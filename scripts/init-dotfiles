@@ -1,4 +1,5 @@
 #! /bin/sh
 
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/steelsojka/dotfiles2.git $HOME/.dotfiles-tmp
+rsync --exclude=".git" $HOME/.dotfiles-tmp/. $HOME
 rm -r $HOME/.dotfiles-tmp
