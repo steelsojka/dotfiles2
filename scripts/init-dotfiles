@@ -1,0 +1,4 @@
+#! /bin/sh
+
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/steelsojka/dotfiles2.git $HOME/.dotfiles-tmp
+rm -r $HOME/.dotfiles-tmp

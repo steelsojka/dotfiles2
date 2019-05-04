@@ -1,1 +1,1 @@
-/home/steel/.vimrc
+../.vimrc

@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Find and replace by a given list of files.
+#
+# replace foo bar **/*.rb
+
+xscreensaver-command -lock
