@@ -1,17 +1,11 @@
-# Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH"
-
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{exports,aliases,functions,extra}; do
+for file in ~/.{path,exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 
-# Include z.sh script
-. ~/z.sh
-
-ulimit -n 1024
+ulimit -n 65536
 
 # Set name of the theme to load.
 ZSH_THEME="robbyrussell"
@@ -41,10 +35,5 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 
-# chuck_cow
-
-###-tns-completion-start-###
-if [ -f /home/steel/.tnsrc ]; then
-    source /home/steel/.tnsrc
-fi
-###-tns-completion-end-###
+# And enter the dragon...
+chuck_cow
