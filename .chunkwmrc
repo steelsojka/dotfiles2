@@ -22,8 +22,6 @@ chunkc core::unload border.so
 #
 
 chunkc set global_desktop_mode           bsp
-chunkc set 2_desktop_mode                monocle
-chunkc set 5_desktop_mode                float
 
 chunkc set global_desktop_offset_top     4
 chunkc set global_desktop_offset_bottom  4
@@ -42,7 +40,7 @@ chunkc set bsp_split_ratio               0.5
 chunkc set monitor_focus_cycle           1
 chunkc set window_focus_cycle            monitor
 
-chunkc set mouse_follows_focus           0
+chunkc set mouse_follows_focus           off
 chunkc set window_float_next             0
 chunkc set window_float_center           1
 chunkc set window_region_locked          1
