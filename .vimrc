@@ -27,7 +27,7 @@ Plug 'digitaltoad/vim-jade'
 Plug 'xolox/vim-session', { 'on': ['SaveSession', 'OpenSession']}
 Plug 'xolox/vim-misc'
 Plug 'benekastah/neomake'
-Plug 'Shougo/deoplete.nvim'
+"Plug 'Shougo/deoplete.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim'

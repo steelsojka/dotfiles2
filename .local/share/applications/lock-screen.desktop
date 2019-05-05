@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Lock Screen
+Type=Application
+Terminal=false
+Exec=xscreensaver-command -lock

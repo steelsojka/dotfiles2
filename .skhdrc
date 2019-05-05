@@ -22,23 +22,17 @@ alt - l : chunkc tiling::window --focus east
 alt - p : chunkc tiling::window --focus prev
 alt - n : chunkc tiling::window --focus next
 
-# arrow key navigation
-alt - left : chunkc tiling::window --focus west
-alt - down : chunkc tiling::window --focus south
-alt - up : chunkc tiling::window --focus north
-alt - right : chunkc tiling::window --focus east
-
 # warp focused window
-shift + alt - left : chunkc tiling::window --warp west
-shift + alt - down : chunkc tiling::window --warp south
-shift + alt - up : chunkc tiling::window --warp north
-shift + alt - right : chunkc tiling::window --warp east
+shift + alt - h : chunkc tiling::window --warp west
+shift + alt - j : chunkc tiling::window --warp south
+shift + alt - k : chunkc tiling::window --warp north
+shift + alt - l : chunkc tiling::window --warp east
 
 # move focused window
-cmd + alt - left : chunkc tiling::window --swap west
-cmd + alt - down : chunkc tiling::window --swap south
-cmd + alt - up : chunkc tiling::window --swap north
-cmd + alt - right : chunkc tiling::window --swap east
+cmd + alt - h : chunkc tiling::window --swap west
+cmd + alt - j : chunkc tiling::window --swap south
+cmd + alt - k : chunkc tiling::window --swap north
+cmd + alt - l : chunkc tiling::window --swap east
 
 alt - r : chunkc tiling::desktop --rotate 90
 
