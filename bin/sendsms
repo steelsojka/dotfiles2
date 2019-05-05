@@ -1,0 +1,32 @@
+#! /bin/bash
+
+mkdir -p $HOME/.sendsms
+
+if [ -z "$1" ];
+then
+  echo "Usage: sendsms PHONE_NUMBER [MESSAGE]"
+  exit 0
+fi
+
+if [ -z "$2" ];
+then
+  vim $HOME/.sendsms/message
+
+  if [ -e $HOME/.sendsms/message ];
+  then
+    message=`cat $HOME/.sendsms/message`
+  else
+    echo "Message not saved. Aborting."
+    exit 1
+  fi
+else
+  message=$2
+fi
+
+kdeconnect-cli --name $(kdeconnect-cli -a --name-only) --send-sms "$message" --destination $1
+echo "Message sent to $1 successfully"
+
+if [ -e $HOME/.sendsms/message ];
+then
+  rm $HOME/.sendsms/message
+fi
