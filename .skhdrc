@@ -1,5 +1,5 @@
 # open terminal
-alt - return : open -na /Applications/iTerm2.app
+alt - return : open -na /Applications/iTerm.app
 
 # enter fullscreen mode for the focused container
 alt - f : chunkc tiling::window --toggle fullscreen
@@ -34,7 +34,10 @@ cmd + alt - j : chunkc tiling::window --swap south
 cmd + alt - k : chunkc tiling::window --swap north
 cmd + alt - l : chunkc tiling::window --swap east
 
-alt - r : chunkc tiling::desktop --rotate 90
+alt - left : chunkc tiling::monitor -f next
+alt - right : chunkc tiling::monitor -f prev
+
+#alt - r : chunkc tiling::desktop --rotate 90
 
 # move focused container to workspace
 shift + alt - m : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
