@@ -1,5 +1,5 @@
 # open terminal
-alt - return : open -na /Applications/iTerm.app
+alt - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance --directory $HOME
 
 # enter fullscreen mode for the focused container
 alt - f : chunkc tiling::window --toggle fullscreen
@@ -37,8 +37,6 @@ cmd + alt - l : chunkc tiling::window --swap east
 alt - left : chunkc tiling::monitor -f next
 alt - right : chunkc tiling::monitor -f prev
 
-#alt - r : chunkc tiling::desktop --rotate 90
-
 # move focused container to workspace
 shift + alt - m : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
 shift + alt - p : chunkc tiling::window --send-to-desktop prev
@@ -65,3 +63,26 @@ ctrl + alt - h : chunkc tiling::window --use-insertion-point west
 ctrl + alt - j : chunkc tiling::window --use-insertion-point south
 ctrl + alt - k : chunkc tiling::window --use-insertion-point north
 ctrl + alt - l : chunkc tiling::window --use-insertion-point east
+
+# add an on_enter command to the default mode
+#:: default : chunkc border::color 0xff0f6288
+
+# defines a new mode 'resize' with an on_enter command, that captures keypresses
+#:: resize @ : chunkc border::color 0xff24ccaa
+:: resize @
+
+# from 'default' mode, activate mode 'resize'
+# (this is the key combination you want to use to enter resize mode)
+alt - r ; resize  
+
+# from 'resize' mode, activate mode 'default'
+# (this is the keypress required to leave resize mode)
+resize < escape ; default
+resize < return ; default
+
+# resize window in different directions
+# (i'm using hjkl but you could just as easily use arrow keys, wasd, etc.)
+resize < h : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east;
+resize < j : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north;
+resize < k : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south;
+resize < l : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west;
