@@ -37,6 +37,7 @@
 	ls = "log --pretty=format: '%C(yellow)%h%Creset -%Cred %ad%Creset:%s %Cgreen[%an]' --decorate"
 	lg = "log --graph --pretty=format: '%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 	last = "log -1 HEAD"
+    plc = !"git fetch && git pull origin $(git rev-parse --abbrev-ref HEAD)"
 
 [apply]
 	# Detect whitespace errors when applying a patch
