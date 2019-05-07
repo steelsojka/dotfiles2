@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.36 for steel on Sat May  4 10:42:50 2019.
+# Written by xscreensaver-demo 5.36 for steel on Sun May  5 13:01:04 2019.
 # https://www.jwz.org/xscreensaver/
 
 timeout:	2:04:00
@@ -180,7 +180,7 @@ programs:								      \
   GL: 				blocktube -root				    \n\
   GL: 				bouncingcow -root			    \n\
 -				cloudlife -root				    \n\
-- GL: 				cubestorm -root				    \n\
+  GL: 				cubestorm -root				    \n\
 -				eruption -root				    \n\
 - GL: 				flipflop -root				    \n\
 - GL: 				flyingtoasters -root -delay 33588 -speed      \
