@@ -187,6 +187,24 @@ xnoremap <silent> ¬ >gv
 xnoremap < <gv
 xnoremap > >gv
 
+" Space mac like bindings
+nnoremap <Leader>fs :w<CR>
+nnoremap <Leader>bp :bprevious<CR>
+nnoremap <Leader>bn :bnext<CR>
+nnoremap <Leader>bf :bfirst<CR>
+nnoremap <Leader>bl :blast<CR>
+nnoremap <Leader>bd :bd<CR>
+nnoremap <Leader>bk :bw<CR>
+nnoremap <Leader>ww <C-W>w
+nnoremap <Leader>wr <C-W>r
+nnoremap <Leader>wd <C-W>c
+nnoremap <Leader>wq <C-W>q
+nnoremap <Leader>wj <C-W>j
+nnoremap <Leader>wk <C-W>k
+nnoremap <Leader>wh <C-W>h
+nnoremap <Leader>wl <C-W>l
+
+
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
