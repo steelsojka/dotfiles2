@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+const exec = require('child_process').exec;
+const path = require('path');
+
+const HOME = process.env.HOME;
+const CONFIG_DIR = path.join(HOME, '.config');
+
+process.stdout.write(JSON.stringify({ version: 1, click_events: true }));
+process.stdout.write('[');
+process.stdout.write('[],');
+
+// Handles click events for individual items.
+process.stdin.on('data', data => {
+  // The first character is an opening array or comma.
+  // Strip it.
+  const clickData = JSON.parse(data.slice(1));
+
+  switch (clickData.name) {
+    case 'network':
+      exec(`kitty --session ${CONFIG_DIR}/i3/nmtui-kitty.startup`);
+      break;
+    case 'cpu':
+    case 'cpuTemp':
+      exec(`kitty --session ${CONFIG_DIR}/i3/cpu-kitty.startup`);
+      break;
+    case 'memory':
+      exec(`kitty --session ${CONFIG_DIR}/i3/memory-kitty.startup`);
+      break;
+    case 'disk':
+      exec(`kitty --session ${CONFIG_DIR}/i3/disk-kitty.startup`);
+      break;
+    case 'date': {
+      if (clickData.button === 3) {
+        exec('firefox --new-window https://calendar.google.com');
+      } else {
+        exec('orage');
+      }
+      break;
+    }
+  }
+});
+
+const conky = exec(`conky -c ${CONFIG_DIR}/i3/conky-i3bar.conf`);
+
+conky.stdout.pipe(process.stdout);
