@@ -1,7 +1,7 @@
 # Guess the weather hourly
 [weather]
 name=weather
-command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+command=$SCRIPT_DIR/weather
 interval=3600
 color=#A4C2F4
 separator_block_width=15
