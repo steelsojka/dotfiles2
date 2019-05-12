@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+date "+%m/%d/%y %l:%M:%S %p"
+
+if [ "$BLOCK_BUTTON" -eq 1 ]; then
+  i3-msg exec orage
+elif [ "$BLOCK_BUTTON" -eq 3 ]; then
+  i3-msg exec "firefox --new-window https://calendar.google.com"
+fi

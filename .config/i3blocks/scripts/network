@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+if [ "${LABEL}" -ne "1" ]; then
+  IP_ADDRESS=$(hostname -I)
+
+  echo $IP_ADDRESS
+  echo $IP_ADDRESS
+  echo "#FFFFFF"
+else
+  echo net
+  echo
+  echo $LABEL_COLOR
+fi
+
+
+if [ "${BLOCK_BUTTON}" -eq "1" ]; then
+  i3-msg exec "kitty --session $HOME/.config/i3/nmtui-kitty.startup"
+fi

@@ -1,0 +1,55 @@
+# Guess the weather hourly
+[weather]
+name=weather
+command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+interval=3600
+color=#A4C2F4
+separator_block_width=15
+
+[cpu-label]
+command=LABEL=1 $SCRIPT_DIR/cpu/cpu
+interval=once
+separator=false
+separator_block_width=4
+
+[cpu]
+command=LABEL=0 $SCRIPT_DIR/cpu/cpu
+interval=2
+separator_block_width=15
+
+[net-label]
+command=LABEL=1 $SCRIPT_DIR/network
+interval=once
+separator=false
+separator_block_width=4
+
+[net]
+command=LABEL=0 $SCRIPT_DIR/network
+interval=60
+separator_block_width=15
+
+[disk-label]
+command=LABEL=1 $SCRIPT_DIR/disk
+interval=once
+separator=false
+separator_block_width=4
+
+[disk]
+command=LABEL=0 $SCRIPT_DIR/disk
+interval=30
+separator_block_width=15
+
+[memory-label]
+command=LABEL=1 $SCRIPT_DIR/memory
+interval=2
+separator=false
+separator_block_width=4
+
+[memory]
+command=LABEL=0 $SCRIPT_DIR/memory
+interval=2
+separator_block_width=15
+
+[date]
+command=$SCRIPT_DIR/date
+interval=1
