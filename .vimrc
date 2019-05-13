@@ -302,7 +302,7 @@ let g:airline_detect_paste = 1
 " ------------------------------------------------------------------------
 " Neomake
 " ------------------------------------------------------------------------
-let g:neomake_javascript_enabled_makers = ['eslint', 'jscs']
+let g:neomake_javascript_enabled_makers = ['eslint']
 autocmd! BufWritePost * Neomake
 
 " ------------------------------------------------------------------------
