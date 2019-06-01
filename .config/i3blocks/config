@@ -15,16 +15,22 @@ separator_block_width=4
 [cpu]
 command=LABEL=0 $SCRIPT_DIR/cpu/cpu
 interval=2
+separator_block_width=5
+separator=false
+
+[cpu-temp]
+command=LABEL=1 SENSOR_CHIP="coretemp-isa-0000" $SCRIPT_DIR/cpu/cpu_temp
+interval=2
 separator_block_width=15
 
 [net-label]
-command=LABEL=1 $SCRIPT_DIR/network
+command=LABEL=1 $SCRIPT_DIR/network $MAIN_NET_INT
 interval=once
 separator=false
 separator_block_width=4
 
 [net]
-command=LABEL=0 $SCRIPT_DIR/network
+command=LABEL=0 $SCRIPT_DIR/network $MAIN_NET_INT
 interval=60
 separator_block_width=15
 

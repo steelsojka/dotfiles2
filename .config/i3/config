@@ -163,7 +163,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         id bar-1
-        status_command LABEL_COLOR="#929292" SCRIPT_DIR="$HOME/.config/i3blocks/scripts" i3blocks
+        status_command LABEL_COLOR="#929292" SCRIPT_DIR="$HOME/.config/i3blocks/scripts" MAIN_NET_INT="wlp4s0" i3blocks
         position top
         mode dock
 }
