@@ -37,3 +37,4 @@ add-zsh-hook chpwd load-nvmrc
 
 # And enter the dragon...
 chuck_cow
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

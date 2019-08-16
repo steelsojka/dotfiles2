@@ -1,0 +1,6 @@
+{
+  "suggest.floatEnable": true,
+  "http.proxyStrictSSL": false,
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.updateImportsOnFileMove.enable": true
+}

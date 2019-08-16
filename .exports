@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 # Make vim the default editor
-export EDITOR="vim"
+export EDITOR="nvim"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -23,3 +23,6 @@ export MANPAGER="less -X"
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
+export SYSTEM_NODE_PATH=/Users/soj214/.nvm/versions/node/v10.16.3/bin/node
+export NODE_TLS_REJECT_UNAUTHORIZED=0
