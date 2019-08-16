@@ -47,8 +47,10 @@ colorscheme OceanicNext
 inoremap jj <esc>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
+" File mappings
 nnoremap <leader>fs :w<CR>
-nnoremap <leader>ff :Lines<CR>
+nnoremap <leader>f/ :Lines<CR>
+" Buffer mappings
 nnoremap <leader>bp :bprevious<CR>
 nnoremap <leader>bn :bnext<CR>
 nnoremap <leader>bf :bfirst<CR>
@@ -56,20 +58,39 @@ nnoremap <leader>bl :blast<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>bk :bw<CR>
 nnoremap <leader>bb :Buffers<CR>
+" Window mappings
 nnoremap <leader>ww <C-W>w
 nnoremap <leader>wr <C-W>r
+nnoremap <leader>wR <C-W>R
 nnoremap <leader>wd <C-W>c
 nnoremap <leader>wq <C-W>q
 nnoremap <leader>wj <C-W>j
 nnoremap <leader>wk <C-W>k
 nnoremap <leader>wh <C-W>h
 nnoremap <leader>wl <C-W>l
+nnoremap <leader>wJ <C-W>J
+nnoremap <leader>wK <C-W>K
+nnoremap <leader>wH <C-W>H
+nnoremap <leader>wL <C-W>L
+nnoremap <leader>wx <C-W>x
+" Project mappings
 nnoremap <leader>pf :GFiles --exclude-standard --others --cached .<CR>
 nnoremap <leader>pF :Files .<CR>
 nnoremap <leader>p/ :Rg<Space>
+nnoremap <leader>pt :Vexplore<CR>
+" Workspace mappings
 nnoremap <leader>qq :q<CR>
 nnoremap <leader>qQ :q!<CR>
-nnoremap <leader>pt :Vexplore<CR>
+" Navigation mappings
+nnoremap <leader>gl $
+nnoremap <leader>gh 0
+nnoremap <leader>gk <C-b>
+nnoremap <leader>gj <C-f>
+nnoremap <leader>gd <C-]>
+" Symbol mappings
+nnoremap <leader>s/ :CocList symbols<CR>
+nnoremap <leader>ss :CocAction<CR>
+
 
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -77,7 +98,7 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " -------------
 " | Polyglot  |
 " -------------
-let g:polyglot_disadled = ['typescript']
+let g:polyglot_disabled = ['typescript']
 
 " -------------
 " | Which Key |

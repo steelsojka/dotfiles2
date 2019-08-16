@@ -1,7 +1,7 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 if [ "${LABEL}" -ne "1" ]; then
-  IP_ADDRESS=$(hostname -I)
+  IP_ADDRESS=$(ifconfig "$1" | awk '/inet [0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}/ {print $2}')
 
   echo $IP_ADDRESS
   echo $IP_ADDRESS
