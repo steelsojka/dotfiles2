@@ -4,9 +4,9 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'sheerun/vim-polyglot'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
@@ -23,6 +23,7 @@ let g:mapleader = "\<Space>"
 
 set number
 set relativenumber
+set termguicolors
 set ruler
 set undofile
 set undodir=~/.vim/undo
@@ -41,59 +42,103 @@ set grepprg=rg\ --vimgrep\ --auto-hybrid-regex
 set updatetime=300
 set signcolumn=yes
 set cmdheight=2
+set mouse=nv
 colorscheme OceanicNext
 
 " ------------
 " = Mappings =
 " ------------
 
+" Defines a leader key mapping and registers the description with WhichKey
+function! DefineLeaderMapping(mode, keys, action, description) abort
+  execute a:mode . ' <leader>' . join(a:keys, '') . ' ' . a:action
+  let category_keys = a:keys[:-2]
+  let end_key = a:keys[-1:][0]
+  let category = g:which_key_map
+  " Escape certain sequences for feedkeys
+  let escaped_cmd = substitute(a:action, '<cr>', "\<cr>", 'g')
+  let escaped_cmd = substitute(escaped_cmd, '<CR>', "\<CR>", 'g')
+  let escaped_cmd = substitute(escaped_cmd, '<Esc>', "\<Esc>", 'g')
+  let escaped_cmd = substitute(escaped_cmd, '<Plug>', "\<Plug>", 'g')
+
+  for key in category_keys
+    let category = category[key]
+  endfor
+
+  let category[end_key] = ['call feedkeys("' . escaped_cmd . '", "m")', a:description] 
+endfunction
+
+" Register mapping groupings
+let g:which_key_map = {}
+let g:which_key_map.f = { 'name': '+files' }
+let g:which_key_map.b = { 'name': '+buffers' }
+let g:which_key_map.w = { 'name': '+windows' }
+let g:which_key_map.q = { 'name': '+quit' }
+let g:which_key_map.s = { 'name': '+symbols' }
+let g:which_key_map.y = { 'name': '+yank' }
+let g:which_key_map.g = { 'name': '+goto' }
+let g:which_key_map.p = { 'name': '+project' }
+let g:which_key_map.r = { 'name': '+refactor' }
+
+" Load the mappings for WhichKey on demand
+autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
+
 inoremap jj <esc>
+tnoremap jj <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 " File mappings
-nnoremap <leader>fs :w<CR>
-nnoremap <leader>f/ :Lines<CR>
+call DefineLeaderMapping('nnoremap', ['f', 's'], ':w<CR>', 'Save File')
+call DefineLeaderMapping('nnoremap', ['f', '/'], ':Lines<CR>', 'Search Lines')
 " Buffer mappings
-nnoremap <leader>bp :bprevious<CR>
-nnoremap <leader>bn :bnext<CR>
-nnoremap <leader>bf :bfirst<CR>
-nnoremap <leader>bl :blast<CR>
-nnoremap <leader>bd :bd<CR>
-nnoremap <leader>bk :bw<CR>
-nnoremap <leader>bb :Buffers<CR>
+call DefineLeaderMapping('nnoremap', ['b', 'p'], ':bprevious<CR>', 'Previous Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'n'], ':bnext<CR>', 'Next Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'f'], ':bfirst<CR>', 'First Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'l'], ':blast<CR>', 'Last Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'd'], ':bd<CR>', 'Delete Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'k'], ':bw<CR>', 'Wipe Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'b'], ':Buffers<CR>', 'List Buffers')
 " Window mappings
-nnoremap <leader>ww <C-W>w
-nnoremap <leader>wr <C-W>r
-nnoremap <leader>wR <C-W>R
-nnoremap <leader>wd <C-W>c
-nnoremap <leader>wq <C-W>q
-nnoremap <leader>wj <C-W>j
-nnoremap <leader>wk <C-W>k
-nnoremap <leader>wh <C-W>h
-nnoremap <leader>wl <C-W>l
-nnoremap <leader>wJ <C-W>J
-nnoremap <leader>wK <C-W>K
-nnoremap <leader>wH <C-W>H
-nnoremap <leader>wL <C-W>L
-nnoremap <leader>wx <C-W>x
+call DefineLeaderMapping('nnoremap', ['w', 'w'], '<C-W>w', 'Move Below/Right')
+call DefineLeaderMapping('nnoremap', ['w', 'r'], '<C-W>r', 'Rotate Window Right')
+call DefineLeaderMapping('nnoremap', ['w', 'R'], '<C-W>R', 'Rotate Window Left')
+call DefineLeaderMapping('nnoremap', ['w', 'd'], '<C-W>c', 'Delete Window')
+call DefineLeaderMapping('nnoremap', ['w', 's'], '<C-W>s', 'Split Window')
+call DefineLeaderMapping('nnoremap', ['w', 'v'], '<C-W>v', 'Split Window Vertical')
+call DefineLeaderMapping('nnoremap', ['w', 'n'], '<C-W>n', 'New Window')
+call DefineLeaderMapping('nnoremap', ['w', 'q'], '<C-W>q', 'Quit Window')
+call DefineLeaderMapping('nnoremap', ['w', 'j'], '<C-W>j', 'Move Down')
+call DefineLeaderMapping('nnoremap', ['w', 'k'], '<C-W>k', 'Move Up')
+call DefineLeaderMapping('nnoremap', ['w', 'h'], '<C-W>h', 'Move Left')
+call DefineLeaderMapping('nnoremap', ['w', 'l'], '<C-W>l', 'Move Right')
+call DefineLeaderMapping('nnoremap', ['w', 'J'], '<C-W>J', 'Move Window Down')
+call DefineLeaderMapping('nnoremap', ['w', 'K'], '<C-W>K', 'Move Window Up')
+call DefineLeaderMapping('nnoremap', ['w', 'H'], '<C-W>H', 'Move Window Left')
+call DefineLeaderMapping('nnoremap', ['w', 'L'], '<C-W>L', 'Move Window Right')
+call DefineLeaderMapping('nnoremap', ['w', 'x'], '<C-W>x', 'Swap Windows')
 " Project mappings
-nnoremap <leader>pf :GFiles --exclude-standard --others --cached .<CR>
-nnoremap <leader>pF :Files .<CR>
-nnoremap <leader>p/ :Rg<Space>
-nnoremap <leader>pt :Vexplore<CR>
+call DefineLeaderMapping('nnoremap', ['p', 'f'], ':GFiles --exclude-standard --others --cached .<CR>', 'Find File (Git)')
+call DefineLeaderMapping('nnoremap', ['p', 'F'], ':Files .<CR>', 'Find File')
+call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg<Space>', 'Search Files')
+call DefineLeaderMapping('nnoremap', ['p', 't'], ':Vexplore<CR>', 'Open File Explorer')
 " Workspace mappings
-nnoremap <leader>qq :q<CR>
-nnoremap <leader>qQ :q!<CR>
+call DefineLeaderMapping('nnoremap', ['q', 'q'], ':q<CR>', 'Quit')
+call DefineLeaderMapping('nnoremap', ['q', 'Q'], ':q!<CR>', 'Force Quit')
 " Navigation mappings
-nnoremap <leader>gl $
-nnoremap <leader>gh 0
-nnoremap <leader>gk <C-b>
-nnoremap <leader>gj <C-f>
-nnoremap <leader>gd <C-]>
+call DefineLeaderMapping('nnoremap', ['g', 'l'], '$', 'End of Line')
+call DefineLeaderMapping('nnoremap', ['g', 'h'], '0', 'Start of Line')
+call DefineLeaderMapping('nnoremap', ['g', 'k'], '<C-b>', 'Page Up')
+call DefineLeaderMapping('nnoremap', ['g', 'j'], '<C-f>', 'Page Down')
+call DefineLeaderMapping('nmap <silent>', ['g', 'd'], '<Plug>(coc-definition)', 'Definition')
+call DefineLeaderMapping('nmap <silent>', ['g', 'i'], '<Plug>(coc-implementation)', 'Implementation')
+call DefineLeaderMapping('nmap <silent>', ['g', 'y'], '<Plug>(coc-type-implementation)', 'Type Definition')
+call DefineLeaderMapping('nmap <silent>', ['g', 'r'], '<Plug>(coc-references)', 'Type References')
 " Symbol mappings
-nnoremap <leader>s/ :CocList symbols<CR>
-nnoremap <leader>ss :CocAction<CR>
-
+call DefineLeaderMapping('nnoremap', ['s', '/'], ':CocList symbols<CR>', 'Find Symbol')
+call DefineLeaderMapping('nnoremap', ['s', 's'], ':CocAction<CR>', 'List Actions')
+" Yank with preview
+call DefineLeaderMapping('nnoremap', ['y', 'y'], ':<C-u>CocList -A --normal yank<CR>', 'List Yanks')
+call DefineLeaderMapping('nmap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
 
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -102,11 +147,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " | Polyglot  |
 " -------------
 let g:polyglot_disabled = ['typescript']
-
-" -------------
-" | Which Key |
-" -------------
-let g:which_key_map = {}
 
 " -------
 " | COC |
@@ -135,11 +175,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
 
 " Command to install all extensions
-command! -nargs=0 InstallCocExtestions CocInstall coc-tsserver coc-json
+command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project
+
+"Prettier command command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " ---------
 " | netrw |
@@ -150,7 +190,6 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
-
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -164,4 +203,5 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
 

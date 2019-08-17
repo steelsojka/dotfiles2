@@ -28,5 +28,6 @@ export MANPAGER="less -X"
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
-export SYSTEM_NODE_PATH=/Users/soj214/.nvm/versions/node/v10.16.3/bin/node
+
 export NODE_TLS_REJECT_UNAUTHORIZED=0
+

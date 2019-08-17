@@ -2,5 +2,9 @@
   "suggest.floatEnable": true,
   "http.proxyStrictSSL": false,
   "typescript.preferences.quoteStyle": "single",
-  "typescript.updateImportsOnFileMove.enable": true
+  "typescript.updateImportsOnFileMove.enable": true,
+  "git.enableGutters": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.requireConfig": true
 }
