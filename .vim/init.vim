@@ -6,7 +6,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhartington/oceanic-next'
 Plug 'sheerun/vim-polyglot'
-Plug 'leafgarland/typescript-vim'
+Plug 'tpope/vim-commentary'
+Plug 'HerringtonDarkholme/yats.vim'
 
 call plug#end()
 
@@ -37,6 +38,7 @@ set ignorecase
 set scrolloff=5
 set sidescrolloff=15
 set hidden
+set nowrap
 set timeoutlen=500
 set grepprg=rg\ --vimgrep\ --auto-hybrid-regex
 set updatetime=300
@@ -79,6 +81,7 @@ let g:which_key_map.y = { 'name': '+yank' }
 let g:which_key_map.g = { 'name': '+goto' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
+let g:which_key_map.c = { 'name': '+comments' }
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
@@ -90,12 +93,13 @@ nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 " File mappings
 call DefineLeaderMapping('nnoremap', ['f', 's'], ':w<CR>', 'Save File')
 call DefineLeaderMapping('nnoremap', ['f', '/'], ':Lines<CR>', 'Search Lines')
+call DefineLeaderMapping('nnoremap', ['f', 'f'], ':CocCommand prettier.formatFile<CR>', 'Format File')
 " Buffer mappings
 call DefineLeaderMapping('nnoremap', ['b', 'p'], ':bprevious<CR>', 'Previous Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'n'], ':bnext<CR>', 'Next Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'f'], ':bfirst<CR>', 'First Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'l'], ':blast<CR>', 'Last Buffer')
-call DefineLeaderMapping('nnoremap', ['b', 'd'], ':bd<CR>', 'Delete Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'd'], ':bn<CR>:bd#<CR>', 'Delete Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'k'], ':bw<CR>', 'Wipe Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'b'], ':Buffers<CR>', 'List Buffers')
 " Window mappings
@@ -136,9 +140,14 @@ call DefineLeaderMapping('nmap <silent>', ['g', 'r'], '<Plug>(coc-references)', 
 " Symbol mappings
 call DefineLeaderMapping('nnoremap', ['s', '/'], ':CocList symbols<CR>', 'Find Symbol')
 call DefineLeaderMapping('nnoremap', ['s', 's'], ':CocAction<CR>', 'List Actions')
+call DefineLeaderMapping('nnoremap', ['s', 'f'], ':CocList outline<CR>', 'List Symbols In File')
 " Yank with preview
 call DefineLeaderMapping('nnoremap', ['y', 'y'], ':<C-u>CocList -A --normal yank<CR>', 'List Yanks')
+" Refactor mappings
 call DefineLeaderMapping('nmap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
+" Comment mappings
+call DefineLeaderMapping('nnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment Line')
+vnoremap <leader>cl :Commentary<CR>
 
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -177,9 +186,10 @@ nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 
 " Command to install all extensions
-command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project
+command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-prettier
 
-"Prettier command command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"Prettier command
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " ---------
 " | netrw |
