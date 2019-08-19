@@ -1,6 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -10,6 +10,7 @@ Plug 'tpope/vim-commentary'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
@@ -47,6 +48,7 @@ set updatetime=300
 set signcolumn=yes
 set cmdheight=2
 set mouse=nv
+set noshowmode
 colorscheme OceanicNext
 
 " ------------
@@ -54,22 +56,20 @@ colorscheme OceanicNext
 " ------------
 
 " Defines a leader key mapping and registers the description with WhichKey
-function! DefineLeaderMapping(mode, keys, action, description) abort
-  execute a:mode . ' <leader>' . join(a:keys, '') . ' ' . a:action
+function! DefineLeaderMapping(mode, keys, action, description, ...) abort
+  execute a:mode . '<silent> <leader>' . join(a:keys, '') . ' ' . a:action
   let category_keys = a:keys[:-2]
   let end_key = a:keys[-1:][0]
   let category = g:which_key_map
-  " Escape certain sequences for feedkeys
-  let escaped_cmd = substitute(a:action, '<cr>', "\<cr>", 'g')
-  let escaped_cmd = substitute(escaped_cmd, '<CR>', "\<CR>", 'g')
-  let escaped_cmd = substitute(escaped_cmd, '<Esc>', "\<Esc>", 'g')
-  let escaped_cmd = substitute(escaped_cmd, '<Plug>', "\<Plug>", 'g')
+  let register_which_key = get(a:, 0, 1)
 
-  for key in category_keys
-    let category = category[key]
-  endfor
+  if register_which_key
+    for key in category_keys
+      let category = category[key]
+    endfor
 
-  let category[end_key] = ['call feedkeys("' . escaped_cmd . '", "m")', a:description] 
+    let category[end_key] = a:description
+  endif
 endfunction
 
 " Register mapping groupings
@@ -85,6 +85,7 @@ let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
 let g:which_key_map.c = { 'name': '+comments' }
 let g:which_key_map.e = { 'name': '+errors' }
+let g:which_key_map.m = { 'name': '+marks' }
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
@@ -92,6 +93,7 @@ autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map"
 inoremap jj <esc>
 tnoremap jj <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
 
 " File mappings
 call DefineLeaderMapping('nnoremap', ['f', 's'], ':w<CR>', 'Save File')
@@ -128,6 +130,7 @@ call DefineLeaderMapping('nnoremap', ['p', 'f'], ':GFiles --exclude-standard --o
 call DefineLeaderMapping('nnoremap', ['p', 'F'], ':Files .<CR>', 'Find File')
 call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg<Space>', 'Search Files')
 call DefineLeaderMapping('nnoremap', ['p', 't'], ':NERDTreeToggle<CR>', 'Open File Explorer')
+call DefineLeaderMapping('nnoremap', ['p', 'r'], ':CocList mru<CR>', 'Open Recents')
 " Workspace mappings
 call DefineLeaderMapping('nnoremap', ['q', 'q'], ':q<CR>', 'Quit')
 call DefineLeaderMapping('nnoremap', ['q', 'Q'], ':q!<CR>', 'Force Quit')
@@ -136,10 +139,13 @@ call DefineLeaderMapping('nnoremap', ['g', 'l'], '$', 'End of Line')
 call DefineLeaderMapping('nnoremap', ['g', 'h'], '0', 'Start of Line')
 call DefineLeaderMapping('nnoremap', ['g', 'k'], '<C-b>', 'Page Up')
 call DefineLeaderMapping('nnoremap', ['g', 'j'], '<C-f>', 'Page Down')
-call DefineLeaderMapping('nmap <silent>', ['g', 'd'], '<Plug>(coc-definition)', 'Definition')
-call DefineLeaderMapping('nmap <silent>', ['g', 'i'], '<Plug>(coc-implementation)', 'Implementation')
-call DefineLeaderMapping('nmap <silent>', ['g', 'y'], '<Plug>(coc-type-implementation)', 'Type Definition')
-call DefineLeaderMapping('nmap <silent>', ['g', 'r'], '<Plug>(coc-references)', 'Type References')
+call DefineLeaderMapping('nnoremap', ['g', 'd'], '<Plug>(coc-definition)', 'Definition')
+call DefineLeaderMapping('nnoremap', ['g', 'i'], '<Plug>(coc-implementation)', 'Implementation')
+call DefineLeaderMapping('nnoremap', ['g', 'y'], '<Plug>(coc-type-implementation)', 'Type Definition')
+call DefineLeaderMapping('nnoremap', ['g', 'r'], '<Plug>(coc-references)', 'Type References')
+call DefineLeaderMapping('nnoremap', ['g', 'e'], "'.", 'Last Edit')
+call DefineLeaderMapping('nnoremap', ['g', 'n'], "<C-o>", 'Next Jump')
+call DefineLeaderMapping('nnoremap', ['g', 'p'], "<C-i>", 'Previous Jump')
 " Symbol mappings
 call DefineLeaderMapping('nnoremap', ['s', '/'], ':CocList symbols<CR>', 'Find Symbol')
 call DefineLeaderMapping('nnoremap', ['s', 's'], ':CocAction<CR>', 'List Actions')
@@ -148,12 +154,16 @@ call DefineLeaderMapping('nnoremap', ['s', 'f'], ':CocList outline<CR>', 'List S
 call DefineLeaderMapping('nnoremap', ['y', 'y'], ':<C-u>CocList -A --normal yank<CR>', 'List Yanks')
 call DefineLeaderMapping('nnoremap', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank File Path')
 " Refactor mappings
-call DefineLeaderMapping('nmap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
+call DefineLeaderMapping('nnoremap', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
 " Comment mappings
 call DefineLeaderMapping('nnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment Line')
-vnoremap <leader>cl :Commentary<CR>
+call DefineLeaderMapping('vnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment Line', 0)
 " Error mappings
 call DefineLeaderMapping('nnoremap', ['e', 'l'], ':CocList diagnostics<CR>', 'List Errors')
+" Mark mappings
+call DefineLeaderMapping('nnoremap', ['m', 'l'], ':CocList marks<CR>', 'List Marks')
+call DefineLeaderMapping('nnoremap', ['m', 'd'], ':delmarks<Space>', 'Delete Marks')
+call DefineLeaderMapping('nnoremap', ['m', 'm'], '`', 'Go to Mark')
 
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -162,6 +172,18 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " | Polyglot  |
 " -------------
 let g:polyglot_disabled = ['typescript']
+
+" -------------
+" | lightline |
+" -------------
+
+let g:lightline = {
+  \ 'colorscheme': 'one',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'readonly', 'filename', 'modified' ] ]
+  \ },
+  \ }
 
 " -------
 " | COC |
@@ -192,20 +214,10 @@ nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 
 " Command to install all extensions
-command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-prettier
+command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-prettier coc-lists
 
 "Prettier command
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" ---------
-" | netrw |
-" ---------
-
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -219,5 +231,4 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
 
