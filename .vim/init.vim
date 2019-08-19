@@ -8,6 +8,8 @@ Plug 'mhartington/oceanic-next'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'HerringtonDarkholme/yats.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -82,6 +84,7 @@ let g:which_key_map.g = { 'name': '+goto' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
 let g:which_key_map.c = { 'name': '+comments' }
+let g:which_key_map.e = { 'name': '+errors' }
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
@@ -99,7 +102,7 @@ call DefineLeaderMapping('nnoremap', ['b', 'p'], ':bprevious<CR>', 'Previous Buf
 call DefineLeaderMapping('nnoremap', ['b', 'n'], ':bnext<CR>', 'Next Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'f'], ':bfirst<CR>', 'First Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'l'], ':blast<CR>', 'Last Buffer')
-call DefineLeaderMapping('nnoremap', ['b', 'd'], ':bn<CR>:bd#<CR>', 'Delete Buffer')
+call DefineLeaderMapping('nnoremap', ['b', 'd'], ':bp<CR>:bd#<CR>', 'Delete Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'k'], ':bw<CR>', 'Wipe Buffer')
 call DefineLeaderMapping('nnoremap', ['b', 'b'], ':Buffers<CR>', 'List Buffers')
 " Window mappings
@@ -124,7 +127,7 @@ call DefineLeaderMapping('nnoremap', ['w', 'x'], '<C-W>x', 'Swap Windows')
 call DefineLeaderMapping('nnoremap', ['p', 'f'], ':GFiles --exclude-standard --others --cached .<CR>', 'Find File (Git)')
 call DefineLeaderMapping('nnoremap', ['p', 'F'], ':Files .<CR>', 'Find File')
 call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg<Space>', 'Search Files')
-call DefineLeaderMapping('nnoremap', ['p', 't'], ':Vexplore<CR>', 'Open File Explorer')
+call DefineLeaderMapping('nnoremap', ['p', 't'], ':NERDTreeToggle<CR>', 'Open File Explorer')
 " Workspace mappings
 call DefineLeaderMapping('nnoremap', ['q', 'q'], ':q<CR>', 'Quit')
 call DefineLeaderMapping('nnoremap', ['q', 'Q'], ':q!<CR>', 'Force Quit')
@@ -143,11 +146,14 @@ call DefineLeaderMapping('nnoremap', ['s', 's'], ':CocAction<CR>', 'List Actions
 call DefineLeaderMapping('nnoremap', ['s', 'f'], ':CocList outline<CR>', 'List Symbols In File')
 " Yank with preview
 call DefineLeaderMapping('nnoremap', ['y', 'y'], ':<C-u>CocList -A --normal yank<CR>', 'List Yanks')
+call DefineLeaderMapping('nnoremap', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank File Path')
 " Refactor mappings
 call DefineLeaderMapping('nmap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
 " Comment mappings
 call DefineLeaderMapping('nnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment Line')
 vnoremap <leader>cl :Commentary<CR>
+" Error mappings
+call DefineLeaderMapping('nnoremap', ['e', 'l'], ':CocList diagnostics<CR>', 'List Errors')
 
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
