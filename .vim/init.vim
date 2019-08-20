@@ -136,10 +136,14 @@ call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'j'], ':resize -5<CR>',
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'k'], ':resize +5<CR>', 'Grow')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'l'], ':vertical resize +5<CR>', 'Vertical Grow')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'h'], ':vertical resize -5<CR>', 'Vertical Shrink')
+call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'J'], ':resize -20<CR>', 'Shrink Large')
+call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'K'], ':resize +20<CR>', 'Grow Large')
+call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'L'], ':vertical resize +20<CR>', 'Vertical Grow Large')
+call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'H'], ':vertical resize -20<CR>', 'Vertical Shrink Large')
 " Project mappings
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'f'], ':GFiles --exclude-standard --others --cached .<CR>', 'Find File (Git)')
-call DefineLeaderMapping('nnoremap', ['p', 'F'], ':Files .<CR>', 'Find File')
-call DefineLeaderMapping('nnoremap <silent>', ['p', '/'], ':Rg!<Space>', 'Search Files')
+call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files .<CR>', 'Find File')
+call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg!<Space>', 'Search Files')
 call DefineLeaderMapping('nnoremap <silent>', ['p', 't'], ':NERDTreeToggle<CR>', 'Open File Explorer')
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'r'], ':CocList mru<CR>', 'Open Recents')
 " Workspace mappings

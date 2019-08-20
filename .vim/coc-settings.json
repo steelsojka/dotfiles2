@@ -7,5 +7,5 @@
   "git.enableGutters": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
-  "prettier.requireConfig": true
+  "prettier.requireConfig": false 
 }
