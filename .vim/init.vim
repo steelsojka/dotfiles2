@@ -1,5 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -11,6 +12,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'itchyny/lightline.vim'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
@@ -101,11 +103,19 @@ inoremap jj <esc>
 tnoremap jj <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
+nnoremap / /\v
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
 
+call DefineLeaderMapping('nnoremap', ['<Space>'], ':', 'Ex Command', 1)
 " File mappings
 call DefineLeaderMapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save File')
 call DefineLeaderMapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search Lines')
 call DefineLeaderMapping('nnoremap <silent>', ['f', 'f'], ':CocCommand prettier.formatFile<CR>', 'Format File')
+call DefineLeaderMapping('nnoremap <silent>', ['f', 'o'], ':NERDTreeFind "expand(''%:p\'')"<CR>', 'Show in Tree')
+call DefineLeaderMapping('nnoremap <silent>', ['f', 'r'], ':CocList mru<CR>', 'Open Recent Files')
 " Buffer mappings
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'p'], ':bprevious<CR>', 'Previous Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'n'], ':bnext<CR>', 'Next Buffer')
@@ -114,6 +124,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['b', 'l'], ':blast<CR>', 'Last Bu
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'd'], ':bp<CR>:bd#<CR>', 'Delete Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'k'], ':bw<CR>', 'Wipe Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'b'], ':Buffers<CR>', 'List Buffers')
+call DefineLeaderMapping('nnoremap <silent>', ['b', 'Y'], 'ggyG', 'Yank Buffer')
 " Window mappings
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'w'], '<C-W>w', 'Move Below/Right')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'd'], '<C-W>c', 'Delete Window')
@@ -141,11 +152,10 @@ call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'K'], ':resize +20<CR>'
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'L'], ':vertical resize +20<CR>', 'Vertical Grow Large')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'H'], ':vertical resize -20<CR>', 'Vertical Shrink Large')
 " Project mappings
-call DefineLeaderMapping('nnoremap <silent>', ['p', 'f'], ':GFiles --exclude-standard --others --cached .<CR>', 'Find File (Git)')
-call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files .<CR>', 'Find File')
+call DefineLeaderMapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find File')
+call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File')
 call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg!<Space>', 'Search Files')
 call DefineLeaderMapping('nnoremap <silent>', ['p', 't'], ':NERDTreeToggle<CR>', 'Open File Explorer')
-call DefineLeaderMapping('nnoremap <silent>', ['p', 'r'], ':CocList mru<CR>', 'Open Recents')
 " Workspace mappings
 call DefineLeaderMapping('nnoremap <silent>', ['q', 'q'], ':q<CR>', 'Quit')
 call DefineLeaderMapping('nnoremap <silent>', ['q', 'Q'], ':q!<CR>', 'Force Quit')
@@ -200,6 +210,8 @@ let g:polyglot_disabled = ['typescript']
 " | FZF |
 " -------
 
+let $FZF_DEFAULT_COMMAND = 'rg --files'
+
 " Show preview for files when searching
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -235,6 +247,7 @@ let g:lightline = {
 " -------
 
 let g:coc_node_path = $SYSTEM_NODE_PATH
+let g:coc_snippet_next = '<tab>'
 inoremap <silent><expr> <C-SPACE> coc#refresh()
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -259,7 +272,7 @@ nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 
 " Command to install all extensions
-command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-prettier coc-lists
+command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-prettier coc-lists coc-snippets
 
 "Prettier command
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -288,3 +301,4 @@ function! GetGitStatus() abort
 
   return ''
 endfunction
+
