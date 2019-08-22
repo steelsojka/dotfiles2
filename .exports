@@ -1,6 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
+export ZSH=$HOME/.oh-my-zsh 
 # Make vim the default editor
 export EDITOR="nvim"
 
@@ -30,4 +29,4 @@ export GREP_OPTIONS="--color=auto"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
 
 export NODE_TLS_REJECT_UNAUTHORIZED=0
-
+export BAT_THEME=OceanicNext

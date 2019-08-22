@@ -12,6 +12,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'itchyny/lightline.vim'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
@@ -102,7 +103,18 @@ inoremap jj <esc>
 tnoremap jj <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
-nnoremap / /\v
+nmap f <Plug>Sneak_f
+nmap F <Plug>Sneak_F
+xmap f <Plug>Sneak_f
+xmap F <Plug>Sneak_F
+omap f <Plug>Sneak_f
+omap F <Plug>Sneak_F
+nmap t <Plug>Sneak_t
+nmap T <Plug>Sneak_T
+xmap t <;lug>Sneak_t
+xmap T <Plug>Sneak_T
+omap t <Plug>Sneak_t
+omap T <Plug>Sneak_T
 
 call DefineLeaderMapping('nnoremap', ['<Space>'], ':', 'Ex Command', 1)
 " File mappings
@@ -148,7 +160,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'L'], ':vertical resize
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'H'], ':vertical resize -20<CR>', 'Vertical Shrink Large')
 " Project mappings
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find File')
-call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File')
+call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File Fullscreen')
 call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg!<Space>', 'Search Files')
 call DefineLeaderMapping('nnoremap <silent>', ['p', 't'], ':NERDTreeToggle<CR>', 'Open File Explorer')
 " Workspace mappings
