@@ -51,6 +51,8 @@ set signcolumn=yes
 set cmdheight=2
 set mouse=nv
 set noshowmode
+set splitbelow
+set splitright 
 colorscheme OceanicNext
 
 " ------------
@@ -95,6 +97,7 @@ let g:which_key_map.c = { 'name': '+comments' }
 let g:which_key_map.e = { 'name': '+errors' }
 let g:which_key_map.m = { 'name': '+marks' }
 let g:which_key_map.j = { 'name': '+jump' }
+let g:which_key_map.t = { 'name': '+terminal' }
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
@@ -117,6 +120,7 @@ omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
 call DefineLeaderMapping('nnoremap', ['<Space>'], ':', 'Ex Command', 1)
+call DefineLeaderMapping('nnoremap', ['/'], ':History:<CR>', 'Search Command History')
 " File mappings
 call DefineLeaderMapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save File')
 call DefineLeaderMapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search Lines')
@@ -129,6 +133,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['b', 'n'], ':bnext<CR>', 'Next Bu
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'f'], ':bfirst<CR>', 'First Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'l'], ':blast<CR>', 'Last Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'd'], ':bp<CR>:bd#<CR>', 'Delete Buffer')
+call DefineLeaderMapping('nnoremap <silent>', ['b', 'D'], ':bp<CR>:bw!#<CR>', 'Wipe Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'k'], ':bw<CR>', 'Wipe Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'b'], ':Buffers<CR>', 'List Buffers')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'Y'], 'ggyG', 'Yank Buffer')
@@ -158,6 +163,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'J'], ':resize -20<CR>'
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'K'], ':resize +20<CR>', 'Grow Large')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'L'], ':vertical resize +20<CR>', 'Vertical Grow Large')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', 'H'], ':vertical resize -20<CR>', 'Vertical Shrink Large')
+call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', '='], '<C-W>=', 'Normalize Splits')
 " Project mappings
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find File')
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File Fullscreen')

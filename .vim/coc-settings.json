@@ -7,6 +7,5 @@
   "git.enableGutters": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
-  "prettier.requireConfig": false ,
-  "coc.preferences.formatOnSaveFiletypes": [ "typescript", "javascript" ]
+  "prettier.requireConfig": false 
 }
