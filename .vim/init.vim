@@ -103,7 +103,7 @@ let g:which_key_map.t = { 'name': '+terminal' }
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
 
 inoremap jj <esc>
-tnoremap jj <C-\><C-n>
+tnoremap <esc> <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
 nmap f <Plug>Sneak_f
@@ -139,6 +139,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['b', 'b'], ':Buffers<CR>', 'List 
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'Y'], 'ggyG', 'Yank Buffer')
 " Window mappings
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'w'], '<C-W>w', 'Move Below/Right')
+call DefineLeaderMapping('nnoremap <silent>', ['w', 'a'], ':Windows<CR>', 'List Windows')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'd'], '<C-W>c', 'Delete Window')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 's'], '<C-W>s', 'Split Window')
 call DefineLeaderMapping('nnoremap <silent>', ['w', 'v'], '<C-W>v', 'Split Window Vertical')
@@ -189,8 +190,11 @@ call DefineLeaderMapping('nnoremap <silent>', ['s', '/'], ':CocList symbols<CR>'
 call DefineLeaderMapping('nnoremap <silent>', ['s', 's'], ':CocAction<CR>', 'List Actions')
 call DefineLeaderMapping('nnoremap <silent>', ['s', 'f'], ':CocList outline<CR>', 'List Symbols In File')
 " Yank with preview
-call DefineLeaderMapping('nnoremap <silent>', ['y', 'y'], ':<C-u>CocList -A --normal yank<CR>', 'List Yanks')
+call DefineLeaderMapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocList -A --normal yank<CR>', 'List Yanks')
 call DefineLeaderMapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank File Path')
+call DefineLeaderMapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard')
+call DefineLeaderMapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard', 1)
+
 " Refactor mappings
 call DefineLeaderMapping('nnoremap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
 " Comment mappings
