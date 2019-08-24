@@ -101,6 +101,7 @@ let g:which_key_map.d = { 'name': '+diagnostics' }
 let g:which_key_map.m = { 'name': '+marks' }
 let g:which_key_map.j = { 'name': '+jump' }
 let g:which_key_map.t = { 'name': '+terminal' }
+let g:which_key_map.l = { 'name': '+local' }
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
@@ -183,10 +184,10 @@ call DefineLeaderMapping('nnoremap <silent>', ['j', 'l'], '$', 'End of Line')
 call DefineLeaderMapping('nnoremap <silent>', ['j', 'h'], '0', 'Start of Line')
 call DefineLeaderMapping('nnoremap <silent>', ['j', 'k'], '<C-b>', 'Page Up')
 call DefineLeaderMapping('nnoremap <silent>', ['j', 'j'], '<C-f>', 'Page Down')
-call DefineLeaderMapping('nnoremap <silent>', ['j', 'd'], '<Plug>(coc-definition)', 'Definition')
-call DefineLeaderMapping('nnoremap <silent>', ['j', 'i'], '<Plug>(coc-implementation)', 'Implementation')
-call DefineLeaderMapping('nnoremap <silent>', ['j', 'y'], '<Plug>(coc-type-implementation)', 'Type Definition')
-call DefineLeaderMapping('nnoremap <silent>', ['j', 'r'], '<Plug>(coc-references)', 'Type References')
+call DefineLeaderMapping('nmap <silent>', ['j', 'd'], '<Plug>(coc-definition)', 'Definition')
+call DefineLeaderMapping('nmap <silent>', ['j', 'i'], '<Plug>(coc-implementation)', 'Implementation')
+call DefineLeaderMapping('nmap <silent>', ['j', 'y'], '<Plug>(coc-type-implementation)', 'Type Definition')
+call DefineLeaderMapping('nmap <silent>', ['j', 'r'], '<Plug>(coc-references)', 'Type References')
 call DefineLeaderMapping('nnoremap <silent>', ['j', 'e'], "'.", 'Last Edit')
 call DefineLeaderMapping('nnoremap <silent>', ['j', 'n'], "<C-o>", 'Next Jump')
 call DefineLeaderMapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'Previous Jump')
@@ -200,7 +201,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p
 call DefineLeaderMapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard')
 call DefineLeaderMapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard', 1)
 " Refactor mappings
-call DefineLeaderMapping('nnoremap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
+call DefineLeaderMapping('nmap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
 " Edit mappings
 call DefineLeaderMapping('nnoremap <silent>', ['e', 'c', 'l'], ':Commentary<CR>', 'Comment Line')
 call DefineLeaderMapping('vnoremap', ['e', 'c', 'l'], ':Commentary<CR>', 'Comment Line', 1)
@@ -213,6 +214,9 @@ call DefineLeaderMapping('nnoremap', ['m', 'm'], '`', 'Go to Mark')
 " Git mappings
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 'u'], ':CocCommand git.chunkUndo<CR>', 'Undo Chunk')
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 's'], ':CocCommand git.chunkStage<CR>', 'Stage Chunk')
+call DefineLeaderMapping('nmap <silent>', ['g', 'c', 'n'], '<Plug>(coc-git-nextchunk)', 'Next Chunk')
+call DefineLeaderMapping('nmap <silent>', ['g', 'c', 'p'], '<Plug>(coc-git-prevchunk)', 'Previous Chunk')
+call DefineLeaderMapping('nmap <silent>', ['g', 'c', 'i'], '<Plug>(coc-git-chunkinfo)', 'Chunk Info')
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'b', 'l'], ':CocList branches<CR>', 'List Branches')
 call DefineLeaderMapping('nnoremap <silent>', ['g', 's'], ':G<CR>', 'Git Status')
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'd'], ':Gdiffsplit<CR>', 'Git Diff')
@@ -231,9 +235,6 @@ call DefineLeaderMapping('nnoremap <silent>', ['t', 'n'], ':tabnew<CR>:term<CR>i
 call DefineLeaderMapping('nnoremap <silent>', ['t', 'v'], ':vsp<CR>:term<CR>i', 'New Terminal Split')
 call DefineLeaderMapping('nnoremap <silent>', ['t', 's'], ':sp<CR>:term<CR>i', 'New Terminal Vertical')
 call DefineLeaderMapping('nnoremap <silent>', ['t', 'r'], ':vsp term://', 'Run in Terminal')
-
-" Highlight jsonc comments
-autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " ------------
 " | sneak.vim|
