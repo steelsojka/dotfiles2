@@ -7,12 +7,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhartington/oceanic-next'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'itchyny/lightline.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-fugitive'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-surround'
+Plug 'justinmk/vim-dirvish'
 
 call plug#end()
 
@@ -46,7 +46,7 @@ set hidden
 set nowrap
 set timeoutlen=500
 set grepprg=rg\ --vimgrep\ --auto-hybrid-regex
-set updatetime=300
+set updatetime=200
 set signcolumn=yes
 set cmdheight=2
 set mouse=nv
@@ -80,7 +80,7 @@ endfunction
 
 " Register mapping groupings
 let g:which_key_map = {}
-let g:which_key_map.f = { 'name': '+files' }
+let g:which_key_map.f = { 'name': '+file' }
 let g:which_key_map.b = { 'name': '+buffers' }
 let g:which_key_map.w = { 'name': '+windows' }
 let g:which_key_map.w.r = { 'name': '+resize' }
@@ -95,8 +95,9 @@ let g:which_key_map.g.l = { 'name': '+log' }
 let g:which_key_map.g.r = { 'name': '+remote' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
-let g:which_key_map.c = { 'name': '+comments' }
-let g:which_key_map.e = { 'name': '+errors' }
+let g:which_key_map.e = { 'name': '+edit' }
+let g:which_key_map.e.c = { 'name': '+comment' }
+let g:which_key_map.d = { 'name': '+diagnostics' }
 let g:which_key_map.m = { 'name': '+marks' }
 let g:which_key_map.j = { 'name': '+jump' }
 let g:which_key_map.t = { 'name': '+terminal' }
@@ -116,7 +117,7 @@ omap f <Plug>Sneak_f
 omap F <Plug>Sneak_F
 nmap t <Plug>Sneak_t
 nmap T <Plug>Sneak_T
-xmap t <;lug>Sneak_t
+xmap t <Plug>Sneak_t
 xmap T <Plug>Sneak_T
 omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
@@ -127,8 +128,10 @@ call DefineLeaderMapping('nnoremap', ['/'], ':History:<CR>', 'Search Command His
 call DefineLeaderMapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save File')
 call DefineLeaderMapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search Lines')
 call DefineLeaderMapping('nnoremap <silent>', ['f', 'f'], ':CocCommand prettier.formatFile<CR>', 'Format File')
-call DefineLeaderMapping('nnoremap <silent>', ['f', 'o'], ':NERDTreeFind "expand(''%:p\'')"<CR>', 'Show in Tree')
+call DefineLeaderMapping('nnoremap <silent>', ['f', 'o'], ':vsp +Dirvish\ %:p:h<CR>', 'Show in Tree')
 call DefineLeaderMapping('nnoremap <silent>', ['f', 'r'], ':CocList mru<CR>', 'Open Recent Files')
+call DefineLeaderMapping('nnoremap <silent>', ['f', 'u'], ':UndotreeToggle<CR>', 'Undo Tree')
+call DefineLeaderMapping('nnoremap <silent>', ['f', 'U'], ':UndotreeFocus<CR>', 'Focus Undo Tree')
 " Buffer mappings
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'p'], ':bprevious<CR>', 'Previous Buffer')
 call DefineLeaderMapping('nnoremap <silent>', ['b', 'n'], ':bnext<CR>', 'Next Buffer')
@@ -171,7 +174,7 @@ call DefineLeaderMapping('nnoremap <silent>', ['w', 'r', '='], '<C-W>=', 'Normal
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find File')
 call DefineLeaderMapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File Fullscreen')
 call DefineLeaderMapping('nnoremap', ['p', '/'], ':Rg!<Space>', 'Search Files')
-call DefineLeaderMapping('nnoremap <silent>', ['p', 't'], ':NERDTreeToggle<CR>', 'Open File Explorer')
+call DefineLeaderMapping('nnoremap <silent>', ['p', 't'], ':vsp +Dirvish<CR>', 'Open File Explorer')
 " Workspace mappings
 call DefineLeaderMapping('nnoremap <silent>', ['q', 'q'], ':q<CR>', 'Quit')
 call DefineLeaderMapping('nnoremap <silent>', ['q', 'Q'], ':q!<CR>', 'Force Quit')
@@ -198,11 +201,11 @@ call DefineLeaderMapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipbo
 call DefineLeaderMapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard', 1)
 " Refactor mappings
 call DefineLeaderMapping('nnoremap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
-" Comment mappings
-call DefineLeaderMapping('nnoremap <silent>', ['c', 'l'], ':Commentary<CR>', 'Comment Line')
-call DefineLeaderMapping('vnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment Line', 1)
-" Error mappings
-call DefineLeaderMapping('nnoremap <silent>', ['e', 'l'], ':CocList diagnostics<CR>', 'List Errors')
+" Edit mappings
+call DefineLeaderMapping('nnoremap <silent>', ['e', 'c', 'l'], ':Commentary<CR>', 'Comment Line')
+call DefineLeaderMapping('vnoremap', ['e', 'c', 'l'], ':Commentary<CR>', 'Comment Line', 1)
+" Diagnostics mappings
+call DefineLeaderMapping('nnoremap <silent>', ['d', 'l'], ':CocList diagnostics<CR>', 'List Diagnostics')
 " Mark mappings
 call DefineLeaderMapping('nnoremap <silent>', ['m', 'l'], ':CocList marks<CR>', 'List Marks')
 call DefineLeaderMapping('nnoremap', ['m', 'd'], ':delmarks<Space>', 'Delete Marks')
@@ -232,10 +235,10 @@ call DefineLeaderMapping('nnoremap <silent>', ['t', 'r'], ':vsp term://', 'Run i
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
-" -------------
-" | Polyglot  |
-" -------------
-let g:polyglot_disabled = ['typescript']
+" ------------
+" | sneak.vim|
+" ------------
+let g:sneak#label = 1
 
 " -------
 " | FZF |

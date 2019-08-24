@@ -3,9 +3,8 @@
   "http.proxyStrictSSL": false,
   "typescript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enable": true,
-  //"tsserver.log": "verbose",
   "git.enableGutters": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
-  "prettier.requireConfig": false 
+  "prettier.requireConfig": false
 }
