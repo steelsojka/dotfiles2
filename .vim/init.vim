@@ -1,6 +1,5 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -13,6 +12,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'itchyny/lightline.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -91,6 +91,8 @@ let g:which_key_map.y = { 'name': '+yank' }
 let g:which_key_map.g = { 'name': '+git' }
 let g:which_key_map.g.c = { 'name': '+chunk' }
 let g:which_key_map.g.b = { 'name': '+branch' }
+let g:which_key_map.g.l = { 'name': '+log' }
+let g:which_key_map.g.r = { 'name': '+remote' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
 let g:which_key_map.c = { 'name': '+comments' }
@@ -194,7 +196,6 @@ call DefineLeaderMapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocList -A --no
 call DefineLeaderMapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank File Path')
 call DefineLeaderMapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard')
 call DefineLeaderMapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to Clipboard', 1)
-
 " Refactor mappings
 call DefineLeaderMapping('nnoremap <silent>', ['r', 'n'], '<Plug>(coc-rename)', 'Rename')
 " Comment mappings
@@ -208,12 +209,25 @@ call DefineLeaderMapping('nnoremap', ['m', 'd'], ':delmarks<Space>', 'Delete Mar
 call DefineLeaderMapping('nnoremap', ['m', 'm'], '`', 'Go to Mark')
 " Git mappings
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 'u'], ':CocCommand git.chunkUndo<CR>', 'Undo Chunk')
-call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 'i'], '<Plug>(coc-git-chunkinfo)', 'Chunk Info')
-call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 'n'], '<Plug>(coc-git-nextchunk)', 'Next Chunk')
-call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 'p'], '<Plug>(coc-git-prevchunk)', 'Previous Chunk')
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'c', 's'], ':CocCommand git.chunkStage<CR>', 'Stage Chunk')
 call DefineLeaderMapping('nnoremap <silent>', ['g', 'b', 'l'], ':CocList branches<CR>', 'List Branches')
-call DefineLeaderMapping('nnoremap <silent>', ['g', 's'], ':CocCommand git.showCommit<CR>', 'Show Commit')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 's'], ':G<CR>', 'Git Status')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'd'], ':Gdiffsplit<CR>', 'Git Diff')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git Edit')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'a'], ':Gwrite<CR>', 'Git Add')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'g'], ':Git<Space>', 'Git Command')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'l', 'b'], ':Gblame<CR>', 'Git Blame')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'l', 'l'], ':Gllog<CR>', 'Git Log')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'l', 'c'], ':Gclog<CR>', 'Git Chunk Log')
+call DefineLeaderMapping('vnoremap <silent>', ['g', 'l', 'c'], ':Gclog<CR>', 'Git Chunk Log', 1)
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'r', 'f'], ':Gfetch<CR>', 'Git Fetch')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'r', 'p'], ':Gpull<CR>', 'Git Pull')
+call DefineLeaderMapping('nnoremap <silent>', ['g', 'r', 's'], ':Gpush<CR>', 'Git Push')
+" Terminal mappings
+call DefineLeaderMapping('nnoremap <silent>', ['t', 'n'], ':tabnew<CR>:term<CR>i', 'New Terminal Tab')
+call DefineLeaderMapping('nnoremap <silent>', ['t', 'v'], ':vsp<CR>:term<CR>i', 'New Terminal Split')
+call DefineLeaderMapping('nnoremap <silent>', ['t', 's'], ':sp<CR>:term<CR>i', 'New Terminal Vertical')
+call DefineLeaderMapping('nnoremap <silent>', ['t', 'r'], ':vsp term://', 'Run in Terminal')
 
 " Highlight jsonc comments
 autocmd FileType json syntax match Comment +\/\/.\+$+
