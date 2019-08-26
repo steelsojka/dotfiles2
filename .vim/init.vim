@@ -28,7 +28,6 @@ let g:mapleader = "\<Space>"
 " ------------
 
 set number
-set relativenumber
 set termguicolors
 set ruler
 set undofile
@@ -82,6 +81,8 @@ let g:which_key_map.j = { 'name': '+jump' }
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
+" Settings for terminal buffers
+autocmd! TermOpen * setlocal nospell nonumber
 
 inoremap jj <esc>
 tnoremap <esc> <C-\><C-n>
@@ -106,7 +107,8 @@ call steelvim#define_leader_mapping('nnoremap', ['/'], ':History:<CR>', 'Search 
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save File')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search Lines')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'f'], ':CocCommand prettier.formatFile<CR>', 'Format File')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'o'], ':vsp +Dirvish\ %:p:h<CR>', 'Show in Tree')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'o'], ':Dirvish %:p:h<CR>', 'Show in Tree')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'O'], ':vsp +Dirvish\ %:p:h<CR>', 'Show in Split Tree')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'r'], ':CocList mru<CR>', 'Open Recent Files')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'u'], ':UndotreeToggle<CR>', 'Undo Tree')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'U'], ':UndotreeFocus<CR>', 'Focus Undo Tree')
@@ -133,7 +135,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'k'], '<C-W>k', '
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'h'], '<C-W>h', 'Move Left')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'l'], '<C-W>l', 'Move Right')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'J'], '<C-W>J', 'Move Window Down')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'k'], '<C-W>K', 'Move Window Up')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'K'], '<C-W>K', 'Move Window Up')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'H'], '<C-W>H', 'Move Window Left')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'L'], '<C-W>L', 'Move Window Right')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'r'], '<C-W>r', 'Rotate Forward')
@@ -153,15 +155,20 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'o'], ':tabnext<C
 " Project mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find File')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File Fullscreen')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 't'], ':vsp +Dirvish<CR>', 'Open File Explorer')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'T'], ':vsp +Dirvish<CR>', 'Open File Explorer in Split')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 't'], ':Dirvish<CR>', 'Open File Explorer')
 " Workspace mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['q'], ':q<CR>', 'Quit')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['Q'], ':q!<CR>', 'Force Quit')
 " Navigation mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'l'], '$', 'End of Line')
+call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'l'], '$', 'End of Line', 1)
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'h'], '0', 'Start of Line')
+call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'h'], '0', 'Start of Line', 1)
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'k'], '<C-b>', 'Page Up')
+call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'k'], '<C-b>', 'Page Up', 1)
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'j'], '<C-f>', 'Page Down')
+call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'j'], '<C-f>', 'Page Down', 1)
 call steelvim#define_leader_mapping('nmap <silent>', ['j', 'd'], '<Plug>(coc-definition)', 'Definition')
 call steelvim#define_leader_mapping('nmap <silent>', ['j', 'i'], '<Plug>(coc-implementation)', 'Implementation')
 call steelvim#define_leader_mapping('nmap <silent>', ['j', 'y'], '<Plug>(coc-type-implementation)', 'Type Definition')
@@ -283,7 +290,7 @@ nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 
 " Command to install all extensions
-command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-prettier coc-lists coc-snippets
+command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-lists coc-snippets coc-eslint
 
 "Prettier command
 command! -nargs=0 Prettier :CocCommand prettier.formatFile

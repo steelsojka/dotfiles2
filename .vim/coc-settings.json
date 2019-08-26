@@ -6,5 +6,7 @@
   "git.enableGutters": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
-  "prettier.requireConfig": false
+  "prettier.requireConfig": false,
+  "java.jdt.ls.vmargs": "-javaagent:/usr/local/share/lombok/lombok.jar -Xbootclasspath/a:/usr/local/share/lombok/lombok.jar",
+  "java.trace.server": "verbose"
 }
