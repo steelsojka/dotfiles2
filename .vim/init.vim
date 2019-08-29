@@ -70,8 +70,7 @@ let g:which_key_map.y = { 'name': '+yank' }
 let g:which_key_map.g = { 'name': '+git' }
 let g:which_key_map.g.c = { 'name': '+chunk' }
 let g:which_key_map.g.b = { 'name': '+branch' }
-let g:which_key_map.g.l = { 'name': '+log' }
-let g:which_key_map.g.r = { 'name': '+remote' }
+let g:which_key_map.g.h = { 'name': '+history' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
 let g:which_key_map.e = { 'name': '+errors' }
@@ -152,6 +151,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', '='], '<C-W>
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', '='], '<C-W>=', 'Balance Splits')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'F'], ':tabnew<CR>', 'New Tab')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'o'], ':tabnext<CR>', 'Next Tab')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['w', '/'], ':Windows<CR>', 'Search Windows')
 " Project mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find File')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find File Fullscreen')
@@ -177,8 +177,9 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'e'], "'.", 'Last
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'n'], "<C-o>", 'Next Jump')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'Previous Jump')
 " Search mappings
-call steelvim#define_leader_mapping('nnoremap <silent>', ['s', '/'], ':CocList symbols<CR>', 'Find Symbol')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['s', 's'], ':BLines<CR>', 'Search Buffer Lines')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['s', '/'], ':History/<CR>', 'Search History')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['s', 's'], ':CocList symbols<CR>', 'Find Symbol')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['s', 'l'], ':BLines<CR>', 'Search Buffer Lines')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['s', 'a'], ':CocAction<CR>', 'List Actions')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['s', 'o'], ':CocList outline<CR>', 'List Symbols In File')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['s', 'b'], ':Lines<CR>', 'Search Lines')
@@ -211,13 +212,15 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'd'], ':Gdiffspli
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git Edit')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'a'], ':Gwrite<CR>', 'Git Add')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'g'], ':Git<Space>', 'Git Command')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l', 'b'], ':Gblame<CR>', 'Git Blame')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l', 'l'], ':Gllog<CR>', 'Git Log')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l', 'c'], ':Gclog<CR>', 'Git Chunk Log')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['g', 'l', 'c'], ':Gclog<CR>', 'Git Chunk Log', 1)
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'r', 'f'], ':Gfetch<CR>', 'Git Fetch')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'r', 'p'], ':Gpull<CR>', 'Git Pull')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'r', 's'], ':Gpush<CR>', 'Git Push')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l'], ':Gllog<CR>', 'Git Log')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'L'], ':Gclog<CR>', 'Git Chunk Log')
+call steelvim#define_leader_mapping('vnoremap <silent>', ['g', 'L'], ':Gclog<CR>', 'Git Chunk Log', 1)
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'f'], ':Gfetch<CR>', 'Git Fetch')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'p'], ':Gpull<CR>', 'Git Pull')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'P'], ':Gpush<CR>', 'Git Push')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Commits<CR>', 'Commit History')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'C'], ':Commits<CR>', 'Buffer Commit History')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git Blame')
 
 " -------------
 " | sneak.vim |
