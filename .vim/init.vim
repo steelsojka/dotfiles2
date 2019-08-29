@@ -13,6 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-dirvish'
+Plug 'arthurxavierx/vim-caser'
 
 call plug#end()
 
@@ -74,9 +75,26 @@ let g:which_key_map.g.h = { 'name': '+history' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.r = { 'name': '+refactor' }
 let g:which_key_map.e = { 'name': '+errors' }
-let g:which_key_map.c = { 'name': '+comments' }
+let g:which_key_map.c = { 'name': '+comments/case' }
+let g:which_key_map.c.c = {
+  \ 'name': '+case',
+  \ 'p': 'PascalCase',
+  \ 'm': 'MixedCase',
+  \ 'c': 'camelCase',
+  \ 'u': 'UPPER CASE',
+  \ 'U': 'UPPER CASE',
+  \ 't': 'Title Case',
+  \ 's': 'Sentence case',
+  \ '_': 'snake_case',
+  \ 'k': 'kebab-case',
+  \ '-': 'dash-case',
+  \ '<space>': 'space case',
+  \ '.': 'dot.case'
+  \ }
 let g:which_key_map.m = { 'name': '+marks' }
 let g:which_key_map.j = { 'name': '+jump' }
+
+let g:caser_prefix = '<Space>cc'
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
@@ -314,7 +332,7 @@ endfunction
 " Gets the git status branch for the status line
 " If the window is not wide enough then nothing will be displayed.
 function! GetGitStatus() abort
-  let status = get(g:, 'coc_git_status', '')
+  let status = fugitive#head()
 
   if winwidth(0) > 80
     return len(status) > 30 ? status[0:27] . '...' : status
