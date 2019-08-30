@@ -119,6 +119,7 @@ omap t <Plug>Sneak_t
 omap T <Plug>Sneak_T
 
 call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':', 'Ex Command', 0)
+call steelvim#define_leader_mapping('vnoremap', ["<Space>"], ':', 'Ex Command', 0)
 call steelvim#define_leader_mapping('nnoremap', ['/'], ':History:<CR>', 'Search Command History')
 " File mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save File')
