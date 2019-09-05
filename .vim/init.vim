@@ -76,6 +76,7 @@ let g:which_key_map.g.b = { 'name': '+branch' }
 let g:which_key_map.g.h = { 'name': '+history' }
 let g:which_key_map.p = { 'name': '+project' }
 let g:which_key_map.c = { 'name': '+code' }
+let g:which_key_map.m = { 'name': '+local' }
 let g:which_key_map.c.c = {
   \ 'name': '+case',
   \ 'p': 'PascalCase',
@@ -91,8 +92,8 @@ let g:which_key_map.c.c = {
   \ '<space>': 'space case',
   \ '.': 'dot.case'
   \ }
-let g:which_key_map.m = { 'name': '+marks' }
 let g:which_key_map.j = { 'name': '+jump' }
+let g:which_key_map.j.m = { 'name': '+marks' }
 
 let g:caser_prefix = '<Space>cc'
 
@@ -207,6 +208,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'a'], ':CocAction
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':Rg!<Space>', 'Search files in project')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
 " Yank with preview
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocList -A --normal yank<CR>', 'List yanks')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank file path')
@@ -222,9 +224,9 @@ call steelvim#define_leader_mapping('nmap <silent>', ['c', 'D'], '<Plug>(coc-ref
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'k'], "gh", 'Jump to documenation')
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'r'], '<Plug>(coc-rename)', 'Rename symbol')
 " Mark mappings
-call steelvim#define_leader_mapping('nnoremap <silent>', ['m', 'l'], ':CocList marks<CR>', 'List marks')
-call steelvim#define_leader_mapping('nnoremap', ['m', 'd'], ':delmarks<Space>', 'Delete marks')
-call steelvim#define_leader_mapping('nnoremap', ['m', 'm'], '`', 'Go to mark')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'm', 'l'], ':CocList marks<CR>', 'List marks')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'd'], ':delmarks<Space>', 'Delete marks')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'm'], '`', 'Go to mark')
 " Git mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 'u'], ':CocCommand git.chunkUndo<CR>', 'Undo chunk')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 's'], ':CocCommand git.chunkStage<CR>', 'Stage chunk')
