@@ -54,6 +54,7 @@ set mouse=nv
 set noshowmode
 set splitbelow
 set splitright
+set inccommand=nosplit
 colorscheme OceanicNext
 
 " ------------
