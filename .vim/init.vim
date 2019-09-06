@@ -55,6 +55,7 @@ set noshowmode
 set splitbelow
 set splitright
 set inccommand=nosplit
+set shortmess+=c
 colorscheme OceanicNext
 
 " ------------
@@ -63,6 +64,7 @@ colorscheme OceanicNext
 
 " Register mapping groupings
 let g:which_key_map = {}
+let g:which_key_map[' '] = 'Ex command'
 let g:which_key_map.f = { 'name': '+file' }
 let g:which_key_map.b = { 'name': '+buffers' }
 let g:which_key_map.w = { 'name': '+windows' }
@@ -98,7 +100,7 @@ let g:which_key_map.j.m = { 'name': '+marks' }
 let g:caser_prefix = '<Space>cc'
 
 " Load the mappings for WhichKey on demand
-autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
+autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
 " Settings for terminal buffers
 autocmd! TermOpen * setlocal nospell nonumber
 
@@ -126,7 +128,7 @@ call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch b
 " File mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search lines')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'f'], ':CocCommand prettier.formatFile<CR>', 'Format file')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'f'], ':call CocAction("format")<CR>', 'Format file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'o'], ':Dirvish %:p:h<CR>', 'Show in tree')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'O'], ':vsp +Dirvish\ %:p:h<CR>', 'Show in split tree')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'r'], ':CocList mru<CR>', 'Open recent files')
@@ -199,7 +201,6 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'n'], "<C-o>", 'N
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'Previous jump')
 " Search mappings
 call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':Rg<Space>', 'Search directory')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'D'], ':Rg!<Space>', 'Search directory full')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<CR>', 'Search command history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', '/'], ':History/<CR>', 'Search history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList symbols<CR>', 'Search symbol')
@@ -207,8 +208,10 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'l'], ':BLines<CR
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'a'], ':CocAction<CR>', 'Search actions')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':Rg!<Space>', 'Search files in project')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':Rg<Space>', 'Search files in project')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
+call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*', 'Search selected text')
+call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
 " Yank with preview
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocList -A --normal yank<CR>', 'List yanks')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank file path')

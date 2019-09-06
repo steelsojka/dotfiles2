@@ -1,7 +1,7 @@
-nmap <silent><buffer> K <Plug>(dirvish_up)
 setlocal nospell
 
+nmap <silent><buffer> K <Plug>(dirvish_up)
 nnoremap <buffer> <leader>md :!mkdir %
 nnoremap <buffer> <leader>mf :!touch %
-nnoremap <buffer> <leader>mm :!mv #<space> 
-nnoremap <buffer> <leader>mr :!mv # %
+nnoremap <buffer> <leader>mr "9yy:!mv <c-r>9 %
+nnoremap <buffer> <leader>mk "9yy:!rm -r <c-r>9
