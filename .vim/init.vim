@@ -104,6 +104,9 @@ autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_ma
 " Settings for terminal buffers
 autocmd! TermOpen * setlocal nospell nonumber
 
+" Custom grep for opening the quick fix windor after searching
+command! -nargs=+ QuickGrep execute 'silent grep! <args>' | copen 20
+
 inoremap jj <esc>
 tnoremap <esc> <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
@@ -200,7 +203,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'e'], "'.", 'Last
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'n'], "<C-o>", 'Next jump')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'Previous jump')
 " Search mappings
-call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':Rg<Space>', 'Search directory')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':QuickGrep<Space> "%:p:h"<left><left><left><left><left><left><left><left>', 'Search directory')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<CR>', 'Search command history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', '/'], ':History/<CR>', 'Search history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList symbols<CR>', 'Search symbol')
@@ -208,7 +211,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'l'], ':BLines<CR
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'a'], ':CocAction<CR>', 'Search actions')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':Rg<Space>', 'Search files in project')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':QuickGrep<space>', 'Search files in project')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
 call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*', 'Search selected text')
 call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
