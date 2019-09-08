@@ -111,6 +111,7 @@ inoremap jj <esc>
 tnoremap <esc> <C-\><C-n>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
+nnoremap U <C-r>
 nmap f <Plug>Sneak_f
 nmap F <Plug>Sneak_F
 xmap f <Plug>Sneak_f
