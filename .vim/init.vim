@@ -14,7 +14,6 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-dirvish'
 Plug 'arthurxavierx/vim-caser'
-Plug 'mhinz/vim-startify'
 
 call plug#end()
 

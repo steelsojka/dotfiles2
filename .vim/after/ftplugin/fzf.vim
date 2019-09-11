@@ -1,2 +1,2 @@
-tnoremap <silent><buffer> <esc> <C-\><C-n>:q!<CR>
-nnoremap <silent><buffer> <esc> <C-\><C-n>:q!<CR>
+tnoremap <silent><buffer> <esc> <C-c>
+nnoremap <silent><buffer> <esc> <C-c>
