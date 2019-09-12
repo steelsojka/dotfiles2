@@ -1,19 +1,164 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual'] }
+" {{{
+  " Register mapping groupings
+  let g:which_key_map = {}
+  let g:which_key_map[' '] = 'Ex command'
+  let g:which_key_map.f = { 'name': '+file' }
+  let g:which_key_map.b = { 'name': '+buffers' }
+  let g:which_key_map.w = { 'name': '+windows' }
+  let g:which_key_map.w.t = { 'name': '+tab' }
+  let g:which_key_map.w.b = { 'name': '+balance' }
+  let g:which_key_map['/'] = { 'name': '+search' }
+  let g:which_key_map.y = { 'name': '+yank' }
+  let g:which_key_map.g = { 'name': '+git' }
+  let g:which_key_map.g.c = { 'name': '+chunk' }
+  let g:which_key_map.g.b = { 'name': '+branch' }
+  let g:which_key_map.g.h = { 'name': '+history' }
+  let g:which_key_map.p = { 'name': '+project' }
+  let g:which_key_map.c = { 'name': '+code' }
+  let g:which_key_map.m = { 'name': '+local' }
+  let g:which_key_map.c.c = {
+    \ 'name': '+case',
+    \ 'p': 'PascalCase',
+    \ 'm': 'MixedCase',
+    \ 'c': 'camelCase',
+    \ 'u': 'UPPER CASE',
+    \ 'U': 'UPPER CASE',
+    \ 't': 'Title Case',
+    \ 's': 'Sentence case',
+    \ '_': 'snake_case',
+    \ 'k': 'kebab-case',
+    \ '-': 'dash-case',
+    \ '<space>': 'space case',
+    \ '.': 'dot.case'
+    \ }
+  let g:which_key_map.j = { 'name': '+jump' }
+  let g:which_key_map.j.m = { 'name': '+marks' }
+
+  " Load the mappings for WhichKey on demand
+  autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
+" }}}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" {{{
+  let $FZF_DEFAULT_COMMAND = 'rg --files'
+
+  " Show preview for files when searching
+  command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+  command! -bang -nargs=? -complete=dir GFiles
+    \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+  command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+    \   <bang>0 ? fzf#vim#with_preview('up:60%')
+    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+    \   <bang>0)
+" }}}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" {{{
+  let g:coc_node_path = $SYSTEM_NODE_PATH
+  let g:coc_snippet_next = '<tab>'
+  inoremap <silent><expr> <C-SPACE> coc#refresh()
+
+  " Use tab for trigger completion with characters ahead and navigate.
+  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+  " Coc only does snippet and additional edit on confirm.
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+  " Remap keys for gotos
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+  nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
+
+  " Command to install all extensions
+  command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-lists coc-snippets coc-eslint
+
+  "Prettier command
+  command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
+" }}}
 Plug 'mhartington/oceanic-next'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'
+" {{{
+  let g:lightline = {
+    \ 'colorscheme': 'one',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'git_status', 'readonly', 'filename', 'modified' ] ],
+    \   'right': [[ 'lineinfo' ], ['percent']]
+    \ },
+    \ 'component_function': {
+    \   'git_status': 'GetGitStatus'
+    \ }
+    \ }
+
+  " Gets the git status branch for the status line
+  " If the window is not wide enough then nothing will be displayed.
+  function! GetGitStatus() abort
+    let status = fugitive#head()
+
+    if winwidth(0) > 80
+      return len(status) > 30 ? status[0:27] . '...' : status
+    endif
+
+    return ''
+  endfunction
+" }}}
 Plug 'justinmk/vim-sneak'
+" {{{
+  let g:sneak#label = 1
+
+  nmap f <Plug>Sneak_f
+  nmap F <Plug>Sneak_F
+  xmap f <Plug>Sneak_f
+  xmap F <Plug>Sneak_F
+  omap f <Plug>Sneak_f
+  omap F <Plug>Sneak_F
+  nmap t <Plug>Sneak_t
+  nmap T <Plug>Sneak_T
+  xmap t <Plug>Sneak_t
+  xmap T <Plug>Sneak_T
+  omap t <Plug>Sneak_t
+  omap T <Plug>Sneak_T
+" }}}
 Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-dirvish'
 Plug 'arthurxavierx/vim-caser'
+" {{{
+  let g:caser_prefix = '<Space>cc'
+" }}}
 
 call plug#end()
 
@@ -57,49 +202,6 @@ set inccommand=nosplit
 set shortmess+=c
 colorscheme OceanicNext
 
-" ------------
-" = Mappings =
-" ------------
-
-" Register mapping groupings
-let g:which_key_map = {}
-let g:which_key_map[' '] = 'Ex command'
-let g:which_key_map.f = { 'name': '+file' }
-let g:which_key_map.b = { 'name': '+buffers' }
-let g:which_key_map.w = { 'name': '+windows' }
-let g:which_key_map.w.t = { 'name': '+tab' }
-let g:which_key_map.w.b = { 'name': '+balance' }
-let g:which_key_map['/'] = { 'name': '+search' }
-let g:which_key_map.y = { 'name': '+yank' }
-let g:which_key_map.g = { 'name': '+git' }
-let g:which_key_map.g.c = { 'name': '+chunk' }
-let g:which_key_map.g.b = { 'name': '+branch' }
-let g:which_key_map.g.h = { 'name': '+history' }
-let g:which_key_map.p = { 'name': '+project' }
-let g:which_key_map.c = { 'name': '+code' }
-let g:which_key_map.m = { 'name': '+local' }
-let g:which_key_map.c.c = {
-  \ 'name': '+case',
-  \ 'p': 'PascalCase',
-  \ 'm': 'MixedCase',
-  \ 'c': 'camelCase',
-  \ 'u': 'UPPER CASE',
-  \ 'U': 'UPPER CASE',
-  \ 't': 'Title Case',
-  \ 's': 'Sentence case',
-  \ '_': 'snake_case',
-  \ 'k': 'kebab-case',
-  \ '-': 'dash-case',
-  \ '<space>': 'space case',
-  \ '.': 'dot.case'
-  \ }
-let g:which_key_map.j = { 'name': '+jump' }
-let g:which_key_map.j.m = { 'name': '+marks' }
-
-let g:caser_prefix = '<Space>cc'
-
-" Load the mappings for WhichKey on demand
-autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
 " Settings for terminal buffers
 autocmd! TermOpen * setlocal nospell nonumber
 
@@ -107,22 +209,10 @@ autocmd! TermOpen * setlocal nospell nonumber
 command! -nargs=+ QuickGrep execute 'silent grep! <args>' | copen 20
 
 inoremap jj <esc>
-tnoremap <esc> <C-\><C-n>
+tnoremap jj <C-\><C-n>
+nnoremap U <C-r>
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
-nnoremap U <C-r>
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-xmap t <Plug>Sneak_t
-xmap T <Plug>Sneak_T
-omap t <Plug>Sneak_t
-omap T <Plug>Sneak_T
 
 call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':', 'Ex command', 0)
 call steelvim#define_leader_mapping('vnoremap', ["<Space>"], ':', 'Ex command', 0)
@@ -202,6 +292,9 @@ call steelvim#define_leader_mapping('nmap <silent>', ['j', 'r'], '<Plug>(coc-ref
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'e'], "'.", 'Last edit')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'n'], "<C-o>", 'Next jump')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'Previous jump')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'm', 'l'], ':CocList marks<CR>', 'List marks')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'd'], ':delmarks<Space>', 'Delete marks')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'm'], '`', 'Go to mark')
 " Search mappings
 call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':QuickGrep<Space> "%:p:h"<left><left><left><left><left><left><left><left>', 'Search directory')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<CR>', 'Search command history')
@@ -212,6 +305,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'a'], ':CocAction
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':QuickGrep<space>', 'Search files in project')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'P'], ':Rg<space>', 'Grep files in project')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
 call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*', 'Search selected text')
 call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
@@ -220,7 +314,6 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocL
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank file path')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to clipboard')
 call steelvim#define_leader_mapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to clipboard', 1)
-" Refactor mappings
 " Code mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['c', 'l'], ':Commentary<CR>', 'Comment line')
 call steelvim#define_leader_mapping('vnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment line', 1)
@@ -229,10 +322,6 @@ call steelvim#define_leader_mapping('nmap <silent>', ['c', 'd'], '<Plug>(coc-def
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'D'], '<Plug>(coc-references)', 'Type references')
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'k'], "gh", 'Jump to documenation')
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'r'], '<Plug>(coc-rename)', 'Rename symbol')
-" Mark mappings
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'm', 'l'], ':CocList marks<CR>', 'List marks')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'd'], ':delmarks<Space>', 'Delete marks')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'm'], '`', 'Go to mark')
 " Git mappings
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 'u'], ':CocCommand git.chunkUndo<CR>', 'Undo chunk')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 's'], ':CocCommand git.chunkStage<CR>', 'Stage chunk')
@@ -255,104 +344,4 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Comm
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'C'], ':Commits<CR>', 'Buffer commit history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
 
-" -------------
-" | sneak.vim |
-" -------------
-let g:sneak#label = 1
-
-" -------
-" | FZF |
-" -------
-
-let $FZF_DEFAULT_COMMAND = 'rg --files'
-
-" Show preview for files when searching
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-command! -bang -nargs=? -complete=dir GFiles
-  \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-" -------------
-" | lightline |
-" -------------
-
-let g:lightline = {
-  \ 'colorscheme': 'one',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'git_status', 'readonly', 'filename', 'modified' ] ],
-  \   'right': [[ 'lineinfo' ], ['percent']]
-  \ },
-  \ 'component_function': {
-  \   'git_status': 'GetGitStatus'
-  \ }
-  \ }
-
-" -------
-" | COC |
-" -------
-
-let g:coc_node_path = $SYSTEM_NODE_PATH
-let g:coc_snippet_next = '<tab>'
-inoremap <silent><expr> <C-SPACE> coc#refresh()
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> gh :call <SID>show_documentation()<CR>
-
-
-" Command to install all extensions
-command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-lists coc-snippets coc-eslint
-
-"Prettier command
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Gets the git status branch for the status line
-" If the window is not wide enough then nothing will be displayed.
-function! GetGitStatus() abort
-  let status = fugitive#head()
-
-  if winwidth(0) > 80
-    return len(status) > 30 ? status[0:27] . '...' : status
-  endif
-
-  return ''
-endfunction
-
+" vim: set sw=2 ts=2 et foldlevel=0 foldmethod=marker:
