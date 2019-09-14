@@ -1,3 +1,7 @@
+" Space is always the leader
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual'] }
@@ -14,7 +18,6 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisu
   let g:which_key_map.y = { 'name': '+yank' }
   let g:which_key_map.g = { 'name': '+git' }
   let g:which_key_map.g.c = { 'name': '+chunk' }
-  let g:which_key_map.g.b = { 'name': '+branch' }
   let g:which_key_map.g.h = { 'name': '+history' }
   let g:which_key_map.p = { 'name': '+project' }
   let g:which_key_map.c = { 'name': '+code' }
@@ -36,6 +39,9 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisu
     \ }
   let g:which_key_map.j = { 'name': '+jump' }
   let g:which_key_map.j.m = { 'name': '+marks' }
+
+  nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+  vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
 
   " Load the mappings for WhichKey on demand
   autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
@@ -165,10 +171,6 @@ call plug#end()
 filetype plugin indent on
 syntax on
 
-" Space is always the leader
-let mapleader = "\<Space>"
-let g:mapleader = "\<Space>"
-
 " ------------
 " = Settings =
 " ------------
@@ -211,8 +213,6 @@ command! -nargs=+ QuickGrep execute 'silent grep! <args>' | copen 20
 inoremap jj <esc>
 tnoremap jj <C-\><C-n>
 nnoremap U <C-r>
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
 
 call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':', 'Ex command', 0)
 call steelvim#define_leader_mapping('vnoremap', ["<Space>"], ':', 'Ex command', 0)
@@ -328,7 +328,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 's'], ':CocC
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'n'], '<Plug>(coc-git-nextchunk)', 'Next chunk')
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'p'], '<Plug>(coc-git-prevchunk)', 'Previous chunk')
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'i'], '<Plug>(coc-git-chunkinfo)', 'Chunk info')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b', 'l'], ':CocList branches<CR>', 'List branches')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b'], ':call steelvim#checkout_git_branch_fzf(expand("%:p:h"))<CR>', 'Checkout branch')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 's'], ':G<CR>', 'Git status')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'd'], ':Gdiffsplit<CR>', 'Git diff')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git edit')

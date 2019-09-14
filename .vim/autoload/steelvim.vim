@@ -26,3 +26,6 @@ function! steelvim#execute_mapping(mode, keys, action) abort
   execute a:mode . join(a:keys, '') . ' ' . a:action
 endfunction
 
+function! steelvim#checkout_git_branch_fzf(dir) abort
+   call fzf#run({ 'source': "git branch | awk '!/*/{print $1}'", 'sink': '!git checkout', 'down': '30%', 'dir': a:dir })
+endfunction
