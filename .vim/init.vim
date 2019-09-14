@@ -207,6 +207,7 @@ set splitbelow
 set splitright
 set inccommand=nosplit
 set shortmess+=c
+set gdefault
 colorscheme OceanicNext
 
 " Settings for terminal buffers
@@ -219,6 +220,7 @@ inoremap jj <esc>
 tnoremap jk <C-\><C-n>
 nnoremap U <C-r>
 nnoremap ; :
+nnoremap / /\v
 
 call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':Commands<CR>', 'List Commands', 0)
 call steelvim#define_leader_mapping('nnoremap', ['.'], ':Files<CR>', 'Find files')
