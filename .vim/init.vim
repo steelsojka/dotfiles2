@@ -211,11 +211,11 @@ autocmd! TermOpen * setlocal nospell nonumber
 command! -nargs=+ QuickGrep execute 'silent grep! <args>' | copen 20
 
 inoremap jj <esc>
-tnoremap jj <C-\><C-n>
+tnoremap jk <C-\><C-n>
 nnoremap U <C-r>
+nnoremap ; :
 
-call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':', 'Ex command', 0)
-call steelvim#define_leader_mapping('vnoremap', ["<Space>"], ':', 'Ex command', 0)
+call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':Commands<CR>', 'List Commands', 0)
 call steelvim#define_leader_mapping('nnoremap', ['.'], ':Files<CR>', 'Find files')
 call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch buffer')
 " File mappings
