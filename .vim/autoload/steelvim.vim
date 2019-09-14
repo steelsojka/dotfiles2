@@ -1,6 +1,5 @@
 function! steelvim#define_mapping(mode, keys, action, description, which_key_dict) abort
-  call steelvim#execute_mapping(a:mode, a:keys, a:action)
-
+  call steelvim#execute_mapping(a:mode, a:keys, a:action) 
   let category = a:which_key_dict
   let category_keys = a:keys[:-2]
   let end_key = a:keys[-1:][0]
@@ -28,4 +27,20 @@ endfunction
 
 function! steelvim#checkout_git_branch_fzf(dir) abort
    call fzf#run({ 'source': "git branch | awk '!/*/{print $1}'", 'sink': '!git checkout', 'down': '30%', 'dir': a:dir })
+endfunction
+
+function! steelvim#start_slime_session(command) abort
+  let current_buffer_name = bufname('%')
+  let current_window = winnr()
+  let buf_name = bufadd(current_buffer_name . '.slime-sesson')
+
+  execute 'silent' 'vsp' buf_name
+
+  let job_id = termopen(a:command)
+  execute 'silent' current_window . 'wincmd w'
+  let b:slime_config = { "jobid": job_id }
+
+  if (job_id <= 0)
+    echo 'Failed to create slime job.'
+  endif
 endfunction

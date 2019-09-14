@@ -165,6 +165,11 @@ Plug 'arthurxavierx/vim-caser'
 " {{{
   let g:caser_prefix = '<Space>cc'
 " }}}
+Plug 'jpalardy/vim-slime'
+" {{{
+  let g:slime_target = 'neovim'
+" }}}
+
 
 call plug#end()
 
