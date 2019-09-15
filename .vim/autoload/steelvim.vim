@@ -44,3 +44,14 @@ function! steelvim#start_slime_session(command) abort
     echo 'Failed to create slime job.'
   endif
 endfunction
+
+function! steelvim#get_startify_banner() abort
+  return [
+    \'  ██╗   ██╗██╗███╗   ███╗',
+    \'  ██║   ██║██║████╗ ████║',
+    \'  ██║   ██║██║██╔████╔██║',
+    \'  ╚██╗ ██╔╝██║██║╚██╔╝██║',
+    \'   ╚████╔╝ ██║██║ ╚═╝ ██║',
+    \'    ╚═══╝  ╚═╝╚═╝     ╚═╝ Sojka Edition',
+    \ ]
+endfunction
