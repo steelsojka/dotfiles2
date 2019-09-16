@@ -52,6 +52,6 @@ function! steelvim#get_startify_banner() abort
     \'  ██║   ██║██║██╔████╔██║',
     \'  ╚██╗ ██╔╝██║██║╚██╔╝██║',
     \'   ╚████╔╝ ██║██║ ╚═╝ ██║',
-    \'    ╚═══╝  ╚═╝╚═╝     ╚═╝ Sojka Edition',
+    \'    ╚═══╝  ╚═╝╚═╝     ╚═╝ Steel Edition',
     \ ]
 endfunction

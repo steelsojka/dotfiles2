@@ -174,6 +174,7 @@ Plug 'mhinz/vim-startify'
   let g:startify_custom_header = steelvim#get_startify_banner()
 "}}}
 Plug 'airblade/vim-rooter'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 call plug#end()
 
@@ -225,6 +226,7 @@ tnoremap <C-j><C-j> <C-\><C-n>
 nnoremap U <C-r>
 nnoremap ; :
 nnoremap / /\v
+nnoremap ? ?\v
 
 " Generic mappings <leader>
 " {{{
@@ -334,7 +336,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>
 call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':QuickGrep<space>', 'Search files in project')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'P'], ':Rg<space>', 'Grep files in project')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
-call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*', 'Search selected text')
+call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*N', 'Search selected text')
 call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
 " }}}
 " Yank with preview <leader>y
