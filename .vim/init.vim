@@ -330,7 +330,6 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', '/'], ':History/<CR>', 'Search history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList symbols<CR>', 'Search symbol')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'l'], ':BLines<CR>', 'Search buffer lines')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'a'], ':CocAction<CR>', 'Search actions')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':QuickGrep<space>', 'Search files in project')
@@ -343,6 +342,7 @@ call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'S
 " {{{
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocList -A --normal yank<CR>', 'List yanks')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank file path')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'F'], ':let @" = expand("%:t:r")<CR>', 'Yank file name')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to clipboard')
 call steelvim#define_leader_mapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to clipboard', 1)
 " }}}
@@ -355,6 +355,7 @@ call steelvim#define_leader_mapping('nmap <silent>', ['c', 'd'], '<Plug>(coc-def
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'D'], '<Plug>(coc-references)', 'Type references')
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'k'], "gh", 'Jump to documenation')
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'r'], '<Plug>(coc-rename)', 'Rename symbol')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['c', 'f'], ':CocAction<CR>', 'Quick fix actions')
 " }}}
 " Git mappings <leader>g
 " {{{
