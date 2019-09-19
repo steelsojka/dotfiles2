@@ -237,6 +237,7 @@ call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch b
 " File mappings <leader>f
 " {{{
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save file')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'S'], ':wa<CR>', 'Save all files')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search lines')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'f'], ':call CocAction("format")<CR>', 'Format file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'o'], ':Dirvish %:p:h<CR>', 'Show in tree')
@@ -302,7 +303,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 't'], ':Dirvish<C
 call steelvim#define_leader_mapping('nnoremap <silent>', ['q'], ':q<CR>', 'Quit')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['Q'], ':q!<CR>', 'Force quit')
 " }}}
-" Navigation mappings <leader>
+" Navigation mappings <leader>j
 " {{{
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'l'], '$', 'End of line')
 call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'l'], '$', 'End of line', 1)
