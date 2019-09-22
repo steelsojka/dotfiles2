@@ -29,12 +29,13 @@ function! steelvim#checkout_git_branch_fzf(dir) abort
    call fzf#run({ 'source': "git branch | awk '!/*/{print $1}'", 'sink': '!git checkout', 'down': '30%', 'dir': a:dir })
 endfunction
 
-function! steelvim#start_slime_session(command) abort
+function! steelvim#start_slime_session(command, filetype) abort
   let current_buffer_name = bufname('%')
   let current_window = winnr()
   let buf_name = bufadd(current_buffer_name . '.slime-sesson')
 
   execute 'silent' 'vsp' buf_name
+  execute 'silent' 'set filetype=' . a:filetype
 
   let job_id = termopen(a:command)
   execute 'silent' current_window . 'wincmd w'
