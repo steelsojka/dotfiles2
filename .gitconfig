@@ -20,6 +20,7 @@
   go = checkout -B
   # Checkout and pull
   cop = !"c() { git checkout $1 && git pull origin $1;}; c"
+  lob = !"git branch | awk '!/*/{print $1}'"
   # Push current branch to remote
   pc = !"git push origin $(git rev-parse --abbrev-ref HEAD) "
   # Force push current branch to remote
