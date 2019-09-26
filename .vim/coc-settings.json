@@ -3,6 +3,9 @@
   "http.proxyStrictSSL": false,
   "typescript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enable": true,
+  "snippets.extends": {
+    "typescriptreact": ["typescript"]
+  },
   "git.enableGutters": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,

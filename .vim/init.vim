@@ -225,6 +225,7 @@ inoremap jj <esc>
 tnoremap <C-j><C-j> <C-\><C-n>
 nnoremap U <C-r>
 nnoremap ; :
+vnoremap ; :
 nnoremap / /\v
 nnoremap ? ?\v
 

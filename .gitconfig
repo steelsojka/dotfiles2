@@ -20,7 +20,8 @@
   go = checkout -B
   # Checkout and pull
   cop = !"c() { git checkout $1 && git pull origin $1;}; c"
-  lob = !"git branch | awk '!/*/{print $1}'"
+  lob = !"git branch -a | awk '!/\\*/{print $1}' | sed s/'^remotes\\/origin\\/'// "
+  cof = !"git lob | fzf --height 10 | xargs git checkout"
   # Push current branch to remote
   pc = !"git push origin $(git rev-parse --abbrev-ref HEAD) "
   # Force push current branch to remote
@@ -87,9 +88,9 @@
   cmd = code "$LOCAL" "$REMOTE" --diff --wait
   trustExitCode = false
 [mergetool "vimdiff"]
-  cmd = vim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool "vimdiff"]
-  cmd = vim -d $LOCAL $REMOTE
+  cmd = nvim -d $LOCAL $REMOTE
 
 # URL shorthands
 [url "git@github.com:"]
