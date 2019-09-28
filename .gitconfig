@@ -20,18 +20,14 @@
   go = checkout -B
   # Checkout and pull
   cop = !"c() { git checkout $1 && git pull origin $1;}; c"
+  # List all other branches
   lob = !"git branch -a | awk '!/\\*/{print $1}' | sed s/'^remotes\\/origin\\/'// "
-  cof = !"git lob | fzf --height 10 | xargs git checkout"
+  # Checkout another branch by fuzzy finding it
+  co = !"git lob | fzf --height 10 | xargs git checkout"
   # Push current branch to remote
   pc = !"git push origin $(git rev-parse --abbrev-ref HEAD) "
   # Force push current branch to remote
   pcf = !"git push -f origin $(git rev-parse --abbrev-ref HEAD) "
-  # Show verbose output about tags, branches or remotes
-  tags = tag -l
-  branches = branch -a
-  remotes = remote -v
-  # Credit an author on the latest commit
-  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
   # Interactive rebase with the given number of latest commits
   reb = "!r() { git rebase -i HEAD~$1; }; r"
   lga = "log --graph --oneline --all --decorate"

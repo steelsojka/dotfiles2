@@ -49,8 +49,6 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisu
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " {{{
-  let $FZF_DEFAULT_COMMAND = 'rg --files'
-
   " Show preview for files when searching
   command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -64,6 +62,20 @@ Plug 'junegunn/fzf.vim'
     \   <bang>0 ? fzf#vim#with_preview('up:60%')
     \           : fzf#vim#with_preview('right:50%:hidden', '?'),
     \   <bang>0)
+
+  function! s:build_quickfix_list(lines)
+    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+    copen
+    cc
+  endfunction
+
+  let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+  " let g:fzf_files_options = '--bind ctrl-a:toggle-all'
 " }}}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " {{{
@@ -334,8 +346,8 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList s
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'l'], ':BLines<CR>', 'Search buffer lines')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':QuickGrep<space>', 'Search files in project')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'P'], ':Rg<space>', 'Grep files in project')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':Rg<space>', 'Grep files in project')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'P'], ':Rg!<space>', 'Grep files in project (full)')
 call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
 call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*N', 'Search selected text')
 call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
@@ -381,6 +393,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'P'], ':Gpush<CR>
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Commits<CR>', 'Commit history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'C'], ':Commits<CR>', 'Buffer commit history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':call steelvim#get_file_history_fzf(expand("%"), expand("%:p:h"))<CR>', 'File History')
 " }}}
 
 " vim: set sw=2 ts=2 et foldlevel=0 foldmethod=marker:
