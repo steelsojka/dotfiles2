@@ -11,12 +11,11 @@ ulimit -n 65536
 ZSH_THEME="robbyrussell"
 COMPLETION_WAITING_DOTS="true"
 
-bindkey "jj" vi-cmd-mode
-
-plugins=(git node npm vi-mode chucknorris)
+plugins=(git node npm chucknorris)
 
 source $ZSH/oh-my-zsh.sh
 
+# Dotfiles command for managing dotfiles
 alias dotfiles='$(which git) --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 dotfiles config status.showUntrackedFiles no
 

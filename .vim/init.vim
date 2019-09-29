@@ -384,16 +384,14 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'd'], ':Gdiffspli
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git edit')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'a'], ':Gwrite<CR>', 'Git add')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'g'], ':Git<Space>', 'Git command')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l'], ':Gllog<CR>', 'Git log')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'L'], ':Gclog<CR>', 'Git chunk log')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['g', 'L'], ':Gclog<CR>', 'Git chunk log', 1)
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l'], ':Glog<CR>', 'Git log')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'L'], ':Glog -- %<CR>', 'Git file log')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'f'], ':Gfetch<CR>', 'Git fetch')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'p'], ':Gpull<CR>', 'Git pull')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'P'], ':Gpush<CR>', 'Git push')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Commits<CR>', 'Commit history')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'C'], ':Commits<CR>', 'Buffer commit history')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Commits!<CR>', 'Commit history')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':BCommits!<CR>', 'Buffer commit history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':call steelvim#get_file_history_fzf(expand("%"), expand("%:p:h"))<CR>', 'File History')
 " }}}
 
 " vim: set sw=2 ts=2 et foldlevel=0 foldmethod=marker:
