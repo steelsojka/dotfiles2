@@ -60,7 +60,7 @@ Plug 'junegunn/fzf.vim'
     \ call fzf#vim#grep(
     \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
     \   <bang>0 ? fzf#vim#with_preview('up:60%')
-    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+    \           : fzf#vim#with_preview('right:50%', '?'),
     \   <bang>0)
 
   function! s:build_quickfix_list(lines)
@@ -351,6 +351,8 @@ call steelvim#define_leader_mapping('nnoremap', ['/', 'P'], ':Rg!<space>', 'Grep
 call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
 call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*N', 'Search selected text')
 call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
+call steelvim#define_leader_mapping('nnoremap', ['/', 'S'], ':Rg <C-r><C-w><CR>', 'Search selected text (project)')
+call steelvim#define_leader_mapping('vnoremap', ['/', 'S'], '"9y:Rg <C-r>9<CR>', 'Search selected text (project)', 1)
 " }}}
 " Yank with preview <leader>y
 " {{{
