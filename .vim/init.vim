@@ -51,7 +51,7 @@ Plug 'junegunn/fzf.vim'
 " {{{
   " Show preview for files when searching
   command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+    \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
 
   command! -bang -nargs=? -complete=dir GFiles
     \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -105,7 +105,20 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
   " Command to install all extensions
-  command! -nargs=0 InstallCocExtestions :CocInstall coc-tsserver coc-json coc-git coc-java coc-pairs coc-prettier coc-css coc-html coc-yank coc-project coc-lists coc-snippets coc-eslint
+  command! -nargs=0 InstallCocExtestions :CocInstall 
+    \ coc-tsserver
+    \ coc-json
+    \ coc-git
+    \ coc-java
+    \ coc-pairs
+    \ coc-prettier
+    \ coc-css
+    \ coc-html
+    \ coc-yank
+    \ coc-lists
+    \ coc-snippets
+    \ coc-eslint
+    \ coc-angular
 
   "Prettier command
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
