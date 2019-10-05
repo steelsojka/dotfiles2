@@ -22,6 +22,7 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisu
   let g:which_key_map.p = { 'name': '+project' }
   let g:which_key_map.c = { 'name': '+code' }
   let g:which_key_map.m = { 'name': '+local' }
+  let g:which_key_map.d = { 'name': '+documentation' }
   let g:which_key_map.c.c = {
     \ 'name': '+case',
     \ 'p': 'PascalCase',
@@ -198,8 +199,11 @@ Plug 'mhinz/vim-startify'
 "{{{
   let g:startify_custom_header = steelvim#get_startify_banner()
 "}}}
-Plug 'airblade/vim-rooter'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'kkoomen/vim-doge'
+"{{{
+  let g:doge_enable_mappings = 0
+"}}}
 
 call plug#end()
 
@@ -385,6 +389,10 @@ call steelvim#define_leader_mapping('nmap <silent>', ['c', 'D'], '<Plug>(coc-ref
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'k'], "gh", 'Jump to documenation')
 call steelvim#define_leader_mapping('nmap <silent>', ['c', 'r'], '<Plug>(coc-rename)', 'Rename symbol')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['c', 'f'], ':CocAction<CR>', 'Quick fix actions')
+" }}}
+" Documentation mappings <leader>d
+" {{{
+call steelvim#define_leader_mapping('nmap <silent>', ['d', 'd'], '<Plug>(doge-generate)', 'Document')
 " }}}
 " Git mappings <leader>g
 " {{{
