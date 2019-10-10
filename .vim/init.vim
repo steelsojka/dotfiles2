@@ -75,8 +75,6 @@ Plug 'junegunn/fzf.vim'
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
-
-  " let g:fzf_files_options = '--bind ctrl-a:toggle-all'
 " }}}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " {{{
@@ -120,6 +118,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     \ coc-snippets
     \ coc-eslint
     \ coc-angular
+    \ coc-dictionary
 
   "Prettier command
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -242,6 +241,7 @@ set splitright
 set inccommand=nosplit
 set shortmess+=c
 set gdefault
+set dictionary=/usr/share/dict/words
 colorscheme OceanicNext
 
 " Settings for terminal buffers
