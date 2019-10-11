@@ -12,7 +12,6 @@ Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisu
   let g:which_key_map.f = { 'name': '+file' }
   let g:which_key_map.b = { 'name': '+buffers' }
   let g:which_key_map.w = { 'name': '+windows' }
-  let g:which_key_map.w.t = { 'name': '+tab' }
   let g:which_key_map.w.b = { 'name': '+balance' }
   let g:which_key_map['/'] = { 'name': '+search' }
   let g:which_key_map.y = { 'name': '+yank' }
@@ -327,6 +326,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'f'], ':Files .<C
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find file fullscreen')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'T'], ':vsp +Dirvish<CR>', 'Open File explorer in split')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 't'], ':Dirvish<CR>', 'Open file Explorer')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'q'], ':qall<CR>', 'Quit project')
 " }}}
 " Workspace mappings <leader>q
 " {{{
