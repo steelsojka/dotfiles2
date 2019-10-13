@@ -196,11 +196,19 @@ Plug 'jpalardy/vim-slime'
 Plug 'mhinz/vim-startify'
 "{{{
   let g:startify_custom_header = steelvim#get_startify_banner()
+  autocmd User Startified setlocal buflisted
 "}}}
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'kkoomen/vim-doge'
 "{{{
   let g:doge_enable_mappings = 0
+"}}}
+Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
+"{{{
+  let g:floaterm_winblend = 10
+  let g:floaterm_position = 'center'
+
+  autocmd VimResized * let g:floaterm_width = &columns
 "}}}
 
 call plug#end()
@@ -262,6 +270,8 @@ nnoremap ? ?\v
 call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':Commands<CR>^', 'List Commands', 0)
 call steelvim#define_leader_mapping('nnoremap', ['.'], ':Files<CR>', 'Find files')
 call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch buffer')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t'], ':call steelvim#float_term(0)<CR>', 'Float terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['T'], ':call steelvim#float_term(1)<CR>', 'Float terminal')
 " }}}
 " File mappings <leader>f
 " {{{

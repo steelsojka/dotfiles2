@@ -58,3 +58,9 @@ function! steelvim#get_startify_banner() abort
         \]
 endfunction
 
+function! steelvim#float_term(full) abort
+  let g:floaterm_height = a:full ? winheight(0) : winheight(0) / 2
+
+  execute 'FloatermToggle'
+  normal i
+endfunction
