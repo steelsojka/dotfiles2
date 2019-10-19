@@ -208,6 +208,7 @@ Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 "{{{
   let g:floaterm_winblend = 10
   let g:floaterm_position = 'center'
+  let g:floaterm_background = '#36353d'
   let g:floaterm_width = float2nr(&columns * 0.9)
 
   autocmd VimResized * let g:floaterm_width = float2nr(&columns * 0.9)
@@ -252,6 +253,9 @@ set shortmess+=c
 set gdefault
 set dictionary=/usr/share/dict/words
 colorscheme OceanicNext
+
+" Color fzf floating windows
+highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
 
 " Settings for terminal buffers
 autocmd! TermOpen * setlocal nospell nonumber

@@ -84,4 +84,5 @@ function! steelvim#float_fzf()
        \ }
 
   call nvim_open_win(buf, v:true, opts)
+  setlocal winblend=10
 endfunction
