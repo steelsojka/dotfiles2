@@ -69,6 +69,7 @@ Plug 'junegunn/fzf.vim'
     cc
   endfunction
 
+  let g:fzf_layout = { 'window': 'call steelvim#float_fzf()' }
   let g:fzf_action = {
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
