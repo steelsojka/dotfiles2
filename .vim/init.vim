@@ -207,8 +207,9 @@ Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 "{{{
   let g:floaterm_winblend = 10
   let g:floaterm_position = 'center'
+  let g:floaterm_width = float2nr(&columns * 0.9)
 
-  autocmd VimResized * let g:floaterm_width = &columns
+  autocmd VimResized * let g:floaterm_width = float2nr(&columns * 0.9)
 "}}}
 
 call plug#end()
@@ -271,7 +272,7 @@ call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':Commands<CR>^', '
 call steelvim#define_leader_mapping('nnoremap', ['.'], ':Files<CR>', 'Find files')
 call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch buffer')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['t'], ':call steelvim#float_term(0)<CR>', 'Float terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['T'], ':call steelvim#float_term(1)<CR>', 'Float terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['T'], ':call steelvim#float_term(1)<CR>', 'Float terminal (full)')
 " }}}
 " File mappings <leader>f
 " {{{
