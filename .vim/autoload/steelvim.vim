@@ -26,7 +26,7 @@ function! steelvim#execute_mapping(mode, keys, action) abort
 endfunction
 
 function! steelvim#checkout_git_branch_fzf(dir) abort
-  call fzf#run({ 'source': "git lob", 'sink': '!git checkout', 'down': '30%', 'dir': a:dir })
+  call fzf#run({ 'source': "git lob", 'sink': '!git checkout', 'window': 'call steelvim#float_fzf()', 'dir': a:dir })
 endfunction
 
 function! steelvim#start_slime_session(command, filetype) abort
