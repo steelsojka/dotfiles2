@@ -10,6 +10,7 @@
   "prettier.semi": true,
   "prettier.singleQuote": true,
   "prettier.requireConfig": false,
+  "tsserver.log": "normal",
   "java.jdt.ls.vmargs": "-javaagent:/usr/local/share/lombok/lombok.jar -Xbootclasspath/a:/usr/local/share/lombok/lombok.jar",
   "java.trace.server": "verbose"
 }
