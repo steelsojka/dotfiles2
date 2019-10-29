@@ -25,6 +25,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'kkoomen/vim-doge'
 Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-projectionist'
 
 call plug#end()
 " }}}
@@ -62,6 +64,7 @@ set shortmess+=c
 set gdefault
 set dictionary=/usr/share/dict/words
 colorscheme OceanicNext
+
 " }}}
 " --- Plugin Setup --- {{{
 " --- vim-which-key --- {{{
@@ -101,6 +104,10 @@ let g:which_key_map.j.m = { 'name': '+marks' }
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
+
+if filereadable('~/.localvimrc')
+  source '~/.localvimrc'
+endif
 
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
@@ -255,8 +262,10 @@ let g:floaterm_winblend = 10
 let g:floaterm_position = 'center'
 let g:floaterm_background = '#36353d'
 let g:floaterm_width = float2nr(&columns * 0.9)
+let g:floaterm_height = float2nr(&lines * 0.75)
 
 autocmd VimResized * let g:floaterm_width = float2nr(&columns * 0.9)
+autocmd VimResized * let g:floaterm_height = float2nr(&lines * 0.75)
 " }}}
 " --- nvim-colorizer.lua --- {{{
 lua << EOF
@@ -268,8 +277,13 @@ require 'colorizer'.setup {
   'javascript';
   'vim';
   'html';
+  'jst';
 }
 EOF
+" }}}
+" --- vim-polyglot --- {{{
+let g:typescript_compiler_binary = 'node_modules/.bin/tsc'
+let g:typescript_compiler_options = '--noEmit'
 " }}}
 " }}}
 " --- Commands --- {{{
@@ -278,6 +292,7 @@ autocmd! TermOpen * setlocal nospell nonumber
 
 " Custom grep for opening the quick fix window after searching
 command! -nargs=+ QuickGrep execute 'silent grep! <args>' | copen 20
+
 " }}}
 " --- Mappings --- {{{
 " Non-leader mappings {{{
@@ -380,6 +395,8 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'P
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'm', 'l'], ':CocList marks<CR>', 'List marks')
 call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'd'], ':delmarks<Space>', 'Delete marks')
 call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'm'], '`', 'Go to mark')
+call steelvim#define_leader_mapping('nnoremap', ['j', 't'], ':A<CR>', 'Go to altenate')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'T'], ':AV<CR>', 'Split altenate')
 " }}}
 " Search mappings <leader>/ {{{
 call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':QuickGrep<Space> "%:p:h"<left><left><left><left><left><left><left><left>', 'Search directory')
