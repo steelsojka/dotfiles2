@@ -285,6 +285,12 @@ EOF
 let g:typescript_compiler_binary = 'node_modules/.bin/tsc'
 let g:typescript_compiler_options = '--noEmit'
 " }}}
+" --- vim-projectionist --- {{{
+let s:base_dir = resolve(expand("<sfile>:p:h"))
+let s:projections_json_path = s:base_dir . '/projections.json'
+let s:projections_json = readfile(s:projections_json_path)
+let g:projectionist_heuristics = projectionist#json_parse(s:projections_json)
+" }}}
 " }}}
 " --- Commands --- {{{
 " Settings for terminal buffers
