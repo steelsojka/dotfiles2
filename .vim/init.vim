@@ -396,8 +396,8 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'P
 call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'm', 'l'], ':CocList marks<CR>', 'List marks')
 call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'd'], ':delmarks<Space>', 'Delete marks')
 call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'm'], '`', 'Go to mark')
-call steelvim#define_leader_mapping('nnoremap', ['j', 't'], ':A<CR>', 'Go to altenate')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'T'], ':AV<CR>', 'Split altenate')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'a'], ':A<CR>', 'Go to altenate')
+call steelvim#define_leader_mapping('nnoremap', ['j', 'A'], ':AV<CR>', 'Split altenate')
 " }}}
 " Search mappings <leader>/ {{{
 call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':QuickGrep<Space> "%:p:h"<left><left><left><left><left><left><left><left>', 'Search directory')
