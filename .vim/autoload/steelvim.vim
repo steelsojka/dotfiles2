@@ -86,3 +86,23 @@ function! steelvim#float_fzf()
   call nvim_open_win(buf, v:true, opts)
   setlocal winblend=10
 endfunction
+
+function! steelvim#filter_qf(new_list)
+  call fzf#run({
+        \ 'source': map(getqflist(), {i, val -> i . '|' . bufname(val.bufnr) . '|' . val.lnum . ' col ' . val.col . '| ' . val.text }),
+        \ 'sink*': function('s:populate_fzf_qf', [a:new_list]), 
+        \ 'window': 'call steelvim#float_fzf()',
+        \ 'options': ['--multi']
+        \ })
+endfunction
+
+function! s:populate_fzf_qf(new_list, lines)
+  let rows_to_keep = map(a:lines, {_, val -> strpart(val, 0, 1)})
+  let qf_list = filter(getqflist(), {i -> index(rows_to_keep, string(i)) != -1})
+
+  if a:new_list == 1
+    call setqflist(qf_list)
+  else
+    call setqflist([], 'r', { 'items': qf_list })
+  endif
+endfunction

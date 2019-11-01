@@ -32,5 +32,5 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 export BAT_THEME=OceanicNext
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--bind ctrl-a:toggle-all --layout=reverse --margin=1,1 --color=marker:12,pointer:12"
+export FZF_DEFAULT_OPTS="--bind ctrl-a:toggle-all --layout=reverse --margin=1,1 --color=marker:12,pointer:12,hl:#7d7abc,hl+:#7d7abc"
 export FZF_ALT_C_OPTS="--preview 'ls -la {}'"
