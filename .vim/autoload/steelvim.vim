@@ -96,6 +96,14 @@ function! steelvim#filter_qf(new_list)
         \ })
 endfunction
 
+function! steelvim#open_terminal(...)
+  let path = get(a:000, 0, getcwd())
+  let buf = nvim_create_buf(v:true, v:false)
+  execute 'buffer' . buf
+  call termopen(&shell, { 'cwd': path } )
+  normal i
+endfunction
+
 function! s:populate_fzf_qf(new_list, lines)
   let rows_to_keep = map(a:lines, {_, val -> strpart(val, 0, 1)})
   let qf_list = filter(getqflist(), {i -> index(rows_to_keep, string(i)) != -1})
@@ -106,3 +114,4 @@ function! s:populate_fzf_qf(new_list, lines)
     call setqflist([], 'r', { 'items': qf_list })
   endif
 endfunction
+

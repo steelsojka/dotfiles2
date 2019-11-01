@@ -101,6 +101,7 @@ let g:which_key_map.c.c = {
   \ }
 let g:which_key_map.j = { 'name': '+jump' }
 let g:which_key_map.j.m = { 'name': '+marks' }
+let g:which_key_map.t = { 'name': '+terminal' }
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
@@ -309,8 +310,6 @@ nnoremap ? ?\v
 call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':Commands<CR>^', 'List Commands', 0)
 call steelvim#define_leader_mapping('nnoremap', ['.'], ':Files<CR>', 'Find files')
 call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t'], ':call steelvim#float_term(0)<CR>', 'Float terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['T'], ':call steelvim#float_term(1)<CR>', 'Float terminal (full)')
 " }}}
 " File mappings <leader>f {{{
 call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save file')
@@ -455,6 +454,12 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'P'], ':Gpush<CR>
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Commits!<CR>', 'Commit history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':BCommits!<CR>', 'Buffer commit history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
+" }}}
+" Terminal mappings <leader>t {{{
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':call steelvim#float_term(0)<CR>', 'Float terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':call steelvim#float_term(1)<CR>', 'Float terminal (full)')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> call steelvim#open_terminal()<CR>', 'Vertical split terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> call steelvim#open_terminal(expand("%:p:h"))<CR>', 'Terminal at file')
 " }}}
 " }}}
 
