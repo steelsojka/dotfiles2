@@ -106,10 +106,6 @@ let g:which_key_map.t = { 'name': '+terminal' }
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
 
-if filereadable('~/.localvimrc')
-  source '~/.localvimrc'
-endif
-
 " Load the mappings for WhichKey on demand
 autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
 " }}}
@@ -202,7 +198,7 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-" 
+ 
 " }}}
 " --- lightline.vim  --- {{{
 let g:lightline = {
@@ -291,9 +287,6 @@ let g:typescript_compiler_options = '--noEmit'
 " --- Commands --- {{{
 " Settings for terminal buffers
 autocmd! TermOpen * setlocal nospell nonumber
-
-" Custom grep for opening the quick fix window after searching
-command! -nargs=+ QuickGrep execute 'silent grep! <args>' | copen 20
 
 " }}}
 " --- Mappings --- {{{
@@ -399,7 +392,7 @@ call steelvim#define_leader_mapping('nnoremap', ['j', 'a'], ':A<CR>', 'Go to alt
 call steelvim#define_leader_mapping('nnoremap', ['j', 'A'], ':AV<CR>', 'Split altenate')
 " }}}
 " Search mappings <leader>/ {{{
-call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':QuickGrep<Space> "%:p:h"<left><left><left><left><left><left><left><left>', 'Search directory')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':Rg<Space> expand("%:p:h")<left><left><left><left><left><left><left><left>', 'Search directory')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<CR>', 'Search command history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', '/'], ':History/<CR>', 'Search history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList symbols<CR>', 'Search symbol')

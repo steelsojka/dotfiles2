@@ -104,6 +104,14 @@ function! steelvim#open_terminal(...)
   normal i
 endfunction
 
+function! steelvim#delete_qf_items(bufnr) range
+  let list = getqflist()
+  
+  call remove(list, a:firstline - 1, a:lastline - 1)
+  call setqflist([], 'r', { 'items': list })
+  call setpos('.', [a:bufnr, a:firstline, 1, 0])
+endfunction
+
 function! s:populate_fzf_qf(new_list, lines)
   let rows_to_keep = map(a:lines, {_, val -> strpart(val, 0, 1)})
   let qf_list = filter(getqflist(), {i -> index(rows_to_keep, string(i)) != -1})
