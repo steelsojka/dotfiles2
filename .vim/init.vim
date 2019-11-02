@@ -117,6 +117,14 @@ command! -bang -nargs=? -complete=dir Files
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 
+" Search from current files directory
+command! -bang -nargs=* Rgd
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'dir': expand("%:p:h")}, 'up:60%')
+  \           : fzf#vim#with_preview({'dir': expand("%:p:h")}, 'right:50%', '?'),
+  \   <bang>0)
+
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -392,7 +400,7 @@ call steelvim#define_leader_mapping('nnoremap', ['j', 'a'], ':A<CR>', 'Go to alt
 call steelvim#define_leader_mapping('nnoremap', ['j', 'A'], ':AV<CR>', 'Split altenate')
 " }}}
 " Search mappings <leader>/ {{{
-call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':Rg<Space> expand("%:p:h")<left><left><left><left><left><left><left><left>', 'Search directory')
+call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':Rgd<space>', 'Grep files in directory')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<CR>', 'Search command history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', '/'], ':History/<CR>', 'Search history')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList symbols<CR>', 'Search symbol')
