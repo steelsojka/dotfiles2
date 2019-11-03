@@ -25,10 +25,6 @@ function! steelvim#execute_mapping(mode, keys, action) abort
   execute a:mode . join(a:keys, '') . ' ' . a:action
 endfunction
 
-function! steelvim#checkout_git_branch_fzf(dir) abort
-  call fzf#run({ 'source': "git lob", 'sink': '!git checkout', 'window': 'call steelvim#float_fzf()', 'dir': a:dir })
-endfunction
-
 function! steelvim#start_slime_session(command, filetype) abort
   let current_buffer_name = bufname('%')
   let current_window = winnr()
@@ -56,35 +52,6 @@ function! steelvim#get_startify_banner() abort
         \'   \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/',
         \'                                      Steel Edition',
         \]
-endfunction
-
-function! steelvim#float_term(full) abort
-  let g:floaterm_height = a:full ? winheight(0) : float2nr(&lines * 0.6)
-
-  execute 'FloatermToggle'
-  normal i
-endfunction
-
-function! steelvim#float_fzf()
-  let buf = nvim_create_buf(v:false, v:true)
-
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let width = float2nr(&columns - (&columns * 2 / 10))
-  let height = &lines - 3
-  let y = &lines - 3
-  let x = float2nr((&columns - width) / 2)
-
-  let opts = {
-       \ 'relative': 'editor',
-       \ 'row': y,
-       \ 'col': x,
-       \ 'width': width,
-       \ 'height': height
-       \ }
-
-  call nvim_open_win(buf, v:true, opts)
-  setlocal winblend=10
 endfunction
 
 function! steelvim#filter_qf(new_list)

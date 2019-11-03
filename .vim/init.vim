@@ -144,7 +144,7 @@ endfunction
 " Color fzf floating windows
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
 
-let g:fzf_layout = { 'window': 'call steelvim#float_fzf()' }
+let g:fzf_layout = { 'window': 'lua steelvim_float_fzf()' }
 let g:fzf_action = {
 \ 'ctrl-q': function('s:build_quickfix_list'),
 \ 'ctrl-t': 'tab split',
@@ -444,7 +444,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 's'], ':CocC
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'n'], '<Plug>(coc-git-nextchunk)', 'Next chunk')
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'p'], '<Plug>(coc-git-prevchunk)', 'Previous chunk')
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'i'], '<Plug>(coc-git-chunkinfo)', 'Chunk info')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b'], ':call steelvim#checkout_git_branch_fzf(expand("%:p:h"))<CR>', 'Checkout branch')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b'], ':call luaeval(''steelvim_checkout_git_branch_fzf(_A[0])'', [expand("%:p:h")])<CR>', 'Checkout branch')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 's'], ':G<CR>', 'Git status')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'd'], ':Gdiffsplit<CR>', 'Git diff')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git edit')
@@ -460,8 +460,8 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':BCom
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
 " }}}
 " Terminal mappings <leader>t {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':call steelvim#float_term(0)<CR>', 'Float terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':call steelvim#float_term(1)<CR>', 'Float terminal (full)')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':lua steelvim_float_term(false)<CR>', 'Float terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':lua steelvim_float_term(true)<CR>', 'Float terminal (full)')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> lua steelvim_open_term()<CR>', 'Vertical split terminal')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> lua steelvim_open_term(true)<CR>', 'Terminal at file')
 " }}}
