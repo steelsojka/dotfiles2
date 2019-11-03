@@ -96,14 +96,6 @@ function! steelvim#filter_qf(new_list)
         \ })
 endfunction
 
-function! steelvim#open_terminal(...)
-  let path = get(a:000, 0, getcwd())
-  let buf = nvim_create_buf(v:true, v:false)
-  execute 'buffer' . buf
-  call termopen(&shell, { 'cwd': path } )
-  normal i
-endfunction
-
 function! steelvim#delete_qf_items(bufnr) range
   let list = getqflist()
   

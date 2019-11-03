@@ -65,6 +65,9 @@ set gdefault
 set dictionary=/usr/share/dict/words
 colorscheme OceanicNext
 
+" Globally load all steelvim functions
+lua require('steelvim')
+
 " }}}
 " --- Plugin Setup --- {{{
 " --- vim-which-key --- {{{
@@ -459,8 +462,8 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gbla
 " Terminal mappings <leader>t {{{
 call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':call steelvim#float_term(0)<CR>', 'Float terminal')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':call steelvim#float_term(1)<CR>', 'Float terminal (full)')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> call steelvim#open_terminal()<CR>', 'Vertical split terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> call steelvim#open_terminal(expand("%:p:h"))<CR>', 'Terminal at file')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> lua steelvim_open_term()<CR>', 'Vertical split terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> lua steelvim_open_term(true)<CR>', 'Terminal at file')
 " }}}
 " }}}
 
