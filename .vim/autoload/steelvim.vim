@@ -41,7 +41,7 @@ function! steelvim#filter_qf(new_list)
   call fzf#run({
         \ 'source': map(getqflist(), {i, val -> i . '|' . bufname(val.bufnr) . '|' . val.lnum . ' col ' . val.col . '| ' . val.text }),
         \ 'sink*': function('s:populate_fzf_qf', [a:new_list]), 
-        \ 'window': 'call steelvim#float_fzf()',
+        \ 'window': 'lua steelvim.float_fzf()',
         \ 'options': ['--multi']
         \ })
 endfunction
