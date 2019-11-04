@@ -19,7 +19,6 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-dirvish'
 Plug 'arthurxavierx/vim-caser'
-Plug 'jpalardy/vim-slime'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'kkoomen/vim-doge'
@@ -144,7 +143,7 @@ endfunction
 " Color fzf floating windows
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
 
-let g:fzf_layout = { 'window': 'lua steelvim_float_fzf()' }
+let g:fzf_layout = { 'window': 'lua steelvim.float_fzf()' }
 let g:fzf_action = {
 \ 'ctrl-q': function('s:build_quickfix_list'),
 \ 'ctrl-t': 'tab split',
@@ -254,9 +253,6 @@ omap T <Plug>Sneak_T
 " }}}
 " --- vim-caser --- {{{
 let g:caser_prefix = '<Space>cc'
-" }}}
-" --- vim-slime --- {{{
-let g:slime_target = 'neovim'
 " }}}
 " --- vim-startify --- {{{
 let g:startify_custom_header = steelvim#get_startify_banner()
@@ -444,7 +440,7 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 's'], ':CocC
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'n'], '<Plug>(coc-git-nextchunk)', 'Next chunk')
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'p'], '<Plug>(coc-git-prevchunk)', 'Previous chunk')
 call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'i'], '<Plug>(coc-git-chunkinfo)', 'Chunk info')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b'], ':call luaeval(''steelvim_checkout_git_branch_fzf(_A[0])'', [expand("%:p:h")])<CR>', 'Checkout branch')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b'], ':call luaeval(''steelvim.checkout_git_branch_fzf(_A[0])'', [expand("%:p:h")])<CR>', 'Checkout branch')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 's'], ':G<CR>', 'Git status')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'd'], ':Gdiffsplit<CR>', 'Git diff')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git edit')
@@ -460,10 +456,10 @@ call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':BCom
 call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
 " }}}
 " Terminal mappings <leader>t {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':lua steelvim_float_term(false)<CR>', 'Float terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':lua steelvim_float_term(true)<CR>', 'Float terminal (full)')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> lua steelvim_open_term()<CR>', 'Vertical split terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> lua steelvim_open_term(true)<CR>', 'Terminal at file')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':lua steelvim.float_term(false)<CR>', 'Float terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':lua steelvim.float_term(true)<CR>', 'Float terminal (full)')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> lua steelvim.open_term()<CR>', 'Vertical split terminal')
+call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> lua steelvim.open_term(true)<CR>', 'Terminal at file')
 " }}}
 " }}}
 
