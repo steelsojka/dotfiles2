@@ -4,13 +4,9 @@ steelvim = {
   -- Opens terminal to the cwd or to the current files directory.
   -- @param is_local Whether to open local to the current file directory
   open_term = function(is_local)
-    local cwd
-
-    if is_local then 
-      cwd = vim.api.nvim_call_function('expand', { '%:p:h' })
-    else
-      cwd = vim.api.nvim_call_function('getcwd', {})
-    end
+    local cwd = is_local 
+      and vim.api.nvim_call_function('expand', { '%:p:h' })
+      or vim.api.nvim_call_function('getcwd', {})
 
     local buf = vim.api.nvim_create_buf(true, false)
 
