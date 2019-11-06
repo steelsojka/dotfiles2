@@ -39,29 +39,21 @@ endfunction
 
 function! steelvim#filter_qf(new_list)
   call fzf#run({
-        \ 'source': map(getqflist(), {i, val -> i . '|' . bufname(val.bufnr) . '|' . val.lnum . ' col ' . val.col . '| ' . val.text }),
-        \ 'sink*': function('s:populate_fzf_qf', [a:new_list]), 
+        \ 'source': luaeval('steelvim.get_qf_fzf_list(_A[1])', [s:to_boolean(a:new_list)]),
+        \ 'sink*': function('s:handle_fzf_qf_filter', [a:new_list]), 
         \ 'window': 'lua steelvim.float_fzf()',
         \ 'options': ['--multi']
         \ })
 endfunction
 
 function! steelvim#delete_qf_items(bufnr) range
-  let list = getqflist()
-  
-  call remove(list, a:firstline - 1, a:lastline - 1)
-  call setqflist([], 'r', { 'items': list })
-  call setpos('.', [a:bufnr, a:firstline, 1, 0])
+  call luaeval('steelvim.delete_qf_item(_A[1], _A[2])', [a:firstline, a:lastline])
 endfunction
 
-function! s:populate_fzf_qf(new_list, lines)
-  let rows_to_keep = map(a:lines, {_, val -> strpart(val, 0, 1)})
-  let qf_list = filter(getqflist(), {i -> index(rows_to_keep, string(i)) != -1})
-
-  if a:new_list == 1
-    call setqflist(qf_list)
-  else
-    call setqflist([], 'r', { 'items': qf_list })
-  endif
+function! s:handle_fzf_qf_filter(new_list, lines)
+  call luaeval('steelvim.handle_fzf_qf_filter(_A[1], _A[2])', [s:to_boolean(a:new_list), a:lines])
 endfunction
 
+function s:to_boolean(value)
+  return a:value ? v:true : v:false 
+endfunction
