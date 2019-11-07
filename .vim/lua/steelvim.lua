@@ -101,6 +101,44 @@ steelvim = {
     end
 
     vim.api.nvim_call_function('setqflist', { {}, 'r', { items = qf_list } })
+  end,
+
+  execute_mapping = function(mode, keys, action)
+    vim.api.nvim_command('execute \'' .. mode .. utils.join(keys, '') .. ' ' .. action .. '\'')
+  end,
+
+  define_mapping = function(mode, keys, action, description, which_key_dict)
+    steelvim.execute_mapping(mode, keys, action) 
+
+    local key_dict = vim.api.nvim_get_var(which_key_dict)
+    local category = key_dict
+    local category_keys = {unpack(keys, 1, #keys - 1)}
+    local end_key = keys[#keys]
+
+    for i,key in ipairs(category_keys) do
+      category = category[key]
+    end
+
+    category[end_key] = description
+    vim.api.nvim_set_var(which_key_dict, key_dict)
+  end,
+
+  define_leader_mapping = function(mode, keys, action, description, which_key_dict)
+    if which_key_dict then
+      steelvim.define_mapping(mode .. ' <leader>', keys, action, description, which_key_dict)
+    else
+      steelvim.execute_mapping(mode .. ' <leader>', keys, action)
+    end
+  end,
+
+  define_global_leader_mapping = function(mode, keys, action, description, ignore_which_key)
+    steelvim.define_leader_mapping(mode, keys, action, description, not ignore_which_key and 'which_key_map' or nil)
+  end,
+
+  define_leader_mappings = function(dict, defs)
+    for i,def in ipairs(defs) do
+      steelvim.define_leader_mapping(def.mode, def.keys, def.action, def.description, def.description and dict or nil)
+    end
   end
 } 
 

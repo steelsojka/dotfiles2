@@ -26,8 +26,15 @@ local function filter(list, predicate)
   end, {})
 end
 
+local function join(list, delimiter) 
+  return reduce(list, function(res, item)
+    return res == '' and tostring(item) or (res .. delimiter .. tostring(item))
+  end, '')
+end 
+
 return {
   reduce = reduce,
   map = map,
-  filter = filter
+  filter = filter,
+  join = join 
 }

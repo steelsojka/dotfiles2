@@ -175,7 +175,6 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
-
 " Command to install all extensions
 command! -nargs=0 InstallCocExtestions :CocInstall 
   \ coc-tsserver
@@ -297,6 +296,8 @@ autocmd! TermOpen * setlocal nospell nonumber
 
 " }}}
 " --- Mappings --- {{{
+lua require('leader_mappings').register_leader_mappings()
+
 " Non-leader mappings {{{
 inoremap jj <esc>
 tnoremap <C-j><C-j> <C-\><C-n>
@@ -306,33 +307,6 @@ vnoremap ; :
 nnoremap / /\v
 nnoremap ? ?\v
 "}}}
-" Generic mappings <leader> {{{
-call steelvim#define_leader_mapping('nnoremap', ["<Space>"], ':Commands<CR>^', 'List Commands', 0)
-call steelvim#define_leader_mapping('nnoremap', ['.'], ':Files<CR>', 'Find files')
-call steelvim#define_leader_mapping('nnoremap', [','], ':Buffers<CR>', 'Switch buffer')
-" }}}
-" File mappings <leader>f {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 's'], ':w<CR>', 'Save file')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'S'], ':wa<CR>', 'Save all files')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', '/'], ':BLines<CR>', 'Search lines')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'f'], ':call CocAction("format")<CR>', 'Format file')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'o'], ':Dirvish %:p:h<CR>', 'Show in tree')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'O'], ':vsp +Dirvish\ %:p:h<CR>', 'Show in split tree')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'r'], ':CocList mru<CR>', 'Open recent files')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'u'], ':UndotreeToggle<CR>', 'Undo tree')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'U'], ':UndotreeFocus<CR>', 'Focus undo tree')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['f', 'E'], ':vsp $MYVIMRC<CR>', 'Edit .vimrc')
-" }}}
-" Buffer mappings <leader>b {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'p'], ':bprevious<CR>', 'Previous buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'n'], ':bnext<CR>', 'Next buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'f'], ':bfirst<CR>', 'First buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'l'], ':blast<CR>', 'Last buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'd'], ':bp<CR>:bd#<CR>', 'Delete buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'k'], ':bp<CR>:bw!#<CR>', 'Wipe buffer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'b'], ':Buffers<CR>', 'List buffers')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['b', 'Y'], 'ggyG', 'Yank buffer')
-" }}}
 " Window mappings <leader>w {{{
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'w'], '<C-W>w', 'Move below/right')
 call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'a'], ':Windows<CR>', 'List windows')
