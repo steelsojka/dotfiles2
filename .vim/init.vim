@@ -81,6 +81,9 @@ autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_ma
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
 
+command! -bang -nargs=? -complete=dir DFiles
+  \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview({ 'dir': expand("%:p:h") }, 'right:60%') : fzf#vim#with_preview({ 'dir': expand("%:p:h") }), <bang>0)
+
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 

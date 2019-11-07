@@ -13,6 +13,7 @@ local leader_mappings = {
   { mode = 'nnoremap <silent>', keys = {'f', 'u'}, action = ':UndotreeToggle<CR>', description = 'Undo tree' },
   { mode = 'nnoremap <silent>', keys = {'f', 'U'}, action = ':UndotreeFocus<CR>', description = 'Focus undo tree' },
   { mode = 'nnoremap <silent>', keys = {'f', 'E'}, action = ':vsp $MYVIMRC<CR>', description = 'Edit .vimrc' },
+  { mode = 'nnoremap <silent>', keys = {'f', 'F'}, action = ':DFiles<CR>', description = 'Find from file' },
   -- Buffer mappings <leader>b
   { mode = 'nnoremap <silent>', keys = {'b', 'p'}, action = ':bprevious<CR>', description = 'Previous buffer' },
   { mode = 'nnoremap <silent>', keys = {'b', 'n'}, action = ':bnext<CR>', description = 'Next buffer' },
