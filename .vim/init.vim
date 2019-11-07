@@ -81,26 +81,12 @@ autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_ma
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
 
-command! -bang -nargs=? -complete=dir DFiles
-  \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview({ 'dir': expand("%:p:h") }, 'right:60%') : fzf#vim#with_preview({ 'dir': expand("%:p:h") }), <bang>0)
-
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " Search from current files directory
-command! -bang -nargs=* Rgd
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview({'dir': expand("%:p:h")}, 'up:60%')
-  \           : fzf#vim#with_preview({'dir': expand("%:p:h")}, 'right:50%', '?'),
-  \   <bang>0)
-
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%', '?'),
-  \   <bang>0)
+command! -bang -nargs=* DRg call steelvim#grep(<q-args>, expand('%:p:h'), <bang>0)
+command! -bang -nargs=* Rg call steelvim#grep(<q-args>, getcwd(), <bang>0)
 
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))

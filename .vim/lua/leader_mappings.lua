@@ -13,7 +13,7 @@ local leader_mappings = {
   { mode = 'nnoremap <silent>', keys = {'f', 'u'}, action = ':UndotreeToggle<CR>', description = 'Undo tree' },
   { mode = 'nnoremap <silent>', keys = {'f', 'U'}, action = ':UndotreeFocus<CR>', description = 'Focus undo tree' },
   { mode = 'nnoremap <silent>', keys = {'f', 'E'}, action = ':vsp $MYVIMRC<CR>', description = 'Edit .vimrc' },
-  { mode = 'nnoremap <silent>', keys = {'f', 'F'}, action = ':DFiles<CR>', description = 'Find from file' },
+  { mode = 'nnoremap <silent>', keys = {'f', 'F'}, action = ':Files %:p:h<CR>', description = 'Find from file' },
   -- Buffer mappings <leader>b
   { mode = 'nnoremap <silent>', keys = {'b', 'p'}, action = ':bprevious<CR>', description = 'Previous buffer' },
   { mode = 'nnoremap <silent>', keys = {'b', 'n'}, action = ':bnext<CR>', description = 'Next buffer' },
@@ -85,7 +85,7 @@ local leader_mappings = {
   { mode = 'nnoremap', keys = {'j', 'a'}, action = ':A<CR>', description = 'Go to altenate' },
   { mode = 'nnoremap', keys = {'j', 'A'}, action = ':AV<CR>', description = 'Split altenate' },
   -- Search mappings <leader>/
-  { mode = 'nnoremap', keys = {'/', 'd'}, action = ':Rgd<space>', description = 'Grep files in directory' },
+  { mode = 'nnoremap', keys = {'/', 'd'}, action = ':DRg<space>', description = 'Grep files in directory' },
   { mode = 'nnoremap <silent>', keys = {'/', 'c'}, action = ':History:<CR>', description = 'Search command history' },
   { mode = 'nnoremap <silent>', keys = {'/', '/'}, action = ':History/<CR>', description = 'Search history' },
   { mode = 'nnoremap <silent>', keys = {'/', 'i'}, action = ':CocList symbols<CR>', description = 'Search symbol' },
