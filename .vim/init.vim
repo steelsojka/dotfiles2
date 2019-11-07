@@ -70,41 +70,6 @@ lua require('steelvim')
 " }}}
 " --- Plugin Setup --- {{{
 " --- vim-which-key --- {{{
-" Register mapping groupings
-let g:which_key_map = {}
-let g:which_key_map[' '] = 'Ex command'
-let g:which_key_map.f = { 'name': '+file' }
-let g:which_key_map.b = { 'name': '+buffers' }
-let g:which_key_map.w = { 'name': '+windows' }
-let g:which_key_map.w.b = { 'name': '+balance' }
-let g:which_key_map['/'] = { 'name': '+search' }
-let g:which_key_map.y = { 'name': '+yank' }
-let g:which_key_map.g = { 'name': '+git' }
-let g:which_key_map.g.c = { 'name': '+chunk' }
-let g:which_key_map.g.h = { 'name': '+history' }
-let g:which_key_map.p = { 'name': '+project' }
-let g:which_key_map.c = { 'name': '+code' }
-let g:which_key_map.m = { 'name': '+local' }
-let g:which_key_map.d = { 'name': '+documentation' }
-let g:which_key_map.c.c = {
-  \ 'name': '+case',
-  \ 'p': 'PascalCase',
-  \ 'm': 'MixedCase',
-  \ 'c': 'camelCase',
-  \ 'u': 'UPPER CASE',
-  \ 'U': 'UPPER CASE',
-  \ 't': 'Title Case',
-  \ 's': 'Sentence case',
-  \ '_': 'snake_case',
-  \ 'k': 'kebab-case',
-  \ '-': 'dash-case',
-  \ '<space>': 'space case',
-  \ '.': 'dot.case'
-  \ }
-let g:which_key_map.j = { 'name': '+jump' }
-let g:which_key_map.j.m = { 'name': '+marks' }
-let g:which_key_map.t = { 'name': '+terminal' }
-
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
 
@@ -273,14 +238,15 @@ autocmd VimResized * let g:floaterm_height = float2nr(&lines * 0.75)
 " --- nvim-colorizer.lua --- {{{
 lua << EOF
 require 'colorizer'.setup {
-  'css';
-  'sass';
-  'less';
-  'typescript';
-  'javascript';
-  'vim';
-  'html';
-  'jst';
+  'css',
+  'sass',
+  'less',
+  'typescript',
+  'javascript',
+  'vim',
+  'html',
+  'jst',
+  'lua'
 }
 EOF
 " }}}
@@ -296,9 +262,8 @@ autocmd! TermOpen * setlocal nospell nonumber
 
 " }}}
 " --- Mappings --- {{{
-lua require('leader_mappings').register_leader_mappings()
+lua require('leader_mappings').register_leader_mappings('which_key_map')
 
-" Non-leader mappings {{{
 inoremap jj <esc>
 tnoremap <C-j><C-j> <C-\><C-n>
 nnoremap U <C-r>
@@ -307,134 +272,5 @@ vnoremap ; :
 nnoremap / /\v
 nnoremap ? ?\v
 "}}}
-" Window mappings <leader>w {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'w'], '<C-W>w', 'Move below/right')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'a'], ':Windows<CR>', 'List windows')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'd'], '<C-W>c', 'Delete window')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 's'], '<C-W>s', 'Split window')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'v'], '<C-W>v', 'Split window vertical')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'n'], '<C-W>n', 'New window')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'q'], '<C-W>q', 'Quit window')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'j'], '<C-W>j', 'Move down')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'k'], '<C-W>k', 'Move up')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'h'], '<C-W>h', 'Move left')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'l'], '<C-W>l', 'Move right')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'J'], '<C-W>J', 'Move window down')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'K'], '<C-W>K', 'Move window up')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'H'], '<C-W>H', 'Move window left')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'L'], '<C-W>L', 'Move window right')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'r'], '<C-W>r', 'Rotate forward')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'R'], '<C-W>R', 'Rotate backwards')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'j'], ':resize -5<CR>', 'Shrink')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'k'], ':resize +5<CR>', 'Grow')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'l'], ':vertical resize +5<CR>', 'Vertical grow')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'h'], ':vertical resize -5<CR>', 'Vertical shrink')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'J'], ':resize -20<CR>', 'Shrink large')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'K'], ':resize +20<CR>', 'Grow large')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'L'], ':vertical resize +20<CR>', 'Vertical grow large')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', 'H'], ':vertical resize -20<CR>', 'Vertical shrink large')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'b', '='], '<C-W>=', 'Balance splits')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', '='], '<C-W>=', 'Balance splits')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'F'], ':tabnew<CR>', 'New tab')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', 'o'], ':tabnext<CR>', 'Next tab')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['w', '/'], ':Windows<CR>', 'Search windows')
-" }}}
-" Project mappings <leader>p {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'f'], ':Files .<CR>', 'Find file')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'F'], ':Files! .<CR>', 'Find file fullscreen')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'T'], ':vsp +Dirvish<CR>', 'Open File explorer in split')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 't'], ':Dirvish<CR>', 'Open file Explorer')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['p', 'q'], ':qall<CR>', 'Quit project')
-" }}}
-" Workspace mappings <leader>q {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['q'], ':q<CR>', 'Quit')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['Q'], ':q!<CR>', 'Force quit')
-" }}}
-" Navigation mappings <leader>j {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'l'], '$', 'End of line')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'l'], '$', 'End of line', 1)
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'h'], '0', 'Start of line')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'h'], '0', 'Start of line', 1)
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'k'], '<C-b>', 'Page up')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'k'], '<C-b>', 'Page up', 1)
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'j'], '<C-f>', 'Page down')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['j', 'j'], '<C-f>', 'Page down', 1)
-call steelvim#define_leader_mapping('nmap <silent>', ['j', 'd'], '<Plug>(coc-definition)', 'Definition')
-call steelvim#define_leader_mapping('nmap <silent>', ['j', 'i'], '<Plug>(coc-implementation)', 'Implementation')
-call steelvim#define_leader_mapping('nmap <silent>', ['j', 'y'], '<Plug>(coc-type-implementation)', 'Type definition')
-call steelvim#define_leader_mapping('nmap <silent>', ['j', 'r'], '<Plug>(coc-references)', 'Type references')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'e'], "'.", 'Last edit')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'n'], "<C-o>", 'Next jump')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'p'], "<C-i>", 'Previous jump')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['j', 'm', 'l'], ':CocList marks<CR>', 'List marks')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'd'], ':delmarks<Space>', 'Delete marks')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'm', 'm'], '`', 'Go to mark')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'a'], ':A<CR>', 'Go to altenate')
-call steelvim#define_leader_mapping('nnoremap', ['j', 'A'], ':AV<CR>', 'Split altenate')
-" }}}
-" Search mappings <leader>/ {{{
-call steelvim#define_leader_mapping('nnoremap', ['/', 'd'], ':Rgd<space>', 'Grep files in directory')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'c'], ':History:<CR>', 'Search command history')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', '/'], ':History/<CR>', 'Search history')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'i'], ':CocList symbols<CR>', 'Search symbol')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'l'], ':BLines<CR>', 'Search buffer lines')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'o'], ':CocList outline<CR>', 'List symbols in file')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['/', 'b'], ':Lines<CR>', 'Search lines')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'p'], ':Rg<space>', 'Grep files in project')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'P'], ':Rg!<space>', 'Grep files in project (full)')
-call steelvim#define_leader_mapping('nnoremap', ['/', 'h'], ':noh<CR>', 'Clear searh highlight')
-call steelvim#define_leader_mapping('nnoremap', ['/', 's'], 'g*N', 'Search selected text')
-call steelvim#define_leader_mapping('vnoremap', ['/', 's'], '"9y/<C-r>9<CR>', 'Search selected text', 1)
-call steelvim#define_leader_mapping('nnoremap', ['/', 'S'], ':Rg <C-r><C-w><CR>', 'Search selected text (project)')
-call steelvim#define_leader_mapping('vnoremap', ['/', 'S'], '"9y:Rg <C-r>9<CR>', 'Search selected text (project)', 1)
-" }}}
-" Yank with preview <leader>y {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'l'], ':<C-u>CocList -A --normal yank<CR>', 'List yanks')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'f'], ':let @" = expand("%:p")<CR>', 'Yank file path')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'F'], ':let @" = expand("%:t:r")<CR>', 'Yank file name')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['y', 'y'], '"+y', 'Yank to clipboard')
-call steelvim#define_leader_mapping('vnoremap <silent>', ['y', 'y'], '"+y', 'Yank to clipboard', 1)
-" }}}
-" Code mappings <leader>c {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['c', 'l'], ':Commentary<CR>', 'Comment line')
-call steelvim#define_leader_mapping('vnoremap', ['c', 'l'], ':Commentary<CR>', 'Comment line', 1)
-call steelvim#define_leader_mapping('nnoremap <silent>', ['c', 'x'], ':CocList diagnostics<CR>', 'List diagnostics')
-call steelvim#define_leader_mapping('nmap <silent>', ['c', 'd'], '<Plug>(coc-definition)', 'Definition')
-call steelvim#define_leader_mapping('nmap <silent>', ['c', 'D'], '<Plug>(coc-references)', 'Type references')
-call steelvim#define_leader_mapping('nmap <silent>', ['c', 'k'], "gh", 'Jump to documenation')
-call steelvim#define_leader_mapping('nmap <silent>', ['c', 'r'], '<Plug>(coc-rename)', 'Rename symbol')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['c', 'f'], ':CocAction<CR>', 'Quick fix actions')
-" }}}
-" Documentation mappings <leader>d {{{
-call steelvim#define_leader_mapping('nmap <silent>', ['d', 'd'], '<Plug>(doge-generate)', 'Document')
-" }}}
-" Git mappings <leader>g {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 'u'], ':CocCommand git.chunkUndo<CR>', 'Undo chunk')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'c', 's'], ':CocCommand git.chunkStage<CR>', 'Stage chunk')
-call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'n'], '<Plug>(coc-git-nextchunk)', 'Next chunk')
-call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'p'], '<Plug>(coc-git-prevchunk)', 'Previous chunk')
-call steelvim#define_leader_mapping('nmap <silent>', ['g', 'c', 'i'], '<Plug>(coc-git-chunkinfo)', 'Chunk info')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'b'], ':call luaeval(''steelvim.checkout_git_branch_fzf(_A[0])'', [expand("%:p:h")])<CR>', 'Checkout branch')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 's'], ':G<CR>', 'Git status')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'd'], ':Gdiffsplit<CR>', 'Git diff')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'e'], ':Gedit<CR>', 'Git edit')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'a'], ':Gwrite<CR>', 'Git add')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'g'], ':Git<Space>', 'Git command')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'l'], ':Glog<CR>', 'Git log')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'L'], ':Glog -- %<CR>', 'Git file log')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'f'], ':Gfetch<CR>', 'Git fetch')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'p'], ':Gpull<CR>', 'Git pull')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'P'], ':Gpush<CR>', 'Git push')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'c'], ':Commits!<CR>', 'Commit history')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'f'], ':BCommits!<CR>', 'Buffer commit history')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['g', 'h', 'b'], ':Gblame<CR>', 'Git blame')
-" }}}
-" Terminal mappings <leader>t {{{
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 't'], ':lua steelvim.float_term(false)<CR>', 'Float terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'T'], ':lua steelvim.float_term(true)<CR>', 'Float terminal (full)')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'v'], ':vsp <bar> lua steelvim.open_term()<CR>', 'Vertical split terminal')
-call steelvim#define_leader_mapping('nnoremap <silent>', ['t', 'f'], ':vsp <bar> lua steelvim.open_term(true)<CR>', 'Terminal at file')
-" }}}
-" }}}
 
 " vim: set sw=2 ts=2 et foldlevel=1 foldmethod=marker:
