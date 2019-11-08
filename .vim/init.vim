@@ -26,6 +26,7 @@ Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
+Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 
 call plug#end()
 " }}}

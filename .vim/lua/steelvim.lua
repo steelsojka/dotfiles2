@@ -30,6 +30,13 @@ steelvim = {
     vim.api.nvim_command('setlocal winblend=10')
   end,
 
+  float_fzf_cmd = function(cmd)
+    steelvim.float_fzf()
+    -- Open a term and exit on process exit
+    vim.api.nvim_command('call termopen(\'' .. cmd .. '\', {\'on_exit\': {_ -> execute(\'q!\') }})')
+    vim.api.nvim_command('normal i')
+  end,
+
   -- Checks out a git branch using fzf
   -- @param dir The directory to run fzf in
   checkout_git_branch_fzf = function(dir)
