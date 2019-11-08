@@ -51,6 +51,7 @@
   # [default] space-before-tab: looks for spaces before tabs at the beginning of
   # a line
   whitespace = space-before-tab,indent-with-non-tab,trailing-space
+	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
   # Use colors in Git commands that are capable of colored output when
