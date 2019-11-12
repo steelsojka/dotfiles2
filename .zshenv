@@ -8,9 +8,8 @@ done
 ulimit -n 65533
 
 ZSH_THEME="robbyrussell"
-# COMPLETION_WAITING_DOTS="true"
-
-# plugins=(node npm chucknorris)
+COMPLETION_WAITING_DOTS="true"
+plugins=(node npm chucknorris)
 
 source $ZSH/oh-my-zsh.sh
 

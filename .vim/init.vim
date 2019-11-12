@@ -96,6 +96,10 @@ function! s:build_quickfix_list(lines)
   cc
 endfunction
 
+" Completion for all lines in all buffers
+imap <C-f> <Plug>(fzf-complete-line)
+imap <C-e> <Plug>(fzf-complete-path)
+
 " Color fzf floating windows
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
 
