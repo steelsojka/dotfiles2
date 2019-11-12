@@ -7,11 +7,5 @@ done
 
 ulimit -n 65533
 
-ZSH_THEME="robbyrussell"
-COMPLETION_WAITING_DOTS="true"
-plugins=(node npm chucknorris)
-
-source $ZSH/oh-my-zsh.sh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
