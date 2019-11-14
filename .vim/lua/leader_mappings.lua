@@ -2,6 +2,7 @@ local leader_mappings = {
   { mode = 'nnoremap', keys = {','}, action = ':Buffers<CR>', description = 'Switch buffer' },
   { mode = 'nnoremap', keys = {'.'}, action = ':Files<CR>', description = 'Find files' },
   { mode = 'nnoremap', keys = {"<Space>"}, action = ':Commands<CR>^' },
+  { mode = 'vnoremap', keys = {"<Space>"}, action = ':Commands<CR>^' },
   -- File mappings <leader>f
   { mode = 'nnoremap <silent>', keys = {'f', 's'}, action = ':w<CR>', description = 'Save file' },
   { mode = 'nnoremap <silent>', keys = {'f', 'S'}, action = ':wa<CR>', description = 'Save all files' },
@@ -54,6 +55,7 @@ local leader_mappings = {
   { mode = 'nnoremap <silent>', keys = {'w', 'F'}, action = ':tabnew<CR>', description = 'New tab' },
   { mode = 'nnoremap <silent>', keys = {'w', 'o'}, action = ':tabnext<CR>', description = 'Next tab' },
   { mode = 'nnoremap <silent>', keys = {'w', '/'}, action = ':Windows<CR>', description = 'Search windows' },
+  { mode = 'nnoremap <silent>', keys = {'w', 'S'}, action = ':Startify<CR>', description = 'Start screen' },
   -- Project mappings <leader>p
   { mode = 'nnoremap <silent>', keys = {'p', 'f'}, action = ':Files .<CR>', description = 'Find file' },
   { mode = 'nnoremap <silent>', keys = {'p', 'F'}, action = ':Files! .<CR>', description = 'Find file fullscreen' },
