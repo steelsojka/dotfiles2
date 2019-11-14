@@ -2,6 +2,7 @@ local leader_mappings = {
   { mode = 'nnoremap', keys = {','}, action = ':Buffers<CR>', description = 'Switch buffer' },
   { mode = 'nnoremap', keys = {'.'}, action = ':Files<CR>', description = 'Find files' },
   { mode = 'nnoremap', keys = {"<Space>"}, action = ':Commands<CR>^' },
+  { mode = 'vnoremap', keys = {"<Space>"}, action = ':Commands<CR>^' },
   -- File mappings <leader>f
   { mode = 'nnoremap <silent>', keys = {'f', 's'}, action = ':w<CR>', description = 'Save file' },
   { mode = 'nnoremap <silent>', keys = {'f', 'S'}, action = ':wa<CR>', description = 'Save all files' },
