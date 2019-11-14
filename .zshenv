@@ -8,4 +8,7 @@ done
 ulimit -n 65533
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+hash fzf=~/.fzf/bin/fzf
+
 [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh

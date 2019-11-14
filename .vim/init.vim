@@ -5,7 +5,7 @@ let g:mapleader = "\<Space>"
 " --- Plugins --- {{{
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!', 'WhichKeyVisual'] }
+Plug 'liuchengxu/vim-which-key'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -72,11 +72,10 @@ lua require('steelvim')
 " }}}
 " --- Plugin Setup --- {{{
 " --- vim-which-key --- {{{
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <leader> :lua steelvim.start_which_key(false)<CR>
+vnoremap <silent> <leader> :lua steelvim.start_which_key(true)<CR>
 
 " Load the mappings for WhichKey on demand
-autocmd! User vim-which-key call which_key#register(g:mapleader, "g:which_key_map")
 " }}}
 " --- fzf --- {{{
 " Show preview for files when searching
@@ -97,8 +96,9 @@ function! s:build_quickfix_list(lines)
 endfunction
 
 " Completion for all lines in all buffers
-imap <C-f> <Plug>(fzf-complete-line)
+imap <C-l> <Plug>(fzf-complete-line)
 imap <C-e> <Plug>(fzf-complete-path)
+imap <C-w> <Plug>(fzf-complete-word)
 
 " Color fzf floating windows
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
@@ -257,7 +257,7 @@ autocmd! TermOpen * setlocal nospell nonumber
 
 " }}}
 " --- Mappings --- {{{
-lua require('leader_mappings').register_leader_mappings('which_key_map')
+lua require('leader_mappings').register_leader_mappings()
 
 inoremap jj <esc>
 tnoremap <C-j><C-j> <C-\><C-n>

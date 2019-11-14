@@ -1,46 +1,47 @@
-local utils = require('utils')
+local utils = require 'utils'
+local api = vim.api
 
 steelvim = {
   -- Opens terminal to the cwd or to the current files directory.
   -- @param is_local Whether to open local to the current file directory
   open_term = function(is_local)
     local cwd = is_local 
-      and vim.api.nvim_call_function('expand', { '%:p:h' })
-      or vim.api.nvim_call_function('getcwd', {})
+      and api.nvim_call_function('expand', { '%:p:h' })
+      or api.nvim_call_function('getcwd', {})
 
-    local buf = vim.api.nvim_create_buf(true, false)
+    local buf = api.nvim_create_buf(true, false)
 
-    vim.api.nvim_set_current_buf(buf)
-    vim.api.nvim_call_function('termopen', { vim.api.nvim_get_option('shell'), { cwd = cwd } })
-    vim.api.nvim_command('normal i')
+    api.nvim_set_current_buf(buf)
+    api.nvim_call_function('termopen', { api.nvim_get_option('shell'), { cwd = cwd } })
+    api.nvim_command('normal i')
   end,
 
   -- Creates a floating window for FZF
   float_fzf = function()
-    local buf = vim.api.nvim_create_buf(false, true)
-    local columns = vim.api.nvim_get_option('columns')
-    local lines = vim.api.nvim_get_option('lines')
+    local buf = api.nvim_create_buf(false, true)
+    local columns = api.nvim_get_option('columns')
+    local lines = api.nvim_get_option('lines')
     local width = math.floor(columns - (columns * 2 / 10))
     local height = lines - 3
     local y = height
     local x = math.floor((columns - width) / 2)
 
-    vim.api.nvim_call_function('setbufvar', { buf, '&signcolumn', 'no' })
-    vim.api.nvim_open_win(buf, true, { relative = 'editor', row = y, col = x, width = width, height = height })
-    vim.api.nvim_command('setlocal winblend=10')
+    api.nvim_call_function('setbufvar', { buf, '&signcolumn', 'no' })
+    api.nvim_open_win(buf, true, { relative = 'editor', row = y, col = x, width = width, height = height })
+    api.nvim_command('setlocal winblend=10')
   end,
 
   float_fzf_cmd = function(cmd)
     steelvim.float_fzf()
     -- Open a term and exit on process exit
-    vim.api.nvim_command('call termopen(\'' .. cmd .. '\', {\'on_exit\': {_ -> execute(\'q!\') }})')
-    vim.api.nvim_command('normal i')
+    api.nvim_command('call termopen(\'' .. cmd .. '\', {\'on_exit\': {_ -> execute(\'q!\') }})')
+    api.nvim_command('normal i')
   end,
 
   -- Checks out a git branch using fzf
   -- @param dir The directory to run fzf in
   checkout_git_branch_fzf = function(dir)
-    vim.api.nvim_call_function('fzf#run', {
+    api.nvim_call_function('fzf#run', {
       { 
         source = 'git lob', 
         sink = '!git checkout', 
@@ -56,26 +57,26 @@ steelvim = {
     local height
 
     if full then
-      height = vim.api.nvim_call_function('winheight', { 0 })
+      height = api.nvim_call_function('winheight', { 0 })
     else
-      local lines = vim.api.nvim_get_option('lines')
+      local lines = api.nvim_get_option('lines')
       height = math.floor(lines * 0.6)
     end
 
-    vim.api.nvim_set_var('floaterm_height', height)
-    vim.api.nvim_command('FloatermToggle')
-    vim.api.nvim_command('normal i')
+    api.nvim_set_var('floaterm_height', height)
+    api.nvim_command('FloatermToggle')
+    api.nvim_command('normal i')
   end,
 
   -- Gets lines from the current quickfix list for fzf to filter
   -- @param new_list Whether to create a new quickfix list
   get_qf_fzf_list = function(new_list)
-    local qf_list = vim.api.nvim_call_function('getqflist', {})
+    local qf_list = api.nvim_call_function('getqflist', {})
 
     return utils.map(
       qf_list, 
       function(item, i)
-        return i .. '|' .. vim.api.nvim_buf_get_name(item.bufnr) .. '|' .. item.lnum .. ' col ' .. item.col .. '| ' .. item.text
+        return i .. '|' .. api.nvim_buf_get_name(item.bufnr) .. '|' .. item.lnum .. ' col ' .. item.col .. '| ' .. item.text
       end
     ) 
   end,
@@ -84,14 +85,14 @@ steelvim = {
   -- @param new_list Whether to create a new quickfix list
   -- @param lines The selected lines
   handle_fzf_qf_filter = function(new_list, lines)
-    local qf_list = vim.api.nvim_call_function('getqflist', {})
+    local qf_list = api.nvim_call_function('getqflist', {})
     local rows_to_keep = utils.map(lines, function(line) return string.sub(line, 1, 1) end)
     local new_results = utils.filter(qf_list, function(item, i) return vim.tbl_contains(rows_to_keep, tostring(i)) end)
 
     if new_list then
-      vim.api.nvim_call_function('setqflist', { new_results })
+      api.nvim_call_function('setqflist', { new_results })
     else
-      vim.api.nvim_call_function('setqflist', { {}, 'r', { items = new_results } })
+      api.nvim_call_function('setqflist', { {}, 'r', { items = new_results } })
     end
   end,
 
@@ -99,7 +100,7 @@ steelvim = {
   -- @param firstline 
   -- @param lastline
   delete_qf_item = function(firstline, lastline)
-    local qf_list = vim.api.nvim_call_function('getqflist', {})
+    local qf_list = api.nvim_call_function('getqflist', {})
     local i = firstline
     
     while i <= lastline do
@@ -107,17 +108,16 @@ steelvim = {
       i = i + 1
     end
 
-    vim.api.nvim_call_function('setqflist', { {}, 'r', { items = qf_list } })
+    api.nvim_call_function('setqflist', { {}, 'r', { items = qf_list } })
   end,
 
   execute_mapping = function(mode, keys, action)
-    vim.api.nvim_command('execute \'' .. mode .. utils.join(keys, '') .. ' ' .. action .. '\'')
+    api.nvim_command('execute \'' .. mode .. utils.join(keys, '') .. ' ' .. action .. '\'')
   end,
 
-  define_mapping = function(mode, keys, action, description, which_key_dict)
+  define_mapping = function(mode, keys, action, description, key_dict)
     steelvim.execute_mapping(mode, keys, action) 
 
-    local key_dict = vim.api.nvim_get_var(which_key_dict)
     local category = key_dict
     local category_keys = {unpack(keys, 1, #keys - 1)}
     local end_key = keys[#keys]
@@ -127,7 +127,6 @@ steelvim = {
     end
 
     category[end_key] = description
-    vim.api.nvim_set_var(which_key_dict, key_dict)
   end,
 
   define_leader_mapping = function(mode, keys, action, description, which_key_dict)
@@ -138,14 +137,38 @@ steelvim = {
     end
   end,
 
-  define_global_leader_mapping = function(mode, keys, action, description, ignore_which_key)
-    steelvim.define_leader_mapping(mode, keys, action, description, not ignore_which_key and 'which_key_map' or nil)
-  end,
-
   define_leader_mappings = function(dict, defs)
     for i,def in ipairs(defs) do
       steelvim.define_leader_mapping(def.mode, def.keys, def.action, def.description, def.description and dict or nil)
     end
+  end,
+
+  define_local_leader_mappings = function(defs)
+    local dict = { m = {} }
+    local buf = api.nvim_win_get_buf(0)
+
+    for i,def in ipairs(defs) do
+      steelvim.define_leader_mapping(def.mode, def.keys, def.action, def.description, def.description and dict or nil)
+    end
+
+    api.nvim_buf_set_var(buf, 'local_which_key', dict)
+  end,
+
+  start_which_key = function(visual)
+    local buf = api.nvim_win_get_buf(0)
+    local success, local_which_key_dict = pcall(function() return api.nvim_buf_get_var(buf, 'local_which_key') end)
+    local which_key_dict = api.nvim_get_var('which_key_map')
+
+    which_key_dict['m'] = { name = '+local' }
+
+    if success then
+      which_key_dict['m'] = local_which_key_dict['m']
+      which_key_dict['m'].name = '+local'
+      api.nvim_set_var('which_key_map', which_key_dict)
+    end
+
+    api.nvim_call_function('which_key#register', { '<Space>', 'g:which_key_map' })
+    api.nvim_command((visual and 'WhichKeyVisual' or 'WhichKey') .. ' " "')
   end
 } 
 

@@ -180,9 +180,11 @@ local function get_which_key_mappings()
   }
 end
 
-local function register_leader_mappings(which_key_map)
-  vim.api.nvim_set_var(which_key_map, get_which_key_mappings())
-  steelvim.define_leader_mappings(which_key_map, leader_mappings)
+local function register_leader_mappings()
+  local dict = get_which_key_mappings()
+
+  steelvim.define_leader_mappings(dict, leader_mappings)
+  vim.api.nvim_set_var('which_key_map', dict)
 end
 
 return {

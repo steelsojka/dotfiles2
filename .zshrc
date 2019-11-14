@@ -13,3 +13,5 @@ export NVM_DIR="$HOME/.nvm"
 alias dotfiles='$(which git) --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 dotfiles config status.showUntrackedFiles no
 
+# For some reason we have to load this after oh-my-zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
