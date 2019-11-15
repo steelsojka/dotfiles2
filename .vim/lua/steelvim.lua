@@ -169,6 +169,14 @@ steelvim = {
 
     api.nvim_call_function('which_key#register', { '<Space>', 'g:which_key_map' })
     api.nvim_command((visual and 'WhichKeyVisual' or 'WhichKey') .. ' " "')
+  end,
+
+  rg_input = function(command, prompt)
+    local search_term = api.nvim_call_function('input', { prompt .. ': ' })
+
+    if string.len(search_term) > 0 then
+      api.nvim_command(command .. ' ' .. search_term)
+    end
   end
 } 
 
