@@ -28,6 +28,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
 Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
+Plug 'norcalli/nvim.lua'
 
 call plug#end()
 " }}}
