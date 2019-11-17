@@ -150,8 +150,7 @@ steelvim = {
   end,
 
   start_which_key = function(visual)
-    local buf = nvim.win_get_buf(0)
-    local success, local_which_key_dict = pcall(function() return nvim.buf_get_var(buf, 'local_which_key') end)
+    local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
     local which_key_dict = nvim.g.which_key_map
 
     which_key_dict['m'] = { name = '+local' }
