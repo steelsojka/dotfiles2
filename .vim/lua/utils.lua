@@ -36,5 +36,5 @@ return {
   reduce = reduce,
   map = map,
   filter = filter,
-  join = join 
+  join = join
 }

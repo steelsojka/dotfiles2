@@ -72,12 +72,6 @@ lua require('steelvim')
 
 " }}}
 " --- Plugin Setup --- {{{
-" --- vim-which-key --- {{{
-nnoremap <silent> <leader> :lua steelvim.start_which_key(false)<CR>
-vnoremap <silent> <leader> :lua steelvim.start_which_key(true)<CR>
-
-" Load the mappings for WhichKey on demand
-" }}}
 " --- fzf --- {{{
 " Show preview for files when searching
 command! -bang -nargs=? -complete=dir Files
@@ -95,11 +89,6 @@ function! s:build_quickfix_list(lines)
   copen
   cc
 endfunction
-
-" Completion for all lines in all buffers
-imap <C-l> <Plug>(fzf-complete-line)
-imap <C-e> <Plug>(fzf-complete-path)
-imap <C-w> <Plug>(fzf-complete-word)
 
 " Color fzf floating windows
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
@@ -127,12 +116,6 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
@@ -197,19 +180,6 @@ endfunction
 " }}}
 " --- vim-sneak --- {{{
 let g:sneak#label = 1
-
-nmap f <Plug>Sneak_f
-nmap F <Plug>Sneak_F
-xmap f <Plug>Sneak_f
-xmap F <Plug>Sneak_F
-omap f <Plug>Sneak_f
-omap F <Plug>Sneak_F
-nmap t <Plug>Sneak_t
-nmap T <Plug>Sneak_T
-xmap t <Plug>Sneak_t
-xmap T <Plug>Sneak_T
-omap t <Plug>Sneak_t
-omap T <Plug>Sneak_T
 " }}}
 " --- vim-caser --- {{{
 let g:caser_prefix = '<Space>cc'
@@ -233,7 +203,7 @@ autocmd VimResized * let g:floaterm_height = float2nr(&lines * 0.75)
 " }}}
 " --- nvim-colorizer.lua --- {{{
 lua << EOF
-require 'colorizer'.setup {
+require('colorizer').setup {
   'css',
   'sass',
   'less',
@@ -258,15 +228,7 @@ autocmd! TermOpen * setlocal nospell nonumber
 
 " }}}
 " --- Mappings --- {{{
-lua require('leader_mappings').register_leader_mappings()
-
-inoremap jj <esc>
-tnoremap <C-j><C-j> <C-\><C-n>
-nnoremap U <C-r>
-nnoremap ; :
-vnoremap ; :
-nnoremap / /\v
-nnoremap ? ?\v
+lua require('global_mappings').initialize()
 "}}}
 
 " vim: set sw=2 ts=2 et foldlevel=1 foldmethod=marker:

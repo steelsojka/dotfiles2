@@ -28,6 +28,8 @@ steelvim = {
     nvim.ex.setlocal('winblend=10')
   end,
 
+  -- Opens a terminl with an fzf floating window
+  -- @param The command to run
   float_fzf_cmd = function(cmd)
     steelvim.float_fzf()
     -- Open a term and exit on process exit
@@ -106,49 +108,9 @@ steelvim = {
     nvim.fn.setqflist({}, 'r', { items = qf_list })
   end,
 
-  execute_mapping = function(mode, keys, action)
-    nvim.ex.execute([[']] .. mode .. utils.join(keys, '') .. ' ' .. action .. [[']])
-  end,
-
-  define_mapping = function(mode, keys, action, description, key_dict)
-    steelvim.execute_mapping(mode, keys, action) 
-
-    local category = key_dict
-    local category_keys = {unpack(keys, 1, #keys - 1)}
-    local end_key = keys[#keys]
-
-    for i,key in ipairs(category_keys) do
-      category = category[key]
-    end
-
-    category[end_key] = description
-  end,
-
-  define_leader_mapping = function(mode, keys, action, description, which_key_dict)
-    if which_key_dict then
-      steelvim.define_mapping(mode .. ' <leader>', keys, action, description, which_key_dict)
-    else
-      steelvim.execute_mapping(mode .. ' <leader>', keys, action)
-    end
-  end,
-
-  define_leader_mappings = function(dict, defs)
-    for i,def in ipairs(defs) do
-      steelvim.define_leader_mapping(def.mode, def.keys, def.action, def.description, def.description and dict or nil)
-    end
-  end,
-
-  define_local_leader_mappings = function(defs)
-    local dict = { m = {} }
-    local buf = nvim.win_get_buf(0)
-
-    for i,def in ipairs(defs) do
-      steelvim.define_leader_mapping(def.mode, def.keys, def.action, def.description, def.description and dict or nil)
-    end
-
-    nvim.buf_set_var(buf, 'local_which_key', dict)
-  end,
-
+  -- Starts which key.
+  -- This will set local buffer mapping names to the local key "m"
+  -- @param visual Whether visual mode
   start_which_key = function(visual)
     local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
     local which_key_dict = nvim.g.which_key_map
@@ -165,7 +127,10 @@ steelvim = {
     nvim.command((visual and 'WhichKeyVisual' or 'WhichKey') .. ' " "')
   end,
 
-  rg_input = function(command, prompt)
+  -- Prompts for input to a command
+  -- @param command Command to run with search term
+  -- @param prompt Prompt text
+  prompt_command = function(command, prompt)
     local search_term = nvim.fn.input(prompt .. ': ')
 
     if string.len(search_term) > 0 then
