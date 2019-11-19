@@ -129,8 +129,8 @@ local mappings = {
   ['n /h'] = { [[<Cmd>noh<CR>]], description = 'Clear searh highlight' },
   ['n /s'] = { [[g*N]], description = 'Search selected text' },
   ['v /s'] = { [["9y/<C-r>9<CR>]] },
-  ['n /S'] = { [[<Cmd>Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
-  ['v /S'] = { [["9y<Cmd>Rg <C-r>9<CR>]] },
+  ['n /S'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
+  ['v /S'] = { [["9y:Rg <C-r>9<CR>]] },
   -- Yank with preview <leader>y
   ['n yl'] = { [[<Cmd><C-u>CocList -A --normal yank<CR>]], description = 'List yanks' },
   ['n yf'] = { [[<Cmd>let @" = expand("%:p")<CR>]], description = 'Yank file path' },
@@ -139,7 +139,7 @@ local mappings = {
   ['v yy'] = { [["+y]] },
   -- Code mappings <leader>c
   ['n cl'] = { [[<Cmd>Commentary<CR>]], description = 'Comment line' },
-  ['v cl'] = { [[Commentary<CR>]] },
+  ['v cl'] = { [[:Commentary<CR>]] },
   ['n cx'] = { [[<Cmd>CocList diagnostics<CR>]], description = 'List diagnostics' },
   ['n cd'] = { [[<Plug>(coc-definition)]], description = 'Definition', noremap = false },
   ['n cD'] = { [[<Plug>(coc-references)]], description = 'Type references', noremap = false },
