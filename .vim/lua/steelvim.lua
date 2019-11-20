@@ -146,6 +146,14 @@ steelvim = {
     end
     
     return ''
+  end,
+
+  show_documentation = function()
+    if nvim.fn.index({ 'vim', 'lua', 'help' }, nvim.o.filetype) then
+      nvim.ex.help(nvim.fn.expand('<cword>'))
+    else
+      nvim.fn.CocAction('doHover')
+    end
   end
 } 
 

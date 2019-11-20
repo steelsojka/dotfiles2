@@ -9,6 +9,8 @@ local mappings = {
   ['nU'] = { [[<C-r>]], description = 'Redo' },
   ['n/'] = { [[/\v]], description = 'Search with magic' },
   ['n?'] = { [[?\v]], description = 'Search backwards with magic' },
+  ['nK'] = { [[:lua steelvim.show_documentation()<CR>]], description = 'Show documentation', silent = true },
+  ['ngh'] = { [[:lua steelvim.show_documentation()<CR>]], description = 'Show documentation', silent = true },
   -- Completion for all lines in all buffers
   ['i<C-l>'] = { [[<Plug>(fzf-complete-line)]], noremap = false },
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]], noremap = false },
@@ -134,7 +136,7 @@ local mappings = {
   ['n /S'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
   ['v /S'] = { [["9y:Rg <C-r>9<CR>]] },
   -- Yank with preview <leader>y
-  ['n yl'] = { [[<Cmd><C-u>CocList -A --normal yank<CR>]], description = 'List yanks' },
+  ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },
   ['n yf'] = { [[<Cmd>let @" = expand("%:p")<CR>]], description = 'Yank file path' },
   ['n yF'] = { [[<Cmd>let @" = expand("%:t:r")<CR>]], description = 'Yank file name' },
   ['n yy'] = { [["+y]], description = 'Yank to clipboard' },

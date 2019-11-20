@@ -116,8 +116,8 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> gh :call <SID>show_documentation()<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 " Command to install all extensions
 command! -nargs=0 InstallCocExtestions :CocInstall 
@@ -144,13 +144,13 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
  
 " }}}
 " --- lightline.vim  --- {{{
@@ -159,24 +159,24 @@ function! GetGitStatus() abort
 endfunction
 " }}}
 " --- vim-sneak --- {{{
-let g:sneak#label = 1
+" let g:sneak#label = 1
 " }}}
 " --- vim-caser --- {{{
-let g:caser_prefix = '<Space>cc'
+" let g:caser_prefix = '<Space>cc'
 " }}}
 " --- vim-startify --- {{{
-let g:startify_custom_header = steelvim#get_startify_banner()
+" let g:startify_custom_header = steelvim#get_startify_banner()
 autocmd User Startified setlocal buflisted
 " }}}
 " --- vim-doge --- {{{
-let g:doge_enable_mappings = 0
+" let g:doge_enable_mappings = 0
 " }}}
 " --- vim-floaterm --- {{{
-let g:floaterm_winblend = 10
-let g:floaterm_position = 'center'
-let g:floaterm_background = '#36353d'
-let g:floaterm_width = float2nr(&columns * 0.9)
-let g:floaterm_height = float2nr(&lines * 0.75)
+" let g:floaterm_winblend = 10
+" let g:floaterm_position = 'center'
+" let g:floaterm_background = '#36353d'
+" let g:floaterm_width = float2nr(&columns * 0.9)
+" let g:floaterm_height = float2nr(&lines * 0.75)
 
 autocmd VimResized * let g:floaterm_width = float2nr(&columns * 0.9)
 autocmd VimResized * let g:floaterm_height = float2nr(&lines * 0.75)
