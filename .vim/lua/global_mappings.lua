@@ -180,49 +180,39 @@ local mappings = {
   ['n tf'] = { [[<Cmd>vsp <bar> lua steelvim.open_term(true)<CR>]], description = 'Terminal at file' }
 }
 
-local function get_which_key_mappings()
-  return {
-    [' '] = 'Ex command',
-    ['/'] = { name = '+search' },
-    f = { name = '+file' },
-    b = { name = '+buffers' },
-    w = { name = '+windows', b = { name = '+balance' } },
-    y = { name = '+yank' },
-    g = { name = '+git', c = { name = '+chunk' } },
-    p = { name = '+project' },
-    c = { 
-      name = '+code', 
-      c = {
-        name = '+case',
-        p = 'PascalCase',
-        m = 'MixedCase',
-        c = 'camelCase',
-        u = 'UPPER CASE',
-        U = 'UPPER CASE',
-        t = 'Title Case',
-        s = 'Sentence case',
-        ['_'] = 'snake_case',
-        k = 'kebab-case',
-        ['-'] = 'dash-case',
-        [' '] = 'space case',
-        ['.'] = 'dot.case'
-      }
-    },
-    -- Locals need to be defined per filetype
-    m = { name = '+local' },
-    d = { name = '+documentation' },
-    j = { name = '+jump', m = { name = '+marks' }, c = { name = '+change' } },
-    t = { name = '+terminal' }
-  }
-end
-
-local function initialize()
-  local dict = get_which_key_mappings()
-
-  mapping_utils.register_mappings(mappings, { noremap = true }, dict)
-  nvim.g.which_key_map = dict
-end
-
-return {
-  initialize = initialize
+local which_key_map = {
+  [' '] = 'Ex command',
+  ['/'] = { name = '+search' },
+  f = { name = '+file' },
+  b = { name = '+buffers' },
+  w = { name = '+windows', b = { name = '+balance' } },
+  y = { name = '+yank' },
+  g = { name = '+git', c = { name = '+chunk' } },
+  p = { name = '+project' },
+  c = { 
+    name = '+code', 
+    c = {
+      name = '+case',
+      p = 'PascalCase',
+      m = 'MixedCase',
+      c = 'camelCase',
+      u = 'UPPER CASE',
+      U = 'UPPER CASE',
+      t = 'Title Case',
+      s = 'Sentence case',
+      ['_'] = 'snake_case',
+      k = 'kebab-case',
+      ['-'] = 'dash-case',
+      [' '] = 'space case',
+      ['.'] = 'dot.case'
+    }
+  },
+  -- Locals need to be defined per filetype
+  m = { name = '+local' },
+  d = { name = '+documentation' },
+  j = { name = '+jump', m = { name = '+marks' }, c = { name = '+change' } },
+  t = { name = '+terminal' }
 }
+
+mapping_utils.register_mappings(mappings, { noremap = true }, which_key_map)
+nvim.g.which_key_map = which_key_map

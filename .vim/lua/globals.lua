@@ -1,4 +1,5 @@
 local nvim = require 'nvim'
+local colorizer = require 'colorizer'
 
 local globals = {
   fzf_layout= {
@@ -30,6 +31,8 @@ local globals = {
   floaterm_background = '#36353d',
   floaterm_width = nvim.fn.float2nr(nvim.o.columns * 0.9),
   floaterm_height = nvim.fn.float2nr(nvim.o.lines * 0.75),
+  typescript_compiler_binary = 'node_modules/.bin/tsc',
+  typescript_compiler_options = '--noEmit',
   startify_custom_header = {
     [[                                 __                ]],
     [[    ___      __    ___   __  __ /\_\    ___ ___    ]],
@@ -41,12 +44,6 @@ local globals = {
   }
 }
 
-local function initialize()
-  for key,value in pairs(globals) do
-    nvim.g[key] = value
-  end
+for key,value in pairs(globals) do
+  nvim.g[key] = value
 end
-
-return {
-  initialize = initialize 
-}

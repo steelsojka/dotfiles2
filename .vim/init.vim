@@ -32,44 +32,8 @@ Plug 'norcalli/nvim.lua'
 
 call plug#end()
 " }}}
-" --- Settings --- {{{
-filetype plugin indent on
-syntax on
 
-set number
-set termguicolors
-set ruler
-set undofile
-set undodir=~/.vim/undo
-set backup
-set backupdir=~/.vim/backups
-set shiftwidth=2
-set tabstop=2
-set expandtab 
-set smartcase
-set ignorecase
-set scrolloff=5
-set sidescrolloff=15
-set hidden
-set nowrap
-set timeoutlen=500
-set grepprg=rg\ --vimgrep\ --auto-hybrid-regex
-set updatetime=200
-set signcolumn=yes
-set cmdheight=2
-set mouse=nv
-set noshowmode
-set splitbelow
-set splitright
-set inccommand=nosplit
-set shortmess+=c
-set gdefault
-set dictionary=/usr/share/dict/words
-colorscheme OceanicNext
-
-" Globally load all steelvim functions
-lua require 'steelvim'
-lua require('globals').initialize()
+lua require 'init'
 
 " }}}
 " --- Plugin Setup --- {{{
@@ -101,8 +65,6 @@ let g:fzf_action = {
 \ 'ctrl-v': 'vsplit' }
 " }}}
 " --- coc.nvim --- {{{
-" let g:coc_node_path = $SYSTEM_NODE_PATH
-" let g:coc_snippet_next = '<tab>'
 inoremap <silent><expr> <C-SPACE> coc#refresh()
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -116,8 +78,6 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
-" nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 " Command to install all extensions
 command! -nargs=0 InstallCocExtestions :CocInstall 
@@ -143,72 +103,24 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   else
-"     call CocAction('doHover')
-"   endif
-" endfunction
- 
 " }}}
 " --- lightline.vim  --- {{{
 function! GetGitStatus() abort
   return luaeval('steelvim.get_git_status()')
 endfunction
 " }}}
-" --- vim-sneak --- {{{
-" let g:sneak#label = 1
-" }}}
-" --- vim-caser --- {{{
-" let g:caser_prefix = '<Space>cc'
-" }}}
 " --- vim-startify --- {{{
-" let g:startify_custom_header = steelvim#get_startify_banner()
 autocmd User Startified setlocal buflisted
 " }}}
-" --- vim-doge --- {{{
-" let g:doge_enable_mappings = 0
-" }}}
 " --- vim-floaterm --- {{{
-" let g:floaterm_winblend = 10
-" let g:floaterm_position = 'center'
-" let g:floaterm_background = '#36353d'
-" let g:floaterm_width = float2nr(&columns * 0.9)
-" let g:floaterm_height = float2nr(&lines * 0.75)
-
 autocmd VimResized * let g:floaterm_width = float2nr(&columns * 0.9)
 autocmd VimResized * let g:floaterm_height = float2nr(&lines * 0.75)
-" }}}
-" --- nvim-colorizer.lua --- {{{
-lua << EOF
-require('colorizer').setup {
-  'css',
-  'sass',
-  'less',
-  'typescript',
-  'javascript',
-  'vim',
-  'html',
-  'jst',
-  'lua'
-}
-EOF
-" }}}
-" --- vim-polyglot --- {{{
-let g:typescript_compiler_binary = 'node_modules/.bin/tsc'
-let g:typescript_compiler_options = '--noEmit'
 " }}}
 " }}}
 
 " --- Commands --- {{{
 " Settings for terminal buffers
 autocmd! TermOpen * setlocal nospell nonumber
-
 " }}}
-" --- Mappings --- {{{
-lua require('global_mappings').initialize()
-"}}}
 
 " vim: set sw=2 ts=2 et foldlevel=1 foldmethod=marker:
