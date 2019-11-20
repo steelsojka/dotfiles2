@@ -68,7 +68,8 @@ set dictionary=/usr/share/dict/words
 colorscheme OceanicNext
 
 " Globally load all steelvim functions
-lua require('steelvim')
+lua require 'steelvim'
+lua require('globals').initialize()
 
 " }}}
 " --- Plugin Setup --- {{{
@@ -93,7 +94,6 @@ endfunction
 " Color fzf floating windows
 highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d
 
-let g:fzf_layout = { 'window': 'lua steelvim.float_fzf()' }
 let g:fzf_action = {
 \ 'ctrl-q': function('s:build_quickfix_list'),
 \ 'ctrl-t': 'tab split',
@@ -101,8 +101,8 @@ let g:fzf_action = {
 \ 'ctrl-v': 'vsplit' }
 " }}}
 " --- coc.nvim --- {{{
-let g:coc_node_path = $SYSTEM_NODE_PATH
-let g:coc_snippet_next = '<tab>'
+" let g:coc_node_path = $SYSTEM_NODE_PATH
+" let g:coc_snippet_next = '<tab>'
 inoremap <silent><expr> <C-SPACE> coc#refresh()
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -154,28 +154,8 @@ endfunction
  
 " }}}
 " --- lightline.vim  --- {{{
-let g:lightline = {
-  \ 'colorscheme': 'one',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'git_status', 'readonly', 'filename', 'modified' ] ],
-  \   'right': [[ 'lineinfo' ], ['percent']]
-  \ },
-  \ 'component_function': {
-  \   'git_status': 'GetGitStatus'
-  \ }
-  \ }
-
-" Gets the git status branch for the status line
-" If the window is not wide enough then nothing will be displayed.
 function! GetGitStatus() abort
-  let status = fugitive#head()
-
-  if winwidth(0) > 80
-    return len(status) > 30 ? status[0:27] . '...' : status
-  endif
-
-  return ''
+  return luaeval('steelvim.get_git_status()')
 endfunction
 " }}}
 " --- vim-sneak --- {{{

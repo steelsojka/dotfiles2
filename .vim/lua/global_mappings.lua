@@ -108,7 +108,7 @@ local mappings = {
   ['n ji'] = { [[<Plug>(coc-implementation)]], description = 'Implementation', noremap = false },
   ['n jy'] = { [[<Plug>(coc-type-implementation)]], description = 'Type definition', noremap = false },
   ['n jr'] = { [[<Plug>(coc-references)]], description = 'Type references', noremap = false },
-  ['n je'] = { [[''.]], description = 'Last edit' },
+  ['n je'] = { [['.]], description = 'Last edit' },
   ['n jn'] = { [[<C-o>]], description = 'Next jump' },
   ['n jp'] = { [[<C-i>]], description = 'Previous jump' },
   ['n jml'] = { [[<Cmd>CocList marks<CR>]], description = 'List marks' },
@@ -116,6 +116,8 @@ local mappings = {
   ['n jmm'] = { [[`]], description = 'Go to mark' },
   ['n ja'] = { [[<Cmd>A<CR>]], description = 'Go to altenate' },
   ['n jA'] = { [[<Cmd>AV<CR>]], description = 'Split altenate' },
+  ['n jcn'] = { [[g,]], description = 'Next change' },
+  ['n jcp'] = { [[g;]], description = 'Previous change' },
   -- Search mappings <leader>/
   ['n /d'] = { [[<Cmd>lua steelvim.prompt_command("DRg", "Grep from file")<CR>]], description = 'Grep files in directory' },
   ['n /c'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
@@ -207,7 +209,7 @@ local function get_which_key_mappings()
     -- Locals need to be defined per filetype
     m = { name = '+local' },
     d = { name = '+documentation' },
-    j = { name = '+jump', m = { name = '+marks' } },
+    j = { name = '+jump', m = { name = '+marks' }, c = { name = '+change' } },
     t = { name = '+terminal' }
   }
 end
