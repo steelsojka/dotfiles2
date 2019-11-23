@@ -2,15 +2,15 @@ local nvim = require 'nvim'
 local mapping_utils = require 'mappings'
 
 local mappings = {
-  ['n '] = { [[:lua steelvim.start_which_key(false)<CR>]], silent = true },
-  ['v '] = { [[:lua steelvim.start_which_key(true)<CR>]], silent = true },
+  ['n '] = { function() steelvim.start_which_key(false) end, silent = true },
+  ['v '] = { function() steelvim.start_which_key(true) end, silent = true },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
   ['nU'] = { [[<C-r>]], description = 'Redo' },
   ['n/'] = { [[/\v]], description = 'Search with magic' },
   ['n?'] = { [[?\v]], description = 'Search backwards with magic' },
-  ['nK'] = { [[:lua steelvim.show_documentation()<CR>]], description = 'Show documentation', silent = true },
-  ['ngh'] = { [[:lua steelvim.show_documentation()<CR>]], description = 'Show documentation', silent = true },
+  ['nK'] = { function() steelvim.show_documentation() end, description = 'Show documentation', silent = true },
+  ['ngh'] = { function() steelvim.show_documentation() end, description = 'Show documentation', silent = true },
   -- Completion for all lines in all buffers
   ['i<C-l>'] = { [[<Plug>(fzf-complete-line)]], noremap = false },
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]], noremap = false },
@@ -121,15 +121,15 @@ local mappings = {
   ['n jcn'] = { [[g,]], description = 'Next change' },
   ['n jcp'] = { [[g;]], description = 'Previous change' },
   -- Search mappings <leader>/
-  ['n /d'] = { [[<Cmd>lua steelvim.prompt_command("DRg", "Grep from file")<CR>]], description = 'Grep files in directory' },
+  ['n /d'] = { function() steelvim.prompt_command("DRg", "Grep from file") end, description = 'Grep files in directory' },
   ['n /c'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
   ['n //'] = { [[<Cmd>History/<CR>]], description = 'Search history' },
   ['n /i'] = { [[<Cmd>CocList symbols<CR>]], description = 'Search symbol' },
   ['n /l'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer lines' },
   ['n /o'] = { [[<Cmd>CocList outline<CR>]], description = 'List symbols in file' },
   ['n /b'] = { [[<Cmd>Lines<CR>]], description = 'Search lines' },
-  ['n /p'] = { [[<Cmd>lua steelvim.prompt_command("Rg", "Grep project")<CR>]], description = 'Grep files in project' },
-  ['n /P'] = { [[<Cmd>lua steelvim.prompt_command("Rg!", "Grep project")<CR>]], description = 'Grep files in project (full },' },
+  ['n /p'] = { function() steelvim.prompt_command("Rg", "Grep project") end, description = 'Grep files in project' },
+  ['n /P'] = { function() steelvim.prompt_command("Rg!", "Grep project") end, description = 'Grep files in project (full },' },
   ['n /h'] = { [[<Cmd>noh<CR>]], description = 'Clear searh highlight' },
   ['n /s'] = { [[g*N]], description = 'Search selected text' },
   ['v /s'] = { [["9y/<C-r>9<CR>]] },
@@ -158,7 +158,7 @@ local mappings = {
   ['n gcn'] = { [[<Plug>(coc-git-nextchunk)]], description = 'Next chunk', noremap = false },
   ['n gcp'] = { [[<Plug>(coc-git-prevchunk)]], description = 'Previous chunk', noremap = false },
   ['n gci'] = { [[<Plug>(coc-git-chunkinfo)]], description = 'Chunk info', noremap = false },
-  ['n gB'] = { [[<Cmd>call luaeval(''steelvim.checkout_git_branch_fzf(_A[0])'', [expand("%:p:h")])<CR>]], description = 'Checkout branch' },
+  ['n gB'] = { function() steelvim.checkout_git_branch_fzf(nvim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
   ['n gs'] = { [[<Cmd>G<CR>]], description = 'Git status' },
   ['n gd'] = { [[<Cmd>Gdiffsplit<CR>]], description = 'Git diff' },
   ['n ge'] = { [[<Cmd>Gedit<CR>]], description = 'Git edit' },
@@ -169,15 +169,21 @@ local mappings = {
   ['n gp'] = { [[<Cmd>Gpull<CR>]], description = 'Git pull' },
   ['n gP'] = { [[<Cmd>Gpush<CR>]], description = 'Git push' },
   ['n gb'] = { [[<Cmd>Gblame<CR>]], description = 'Git blame' },
-  ['n gS'] = { [[<Cmd>lua steelvim.float_fzf_cmd("gss")<CR>]], description = 'Browse stash' },
-  ['n gr'] = { [[<Cmd>lua steelvim.float_fzf_cmd("grh")<CR>]], description = 'Reset files to head' },
-  ['n gD'] = { [[<Cmd>lua steelvim.float_fzf_cmd("gd")<CR>]], description = 'Diff files' },
-  ['n ga'] = { [[<Cmd>lua steelvim.float_fzf_cmd("ga")<CR>]], description = 'Add files' },
+  ['n gS'] = { function() steelvim.float_fzf_cmd("gss") end, description = 'Browse stash' },
+  ['n gr'] = { function() steelvim.float_fzf_cmd("grh") end, description = 'Reset files to head' },
+  ['n gD'] = { function() steelvim.float_fzf_cmd("gd") end, description = 'Diff files' },
+  ['n ga'] = { function() steelvim.float_fzf_cmd("ga") end, description = 'Add files' },
   -- Terminal mappings <leader>t
-  ['n tt'] = { [[<Cmd>lua steelvim.float_term(false)<CR>]], description = 'Float terminal' },
-  ['n tT'] = { [[<Cmd>lua steelvim.float_term(true)<CR>]], description = 'Float terminal (full)' },
-  ['n tv'] = { [[<Cmd>vsp <bar> lua steelvim.open_term()<CR>]], description = 'Vertical split terminal' },
-  ['n tf'] = { [[<Cmd>vsp <bar> lua steelvim.open_term(true)<CR>]], description = 'Terminal at file' }
+  ['n tt'] = { function() steelvim.float_term(false) end, description = 'Float terminal' },
+  ['n tT'] = { function() steelvim.float_term(true) end, description = 'Float terminal (full)' },
+  ['n tv'] = { function() 
+    nvim.ex.vsp()
+    steelvim.open_term() 
+  end, description = 'Vertical split terminal' },
+  ['n tf'] = { function()
+    nvim.ex.vsp()
+    steelvim.open_term(true)
+  end, description = 'Terminal at file' }
 }
 
 local which_key_map = {

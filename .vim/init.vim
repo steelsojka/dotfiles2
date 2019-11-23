@@ -96,9 +96,6 @@ command! -nargs=0 InstallCocExtestions :CocInstall
   \ coc-angular
   \ coc-dictionary
 
-"Prettier command
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'

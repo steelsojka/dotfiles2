@@ -1,12 +1,13 @@
 local utils = require 'utils'
 local nvim = require 'nvim'
 
+LUA_MAPPINGS = {}
+
 local function parse_key_map(key_str)
   local result = {} 
   local i = 1
   local len = key_str:len()
-  local is_meta = false
-  local char_result = ''
+  local is_meta = false local char_result = ''
   local key_index = 1
 
   while i <= len do
@@ -56,7 +57,6 @@ local function register_mapping(key, mapping, key_dict)
     if keys[2] == 'm' and is_buffer then
       local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
 
-
       if not success then
         local_which_key_dict = { m = {} }  
       end
@@ -77,6 +77,16 @@ local function register_mapping(key, mapping, key_dict)
   mapping.description = nil
   mapping.which_key = nil
   mapping.buffer = nil 
+
+  if type(action) == 'function' then
+    LUA_MAPPINGS[mode .. key_string] = action
+
+    if (mode == 'v') then
+      action = ([[:<C-u>lua LUA_MAPPINGS['%s']()<CR>]]):format(mode .. key_string)
+    else
+      action = ([[<Cmd>lua LUA_MAPPINGS['%s']()<CR>]]):format(mode .. key_string)
+    end
+  end
 
   if is_buffer then
     local buf = nvim.get_current_buf()

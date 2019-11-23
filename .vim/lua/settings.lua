@@ -37,5 +37,11 @@ local settings = {
 nvim.ex.colorscheme('OceanicNext')
 
 for key,value in pairs(settings) do
-  nvim.o[key] = value
+  if value == true then
+    nvim.ex.set(key)
+  elseif value == false then
+    nvim.ex.set('no' .. key)
+  else
+    nvim.o[key] = value
+  end
 end
