@@ -7,7 +7,8 @@ local function parse_key_map(key_str)
   local result = {} 
   local i = 1
   local len = key_str:len()
-  local is_meta = false local char_result = ''
+  local is_meta = false
+  local char_result = ''
   local key_index = 1
 
   while i <= len do
