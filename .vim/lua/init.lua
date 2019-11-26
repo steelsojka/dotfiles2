@@ -9,6 +9,7 @@ nvim.ex.syntax('on')
 require 'settings'
 require 'globals'
 require 'global_mappings'
+require 'filetypes'
 
 colorizer.setup {
   'css',

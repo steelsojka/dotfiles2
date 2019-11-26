@@ -2,6 +2,12 @@ local utils = require 'utils'
 local nvim = require 'nvim'
 
 LUA_MAPPINGS = {}
+LUA_BUFFER_MAPPINGS = {}
+
+local function escape_keymap(key)
+	-- Prepend with a letter so it can be used as a dictionary key
+	return 'k' .. key:gsub('.', string.byte)
+end
 
 local function parse_key_map(key_str)
   local result = {} 
@@ -53,6 +59,7 @@ local function register_mapping(key, mapping, key_dict)
   local keys = parse_key_map(key_string)
   local action = mapping[1]
   local is_buffer = mapping.buffer
+  local bufnr = nvim.get_current_buf()
 
   if keys[1] == ' ' and mapping.which_key ~= false and mapping.description then
     if keys[2] == 'm' and is_buffer then
@@ -79,20 +86,44 @@ local function register_mapping(key, mapping, key_dict)
   mapping.which_key = nil
   mapping.buffer = nil 
 
-  if type(action) == 'function' then
-    LUA_MAPPINGS[mode .. key_string] = action
+  local escaped_key = escape_keymap(mode .. key_string)
 
-    if (mode == 'v') then
-      action = ([[:<C-u>lua LUA_MAPPINGS['%s']()<CR>]]):format(mode .. key_string)
+  if type(action) == 'function' then
+    if is_buffer then
+      if not LUA_BUFFER_MAPPINGS[bufnr] then
+        LUA_BUFFER_MAPPINGS[bufnr] = {}
+
+        -- Clean up this map on detach
+        nvim.buf_attach(bufnr, false, {
+          on_detach = function()
+            LUA_BUFFER_MAPPINGS[bufnr] = nil
+          end
+        })
+      end
+
+      LUA_BUFFER_MAPPINGS[bufnr][escaped_key] = action
+
+      if (mode == 'v' or mode == 'x') then
+        action = ([[:<C-u>lua LUA_BUFFER_MAPPINGS[%d]['%s']()<CR>]]):format(bufnr, escaped_key)
+      else
+        action = ([[<Cmd>lua LUA_BUFFER_MAPPINGS[%d]['%s']()<CR>]]):format(bufnr, escaped_key)
+      end
     else
-      action = ([[<Cmd>lua LUA_MAPPINGS['%s']()<CR>]]):format(mode .. key_string)
+      LUA_MAPPINGS[escaped_key] = action
+
+      if (mode == 'v' or mode == 'x') then
+        action = ([[:<C-u>lua LUA_MAPPINGS['%s']()<CR>]]):format(escaped_key)
+      else
+        action = ([[<Cmd>lua LUA_MAPPINGS['%s']()<CR>]]):format(escaped_key)
+      end
     end
+
+    mapping.noremap = true
+    mapping.silent = true
   end
 
   if is_buffer then
-    local buf = nvim.get_current_buf()
-
-    nvim.buf_set_keymap(buf, mode, key_string, action, mapping)
+    nvim.buf_set_keymap(bufnr, mode, key_string, action, mapping)
   else
     nvim.set_keymap(mode, key_string, action, mapping)
   end
@@ -110,8 +141,25 @@ local function register_buffer_mappings(mappings, default_options)
   end
 end
 
+local function create_augroups(definitions)
+  for group_name,def in pairs(definitions) do
+    nvim.ex['augroup '..group_name]()
+    nvim.ex.autocmd_()
+    
+    for _,def in ipairs(def) do
+      local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
+
+      nvim.ex[command]()
+    end
+
+    nvim.ex['augroup END']()
+  end
+end
+
 return {
   register_mapping = register_mapping,
   register_mappings = register_mappings,
-  register_buffer_mappings = register_buffer_mappings
+  register_buffer_mappings = register_buffer_mappings,
+  create_augroups = create_augroups,
+  escape_keymap = escape_keymap
 }
