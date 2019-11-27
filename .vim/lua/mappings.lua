@@ -3,6 +3,7 @@ local nvim = require 'nvim'
 
 LUA_MAPPINGS = {}
 LUA_BUFFER_MAPPINGS = {}
+LUA_AUGROUP_HOOKS = {}
 
 local function escape_keymap(key)
 	-- Prepend with a letter so it can be used as a dictionary key
@@ -143,10 +144,17 @@ end
 
 local function create_augroups(definitions)
   for group_name,def in pairs(definitions) do
-    nvim.ex['augroup '..group_name]()
+    nvim.ex['augroup ' .. group_name]()
     nvim.ex.autocmd_()
     
-    for _,def in ipairs(def) do
+    for index,def in pairs(def) do
+      if type(def[#def]) == 'function' then
+        fn = def[#def]
+        def = {unpack(def, 1, #def - 1)}
+        table.insert(def, ("lua LUA_AUGROUP_HOOKS['%s']()"):format(group_name .. index))
+        LUA_AUGROUP_HOOKS[group_name .. index] = fn
+      end
+
       local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
 
       nvim.ex[command]()

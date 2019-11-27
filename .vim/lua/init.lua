@@ -10,6 +10,7 @@ require 'settings'
 require 'globals'
 require 'global_mappings'
 require 'filetypes'
+require 'commands'
 
 colorizer.setup {
   'css',

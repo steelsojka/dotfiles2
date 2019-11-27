@@ -106,18 +106,6 @@ function! GetGitStatus() abort
   return luaeval('steelvim.get_git_status()')
 endfunction
 " }}}
-" --- vim-startify --- {{{
-autocmd User Startified setlocal buflisted
-" }}}
-" --- vim-floaterm --- {{{
-autocmd VimResized * let g:floaterm_width = float2nr(&columns * 0.9)
-autocmd VimResized * let g:floaterm_height = float2nr(&lines * 0.75)
-" }}}
-" }}}
-
-" --- Commands --- {{{
-" Settings for terminal buffers
-autocmd! TermOpen * setlocal nospell nonumber
 " }}}
 
 " vim: set sw=2 ts=2 et foldlevel=1 foldmethod=marker:
