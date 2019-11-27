@@ -154,6 +154,12 @@ steelvim = {
     else
       nvim.fn.CocAction('doHover')
     end
+  end,
+
+  build_quickfix_list = function(lines)
+    nvim.fn.setqflist(utils.map(lines, function(line) return { filename = line } end))
+    nvim.ex.copen()
+    nvim.ex.cc()
   end
 } 
 

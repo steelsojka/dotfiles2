@@ -7,6 +7,11 @@ local globals = {
   },
   coc_node_path = nvim.env.SYSTEM_NODE_PATH,
   coc_snippet_next = '<tab>',
+  fzf_action = {
+    ['ctrl-t'] = 'tab split',
+    ['ctrl-x'] = 'split',
+    ['ctrl-v'] = 'vsplit'
+  },
   lightline = {
     colorscheme = 'one',
     active = {
@@ -44,6 +49,25 @@ local globals = {
   }
 }
 
+-- For lightline.vim
+nvim.command [[
+  function! GetGitStatus() abort
+    return luaeval('steelvim.get_git_status()')
+  endfunction
+]]
+
+nvim.command [[
+  function! BuildQuickFixList(lines) abort
+    call luaeval('steelvim.build_quickfix_list(_A[1])', [a:lines])
+  endfunction
+]]
+
+nvim.command [[highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d]]
+
 for key,value in pairs(globals) do
   nvim.g[key] = value
 end
+
+-- Needs to come after we define globals
+nvim.command [[let g:fzf_action['ctrl-q'] = function('BuildQuickFixList')]]
+

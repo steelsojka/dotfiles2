@@ -222,3 +222,22 @@ local which_key_map = {
 
 mapping_utils.register_mappings(mappings, { noremap = true }, which_key_map)
 nvim.g.which_key_map = which_key_map
+
+-- I can't get the following mappings to work in lua...
+nvim.command [[
+function! CheckBackSpace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+]]
+
+nvim.command [[inoremap <silent><expr> <C-SPACE> coc#refresh()]]
+
+-- Use tab for trigger completion with characters ahead and navigate.
+-- Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+nvim.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : coc#refresh()]]
+nvim.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
+
+-- Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+-- Coc only does snippet and additional edit on confirm.
+nvim.command [[inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"]]

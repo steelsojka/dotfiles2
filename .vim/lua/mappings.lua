@@ -70,11 +70,7 @@ local function register_mapping(key, mapping, key_dict)
         local_which_key_dict = { m = {} }  
       end
 
-      local t = pcall(function() add_to_which_key({unpack(keys, 2)}, mapping.description, local_which_key_dict) end)
-
-      if not t then
-        print(unpack(keys))
-      end
+      add_to_which_key({unpack(keys, 2)}, mapping.description, local_which_key_dict)
 
       nvim.b.local_which_key = local_which_key_dict
     elseif key_dict then
