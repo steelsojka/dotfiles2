@@ -11,14 +11,6 @@ function! steelvim#delete_qf_items(bufnr) range
   call luaeval('steelvim.delete_qf_item(_A[1], _A[2])', [a:firstline, a:lastline])
 endfunction
 
-function! steelvim#grep(query, dir, full_screen)
-  call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case ' . shellescape(a:query), 1,
-  \   a:full_screen ? fzf#vim#with_preview({ 'dir': a:dir }, 'up:60%')
-  \                 : fzf#vim#with_preview({ 'dir': a:dir }, 'right:50%', '?'),
-  \   a:full_screen)
-endfunction
-
 function! s:handle_fzf_qf_filter(new_list, lines)
   call luaeval('steelvim.handle_fzf_qf_filter(_A[1], _A[2])', [s:to_boolean(a:new_list), a:lines])
 endfunction

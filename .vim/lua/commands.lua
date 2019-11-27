@@ -47,4 +47,6 @@ command! -bang -nargs=? -complete=dir Files
 
 nvim.command [[command! -bang -nargs=* DRg call steelvim#grep(<q-args>, expand('%:p:h'), <bang>0)]]
 nvim.command [[command! -bang -nargs=* Rg call steelvim#grep(<q-args>, getcwd(), <bang>0)]]
+nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('steelvim.flygrep(_A[1], _A[2], _A[3])', [<q-args>, expand('%:p:h'), <bang>0])]]
+nvim.command [[command! -bang -nargs=* FlyRg call luaeval('steelvim.flygrep(_A[1], _A[2], _A[3])', [<q-args>, getcwd(), <bang>0])]]
 nvim.command([[command! -nargs=0 InstallCocExtestions :CocInstall ]] .. utils.join(coc_extensions, ' '))

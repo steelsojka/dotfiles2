@@ -160,6 +160,18 @@ steelvim = {
     nvim.fn.setqflist(utils.map(lines, function(line) return { filename = line } end))
     nvim.ex.copen()
     nvim.ex.cc()
+  end,
+
+  flygrep = function(query, cwd, fullscreen)
+    local command = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+    local initial_cmd = nvim.fn.printf(command, nvim.fn.shellescape(query))
+    local reload_cmd = nvim.fn.printf(command, '{q}')
+    local spec = {
+      dir = cwd,
+      options = { '--phony', '--query', query, '--bind', 'change:reload:' .. reload_cmd }
+    }
+
+    nvim.fn['fzf#vim#grep'](initial_cmd, 1, nvim.fn['fzf#vim#with_preview'](spec), fullscreen)
   end
 } 
 
