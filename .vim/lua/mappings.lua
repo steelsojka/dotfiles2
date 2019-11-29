@@ -140,7 +140,7 @@ end
 
 local function create_augroups(definitions)
   for group_name,def in pairs(definitions) do
-    nvim.ex['augroup ' .. group_name]()
+    nvim.ex['augroup LuaAugroup_' .. group_name]()
     nvim.ex.autocmd_()
     
     for index,def in pairs(def) do

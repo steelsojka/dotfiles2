@@ -1,5 +1,8 @@
 local nvim = require 'nvim'
 local utils = require 'utils'
+local fzf_utils = require 'fzf_utils'
+
+local fzf_git_checkout_executor = fzf_utils.create_executor('!git checkout')
 
 steelvim = {
   -- Opens terminal to the cwd or to the current files directory.
@@ -40,9 +43,8 @@ steelvim = {
   -- Checks out a git branch using fzf
   -- @param dir The directory to run fzf in
   checkout_git_branch_fzf = function(dir)
-    nvim.fn['fzf#run'] { 
+    fzf_git_checkout_executor {
       source = 'git lob', 
-      sink = '!git checkout', 
       window = 'lua steelvim.float_fzf()', 
       dir = dir 
     }
@@ -172,7 +174,8 @@ steelvim = {
     }
 
     nvim.fn['fzf#vim#grep'](initial_cmd, 1, nvim.fn['fzf#vim#with_preview'](spec), fullscreen)
-  end
+  end,
+
 } 
 
 setmetatable(steelvim, {

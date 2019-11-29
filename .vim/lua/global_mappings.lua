@@ -1,5 +1,6 @@
 local nvim = require 'nvim'
 local mapping_utils = require 'mappings'
+local fzf_diagnostics = require 'fzf_diagnostics'
 
 local mappings = {
   ['n '] = { function() steelvim.start_which_key(false) end, silent = true },
@@ -47,6 +48,7 @@ local mappings = {
   ['n fU'] = { [[<Cmd>UndotreeFocus<CR>]], description = 'Focus undo tree' },
   ['n fE'] = { [[<Cmd>vsp $MYVIMRC<CR>]], description = 'Edit .vimrc' },
   ['n fF'] = { [[<Cmd>Files %:p:h<CR>]], description = 'Find from file' },
+  ['n fx'] = { function() fzf_diagnostics.open_diagnostics(true) end, description = 'List file diagnostics' },
   -- Buffer mappings <leader>b
   ['n bp'] = { [[<Cmd>bprevious<CR>]], description = 'Previous buffer' },
   ['n bn'] = { [[<Cmd>bnext<CR>]], description = 'Next buffer' },
@@ -110,7 +112,8 @@ local mappings = {
   ['n ji'] = { [[<Plug>(coc-implementation)]], description = 'Implementation', noremap = false },
   ['n jy'] = { [[<Plug>(coc-type-implementation)]], description = 'Type definition', noremap = false },
   ['n jr'] = { [[<Plug>(coc-references)]], description = 'Type references', noremap = false },
-  ['n je'] = { [['.]], description = 'Last edit' },
+  ['n jep'] = { [[<Plug>(coc-diagnostics-prev)]], description = 'Previous error' },
+  ['n jen'] = { [[<Plug>(coc-diagnostics-next)]], description = 'Next error' },
   ['n jn'] = { [[<C-o>]], description = 'Next jump' },
   ['n jp'] = { [[<C-i>]], description = 'Previous jump' },
   ['n jml'] = { [[<Cmd>CocList marks<CR>]], description = 'List marks' },
@@ -144,7 +147,8 @@ local mappings = {
   -- Code mappings <leader>c
   ['n cl'] = { [[<Cmd>Commentary<CR>]], description = 'Comment line' },
   ['v cl'] = { [[:Commentary<CR>]] },
-  ['n cx'] = { [[<Cmd>CocList diagnostics<CR>]], description = 'List diagnostics' },
+  ['n cx'] = { function() fzf_diagnostics.open_diagnostics() end, description = 'List diagnostics (Fzf)' },
+  ['n cX'] = { [[<Cmd>CocList diagnostics<CR>]], description = 'List diagnostics (Coc)' },
   ['n cd'] = { [[<Plug>(coc-definition)]], description = 'Definition', noremap = false },
   ['n cD'] = { [[<Plug>(coc-references)]], description = 'Type references', noremap = false },
   ['n ck'] = { [[gh]], description = 'Jump to documenation', noremap = false },
@@ -216,7 +220,12 @@ local which_key_map = {
   -- Locals need to be defined per filetype
   m = { name = '+local' },
   d = { name = '+documentation' },
-  j = { name = '+jump', m = { name = '+marks' }, c = { name = '+change' } },
+  j = { 
+    name = '+jump', 
+    m = { name = '+marks' },
+    c = { name = '+changes' }, 
+    e = { name = '+errors' }
+  },
   t = { name = '+terminal' }
 }
 
@@ -240,4 +249,4 @@ nvim.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
 
 -- Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 -- Coc only does snippet and additional edit on confirm.
-nvim.command [[inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"]]
+nvim.command [[inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"]]

@@ -24,19 +24,19 @@ mappings.create_augroups {
     { 'VimResized', '*', function() 
       nvim.g.floaterm_width = nvim.fn.float2nr(nvim.o.columns * 0.9)
       nvim.g.floaterm_height = nvim.fn.float2nr(nvim.o.lines * 0.75)
-    end}
+    end }
   },
 
   terminal = {
-    { 'TermOpen', '*', function() 
-      nvim.ex.setlocal('nospell', 'nonumber')
-    end}
+    { 'TermOpen', '*', function() nvim.ex.setlocal('nospell', 'nonumber') end }
   },
 
   startify = {
-    { 'User', 'Startified', function()
-      nvim.ex.setlocal('buflisted')
-    end}
+    { 'User', 'Startified', function() nvim.ex.setlocal('buflisted') end }
+  },
+  coc_nvim = {
+    { 'CursorHold', '*', 'silent', function() nvim.fn.CocActionAsync('highlight') end },
+    { 'User', 'CocJumpPlaceholder', function() nvim.fn.CocActionAsync('showSignatureHelp') end }
   }
 }
 
@@ -45,6 +45,7 @@ command! -bang -nargs=? -complete=dir Files
   call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
 ]]
 
+nvim.command [[command! -bang -nargs=* FZFDiagnostics lua require'fzf_diagnostics'.open_diagnostics()]]
 nvim.command [[command! -bang -nargs=* DRg call steelvim#grep(<q-args>, expand('%:p:h'), <bang>0)]]
 nvim.command [[command! -bang -nargs=* Rg call steelvim#grep(<q-args>, getcwd(), <bang>0)]]
 nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('steelvim.flygrep(_A[1], _A[2], _A[3])', [<q-args>, expand('%:p:h'), <bang>0])]]
