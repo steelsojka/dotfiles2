@@ -1,51 +1,36 @@
 local nvim = require 'nvim'
 local utils = require 'utils'
-local fzf_utils = require 'fzf_utils'
+local Fzf = require 'fzf/fzf'
 
-local fzf_git_checkout_executor = fzf_utils.create_executor('!git checkout')
+local git_checkout_fzf = Fzf:create '!git checkout'
 
 steelvim = {
   -- Opens terminal to the cwd or to the current files directory.
   -- @param is_local Whether to open local to the current file directory
   open_term = function(is_local)
-    local cwd = is_local and nvim.fn.expand('%:p:h') or nvim.fn.getcwd()
+    local cwd = is_local and nvim.fn.expand '%:p:h' or nvim.fn.getcwd()
     local buf = nvim.create_buf(true, false)
 
     nvim.set_current_buf(buf)
     nvim.fn.termopen(nvim.o.shell, { cwd = cwd })
-    nvim.ex.normal('i')
-  end,
-
-  -- Creates a floating window for FZF
-  float_fzf = function()
-    local buf = nvim.create_buf(false, true)
-    local columns = nvim.o.columns
-    local lines = nvim.o.lines
-    local width = math.floor(columns - (columns * 2 / 10))
-    local height = lines - 3
-    local y = height
-    local x = math.floor((columns - width) / 2)
-
-    nvim.fn.setbufvar(buf, '&signcolumn', 'no' )
-    nvim.open_win(buf, true, { relative = 'editor', row = y, col = x, width = width, height = height })
-    nvim.ex.setlocal('winblend=10')
+    nvim.ex.normal 'i'
   end,
 
   -- Opens a terminl with an fzf floating window
   -- @param The command to run
   float_fzf_cmd = function(cmd)
-    steelvim.float_fzf()
+    Fzf.create_floating_window()
     -- Open a term and exit on process exit
     nvim.command('call termopen(\'' .. cmd .. '\', {\'on_exit\': {_ -> execute(\'q!\') }})')
-    nvim.ex.normal('i')
+    nvim.ex.normal 'i'
   end,
 
   -- Checks out a git branch using fzf
   -- @param dir The directory to run fzf in
   checkout_git_branch_fzf = function(dir)
-    fzf_git_checkout_executor {
+    git_checkout_fzf:execute {
       source = 'git lob', 
-      window = 'lua steelvim.float_fzf()', 
+      window = Fzf.float_window(),
       dir = dir 
     }
   end,
@@ -64,35 +49,7 @@ steelvim = {
 
     nvim.g.floaterm_height = height
     nvim.ex.FloatermToggle()
-    nvim.ex.normal('i')
-  end,
-
-  -- Gets lines from the current quickfix list for fzf to filter
-  -- @param new_list Whether to create a new quickfix list
-  get_qf_fzf_list = function(new_list)
-    local qf_list = nvim.fn.getqflist()
-
-    return utils.map(
-      qf_list, 
-      function(item, i)
-        return i .. '|' .. nvim.buf_get_name(item.bufnr) .. '|' .. item.lnum .. ' col ' .. item.col .. '| ' .. item.text
-      end
-    ) 
-  end,
-
-  -- Handles lines from the quickfix filter list
-  -- @param new_list Whether to create a new quickfix list
-  -- @param lines The selected lines
-  handle_fzf_qf_filter = function(new_list, lines)
-    local qf_list = nvim.fn.getqflist()
-    local rows_to_keep = utils.map(lines, function(line) return string.sub(line, 1, 1) end)
-    local new_results = utils.filter(qf_list, function(item, i) return vim.tbl_contains(rows_to_keep, tostring(i)) end)
-
-    if new_list then
-      nvim.fn.setqflist(new_results)
-    else
-      nvim.fn.setqflist({}, 'r', { items = new_results })
-    end
+    nvim.ex.normal 'i'
   end,
 
   -- Deletes items in the quickfix list
@@ -174,8 +131,7 @@ steelvim = {
     }
 
     nvim.fn['fzf#vim#grep'](initial_cmd, 1, nvim.fn['fzf#vim#with_preview'](spec), fullscreen)
-  end,
-
+  end
 } 
 
 setmetatable(steelvim, {

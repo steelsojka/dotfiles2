@@ -1,5 +1,6 @@
 local mappings = require 'mappings'
 local nvim = require 'nvim'
+local fzf_quickfix = require 'fzf/quickfix'
 
 LUA_FILETYPE_HOOKS = {
   dirvish = function()
@@ -27,6 +28,15 @@ LUA_FILETYPE_HOOKS = {
           nvim.input('R')
         end
       end, description = 'Rename' },
+      ['n mm'] = { function()
+        local filepath = nvim.fn.expand('<cfile>')
+        local new_path = nvim.fn.input('Move file to : ', filepath)
+
+        if new_path ~= '' and new_path ~= filepath then
+          nvim.command('!mv ' .. filepath .. ' ' .. new_path)
+          nvim.input('R')
+        end
+      end, description = 'Move' },
       ['n mc'] = { function()
         local filepath = nvim.fn.expand('<cfile>')
         local new_path = nvim.fn.input('Copy file to : ', filepath)
@@ -64,8 +74,8 @@ LUA_FILETYPE_HOOKS = {
       ['n mn'] = { [[:cnewer<CR>]], description = 'Newer list' },
       ['n mp'] = { [[:colder<CR>]], description = 'Older list'  },
       ['n ml'] = { [[:chistory<CR>]], description = 'List history' },
-      ['n mf'] = { [[:call steelvim#filter_qf(0)<CR>]], description = 'Filter (destructive)' },
-      ['n mF'] = { [[:call steelvim#filter_qf(1)<CR>]], description = 'Filter' },
+      ['n mf'] = { function() fzf_quickfix.filter(true) end, description = 'Filter (destructive)' },
+      ['n mF'] = { function() fzf_quickfix.filter(false) end, description = 'Filter' },
       ['n md'] = { [[:call steelvim#delete_qf_items(bufnr())<CR>]], description = 'Delete item' },
       ['v md'] = { [[:call steelvim#delete_qf_items(bufnr())<CR>]], description = 'Delete selected items' }
     }

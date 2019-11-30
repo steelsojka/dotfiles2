@@ -1,8 +1,20 @@
 local nvim = require 'nvim'
 local utils = require 'utils'
-local fzf = require 'fzf_utils'
+local Fzf = require 'fzf/fzf'
 
-local executor 
+local fzf = Fzf:create(function(ref, line)
+  local file, lnum, col, error_msg = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
+
+  if file then
+    nvim.ex.buffer(nvim.fn.bufnr(file))
+    nvim.ex.mark("'")
+
+    if lnum and col then
+      nvim.fn.cursor(lnum, col)
+      nvim.ex.normal_('zvzz')
+    end
+  end
+end, false)
 
 local function format_diagnostic(item, key)
   return (item.file ~= nil and nvim.fn.bufname(item.file) or '')
@@ -30,27 +42,11 @@ local function open_diagnostics(file_only)
   local diagnostics = get_diagnostics(file_only)
   local opts = {
     source = diagnostics,
-    window = 'lua steelvim.float_fzf()'
+    window = Fzf.float_window()
   }
 
-  executor(opts)
+  fzf:execute(opts)
 end
-
-local function handle_selection(line)
-  local file, lnum, col, error_msg = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
-
-  if file then
-    nvim.ex.buffer(nvim.fn.bufnr(file))
-    nvim.ex.mark("'")
-
-    if lnum and col then
-      nvim.fn.cursor(lnum, col)
-      nvim.ex.normal_('zvzz')
-    end
-  end
-end
-
-executor = fzf.create_executor(handle_selection, false)
 
 return {
   open_diagnostics = open_diagnostics

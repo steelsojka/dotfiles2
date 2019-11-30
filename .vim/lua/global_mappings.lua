@@ -1,6 +1,7 @@
 local nvim = require 'nvim'
 local mapping_utils = require 'mappings'
-local fzf_diagnostics = require 'fzf_diagnostics'
+local fzf_diagnostics = require 'fzf/diagnostics'
+local fzf_quickfix = require 'fzf/quickfix'
 
 local mappings = {
   ['n '] = { function() steelvim.start_which_key(false) end, silent = true },

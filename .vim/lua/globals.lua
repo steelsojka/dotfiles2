@@ -1,9 +1,10 @@
 local nvim = require 'nvim'
 local colorizer = require 'colorizer'
+local Fzf = require 'fzf/fzf'
 
 local globals = {
   fzf_layout= {
-    window = 'lua steelvim.float_fzf()'
+    window = Fzf.float_window()
   },
   coc_node_path = nvim.env.SYSTEM_NODE_PATH,
   coc_snippet_next = '<tab>',

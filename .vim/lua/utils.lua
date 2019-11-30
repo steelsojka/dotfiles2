@@ -1,7 +1,5 @@
 local nvim = require 'nvim'
 
-LUA_FUNCTION_REFS = {}
-
 local function reduce(list, accumulator, start_value)
   local result = start_value
 
@@ -36,24 +34,9 @@ local function join(list, delimiter)
   end, '')
 end 
 
-local function create_function_ref(fn)
-  local name = 'K' .. math.random(1, 1000000)
-  local fn_def = {
-    'function! ' .. name .. '(...)',
-    ([[  return luaeval("LUA_FUNCTION_REFS['%s'](unpack(_A))", a:000)]]):format(name),
-    'endfunction'
-  }
-
-  LUA_FUNCTION_REFS[name] = fn
-  nvim.command(join(fn_def, '\n'))
-
-  return name 
-end
-
 return {
   reduce = reduce,
   map = map,
   filter = filter,
-  join = join,
-  create_function_ref = create_function_ref
+  join = join
 }

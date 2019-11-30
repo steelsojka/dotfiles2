@@ -45,7 +45,6 @@ command! -bang -nargs=? -complete=dir Files
   call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
 ]]
 
-nvim.command [[command! -bang -nargs=* FZFDiagnostics lua require'fzf_diagnostics'.open_diagnostics()]]
 nvim.command [[command! -bang -nargs=* DRg call steelvim#grep(<q-args>, expand('%:p:h'), <bang>0)]]
 nvim.command [[command! -bang -nargs=* Rg call steelvim#grep(<q-args>, getcwd(), <bang>0)]]
 nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('steelvim.flygrep(_A[1], _A[2], _A[3])', [<q-args>, expand('%:p:h'), <bang>0])]]
