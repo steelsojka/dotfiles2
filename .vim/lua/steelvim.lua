@@ -111,7 +111,7 @@ steelvim = {
     if nvim.fn.index({ 'vim', 'lua', 'help' }, nvim.bo.filetype) >= 0 then
       nvim.ex.help(nvim.fn.expand('<cword>'))
     else
-      nvim.fn.CocAction('doHover')
+      nvim.fn.CocAction 'doHover'
     end
   end,
 

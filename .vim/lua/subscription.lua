@@ -23,7 +23,7 @@ function Subscription:unsubscribe()
   for __,fn in pairs(self.fns) do
     if type(fn) == 'table' and type(fn['unsubscribe']) == 'function' then
       fn:unsubscribe()
-    else
+    elseif type(fn) == 'function' then
       fn()
     end
   end

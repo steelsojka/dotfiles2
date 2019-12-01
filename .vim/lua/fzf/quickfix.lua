@@ -1,3 +1,5 @@
+-- Fzf features for the quick fix list
+
 local nvim = require 'nvim'
 local Fzf = require 'fzf/fzf'
 local utils = require 'utils'
@@ -13,6 +15,8 @@ local function get_list()
   ) 
 end
 
+-- Filters the quick fix list using FZF
+-- @param destructive Whether to overwrite the current quick fix list
 local function filter_qf(destructive)
   local fzf = Fzf:create(function(ref, lines)
     local qf_list = nvim.fn.getqflist()
@@ -24,13 +28,11 @@ local function filter_qf(destructive)
     else
       nvim.fn.setqflist({}, 'r', { items = new_results })
     end
-
-    ref:unsubscribe()
   end, true)
 
   fzf:execute {
     source = get_list(),
-    window = Fzf.float_window(),
+    window = Fzf.float_window(function() fzf:unsubscribe() end),
     options = { '--multi' }
   } 
 end
