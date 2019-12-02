@@ -52,21 +52,6 @@ steelvim = {
     nvim.ex.normal 'i'
   end,
 
-  -- Deletes items in the quickfix list
-  -- @param firstline 
-  -- @param lastline
-  delete_qf_item = function(firstline, lastline)
-    local qf_list = nvim.fn.getqflist()
-    local i = firstline
-    
-    while i <= lastline do
-      table.remove(qf_list, firstline)
-      i = i + 1
-    end
-
-    nvim.fn.setqflist({}, 'r', { items = qf_list })
-  end,
-
   -- Starts which key.
   -- This will set local buffer mapping names to the local key "m"
   -- @param visual Whether visual mode

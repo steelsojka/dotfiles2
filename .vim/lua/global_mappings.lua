@@ -139,6 +139,10 @@ local mappings = {
   ['v /s'] = { [["9y/<C-r>9<CR>]] },
   ['n /S'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
   ['v /S'] = { [["9y:Rg <C-r>9<CR>]] },
+  ['n /r'] = { function()
+    nvim.ex.normal('g*')
+    nvim.input(':%s//')
+  end, description = 'Replace selected text' },
   -- Yank with preview <leader>y
   ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },
   ['n yf'] = { [[<Cmd>let @" = expand("%:p")<CR>]], description = 'Yank file path' },

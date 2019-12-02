@@ -27,7 +27,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
 Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
-Plug 'norcalli/nvim.lua'
+Plug 'norcalli/nvim.lua', { 'commit': 'ceb76105a8d715eec898c692ba41c2d8dbdc6dbd' }
 
 call plug#end()
 

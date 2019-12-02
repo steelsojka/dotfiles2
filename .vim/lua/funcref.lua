@@ -15,10 +15,11 @@ nvim.command [[
 -- Creates a function that can be easily accessed in VimL.
 -- This is primarily for creating function refs in Lua.
 -- @param fn The function code to execute
-function Funcref:create(fn)
+function Funcref:create(fn, opts)
   local instance = {}
+  local _opts = opts or {}
 
-  instance.name = 'k' .. unique_id()
+  instance.name = _opts.name or 'k' .. unique_id()
   instance.subscription = Subscription:create(function()
     LUA_FUNCTION_REFS[instance.name] = nil
   end)
@@ -37,7 +38,7 @@ end
 
 -- Gets a string in VimL that creates a function ref to this Lua function.
 function Funcref:get_vim_ref_string()
-  return 'function("LuaFunctionRefHandler", ["' .. self.name .. '"])'
+  return ('function("LuaFunctionRefHandler", ["%s"])'):format(self.name)
 end
 
 -- Gets a string to reference this function from Lua.
