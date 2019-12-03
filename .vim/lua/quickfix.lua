@@ -1,10 +1,14 @@
--- Fzf features for the quick fix list
-
 local nvim = require 'nvim'
+local utils = require 'utils/utils'
 local Fzf = require 'fzf/fzf'
-local utils = require 'utils'
 
-local function get_list()
+local function build_list(lines)
+  nvim.fn.setqflist(utils.map(lines, function(line) return { filename = line } end))
+  nvim.ex.copen()
+  nvim.ex.cc()
+end
+
+local function get_fzf_list()
   local qf_list = nvim.fn.getqflist()
 
   return utils.map(
@@ -31,12 +35,27 @@ local function filter_qf(destructive)
   end, true)
 
   fzf:execute {
-    source = get_list(),
+    source = get_fzf_list(),
     window = Fzf.float_window(function() fzf:unsubscribe() end),
     options = { '--multi' }
   } 
 end
 
+local function delete_item(first_line, last_line)
+  local qf_list = nvim.fn.getqflist()
+  local i = first_line
+  
+  while i <= last_line do
+    table.remove(qf_list, first_line)
+    i = i + 1
+  end
+
+  nvim.fn.setqflist({}, 'r', { items = qf_list })
+end
+
+
 return {
-  filter = filter_qf
+  build_list = build_list,
+  filter = filter_qf,
+  delete_item = delete_item
 }

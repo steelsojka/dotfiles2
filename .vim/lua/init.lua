@@ -1,16 +1,14 @@
 local nvim = require 'nvim'
 local colorizer = require 'colorizer'
 
-require 'steelvim'
-
 nvim.ex.filetype('plugin', 'indent', 'on')
 nvim.ex.syntax('on')
 
-require 'settings'
-require 'globals'
-require 'global_mappings'
-require 'filetypes'
-require 'commands'
+require 'init/settings'
+require 'init/globals'
+require 'init/global_mappings'
+require 'init/filetypes'
+require 'init/commands'
 
 colorizer.setup {
   'css',

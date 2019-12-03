@@ -1,6 +1,6 @@
 local nvim = require 'nvim'
-local mappings = require 'mappings'
-local utils = require 'utils'
+local mappings = require 'utils/mappings'
+local utils = require 'utils/utils'
 
 local coc_extensions = {
   'coc-tsserver',
@@ -45,8 +45,8 @@ command! -bang -nargs=? -complete=dir Files
   call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
 ]]
 
-nvim.command [[command! -bang -nargs=* DRg call steelvim#grep(<q-args>, expand('%:p:h'), <bang>0)]]
-nvim.command [[command! -bang -nargs=* Rg call steelvim#grep(<q-args>, getcwd(), <bang>0)]]
-nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('steelvim.flygrep(_A[1], _A[2], _A[3])', [<q-args>, expand('%:p:h'), <bang>0])]]
-nvim.command [[command! -bang -nargs=* FlyRg call luaeval('steelvim.flygrep(_A[1], _A[2], _A[3])', [<q-args>, getcwd(), <bang>0])]]
+nvim.command [[command! -bang -nargs=* DRg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
+nvim.command [[command! -bang -nargs=* Rg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
+nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('require(''grep'').flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
+nvim.command [[command! -bang -nargs=* FlyRg call luaeval('require(''grep'').flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
 nvim.command([[command! -nargs=0 InstallCocExtestions :CocInstall ]] .. utils.join(coc_extensions, ' '))

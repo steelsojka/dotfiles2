@@ -1,4 +1,4 @@
-local mappings = require 'mappings'
+local mappings = require 'utils/mappings'
 local nvim = require 'nvim'
 
 return function()

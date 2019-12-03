@@ -1,18 +1,21 @@
 local nvim = require 'nvim'
-local mapping_utils = require 'mappings'
+local mapping_utils = require 'utils/mappings'
 local fzf_diagnostics = require 'fzf/diagnostics'
-local fzf_quickfix = require 'fzf/quickfix'
+local git = require 'git'
+local terminal = require 'terminal'
+local which_key = require 'which_key'
+local common = require 'common'
 
 local mappings = {
-  ['n '] = { function() steelvim.start_which_key(false) end, silent = true },
-  ['v '] = { function() steelvim.start_which_key(true) end, silent = true },
+  ['n '] = { function() which_key.start(false) end, silent = true },
+  ['v '] = { function() which_key.start(true) end, silent = true },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
   ['nU'] = { [[<C-r>]], description = 'Redo' },
   ['n/'] = { [[/\v]], description = 'Search with magic' },
   ['n?'] = { [[?\v]], description = 'Search backwards with magic' },
-  ['nK'] = { function() steelvim.show_documentation() end, description = 'Show documentation', silent = true },
-  ['ngh'] = { function() steelvim.show_documentation() end, description = 'Show documentation', silent = true },
+  ['nK'] = { function() common.show_documentation() end, description = 'Show documentation', silent = true },
+  ['ngh'] = { function() common.show_documentation() end, description = 'Show documentation', silent = true },
   -- Completion for all lines in all buffers
   ['i<C-l>'] = { [[<Plug>(fzf-complete-line)]], noremap = false },
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]], noremap = false },
@@ -167,7 +170,7 @@ local mappings = {
   ['n gcn'] = { [[<Plug>(coc-git-nextchunk)]], description = 'Next chunk', noremap = false },
   ['n gcp'] = { [[<Plug>(coc-git-prevchunk)]], description = 'Previous chunk', noremap = false },
   ['n gci'] = { [[<Plug>(coc-git-chunkinfo)]], description = 'Chunk info', noremap = false },
-  ['n gB'] = { function() steelvim.checkout_git_branch_fzf(nvim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
+  ['n gB'] = { function() git.checkout_git_branch_fzf(nvim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
   ['n gs'] = { [[<Cmd>G<CR>]], description = 'Git status' },
   ['n gd'] = { [[<Cmd>Gdiffsplit<CR>]], description = 'Git diff' },
   ['n ge'] = { [[<Cmd>Gedit<CR>]], description = 'Git edit' },
@@ -178,20 +181,20 @@ local mappings = {
   ['n gp'] = { [[<Cmd>Gpull<CR>]], description = 'Git pull' },
   ['n gP'] = { [[<Cmd>Gpush<CR>]], description = 'Git push' },
   ['n gb'] = { [[<Cmd>Gblame<CR>]], description = 'Git blame' },
-  ['n gS'] = { function() steelvim.float_fzf_cmd("gss") end, description = 'Browse stash' },
-  ['n gr'] = { function() steelvim.float_fzf_cmd("grh") end, description = 'Reset files to head' },
-  ['n gD'] = { function() steelvim.float_fzf_cmd("gd") end, description = 'Diff files' },
-  ['n ga'] = { function() steelvim.float_fzf_cmd("ga") end, description = 'Add files' },
+  ['n gS'] = { function() terminal.float_fzf_cmd("gss") end, description = 'Browse stash' },
+  ['n gr'] = { function() terminal.float_fzf_cmd("grh") end, description = 'Reset files to head' },
+  ['n gD'] = { function() terminal.float_fzf_cmd("gd") end, description = 'Diff files' },
+  ['n ga'] = { function() terminal.float_fzf_cmd("ga") end, description = 'Add files' },
   -- Terminal mappings <leader>t
-  ['n tt'] = { function() steelvim.float_term(false) end, description = 'Float terminal' },
-  ['n tT'] = { function() steelvim.float_term(true) end, description = 'Float terminal (full)' },
+  ['n tt'] = { function() terminal.float(false) end, description = 'Float terminal' },
+  ['n tT'] = { function() terminal.float(true) end, description = 'Float terminal (full)' },
   ['n tv'] = { function() 
     nvim.ex.vsp()
-    steelvim.open_term() 
+    terminal.open() 
   end, description = 'Vertical split terminal' },
   ['n tf'] = { function()
     nvim.ex.vsp()
-    steelvim.open_term(true)
+    terminal.open(true)
   end, description = 'Terminal at file' }
 }
 

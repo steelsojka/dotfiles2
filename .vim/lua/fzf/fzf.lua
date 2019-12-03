@@ -1,8 +1,8 @@
-local Subscription = require 'subscription'
-local Funcref = require 'funcref'
+local Subscription = require 'utils/subscription'
+local Funcref = require 'utils/funcref'
 local nvim = require 'nvim'
-local unique_id = require 'unique_id'
-local utils = require 'utils'
+local unique_id = require 'utils/unique_id'
+local utils = require 'utils/utils'
 
 local Fzf = {}
 

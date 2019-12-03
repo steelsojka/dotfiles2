@@ -1,4 +1,4 @@
-local utils = require 'utils'
+local utils = require 'utils/utils'
 local nvim = require 'nvim'
 
 LUA_MAPPINGS = {}

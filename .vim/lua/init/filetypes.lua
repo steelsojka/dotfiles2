@@ -1,4 +1,4 @@
-local mappings = require 'mappings'
+local mappings = require 'utils/mappings'
 
 LUA_FILETYPE_HOOKS = {
   dirvish = require 'filetypes/dirvish',

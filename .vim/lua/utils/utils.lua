@@ -1,5 +1,3 @@
-local nvim = require 'nvim'
-
 local function reduce(list, accumulator, start_value)
   local result = start_value
 

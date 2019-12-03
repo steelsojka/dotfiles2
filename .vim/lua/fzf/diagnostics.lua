@@ -1,7 +1,7 @@
 -- Uses FZF to filter diagnostics from Coc.nvim
 
 local nvim = require 'nvim'
-local utils = require 'utils'
+local utils = require 'utils/utils'
 local Fzf = require 'fzf/fzf'
 
 local fzf = Fzf:create(function(ref, line)

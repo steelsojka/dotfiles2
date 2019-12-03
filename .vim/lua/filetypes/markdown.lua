@@ -1,4 +1,4 @@
-local mappings = require 'mappings'
+local mappings = require 'utils/mappings'
 
 return function()
   mappings.register_buffer_mappings {

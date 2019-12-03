@@ -1,6 +1,10 @@
 local nvim = require 'nvim'
 local colorizer = require 'colorizer'
 local Fzf = require 'fzf/fzf'
+local Funcref = require 'utils/funcref'
+local quickfix = require 'quickfix'
+
+local fzf_to_qf_ref = Funcref:create(function(ref, lines) quickfix.build_list(lines) end , { name = 'fzf_to_qf' })
 
 local globals = {
   fzf_layout= {
@@ -11,7 +15,7 @@ local globals = {
   fzf_action = {
     ['ctrl-t'] = 'tab split',
     ['ctrl-x'] = 'split',
-    ['ctrl-v'] = 'vsplit'
+    ['ctrl-v'] = 'vsplit',
   },
   lightline = {
     colorscheme = 'one',
@@ -53,13 +57,7 @@ local globals = {
 -- For lightline.vim
 nvim.command [[
   function! GetGitStatus() abort
-    return luaeval('steelvim.get_git_status()')
-  endfunction
-]]
-
-nvim.command [[
-  function! BuildQuickFixList(lines) abort
-    call luaeval('steelvim.build_quickfix_list(_A[1])', [a:lines])
+    return luaeval('require(''git'').get_git_status()')
   endfunction
 ]]
 
@@ -69,6 +67,5 @@ for key,value in pairs(globals) do
   nvim.g[key] = value
 end
 
--- Needs to come after we define globals
-nvim.command [[let g:fzf_action['ctrl-q'] = function('BuildQuickFixList')]]
+nvim.command(([[let g:fzf_action['ctrl-q'] = %s]]):format(fzf_to_qf_ref:get_vim_ref_string()))
 

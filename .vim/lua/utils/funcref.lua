@@ -1,6 +1,6 @@
 local nvim = require 'nvim'
-local Subscription = require 'subscription'
-local unique_id = require 'unique_id'
+local Subscription = require 'utils/subscription'
+local unique_id = require 'utils/unique_id'
 
 local Funcref = {}
 
