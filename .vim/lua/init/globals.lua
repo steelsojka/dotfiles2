@@ -4,7 +4,9 @@ local Fzf = require 'fzf/fzf'
 local Funcref = require 'utils/funcref'
 local quickfix = require 'quickfix'
 
-local fzf_to_qf_ref = Funcref:create(function(ref, lines) quickfix.build_list(lines) end , { name = 'fzf_to_qf' })
+local fzf_to_qf_ref = Funcref:create(function(ref, lines)
+  quickfix.build_list(lines) 
+end , { name = 'fzf_to_qf' })
 
 local globals = {
   fzf_layout= {
@@ -26,11 +28,13 @@ local globals = {
       },
       right = {
         { 'lineinfo' },
-        { 'percent' }
+        { 'percent' },
+        { 'coc_status' }
       }
     },
-    component_function = {
-      git_status = 'GetGitStatus'
+    component = {
+      git_status = [[%{luaeval('require(''git'').get_git_status()')}]],
+      coc_status = [[%{coc#status()}]]
     }
   },
   ['sneak#label'] = true,
@@ -53,13 +57,6 @@ local globals = {
     [[                                      Steel Edition]]
   }
 }
-
--- For lightline.vim
-nvim.command [[
-  function! GetGitStatus() abort
-    return luaeval('require(''git'').get_git_status()')
-  endfunction
-]]
 
 nvim.command [[highlight NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#36353d]]
 

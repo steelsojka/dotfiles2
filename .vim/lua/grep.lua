@@ -15,14 +15,11 @@ end
 local function grep(query, dir, fullscreen)
   local options
 
-  print(query, dir, fullscreen)
-
   if fullscreen == 1 then
     options = nvim.fn['fzf#vim#with_preview']({ dir = dir }, 'up:60%')
   else
     options = nvim.fn['fzf#vim#with_preview']({ dir = dir }, 'right:50%', '?')
   end
-
 
   nvim.fn['fzf#vim#grep'](
     'rg --column --line-number --no-heading --color=always --smart-case ' .. nvim.fn.shellescape(query),
