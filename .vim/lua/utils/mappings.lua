@@ -117,6 +117,11 @@ local function register_mapping(key, mapping, key_dict)
 
     mapping.noremap = true
     mapping.silent = true
+  elseif type(action) == 'string' then
+    -- Plug mappings always have noremap set to false
+    if action:lower():match('^<plug>') then
+      mapping.noremap = false
+    end
   end
 
   if is_buffer then
