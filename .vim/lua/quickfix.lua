@@ -24,7 +24,10 @@ end
 local function filter_qf(destructive)
   local fzf = Fzf:create(function(ref, lines)
     local qf_list = nvim.fn.getqflist()
-    local rows_to_keep = utils.map(lines, function(line) return string.sub(line, 1, 1) end)
+    local rows_to_keep = utils.filter(
+      utils.map(lines, function(line) return line:match('^([0-9]+)') end),
+      function(line) return line ~= nil end
+    )
     local new_results = utils.filter(qf_list, function(item, i) return vim.tbl_contains(rows_to_keep, tostring(i)) end)
 
     if not destructive then
