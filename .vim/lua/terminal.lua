@@ -23,7 +23,7 @@ end
 local function float_fzf_cmd(cmd)
   Fzf.create_floating_window()
   -- Open a term and exit on process exit
-  nvim.command('call termopen(\'' .. cmd .. '\', {\'on_exit\': {_ -> execute(\'q!\') }})')
+  nvim.command(([[call termopen('%s', {'on_exit': {_ -> execute('q!') }})]]):format(cmd))
   nvim.ex.normal 'i'
 end
 

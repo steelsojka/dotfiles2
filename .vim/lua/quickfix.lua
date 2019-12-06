@@ -14,7 +14,7 @@ local function get_fzf_list()
   return utils.map(
     qf_list, 
     function(item, i)
-      return i .. '|' .. nvim.buf_get_name(item.bufnr) .. '|' .. item.lnum .. ':' .. item.col .. '| ' .. item.text
+      return ('%d\t%s\t%d:%d\t%s'):format(i, nvim.buf_get_name(item.bufnr), item.lnum, item.col, item.text)
     end
   ) 
 end
@@ -40,7 +40,7 @@ local function filter_qf(destructive)
   fzf:execute {
     source = get_fzf_list(),
     window = Fzf.float_window(function() fzf:unsubscribe() end),
-    options = { '--multi' }
+    options = { '--multi', '--nth=2..', '--with-nth=2..' }
   } 
 end
 

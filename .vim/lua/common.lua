@@ -5,10 +5,10 @@ local utils = require 'utils/utils'
 -- @param command Command to run with search term
 -- @param prompt Prompt text
 local function prompt_command(command, prompt)
-  local search_term = nvim.fn.input(prompt .. ': ')
+  local search_term = nvim.fn.input(('%s: '):format(prompt))
 
   if string.len(search_term) > 0 then
-    nvim.command(command .. ' ' .. search_term)
+    nvim.command(('%s %s'):format(command, search_term))
   end
 end
 

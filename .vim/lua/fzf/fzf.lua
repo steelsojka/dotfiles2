@@ -33,12 +33,12 @@ function Fzf:execute(cmd)
   nvim.g[self.fn_name] = cmd
 
   if type(self.sink_ref) ~= 'string' then
-    nvim.command('let g:' .. self.fn_name .. '["sink' .. (self.handle_all and '*' or '') .. '"] = ' .. self.sink_ref:get_vim_ref_string())
+    nvim.command(('let g:%s["sink%s"] = %s'):format(self.fn_name, self.handle_all and '*' or '', self.sink_ref:get_vim_ref_string()))
   else
-    nvim.command('let g:' .. self.fn_name .. '["sink"] = "' .. self.sink_ref .. '"')
+    nvim.command(('let g:%s["sink"] = "%s"'):format(self.fn_name, self.sink_ref))
   end
 
-  nvim.command('call fzf#run(fzf#wrap(g:' .. self.fn_name ..'))')
+  nvim.command(('call fzf#run(fzf#wrap(g:%s))'):format(self.fn_name))
   nvim.command('unlet g:' .. self.fn_name)
 end
 
@@ -78,7 +78,7 @@ function Fzf.float_window(on_close)
       ref:unsubscribe()
     end)
 
-    return "lua require('fzf/fzf').create_floating_window(" .. fn_ref:get_lua_ref_string() .. ")"
+    return ("lua require('fzf/fzf').create_floating_window(%s)"):format(fn_ref:get_lua_ref_string())
   end
 
   return [[lua require('fzf/fzf').create_floating_window()]]

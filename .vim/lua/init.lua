@@ -2,7 +2,7 @@ local nvim = require 'nvim'
 local colorizer = require 'colorizer'
 
 nvim.ex.filetype('plugin', 'indent', 'on')
-nvim.ex.syntax('on')
+nvim.ex.syntax 'on'
 
 require 'init/settings'
 require 'init/globals'
