@@ -5,7 +5,8 @@ LUA_FILETYPE_HOOKS = {
   typescript = require 'filetypes/typescript',
   qf = require 'filetypes/qf',
   markdown = require 'filetypes/markdown',
-  java = require 'filetypes/java'
+  java = require 'filetypes/java',
+  lua = require 'filetypes/lua'
 }
 
 local autocmds = {}

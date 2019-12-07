@@ -1,5 +1,5 @@
 local nvim = require 'nvim'
 
 return function()
-  nvim.bo.shiftwidth = 4
+  nvim.bo.shiftwidth = 2
 end
