@@ -10,10 +10,22 @@ local function escape_keymap(key)
 	return 'k' .. key:gsub('.', string.byte)
 end
 
+local function init_buffer_mappings(initial_mappings)
+  local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
+
+  if not success then
+    local_which_key_dict = { m = initial_mappings or {} }
+  end
+
+  nvim.b.local_which_key = local_which_key_dict
+
+  return local_which_key_dict
+end
+
 local function parse_key_map(key_str)
   local result = {} 
   local i = 1
-  local len = key_str:len()
+  local len = #key_str
   local is_meta = false
   local char_result = ''
   local key_index = 1
@@ -64,11 +76,7 @@ local function register_mapping(key, mapping, key_dict)
 
   if keys[1] == ' ' and mapping.which_key ~= false and mapping.description then
     if keys[2] == 'm' and is_buffer then
-      local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
-
-      if not success then
-        local_which_key_dict = { m = {} }  
-      end
+      local local_which_key_dict = init_buffer_mappings()
 
       add_to_which_key({unpack(keys, 2)}, mapping.description, local_which_key_dict)
 
@@ -169,6 +177,7 @@ return {
   register_mapping = register_mapping,
   register_mappings = register_mappings,
   register_buffer_mappings = register_buffer_mappings,
+  init_buffer_mappings = init_buffer_mappings,
   create_augroups = create_augroups,
   escape_keymap = escape_keymap
 }

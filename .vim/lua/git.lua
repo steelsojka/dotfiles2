@@ -8,7 +8,7 @@ local function get_git_status()
   local status = nvim.fn['fugitive#head']()
 
   if nvim.fn.winwidth(0) > 80 then
-    return status:len() > 30 and (status:sub(0, 27) .. '...') or status
+    return #status > 30 and (status:sub(0, 27) .. '...') or status
   end
   
   return ''

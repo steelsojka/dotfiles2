@@ -3,6 +3,7 @@
   "http.proxyStrictSSL": false,
   "typescript.preferences.quoteStyle": "single",
   "typescript.updateImportsOnFileMove.enable": true,
+  "snippets.priority": 100,
   "snippets.extends": {
     "typescriptreact": ["typescript"]
   },

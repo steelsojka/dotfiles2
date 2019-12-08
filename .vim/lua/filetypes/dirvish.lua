@@ -2,17 +2,26 @@ local mappings = require 'utils/mappings'
 local nvim = require 'nvim'
 local Fzf = require 'fzf/fzf'
 
-local find_directory_fzf = Fzf:create 'Dirvish'
+local find_fzf = Fzf:create 'Dirvish'
 
 local function fzf_directories(starting_point)
-  find_directory_fzf:execute {
+  find_fzf:execute {
     source = ([[find "%s" -type d]]):format(starting_point),
     options = { [[--preview=ls -la {}]]}
   }
 end
 
+local function fzf_files(starting_point)
+  find_fzf:execute(nvim.fn['fzf#vim#with_preview'] {
+    source = ([[rg --hidden --files %s]]):format(starting_point)
+  })
+end
+
 return function()
   nvim.ex.setlocal('nospell')
+  mappings.init_buffer_mappings {
+    g = { name = '+goto' }
+  }
 
   mappings.register_buffer_mappings {
     ['n md'] = { [[:!mkdir %]], description = 'Make directory' },
@@ -63,8 +72,10 @@ return function()
         nvim.input 'R'
       end
     end, description = 'Delete' },
-    ['n mg'] = { function() fzf_directories(nvim.fn.expand '%:p:h') end, description = 'Go to child directory' },
-    ['n mG'] = { function() fzf_directories(nvim.fn.getcwd()) end, description = 'Go to project directory' },
+    ['n mgd'] = { function() fzf_directories(nvim.fn.expand '%:p:h') end, description = 'Child directory' },
+    ['n mgD'] = { function() fzf_directories(nvim.fn.getcwd()) end, description = 'Project directory' },
+    ['n mgf'] = { function() fzf_files(nvim.fn.expand '%:p:h') end, description = 'Child file' },
+    ['n mgF'] = { function() fzf_files(nvim.fn.getcwd()) end, description = 'Project file' },
     ['nH'] = { [[<Plug>(dirvish_up)]], noremap = false },
     ['n q'] = { [[gq]], noremap = false },
     ['n Q'] = { [[gq]], noremap = false }

@@ -56,7 +56,6 @@ local function delete_item(first_line, last_line)
   nvim.fn.setqflist({}, 'r', { items = qf_list })
 end
 
-
 return {
   build_list = build_list,
   filter = filter_qf,
