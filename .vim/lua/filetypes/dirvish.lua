@@ -18,13 +18,21 @@ local function fzf_files(starting_point)
 end
 
 return function()
-  nvim.ex.setlocal('nospell')
+  nvim.ex.setlocal 'nospell'
   mappings.init_buffer_mappings {
     g = { name = '+goto' }
   }
 
   mappings.register_buffer_mappings {
-    ['n md'] = { [[:!mkdir %]], description = 'Make directory' },
+    ['n md'] = { function()
+      local filehead = nvim.fn.expand '<cfile>:h'
+      local dirname = nvim.fn.input 'Create directory: '
+
+      if filename ~= '' then
+        nvim.command(('!mkdir %s/%s'):format(filehead, dirname))
+        nvim.input 'R'
+      end
+    end, description = 'Make directory' },
     ['n mf'] = { function()
       local filehead = nvim.fn.expand '<cfile>:h'
       local filename = nvim.fn.input 'Create file: '
@@ -76,7 +84,7 @@ return function()
     ['n mgD'] = { function() fzf_directories(nvim.fn.getcwd()) end, description = 'Project directory' },
     ['n mgf'] = { function() fzf_files(nvim.fn.expand '%:p:h') end, description = 'Child file' },
     ['n mgF'] = { function() fzf_files(nvim.fn.getcwd()) end, description = 'Project file' },
-    ['nH'] = { [[<Plug>(dirvish_up)]], noremap = false },
+    ['nH'] = { [[<Plug>(dirvish_up)]] },
     ['n q'] = { [[gq]], noremap = false },
     ['n Q'] = { [[gq]], noremap = false }
   }
