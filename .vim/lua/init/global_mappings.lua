@@ -120,7 +120,7 @@ local mappings = {
   ['n jn'] = { [[<C-o>]], description = 'Next jump' },
   ['n jp'] = { [[<C-i>]], description = 'Previous jump' },
   ['n jml'] = { [[<Cmd>Marks<CR>]], description = 'List marks' },
-  ['n jmd'] = { [[<Cmd>delmarks<Space>]], description = 'Delete marks' },
+  ['n jmd'] = { [[:delmarks<Space>]], description = 'Delete marks' },
   ['n jmm'] = { [[`]], description = 'Go to mark' },
   ['n ja'] = { [[<Cmd>A<CR>]], description = 'Go to altenate' },
   ['n jA'] = { [[<Cmd>AV<CR>]], description = 'Split altenate' },
