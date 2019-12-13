@@ -40,7 +40,7 @@ local function filter_qf(destructive)
   fzf:execute {
     source = get_fzf_list(),
     window = Fzf.float_window(function() fzf:unsubscribe() end),
-    options = { '--multi', '--nth=2..', '--with-nth=2..' }
+    options = { '--multi', '--nth=1..', '--with-nth=2..' }
   } 
 end
 
