@@ -117,6 +117,8 @@ local mappings = {
   ['n jr'] = { [[<Plug>(coc-references)]], description = 'Type references' },
   ['n jep'] = { [[<Plug>(coc-diagnostic-prev)]], description = 'Previous error' },
   ['n jen'] = { [[<Plug>(coc-diagnostic-next)]], description = 'Next error' },
+  ['n jqp'] = { [[<Cmd>cN<CR>]], description = 'Previous' },
+  ['n jqn'] = { [[<Cmd>cn<CR>]], description = 'Next' },
   ['n jn'] = { [[<C-o>]], description = 'Next jump' },
   ['n jp'] = { [[<C-i>]], description = 'Previous jump' },
   ['n jml'] = { [[<Cmd>Marks<CR>]], description = 'List marks' },
@@ -231,7 +233,8 @@ local which_key_map = {
     name = '+jump', 
     m = { name = '+marks' },
     c = { name = '+changes' }, 
-    e = { name = '+errors' }
+    e = { name = '+errors' },
+    q = { name = '+quickfix' }
   },
   t = { name = '+terminal' }
 }
