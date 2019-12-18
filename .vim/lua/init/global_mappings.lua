@@ -186,6 +186,7 @@ local mappings = {
   ['n gr'] = { function() terminal.float_fzf_cmd("grh") end, description = 'Reset files to head' },
   ['n gD'] = { function() terminal.float_fzf_cmd("gd") end, description = 'Diff files' },
   ['n ga'] = { function() terminal.float_fzf_cmd("ga") end, description = 'Add files' },
+  ['n gC'] = { function() terminal.float_fzf_cmd("gcf") end, description = 'Checkout files' },
   -- Terminal mappings <leader>t
   ['n tt'] = { function() terminal.float(false) end, description = 'Float terminal' },
   ['n tT'] = { function() terminal.float(true) end, description = 'Float terminal (full)' },
