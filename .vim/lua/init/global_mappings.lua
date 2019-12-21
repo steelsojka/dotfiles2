@@ -5,6 +5,7 @@ local git = require 'git'
 local terminal = require 'terminal'
 local which_key = require 'which_key'
 local common = require 'common'
+local buffers = require 'buffers'
 
 local mappings = {
   ['n '] = { function() which_key.start(false) end, silent = true },
@@ -59,6 +60,7 @@ local mappings = {
   ['n bl'] = { [[<Cmd>blast<CR>]], description = 'Last buffer' },
   ['n bd'] = { [[<Cmd>bp<CR>:bd#<CR>]], description = 'Delete buffer' },
   ['n bk'] = { [[<Cmd>bp<CR>:bw!#<CR>]], description = 'Wipe buffer' },
+  ['n bK'] = { function() buffers.delete_buffers_fzf() end, description = 'Wipe buffers' },
   ['n bb'] = { [[<Cmd>Buffers<CR>]], description = 'List buffers' },
   ['n bY'] = { [[ggyG]], description = 'Yank buffer' },
   -- Window mappings <leader>w
