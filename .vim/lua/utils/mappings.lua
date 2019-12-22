@@ -71,8 +71,8 @@ local function register_mapping(key, mapping, key_dict)
   local mode, key_string = key:match("^(.)(.+)$")
   local keys = parse_key_map(key_string)
   local action = mapping[1]
-  local is_buffer = mapping.buffer
-  local bufnr = nvim.get_current_buf()
+  local is_buffer = mapping.buffer == true or type(mapping.buffer) == 'number'
+  local bufnr = type(mapping.buffer) == 'number' and mapping.buffer or nvim.get_current_buf()
 
   if keys[1] == ' ' and mapping.which_key ~= false and mapping.description then
     if keys[2] == 'm' and is_buffer then
@@ -145,9 +145,9 @@ local function register_mappings(mappings, default_options, which_key_dict)
   end
 end
 
-local function register_buffer_mappings(mappings, default_options)
+local function register_buffer_mappings(mappings, default_options, buffer)
   for keys, mapping in pairs(mappings) do
-    register_mapping(keys, vim.tbl_extend('keep', { buffer = true }, mapping, default_options or {}))
+    register_mapping(keys, vim.tbl_extend('keep', { buffer = buffer or true }, mapping, default_options or {}))
   end
 end
 
