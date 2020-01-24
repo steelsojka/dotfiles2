@@ -1,6 +1,7 @@
 local nvim = require 'nvim'
 local Subscription = require 'utils/subscription'
 local unique_id = require 'utils/unique_id'
+local utils = require 'utils/utils'
 
 local Funcref = {}
 
@@ -37,8 +38,8 @@ function Funcref:unsubscribe()
 end
 
 -- Gets a string in VimL that creates a function ref to this Lua function.
-function Funcref:get_vim_ref_string()
-  return ('function("LuaFunctionRefHandler", ["%s"])'):format(self.name)
+function Funcref:get_vim_ref_string(...)
+  return ('function("LuaFunctionRefHandler", [%s])'):format(utils.join({ '"' .. self.name .. '"', ... }, ','))
 end
 
 -- Gets a string to reference this function from Lua.
