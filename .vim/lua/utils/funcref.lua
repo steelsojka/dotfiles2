@@ -4,8 +4,15 @@ local unique_id = require 'utils/unique_id'
 local utils = require 'utils/utils'
 
 local Funcref = {}
+local NOOP = function() end
 
-LUA_FUNCTION_REFS = {}
+LUA_FUNCTION_REFS = setmetatable({}, {
+  __index = function(tbl, key)
+    local handler = rawget(tbl, key)
+
+    return handler == nil and NOOP or handler
+  end
+})
 
 nvim.command [[
   function! LuaFunctionRefHandler(name, ...)

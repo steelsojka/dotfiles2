@@ -9,10 +9,7 @@ end
 local function job_start(cmd, stdin_handler)
   return Observable:create(function(subscriber)
     local result = {}
-    local unsubbed = false
     local handler = Funcref:create(function(ref, jobid, data, event)
-      if unsubbed then return end
-
       if event == 'stdout' then
         if is_eof(data) then
           subscriber.next(result)
@@ -43,7 +40,6 @@ local function job_start(cmd, stdin_handler)
     end
 
     return function()
-      unsubbed = true
       pcall(function() nvim.fn.jobstop(job_id) end)
       handler:unsubscribe()
     end
