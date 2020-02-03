@@ -9,14 +9,18 @@ local function flygrep(query, cwd, fullscreen)
     options = { '--phony', '--query', query, '--bind', ('change:reload:%s'):format(reload_cmd) }
   }
 
-  nvim.fn['fzf#vim#grep'](initial_cmd, 1, nvim.fn['fzf#vim#with_preview'](spec), fullscreen)
+  if fullscreen == 1 then
+    nvim.fn['fzf#vim#grep'](initial_cmd, 1, nvim.fn['fzf#vim#with_preview'](spec, 'up:80%'), 1)
+  else
+    nvim.fn['fzf#vim#grep'](initial_cmd, 1, nvim.fn['fzf#vim#with_preview'](spec), 0)
+  end
 end
 
 local function grep(query, dir, fullscreen)
   local options
 
   if fullscreen == 1 then
-    options = nvim.fn['fzf#vim#with_preview']({ dir = dir }, 'up:60%')
+    options = nvim.fn['fzf#vim#with_preview']({ dir = dir }, 'up:80%')
   else
     options = nvim.fn['fzf#vim#with_preview']({ dir = dir }, 'right:50%', '?')
   end

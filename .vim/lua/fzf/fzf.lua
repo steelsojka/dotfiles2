@@ -53,7 +53,7 @@ function Fzf.create_floating_window(on_close)
   local buf = nvim.create_buf(false, true)
   local columns = nvim.o.columns
   local lines = nvim.o.lines
-  local width = math.floor(columns - (columns * 2 / 10))
+  local width = math.floor(columns - (columns * 2 / 20))
   local height = lines - 3
   local y = height
   local x = math.floor((columns - width) / 2)

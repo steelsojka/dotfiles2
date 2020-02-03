@@ -42,7 +42,7 @@ mappings.create_augroups {
 
 nvim.command [[
 command! -bang -nargs=? -complete=dir Files
-  call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('right:60%') : fzf#vim#with_preview(), <bang>0)
+  call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:80%') : fzf#vim#with_preview(), <bang>0)
 ]]
 
 nvim.command [[command! -bang -nargs=* DRg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]

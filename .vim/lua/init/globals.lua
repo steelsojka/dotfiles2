@@ -12,6 +12,7 @@ local globals = {
   fzf_layout= {
     window = Fzf.float_window()
   },
+  vimspector_enable_mappings = 'HUMAN',
   coc_node_path = nvim.env.SYSTEM_NODE_PATH,
   coc_snippet_next = '<tab>',
   fzf_action = {
