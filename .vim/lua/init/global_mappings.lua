@@ -98,6 +98,12 @@ local mappings = {
   -- Project mappings <leader>p
   ['n pf'] = { [[<Cmd>Files .<CR>]], description = 'Find file' },
   ['n pF'] = { [[<Cmd>Files! .<CR>]], description = 'Find file fullscreen' },
+  ['n ps'] = { function()
+    local word = nvim.fn.expand("<cword>")
+
+    nvim.ex.Files('.') 
+    nvim.input(word)
+  end, description = 'Find file with text' },
   ['n pT'] = { [[<Cmd>vsp +Dirvish<CR>]], description = 'Open File explorer in split' },
   ['n pt'] = { [[<Cmd>Dirvish<CR>]], description = 'Open file Explorer' },
   ['n pq'] = { [[<Cmd>qall<CR>]], description = 'Quit project' },
