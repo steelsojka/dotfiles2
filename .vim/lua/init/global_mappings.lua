@@ -6,6 +6,7 @@ local terminal = require 'terminal'
 local which_key = require 'which_key'
 local common = require 'common'
 local buffers = require 'buffers'
+local grep = require 'grep'
 
 local mappings = {
   ['n '] = { function() which_key.start(false) end, silent = true },
@@ -146,6 +147,9 @@ local mappings = {
   ['n /b'] = { [[<Cmd>Lines<CR>]], description = 'Search lines' },
   ['n /p'] = { [[<Cmd>FlyRg<CR>]], description = 'Grep files in project' },
   ['n /P'] = { [[<Cmd>FlyRg!<CR>]], description = 'Grep files in project (full),' },
+  ['n /f'] = { function()
+    grep.flygrep('', nvim.fn.expand('%:p:h'), 0, { '--hidden', '--no-ignore' })
+  end, description = 'Grep all files' },
   ['n /h'] = { [[<Cmd>noh<CR>]], description = 'Clear searh highlight' },
   ['n /s'] = { [[g*N]], description = 'Search selected text' },
   ['v /s'] = { [["9y/<C-r>9<CR>]] },

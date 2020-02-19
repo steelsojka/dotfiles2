@@ -1,9 +1,11 @@
 local nvim = require 'nvim'
+local utils = require 'utils/utils'
 
-local function flygrep(query, cwd, fullscreen)
-  local command = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
-  local initial_cmd = command:format(nvim.fn.shellescape(query))
-  local reload_cmd = command:format('{q}')
+local function flygrep(query, cwd, fullscreen, args)
+  local custom_args = utils.join(args or {}, ' ')
+  local command = 'rg --column --line-number --no-heading --color=always --smart-case %s %s || true'
+  local initial_cmd = command:format(custom_args, nvim.fn.shellescape(query))
+  local reload_cmd = command:format(custom_args, '{q}')
   local spec = {
     dir = cwd,
     options = { '--phony', '--query', query, '--bind', ('change:reload:%s'):format(reload_cmd) }
@@ -16,8 +18,9 @@ local function flygrep(query, cwd, fullscreen)
   end
 end
 
-local function grep(query, dir, fullscreen)
+local function grep(query, dir, fullscreen, args)
   local options
+  local custom_args = utils.join(args or {}, ' ')
 
   if fullscreen == 1 then
     options = nvim.fn['fzf#vim#with_preview']({ dir = dir }, 'up:80%')
@@ -26,7 +29,7 @@ local function grep(query, dir, fullscreen)
   end
 
   nvim.fn['fzf#vim#grep'](
-    ('rg --column --line-number --no-heading --color=always --smart-case %s'):format(nvim.fn.shellescape(query)),
+    ('rg --column --line-number --no-heading --color=always --smart-case %s %s'):format(custom_args, nvim.fn.shellescape(query)),
     1,
     options,
     fullscreen
