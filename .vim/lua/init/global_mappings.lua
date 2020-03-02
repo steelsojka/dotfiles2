@@ -187,7 +187,7 @@ local mappings = {
   ['n gs'] = { [[<Cmd>G<CR>]], description = 'Git status' },
   ['n gd'] = { [[<Cmd>Gdiffsplit<CR>]], description = 'Git diff' },
   ['n ge'] = { [[<Cmd>Gedit<CR>]], description = 'Git edit' },
-  ['n gg'] = { [[<Cmd>Git<Space>]], description = 'Git command' },
+  ['n gg'] = { [[:Git<Space>]], description = 'Git command' },
   ['n gl'] = { [[<Cmd>Commits<CR>]], description = 'Git log' },
   ['n gL'] = { [[<Cmd>BCommits<CR>]], description = 'Git file log' },
   ['n gf'] = { [[<Cmd>Gfetch<CR>]], description = 'Git fetch' },
