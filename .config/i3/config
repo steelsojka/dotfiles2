@@ -163,6 +163,3 @@ bar {
         position top
         mode dock
 }
-
-# Start our screensaver daemon
-exec --no-startup-id xscreensaver -no-splash
