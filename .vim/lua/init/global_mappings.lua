@@ -7,6 +7,7 @@ local which_key = require 'which_key'
 local common = require 'common'
 local buffers = require 'buffers'
 local grep = require 'grep'
+local quickfix = require 'quickfix'
 
 local mappings = {
   ['n '] = { function() which_key.start(false) end, silent = true },
@@ -175,6 +176,14 @@ local mappings = {
   ['n ck'] = { [[gh]], description = 'Jump to documenation', noremap = false },
   ['n cr'] = { [[<Plug>(coc-rename)]], description = 'Rename symbol' },
   ['n cf'] = { [[<Cmd>CocAction<CR>]], description = 'Quick fix actions' },
+  ['n cql'] = { function() 
+    local line = nvim.fn.getpos(".")[2]
+    quickfix.add_line_to_quickfix(line, line)
+  end, description = 'Add line to quickfix' },
+  ['v cql'] = { function() 
+    quickfix.add_line_to_quickfix(nvim.fn.getpos("'<")[2], nvim.fn.getpos("'>")[2])
+  end, description = 'Add line to quickfix' },
+  ['n cqn'] = { function() quickfix.new_qf_list() end, description = 'New quickfix list' },
   -- Documentation mappings <leader>d
   ['n dd'] = { [[<Plug>(doge-generate)]], description = 'Document' },
   -- Git mappings <leader>g
@@ -223,6 +232,7 @@ local which_key_map = {
   p = { name = '+project' },
   c = { 
     name = '+code', 
+    q = { name = '+quickfix' },
     c = {
       name = '+case',
       p = 'PascalCase',

@@ -36,6 +36,10 @@ local function grep(query, dir, fullscreen, args)
   )
 end
 
+local function grep_quickfix_files()
+  local qf_list = nvim.fn.getqflist()
+end
+
 return {
   flygrep = flygrep,
   grep = grep

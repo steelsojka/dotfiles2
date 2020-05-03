@@ -56,8 +56,33 @@ local function delete_item(first_line, last_line)
   nvim.fn.setqflist({}, 'r', { items = qf_list })
 end
 
+local function add_line_to_quickfix(start_line, end_line)
+  local list = nvim.fn.getqflist() 
+  local buf = nvim.win_get_buf(0)
+  local lines = nvim.buf_get_lines(buf, start_line, end_line, false)
+  local qflist = utils.map(lines, function(line, index)
+    return {
+      bufnr = buf,
+      lnum = start_line + index - 1,
+      col = 0,
+      text = line
+    }
+  end)
+
+  vim.inspect(qflist)
+
+  nvim.fn.setqflist({ unpack(list), unpack(qflist) })
+end
+
+local function new_qf_list(title)
+  nvim.fn.setqflist({}, ' ', { title = title or '' })
+  nvim.ex.copen()
+end
+
 return {
   build_list = build_list,
   filter = filter_qf,
-  delete_item = delete_item
+  delete_item = delete_item,
+  new_qf_list = new_qf_list,
+  add_line_to_quickfix = add_line_to_quickfix
 }
