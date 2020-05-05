@@ -7,11 +7,11 @@
   # View the current working tree status using the short format
   s = status -s
   # Show the diff between the latest commit and the current state
-  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+  d = "!git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
   # `git di $number` shows the diff between the state `$number` revisions ago and the current state
-  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+  di = "!d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
   # Pull in remote changes for the current repository and all its submodules
-  p = !"git pull; git submodule foreach git pull origin master"
+  p = "!git pull; git submodule foreach git pull origin master"
   # Clone a repository including all submodules
   c = clone --recursive
   # Commit all changes
@@ -19,23 +19,23 @@
   # Switch to a branch, creating it if necessary
   go = checkout -B
   # Checkout and pull
-  cop = !"c() { git checkout $1 && git pull origin $1;}; c"
+  cop = "!c() { git checkout $1 && git pull origin $1;}; c"
   # List all other branches
-  lob = !"git branch -a | awk '!/\\*/{print $1}' | sed s/'^remotes\\/origin\\/'// "
+  lob = "!git branch -a | awk '!/\\*/{print $1}' | sed s/'^remotes\\/origin\\/'// "
   # Checkout another branch by fuzzy finding it
-  co = !"git lob | fzf --height 10 | xargs git checkout"
+  co = !git lob | fzf --height 10 | xargs git checkout
   # Push current branch to remote
-  pc = !"git push origin $(git rev-parse --abbrev-ref HEAD) "
+  pc = "!git push origin $(git rev-parse --abbrev-ref HEAD) "
   # Force push current branch to remote
-  pcf = !"git push -f origin $(git rev-parse --abbrev-ref HEAD) "
+  pcf = "!git push -f origin $(git rev-parse --abbrev-ref HEAD) "
   # Interactive rebase with the given number of latest commits
   reb = "!r() { git rebase -i HEAD~$1; }; r"
-  lga = "log --graph --oneline --all --decorate"
-  lgb = "log --graph --all --decorate --stat"
-  ls = "log --pretty=format: '%C(yellow)%h%Creset -%Cred %ad%Creset:%s %Cgreen[%an]' --decorate"
-  lg = "log --graph --pretty=format: '%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
-  last = "log -1 HEAD"
-  plc = !"git fetch && git pull origin $(git rev-parse --abbrev-ref HEAD)"
+  lga = log --graph --oneline --all --decorate
+  lgb = log --graph --all --decorate --stat
+  ls = log --pretty=format: '%C(yellow)%h%Creset -%Cred %ad%Creset:%s %Cgreen[%an]' --decorate
+  lg = log --graph --pretty=format: '%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  last = log -1 HEAD
+  plc = !git fetch && git pull origin $(git rev-parse --abbrev-ref HEAD)
 
 [apply]
   # Detect whitespace errors when applying a patch
@@ -79,10 +79,10 @@
 [difftool]
   prompt = false
 [difftool "vscode"]
-  cmd = code "$LOCAL" "$REMOTE" --diff --wait
+  cmd = code $LOCAL $REMOTE --diff --wait
   trustExitCode = false
 [mergetool "vscode"]
-  cmd = code "$LOCAL" "$REMOTE" --diff --wait
+  cmd = code $LOCAL $REMOTE --diff --wait
   trustExitCode = false
 [mergetool "vimdiff"]
   cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
@@ -91,17 +91,17 @@
 
 # URL shorthands
 [url "git@github.com:"]
-  insteadOf = "gh:"
-  pushInsteadOf = "github:"
-  pushInsteadOf = "git://github.com/"
+  insteadOf = gh:
+  pushInsteadOf = github:
+  pushInsteadOf = git://github.com/
 [url "git://github.com/"]
-  insteadOf = "github:"
+  insteadOf = github:
 [url "git@gist.github.com:"]
-  insteadOf = "gst:"
-  pushInsteadOf = "gist:"
-  pushInsteadOf = "git://gist.github.com/"
+  insteadOf = gst:
+  pushInsteadOf = gist:
+  pushInsteadOf = git://gist.github.com/
 [url "git://gist.github.com/"]
-  insteadOf = "gist:"
+  insteadOf = gist:
 [url "https://"]
   insteadOf = git://
 [push]
@@ -110,3 +110,6 @@
   path = ~/.localgitconfig
 [credential]
   helper = cache
+[filesystem "Azul Systems, Inc.|11.0.3|/dev/disk1"]
+	timestampResolution = 1000 milliseconds
+	minRacyThreshold = 0 nanoseconds

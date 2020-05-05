@@ -54,6 +54,7 @@ local mappings = {
   ['n fU'] = { [[<Cmd>UndotreeFocus<CR>]], description = 'Focus undo tree' },
   ['n fE'] = { [[<Cmd>vsp $MYVIMRC<CR>]], description = 'Edit .vimrc' },
   ['n fF'] = { [[<Cmd>Files %:p:h<CR>]], description = 'Find from file' },
+  ['n fP'] = { [[<Cmd>Files ~/.vim/lua<CR>]], description = 'Find config file' },
   ['n fx'] = { function() fzf_diagnostics.open_diagnostics(true) end, description = 'List file diagnostics' },
   -- Buffer mappings <leader>b
   ['n bp'] = { [[<Cmd>bprevious<CR>]], description = 'Previous buffer' },
