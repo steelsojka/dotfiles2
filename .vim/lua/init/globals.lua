@@ -19,6 +19,7 @@ local globals = {
     ['ctrl-x'] = 'split',
     ['ctrl-v'] = 'vsplit',
   },
+  fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
   lightline = {
     colorscheme = 'one',
     active = {
