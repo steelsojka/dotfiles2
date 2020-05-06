@@ -12,6 +12,7 @@ local quickfix = require 'quickfix'
 local mappings = {
   ['n '] = { function() which_key.start(false) end, silent = true },
   ['v '] = { function() which_key.start(true) end, silent = true },
+  ['n <CR>'] = { [[<Cmd>Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
   ['nU'] = { [[<C-r>]], description = 'Redo' },
@@ -139,23 +140,26 @@ local mappings = {
   ['n jA'] = { [[<Cmd>AV<CR>]], description = 'Split altenate' },
   ['n jcn'] = { [[g,]], description = 'Next change' },
   ['n jcp'] = { [[g;]], description = 'Previous change' },
-  -- Search mappings <leader>/
-  ['n /d'] = { [[<Cmd>FlyDRg<CR>]], description = 'Grep files in directory' },
-  ['n /c'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
-  ['n //'] = { [[<Cmd>History/<CR>]], description = 'Search history' },
-  ['n /i'] = { [[<Cmd>CocList symbols<CR>]], description = 'Search symbol' },
-  ['n /l'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer lines' },
-  ['n /o'] = { [[<Cmd>CocList outline<CR>]], description = 'List symbols in file' },
-  ['n /b'] = { [[<Cmd>Lines<CR>]], description = 'Search lines' },
-  ['n /p'] = { [[<Cmd>FlyRg<CR>]], description = 'Grep files in project' },
-  ['n /P'] = { [[<Cmd>FlyRg!<CR>]], description = 'Grep files in project (full),' },
-  ['n /f'] = { function()
+  -- Search mappings <leader>s
+  ['n sd'] = { [[<Cmd>FlyDRg<CR>]], description = 'Grep files in directory' },
+  ['n sc'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
+  ['n sh'] = { [[<Cmd>History/<CR>]], description = 'Search history' },
+  ['n si'] = { [[<Cmd>CocList symbols<CR>]], description = 'Search symbol' },
+  ['n sb'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer' },
+  ['n ss'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer' },
+  ['n so'] = { [[<Cmd>CocList outline<CR>]], description = 'List symbols in file' },
+  ['n sl'] = { [[<Cmd>Lines<CR>]], description = 'Search lines' },
+  ['n sp'] = { [[<Cmd>FlyRg<CR>]], description = 'Grep files in project' },
+  ['n sP'] = { [[<Cmd>FlyRg!<CR>]], description = 'Grep files in project (full),' },
+  ['n sm'] = { [[<Cmd>Marks<CR>]], description = 'Jump to marks' },
+  ['n sa'] = { function()
     grep.flygrep('', nvim.fn.expand('%:p:h'), 0, { '--hidden', '--no-ignore' })
   end, description = 'Grep all files' },
+  ['n sS'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
+  -- Local Search/Replace mappings <leader>/
   ['n /h'] = { [[<Cmd>noh<CR>]], description = 'Clear searh highlight' },
   ['n /s'] = { [[g*N]], description = 'Search selected text' },
   ['v /s'] = { [["9y/<C-r>9<CR>]] },
-  ['n /S'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
   ['v /S'] = { [["9y:Rg <C-r>9<CR>]] },
   ['n /r'] = { function()
     nvim.ex.normal('g*')
@@ -224,11 +228,13 @@ local mappings = {
 
 local which_key_map = {
   [' '] = 'Ex command',
-  ['/'] = { name = '+search' },
+  ['/'] = { name = '+local search' },
+  s = { name = '+search' },
   f = { name = '+file' },
   b = { name = '+buffers' },
   w = { name = '+windows', b = { name = '+balance' } },
   y = { name = '+yank' },
+  i = { name = '+insert' },
   g = { name = '+git', c = { name = '+chunk' } },
   p = { name = '+project' },
   c = { 
