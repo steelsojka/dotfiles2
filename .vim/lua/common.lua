@@ -20,7 +20,15 @@ local function show_documentation()
   end
 end
 
+local function cycle_property(current, values, setter)
+  local __, current_index = utils.find(values, function(v) return v == current end)
+  local next_index = current_index + 1 > #values and 0 or current_index + 1
+
+  setter(values[next_index])
+end
+
 return {
   prompt_command = prompt_command,
-  show_documentation = show_documentation
+  show_documentation = show_documentation,
+  cycle_property = cycle_property 
 }

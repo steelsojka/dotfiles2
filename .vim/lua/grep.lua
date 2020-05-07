@@ -1,14 +1,21 @@
 local nvim = require 'nvim'
 local utils = require 'utils/utils'
+local project = require 'utils/project'
 
 local function flygrep(query, cwd, fullscreen, args)
+  local local_folder = project.create_project_local(nvim.fn.expand('%:p:h'))
   local custom_args = utils.join(args or {}, ' ')
   local command = 'rg --column --line-number --no-heading --color=always --smart-case %s %s || true'
   local initial_cmd = command:format(custom_args, nvim.fn.shellescape(query))
   local reload_cmd = command:format(custom_args, '{q}')
   local spec = {
     dir = cwd,
-    options = { '--phony', '--query', query, '--bind', ('change:reload:%s'):format(reload_cmd) }
+    options = { 
+      '--phony', 
+      '--query', query, 
+      '--bind', ('change:reload:%s'):format(reload_cmd),
+      '--history', local_folder .. '/fzf-history-grep'
+    }
   }
 
   if fullscreen == 1 then

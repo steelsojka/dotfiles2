@@ -23,12 +23,10 @@ mappings.create_augroups {
   }
 }
 
-nvim.command [[
-command! -bang -nargs=? -complete=dir Files
-  call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:80%') : fzf#vim#with_preview(), <bang>0)
-]]
-
 nvim.command [[command! -bang -nargs=* DRg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
 nvim.command [[command! -bang -nargs=* Rg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
 nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('require(''grep'').flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
 nvim.command [[command! -bang -nargs=* FlyRg call luaeval('require(''grep'').flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
+nvim.command [[command! -bang -nargs=? -complete=dir Files 
+  call luaeval('require(''files'').fzf_files(unpack(_A))', [<q-args>, <bang>0])
+]]

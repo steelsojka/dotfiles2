@@ -237,8 +237,12 @@ local mappings = {
     nvim.ex.vsp()
     terminal.open(true)
   end, description = 'Terminal at file' },
+  -- Toggle mappings <leader>t
   ['n tl'] = { function() unimplemented() end, description = 'Line numbers' },
-  ['n tw'] = { function() unimplemented() end, description = 'Word wrap' }
+  ['n tw'] = { [[<Cmd>set wrap!<CR>]], description = 'Word wrap' },
+  ['n tr'] = { [[<Cmd>set modifiable!<CR>]], description = 'Read only' },
+  -- Help mappings <leader>h
+  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' }
 }
 
 local which_key_map = {
