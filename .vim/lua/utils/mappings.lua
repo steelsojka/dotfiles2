@@ -5,6 +5,10 @@ LUA_MAPPINGS = {}
 LUA_BUFFER_MAPPINGS = {}
 LUA_AUGROUP_HOOKS = {}
 
+local function unimplemented()
+  print('Unimplemented mapping!');
+end
+
 local function escape_keymap(key)
 	-- Prepend with a letter so it can be used as a dictionary key
 	return 'k' .. key:gsub('.', string.byte)
@@ -179,5 +183,6 @@ return {
   register_buffer_mappings = register_buffer_mappings,
   init_buffer_mappings = init_buffer_mappings,
   create_augroups = create_augroups,
-  escape_keymap = escape_keymap
+  escape_keymap = escape_keymap,
+  unimplemented = unimplemented
 }

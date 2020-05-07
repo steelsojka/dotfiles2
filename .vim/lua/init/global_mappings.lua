@@ -9,10 +9,12 @@ local buffers = require 'buffers'
 local grep = require 'grep'
 local quickfix = require 'quickfix'
 
+local unimplemented = mapping_utils.unimplemented;
+
 local mappings = {
   ['n '] = { function() which_key.start(false) end, silent = true },
   ['v '] = { function() which_key.start(true) end, silent = true },
-  ['n <CR>'] = { [[<Cmd>Marks<CR>]], description = 'Jump to mark' },
+  ['n <CR>'] = { [[:Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
   ['nU'] = { [[<C-r>]], description = 'Redo' },
@@ -43,6 +45,7 @@ local mappings = {
   ['n ,'] = { [[<Cmd>Buffers<CR>]], description = 'Switch buffer' },
   ['n .'] = { [[<Cmd>Files<CR>]], description = 'Find files' },
   ['n  '] = { [[<Cmd>Commands<CR>^]] },
+  ['n x'] = { [[<Cmd>sp e<CR>]], description = 'Scratch buffer' },
   -- File mappings <leader>f
   ['n fs'] = { [[<Cmd>w<CR>]], description = 'Save file' },
   ['n fS'] = { [[<Cmd>wa<CR>]], description = 'Save all files' },
@@ -67,6 +70,7 @@ local mappings = {
   ['n bK'] = { function() buffers.delete_buffers_fzf() end, description = 'Wipe buffers' },
   ['n bb'] = { [[<Cmd>Buffers<CR>]], description = 'List buffers' },
   ['n bY'] = { [[ggyG]], description = 'Yank buffer' },
+  ['n bm'] = { function() common.prompt_command('mark', 'Set mark') end, description = 'Set mark' },
   -- Window mappings <leader>w
   ['n ww'] = { [[<C-W>w]], description = 'Move below/right' },
   ['n wa'] = { [[<Cmd>Windows<CR>]], description = 'List windows' },
@@ -140,6 +144,10 @@ local mappings = {
   ['n jA'] = { [[<Cmd>AV<CR>]], description = 'Split altenate' },
   ['n jcn'] = { [[g,]], description = 'Next change' },
   ['n jcp'] = { [[g;]], description = 'Previous change' },
+  -- Insert mappings <leader>i
+  ['n if'] = { [["%p]], description = 'Current file name' },
+  ['n iF'] = { [[<Cmd>put = expand('%:p')<CR>]], description = 'Current file path' },
+  ['n iy'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'From clipboard' },
   -- Search mappings <leader>s
   ['n sd'] = { [[<Cmd>FlyDRg<CR>]], description = 'Grep files in directory' },
   ['n sc'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
@@ -204,39 +212,47 @@ local mappings = {
   ['n gg'] = { [[:Git<Space>]], description = 'Git command' },
   ['n gl'] = { [[<Cmd>Commits<CR>]], description = 'Git log' },
   ['n gL'] = { [[<Cmd>BCommits<CR>]], description = 'Git file log' },
-  ['n gf'] = { [[<Cmd>Gfetch<CR>]], description = 'Git fetch' },
+  ['n gF'] = { [[<Cmd>Gfetch<CR>]], description = 'Git fetch' },
   ['n gp'] = { [[<Cmd>Gpull<CR>]], description = 'Git pull' },
   ['n gP'] = { [[<Cmd>Gpush<CR>]], description = 'Git push' },
   ['n gb'] = { [[<Cmd>Gblame<CR>]], description = 'Git blame' },
-  ['n gS'] = { function() terminal.float_fzf_cmd("gss") end, description = 'Browse stash' },
   ['n gr'] = { function() terminal.float_fzf_cmd("grh") end, description = 'Reset files to head' },
   ['n gD'] = { function() terminal.float_fzf_cmd("gd") end, description = 'Diff files' },
   ['n ga'] = { function() terminal.float_fzf_cmd("ga") end, description = 'Add files' },
   ['n gC'] = { function() terminal.float_fzf_cmd("gcf") end, description = 'Checkout files' },
-  -- Terminal mappings <leader>t
-  ['n tt'] = { function() terminal.float(false) end, description = 'Float terminal' },
-  ['n tT'] = { function() terminal.float(true) end, description = 'Float terminal (full)' },
-  ['n tv'] = { function() 
+  ['n gfc'] = { function() unimplemented() end, description = 'Find commit' },
+  ['n gff'] = { function() unimplemented() end, description = 'Find file' },
+  ['n gfg'] = { function() unimplemented() end, description = 'Find gitconfig file' },
+  ['n gfi'] = { function() unimplemented() end, description = 'Find issue' },
+  ['n gfp'] = { function() unimplemented() end, description = 'Find pull request' },
+  ['n gfs'] = { function() terminal.float_fzf_cmd("gss") end, description = 'Find stash' },
+  -- Terminal mappings <leader>wt
+  ['n wtt'] = { function() terminal.float(false) end, description = 'Float terminal' },
+  ['n wtT'] = { function() terminal.float(true) end, description = 'Float terminal (full)' },
+  ['n wtv'] = { function() 
     nvim.ex.vsp()
     terminal.open() 
   end, description = 'Vertical split terminal' },
-  ['n tf'] = { function()
+  ['n wtf'] = { function()
     nvim.ex.vsp()
     terminal.open(true)
-  end, description = 'Terminal at file' }
+  end, description = 'Terminal at file' },
+  ['n tl'] = { function() unimplemented() end, description = 'Line numbers' },
+  ['n tw'] = { function() unimplemented() end, description = 'Word wrap' }
 }
 
 local which_key_map = {
   [' '] = 'Ex command',
-  ['/'] = { name = '+local search' },
+  ['/'] = { name = '+local-search' },
   s = { name = '+search' },
   f = { name = '+file' },
   b = { name = '+buffers' },
-  w = { name = '+windows', b = { name = '+balance' } },
+  w = { name = '+windows', b = { name = '+balance' }, t = { name = '+terminal' } },
   y = { name = '+yank' },
   i = { name = '+insert' },
-  g = { name = '+git', c = { name = '+chunk' } },
+  g = { name = '+git', c = { name = '+chunk' }, f = { name = '+find' } },
   p = { name = '+project' },
+  h = { name = '+help' },
   c = { 
     name = '+code', 
     q = { name = '+quickfix' },
@@ -266,7 +282,7 @@ local which_key_map = {
     e = { name = '+errors' },
     q = { name = '+quickfix' }
   },
-  t = { name = '+terminal' }
+  t = { name = '+toggle' }
 }
 
 mapping_utils.register_mappings(mappings, { noremap = true }, which_key_map)
