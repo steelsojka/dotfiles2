@@ -8,6 +8,7 @@ local common = require 'common'
 local buffers = require 'buffers'
 local grep = require 'grep'
 local quickfix = require 'quickfix'
+local files = require 'files'
 
 local unimplemented = mapping_utils.unimplemented;
 
@@ -26,6 +27,7 @@ local mappings = {
   ['i<C-l>'] = { [[<Plug>(fzf-complete-line)]] },
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]] },
   ['i<C-w>'] = { [[<Plug>(fzf-complete-word)]] },
+  ['i<C-u>'] = { function() files.insert_relative_path(nvim.fn.expand('%:p:h')) end },
   ['ngd'] = { [[<Plug>(coc-definition)]], silent = true },
   ['ngy'] = { [[<Plug>(coc-type-definition)]], silent = true },
   ['ngi'] = { [[<Plug>(coc-implementation)]], silent = true },
@@ -148,6 +150,7 @@ local mappings = {
   ['n if'] = { [["%p]], description = 'Current file name' },
   ['n iF'] = { [[<Cmd>put = expand('%:p')<CR>]], description = 'Current file path' },
   ['n iy'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'From clipboard' },
+  ['n is'] = { function() unimplemented() end, description = 'Insert snippet' },
   -- Search mappings <leader>s
   ['n sd'] = { [[<Cmd>FlyDRg<CR>]], description = 'Grep files in directory' },
   ['n sc'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
@@ -242,7 +245,8 @@ local mappings = {
   ['n tw'] = { [[<Cmd>set wrap!<CR>]], description = 'Word wrap' },
   ['n tr'] = { [[<Cmd>set modifiable!<CR>]], description = 'Read only' },
   -- Help mappings <leader>h
-  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' }
+  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' },
+  ['n hs'] = { [[<Cmd>CocList snippets<CR>]], description = 'Snippets list' }
 }
 
 local which_key_map = {

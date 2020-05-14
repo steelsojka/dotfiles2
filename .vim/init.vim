@@ -41,6 +41,8 @@ Plug 'neoclide/coc-lists', { 'do': 'yarn install --frozen-lockfile' }
 Plug 'neoclide/coc-snippets', { 'do': 'yarn install --frozen-lockfile' }
 Plug 'neoclide/coc-eslint', { 'do': 'yarn install --frozen-lockfile' }
 Plug 'neoclide/coc-sources', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'neoclide/coc-tslint', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'neoclide/coc-emmet', { 'do': 'yarn install --frozen-lockfile' }
 Plug 'iamcco/coc-angular', { 'do': 'yarn install --frozen-lockfile && yarn run build' }
 
 call plug#end()
