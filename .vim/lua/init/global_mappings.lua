@@ -244,6 +244,7 @@ local mappings = {
   ['n tl'] = { function() unimplemented() end, description = 'Line numbers' },
   ['n tw'] = { [[<Cmd>set wrap!<CR>]], description = 'Word wrap' },
   ['n tr'] = { [[<Cmd>set modifiable!<CR>]], description = 'Read only' },
+  ['n ts'] = { [[<Cmd>set spell!<CR>]], description = 'Spell check' },
   -- Help mappings <leader>h
   ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' },
   ['n hs'] = { [[<Cmd>CocList snippets<CR>]], description = 'Snippets list' }
