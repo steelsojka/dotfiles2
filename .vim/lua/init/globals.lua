@@ -1,11 +1,10 @@
 local nvim = require 'nvim'
-local colorizer = require 'colorizer'
 local Fzf = require 'fzf/fzf'
 local Funcref = require 'utils/funcref'
 local quickfix = require 'quickfix'
 
-local fzf_to_qf_ref = Funcref:create(function(ref, lines)
-  quickfix.build_list(lines) 
+local fzf_to_qf_ref = Funcref:create(function(_, lines)
+  quickfix.build_list(lines)
 end , { name = 'fzf_to_qf' })
 
 local globals = {
@@ -20,6 +19,7 @@ local globals = {
     ['ctrl-v'] = 'vsplit',
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
+  diagnostic_enable_virtual_text = 0,
   lightline = {
     colorscheme = 'one',
     active = {
@@ -29,8 +29,7 @@ local globals = {
       },
       right = {
         { 'lineinfo' },
-        { 'percent' },
-        { 'coc_status' }
+        { 'percent' }
       }
     },
     component = {
@@ -44,8 +43,8 @@ local globals = {
   floaterm_winblend = 10,
   floaterm_position = 'center',
   floaterm_background = '#36353d',
-  floaterm_width = nvim.fn.float2nr(nvim.o.columns * 0.9),
-  floaterm_height = nvim.fn.float2nr(nvim.o.lines * 0.75),
+  floaterm_width = vim.fn.float2nr(nvim.o.columns * 0.9),
+  floaterm_height = vim.fn.float2nr(nvim.o.lines * 0.75),
   typescript_compiler_binary = 'node_modules/.bin/tsc',
   typescript_compiler_options = '--noEmit',
   startify_custom_header = {

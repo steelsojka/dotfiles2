@@ -1,6 +1,6 @@
 local nvim = require 'nvim'
 
-local HOME = nvim.fn.expand('~')
+local HOME = vim.fn.expand('~')
 
 local settings = {
   number = true,
@@ -23,13 +23,14 @@ local settings = {
   grepprg = 'rg --vimgrep --auto-hybrid-regex',
   updatetime = 200,
   signcolumn = 'yes',
-  cmdheight = 2,
+  cmdheight = 1,
   mouse = 'nv',
   showmode = false,
   splitbelow = true,
   splitright = true,
   inccommand = 'nosplit',
   shortmess = nvim.o.shortmess .. 'c',
+  completeopt = 'menuone,noinsert,noselect',
   gdefault = true,
   dictionary = '/usr/share/dict/words'
 }

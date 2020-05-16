@@ -4,40 +4,48 @@ local nvim = require 'nvim'
 local utils = require 'utils/utils'
 local Fzf = require 'fzf/fzf'
 
-local fzf = Fzf:create(function(ref, line)
-  local file, lnum, col, error_msg = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
+local fzf = Fzf:create(function(_, line)
+  local file, lnum, col = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
 
   if file then
-    nvim.ex.buffer(nvim.fn.bufnr(file))
+    nvim.ex.buffer(vim.fn.bufnr(file))
     nvim.ex.mark("'")
 
     if lnum and col then
-      nvim.fn.cursor(lnum, col)
+      vim.fn.cursor(lnum, col)
       nvim.ex.normal_('zvzz')
     end
   end
 end, false)
 
 local function format_diagnostic(item, key)
-  return (item.file ~= nil and nvim.fn.bufname(item.file) or '')
-    .. '|' .. (item.lnum ~= nil and item.lnum or '')
-    .. (item.col ~= nil and (' ' .. item.col) or ' 0')
+  return (item.uri ~= nil and item.uri or '')
+    .. '|' .. (item.range.start.line ~= nil and item.range.start.line or '')
+    .. (item.range.start.character ~= nil and (' ' .. item.range.start.character) or ' 0')
     .. '| ' .. item.severity
     .. ': ' .. item.message
 end
 
-local function get_diagnostics(file_only)
-  local diagnostics = nvim.fn.CocAction('diagnosticList')
+local function get_diagnostics(options)
+  options = options or {}
 
-  if file_only then
-    local current_file = nvim.fn.expand('%:p')
+  local result = {}
 
-    diagnostics = utils.filter(diagnostics, function(item, key)
-      return item.file == current_file
-    end)
+  if options.bufnr then
+    result = vim.lsp.util.diagnostics[options.bufnr] or {}
+  else 
+    for buf,diagnostics in pairs(vim.lsp.util.diagnostics_by_buf) do
+      if options.filetype then
+        diagnostics = utils.filter(diagnostics, function(diagnostic)
+          return diagnostic.source == options.filetype
+        end)
+      end
+
+      result = utils.concat(result, diagnostics)
+    end
   end
 
-  return utils.map(diagnostics, format_diagnostic) 
+  return utils.map(result, format_diagnostic) 
 end
 
 local function open_diagnostics(file_only)

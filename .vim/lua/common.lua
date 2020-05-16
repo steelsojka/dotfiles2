@@ -5,18 +5,26 @@ local utils = require 'utils/utils'
 -- @param command Command to run with search term
 -- @param prompt Prompt text
 local function prompt_command(command, prompt)
-  local search_term = nvim.fn.input(('%s: '):format(prompt))
+  local search_term = vim.fn.input(('%s: '):format(prompt))
 
   if string.len(search_term) > 0 then
     nvim.command(('%s %s'):format(command, search_term))
   end
 end
 
-local function show_documentation()
-  if nvim.fn.index({ 'vim', 'lua', 'help' }, nvim.bo.filetype) >= 0 then
-    nvim.ex.help(nvim.fn.expand('<cword>'))
+local function show_documentation(show_errors)
+  if show_errors then
+    local error_result = vim.lsp.util.show_line_diagnostics()
+
+    if error_result ~= nil then
+      return
+    end
+  end
+
+  if vim.fn.index({ 'vim', 'lua', 'help' }, nvim.bo.filetype) >= 0 then
+    nvim.ex.help(vim.fn.expand('<cword>'))
   else
-    nvim.fn.CocAction 'doHover'
+    vim.lsp.buf.hover()
   end
 end
 

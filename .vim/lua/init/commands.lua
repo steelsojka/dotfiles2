@@ -5,8 +5,8 @@ local utils = require 'utils/utils'
 mappings.create_augroups {
   float_term = {
     { 'VimResized', '*', function() 
-      nvim.g.floaterm_width = nvim.fn.float2nr(nvim.o.columns * 0.9)
-      nvim.g.floaterm_height = nvim.fn.float2nr(nvim.o.lines * 0.75)
+      nvim.g.floaterm_width = vim.fn.float2nr(nvim.o.columns * 0.9)
+      nvim.g.floaterm_height = vim.fn.float2nr(nvim.o.lines * 0.75)
     end }
   },
 
@@ -18,8 +18,8 @@ mappings.create_augroups {
     { 'User', 'Startified', function() nvim.ex.setlocal('buflisted') end }
   },
   coc_nvim = {
-    { 'CursorHold', '*', 'silent', function() nvim.fn.CocActionAsync('highlight') end },
-    { 'User', 'CocJumpPlaceholder', function() nvim.fn.CocActionAsync('showSignatureHelp') end }
+    -- { 'CursorHold', '*', 'silent', function() vim.fn.CocActionAsync('highlight') end },
+    -- { 'User', 'CocJumpPlaceholder', function() vim.fn.CocActionAsync('showSignatureHelp') end }
   }
 }
 

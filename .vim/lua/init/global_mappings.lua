@@ -15,6 +15,7 @@ local unimplemented = mapping_utils.unimplemented;
 local mappings = {
   ['n '] = { function() which_key.start(false) end, silent = true },
   ['v '] = { function() which_key.start(true) end, silent = true },
+  ['i<C-space>'] = { function() vim.lsp.omnifunc() end, silent = true },
   ['n <CR>'] = { [[:Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
@@ -22,16 +23,16 @@ local mappings = {
   ['n/'] = { [[/\v]], description = 'Search with magic' },
   ['n?'] = { [[?\v]], description = 'Search backwards with magic' },
   ['nK'] = { function() common.show_documentation() end, description = 'Show documentation', silent = true },
-  ['ngh'] = { function() common.show_documentation() end, description = 'Show documentation', silent = true },
+  ['ngh'] = { function() common.show_documentation(true) end, description = 'Show documentation', silent = true },
   -- Completion for all lines in all buffers
   ['i<C-l>'] = { [[<Plug>(fzf-complete-line)]] },
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]] },
   ['i<C-w>'] = { [[<Plug>(fzf-complete-word)]] },
-  ['i<C-u>'] = { function() files.insert_relative_path(nvim.fn.expand('%:p:h')) end },
-  ['ngd'] = { [[<Plug>(coc-definition)]], silent = true },
-  ['ngy'] = { [[<Plug>(coc-type-definition)]], silent = true },
-  ['ngi'] = { [[<Plug>(coc-implementation)]], silent = true },
-  ['ngr'] = { [[<Plug>(coc-references)]], silent = true },
+  ['i<C-u>'] = { function() files.insert_relative_path(vim.fn.expand('%:p:h')) end },
+  ['ngd'] = { function() vim.lsp.buf.definition() end, silent = true },
+  ['ngy'] = { function() vim.lsp.buf.type_definition()  end, silent = true },
+  ['ngi'] = { function() vim.lsp.buf.implementation() end, silent = true },
+  ['ngr'] = { function() vim.lsp.buf.references()  end, silent = true },
   ['nf'] = { [[<Plug>Sneak_f]] },
   ['nF'] = { [[<Plug>Sneak_F]] },
   ['xf'] = { [[<Plug>Sneak_f]] },
@@ -52,10 +53,10 @@ local mappings = {
   ['n fs'] = { [[<Cmd>w<CR>]], description = 'Save file' },
   ['n fS'] = { [[<Cmd>wa<CR>]], description = 'Save all files' },
   ['n f/'] = { [[<Cmd>BLines<CR>]], description = 'Search lines' },
-  ['n ff'] = { [[<Cmd>call CocAction("format")<CR>]], description = 'Format file' },
+  ['n ff'] = { function() vim.lsp.buf.formatting() end, description = 'Format file' },
   ['n fo'] = { [[<Cmd>Dirvish %:p:h<CR>]], description = 'Show in tree' },
   ['n fO'] = { [[<Cmd>vsp +Dirvish %:p:h<CR>]], description = 'Show in split tree' },
-  ['n fr'] = { [[<Cmd>CocList mru<CR>]], description = 'Open recent files' },
+  -- ['n fr'] = { [[<Cmd>CocList mru<CR>]], description = 'Open recent files' },
   ['n fu'] = { [[<Cmd>UndotreeToggle<CR>]], description = 'Undo tree' },
   ['n fU'] = { [[<Cmd>UndotreeFocus<CR>]], description = 'Focus undo tree' },
   ['n fE'] = { [[<Cmd>vsp $MYVIMRC<CR>]], description = 'Edit .vimrc' },
@@ -109,7 +110,7 @@ local mappings = {
   ['n pf'] = { [[<Cmd>Files .<CR>]], description = 'Find file' },
   ['n pF'] = { [[<Cmd>Files! .<CR>]], description = 'Find file fullscreen' },
   ['n ps'] = { function()
-    local word = nvim.fn.expand("<cword>")
+    local word = vim.fn.expand("<cword>")
 
     nvim.ex.Files('.') 
     nvim.input(word)
@@ -129,12 +130,12 @@ local mappings = {
   ['v jk'] = { [[<C-b>]], description = 'Page up', which_key = false },
   ['n jj'] = { [[<C-f>]], description = 'Page down' },
   ['v jj'] = { [[<C-f>]], description = 'Page down', which_key = false },
-  ['n jd'] = { [[<Plug>(coc-definition)]], description = 'Definition' },
-  ['n ji'] = { [[<Plug>(coc-implementation)]], description = 'Implementation' },
-  ['n jy'] = { [[<Plug>(coc-type-implementation)]], description = 'Type definition' },
-  ['n jr'] = { [[<Plug>(coc-references)]], description = 'Type references' },
-  ['n jep'] = { [[<Plug>(coc-diagnostic-prev)]], description = 'Previous error' },
-  ['n jen'] = { [[<Plug>(coc-diagnostic-next)]], description = 'Next error' },
+  ['n jd'] = { function() vim.lsp.buf.definition()  end, description = 'Definition' },
+  ['n ji'] = { function() vim.lsp.buf.implementation() end, description = 'Implementation' },
+  ['n jy'] = { function() vim.lsp.buf.type_definition() end, description = 'Type definition' },
+  ['n jr'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
+  ['n jep'] = { [[<Cmd>PrevDiagnosticCycle<CR>]], description = 'Previous error' },
+  ['n jen'] = { [[<Cmd>NextDiagnosticCycle<CR>]], description = 'Next error' },
   ['n jqp'] = { [[<Cmd>cN<CR>]], description = 'Previous' },
   ['n jqn'] = { [[<Cmd>cn<CR>]], description = 'Next' },
   ['n jn'] = { [[<C-o>]], description = 'Next jump' },
@@ -149,22 +150,22 @@ local mappings = {
   -- Insert mappings <leader>i
   ['n if'] = { [["%p]], description = 'Current file name' },
   ['n iF'] = { [[<Cmd>put = expand('%:p')<CR>]], description = 'Current file path' },
-  ['n iy'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'From clipboard' },
+  -- ['n iy'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'From clipboard' },
   ['n is'] = { function() unimplemented() end, description = 'Insert snippet' },
   -- Search mappings <leader>s
   ['n sd'] = { [[<Cmd>FlyDRg<CR>]], description = 'Grep files in directory' },
   ['n sc'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },
   ['n sh'] = { [[<Cmd>History/<CR>]], description = 'Search history' },
-  ['n si'] = { [[<Cmd>CocList symbols<CR>]], description = 'Search symbol' },
+  ['n si'] = { function() vim.lsp.buf.workspace_symbol() end, description = 'Search symbol' },
   ['n sb'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer' },
   ['n ss'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer' },
-  ['n so'] = { [[<Cmd>CocList outline<CR>]], description = 'List symbols in file' },
+  -- ['n so'] = { [[<Cmd>CocList outline<CR>]], description = 'List symbols in file' },
   ['n sl'] = { [[<Cmd>Lines<CR>]], description = 'Search lines' },
   ['n sp'] = { [[<Cmd>FlyRg<CR>]], description = 'Grep files in project' },
   ['n sP'] = { [[<Cmd>FlyRg!<CR>]], description = 'Grep files in project (full),' },
   ['n sm'] = { [[<Cmd>Marks<CR>]], description = 'Jump to marks' },
   ['n sa'] = { function()
-    grep.flygrep('', nvim.fn.expand('%:p:h'), 0, { '--hidden', '--no-ignore' })
+    grep.flygrep('', vim.fn.expand('%:p:h'), 0, { '--hidden', '--no-ignore' })
   end, description = 'Grep all files' },
   ['n sS'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
   -- Local Search/Replace mappings <leader>/
@@ -177,7 +178,7 @@ local mappings = {
     nvim.input(':%s//')
   end, description = 'Replace selected text' },
   -- Yank with preview <leader>y
-  ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },
+  -- ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },
   ['n yf'] = { [[<Cmd>let @" = expand("%:p")<CR>]], description = 'Yank file path' },
   ['n yF'] = { [[<Cmd>let @" = expand("%:t:r")<CR>]], description = 'Yank file name' },
   ['n yy'] = { [["+y]], description = 'Yank to clipboard' },
@@ -185,30 +186,31 @@ local mappings = {
   -- Code mappings <leader>c
   ['n cl'] = { [[<Cmd>Commentary<CR>]], description = 'Comment line' },
   ['v cl'] = { [[:Commentary<CR>]] },
-  ['n cx'] = { function() fzf_diagnostics.open_diagnostics() end, description = 'List diagnostics (Fzf)' },
-  ['n cX'] = { [[<Cmd>CocList diagnostics<CR>]], description = 'List diagnostics (Coc)' },
-  ['n cd'] = { [[<Plug>(coc-definition)]], description = 'Definition' },
-  ['n cD'] = { [[<Plug>(coc-references)]], description = 'Type references' },
-  ['n ck'] = { [[gh]], description = 'Jump to documenation', noremap = false },
-  ['n cr'] = { [[<Plug>(coc-rename)]], description = 'Rename symbol' },
-  ['n cf'] = { [[<Cmd>CocAction<CR>]], description = 'Quick fix actions' },
-  ['n cql'] = { function() 
-    local line = nvim.fn.getpos(".")[2]
+  ['n cx'] = { function() fzf_diagnostics.open_diagnostics() end, description = 'List diagnostics (fzf)' },
+  ['n cX'] = { [[<Cmd>OpenDiagnostic<CR>]], description = 'List diagnostics (loc)' },
+  ['n cd'] = { function() vim.lsp.buf.definition() end, description = 'Definition' },
+  ['n cD'] = { function() vim.lsp.buf.type_definition() end, description = 'Type references' },
+  ['n ck'] = { [[gh]], description = 'Get help', noremap = false },
+  ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'Rename symbol' },
+  ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
+  -- ['n cf'] = { [[<Cmd>CocAction<CR>]], description = 'Quick fix actions' },
+  ['n cql'] = { function()
+    local line = vim.fn.getpos(".")[2]
     quickfix.add_line_to_quickfix(line, line)
   end, description = 'Add line to quickfix' },
-  ['v cql'] = { function() 
-    quickfix.add_line_to_quickfix(nvim.fn.getpos("'<")[2], nvim.fn.getpos("'>")[2])
+  ['v cql'] = { function()
+    quickfix.add_line_to_quickfix(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
   end, description = 'Add line to quickfix' },
   ['n cqn'] = { function() quickfix.new_qf_list() end, description = 'New quickfix list' },
   -- Documentation mappings <leader>d
   ['n dd'] = { [[<Plug>(doge-generate)]], description = 'Document' },
   -- Git mappings <leader>g
-  ['n gcu'] = { [[<Cmd>CocCommand git.chunkUndo<CR>]], description = 'Undo chunk' },
-  ['n gcs'] = { [[<Cmd>CocCommand git.chunkStage<CR>]], description = 'Stage chunk' },
-  ['n gcn'] = { [[<Plug>(coc-git-nextchunk)]], description = 'Next chunk' },
-  ['n gcp'] = { [[<Plug>(coc-git-prevchunk)]], description = 'Previous chunk' },
-  ['n gci'] = { [[<Plug>(coc-git-chunkinfo)]], description = 'Chunk info' },
-  ['n gB'] = { function() git.checkout_git_branch_fzf(nvim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
+  ['n gcu'] = { [[<Cmd>GitGutterUndoHunk<CR>]], description = 'Undo chunk' },
+  ['n gcs'] = { [[<Cmd>GitGutterStageHunk<CR>]], description = 'Stage chunk' },
+  ['n gcn'] = { [[<Cmd>GitGutterNextHunk<CR>]], description = 'Next chunk' },
+  ['n gcp'] = { [[<Cmd>GitGutterPrevHunk<CR>]], description = 'Previous chunk' },
+  ['n gci'] = { [[<Cmd>GitGutterPreviewHunk<CR>]], description = 'Chunk info' },
+  ['n gB'] = { function() git.checkout_git_branch_fzf(vim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
   ['n gs'] = { [[<Cmd>G<CR>]], description = 'Git status' },
   ['n gd'] = { [[<Cmd>Gdiffsplit<CR>]], description = 'Git diff' },
   ['n ge'] = { [[<Cmd>Gedit<CR>]], description = 'Git edit' },
@@ -245,9 +247,18 @@ local mappings = {
   ['n tw'] = { [[<Cmd>set wrap!<CR>]], description = 'Word wrap' },
   ['n tr'] = { [[<Cmd>set modifiable!<CR>]], description = 'Read only' },
   ['n ts'] = { [[<Cmd>set spell!<CR>]], description = 'Spell check' },
+  ['n te'] = { function()
+    local cur = nvim.g.diagnostic_enable_virtual_text
+
+    if cur == 1 then
+      nvim.g.diagnostic_enable_virtual_text = 0
+    else
+      nvim.g.diagnostic_enable_virtual_text = 1
+    end
+  end, description = 'Inline errors' },
   -- Help mappings <leader>h
   ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' },
-  ['n hs'] = { [[<Cmd>CocList snippets<CR>]], description = 'Snippets list' }
+  -- ['n hs'] = { [[<Cmd>CocList snippets<CR>]], description = 'Snippets list' }
 }
 
 local which_key_map = {
@@ -305,13 +316,11 @@ function! CheckBackSpace() abort
 endfunction
 ]]
 
-nvim.command [[inoremap <silent><expr> <C-SPACE> coc#refresh()]]
-
 -- Use tab for trigger completion with characters ahead and navigate.
 -- Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-nvim.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : coc#refresh()]]
+nvim.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : completion#trigger_completion()]]
 nvim.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
 
 -- Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 -- Coc only does snippet and additional edit on confirm.
-nvim.command [[inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"]]
+-- nvim.command [[inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"]]

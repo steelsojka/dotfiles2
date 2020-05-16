@@ -1,6 +1,5 @@
 local Observable = require 'utils/observable'
 local Funcref = require 'utils/funcref'
-local nvim = require 'nvim'
 
 local function is_eof(list)
   return type(list) == 'table' and list[1] == "" and list[2] == nil
@@ -25,7 +24,7 @@ local function job_start(cmd, stdin_handler)
       end
     end)
 
-    local job_id = nvim.fn.eval(([[jobstart('%s', { 'on_stdout': %s, 'on_stderr': %s, 'on_exit': %s })]]):format(
+    local job_id = vim.fn.eval(([[jobstart('%s', { 'on_stdout': %s, 'on_stderr': %s, 'on_exit': %s })]]):format(
       cmd,
       handler:get_vim_ref_string(),
       handler:get_vim_ref_string(),
@@ -35,12 +34,12 @@ local function job_start(cmd, stdin_handler)
     if type(stdin_handler) == 'function' then
       stdin_handler(job_id)
     elseif stdin_handler then
-      nvim.fn.chansend(job_id, stdin_handler)
-      nvim.fn.chanclose(job_id, 'stdin')
+      vim.fn.chansend(job_id, stdin_handler)
+      vim.fn.chanclose(job_id, 'stdin')
     end
 
     return function()
-      pcall(function() nvim.fn.jobstop(job_id) end)
+      pcall(function() vim.fn.jobstop(job_id) end)
       handler:unsubscribe()
     end
   end) 

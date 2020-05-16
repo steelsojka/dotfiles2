@@ -7,7 +7,7 @@ local function float(full)
   local height
 
   if full then
-    height = nvim.fn.winheight(0)
+    height = vim.fn.winheight(0)
   else
     local lines = nvim.o.lines
     height = math.floor(lines * 0.6)
@@ -30,11 +30,11 @@ end
 -- Opens terminal to the cwd or to the current files directory.
 -- @param is_local Whether to open local to the current file directory
 local function open_term(is_local)
-  local cwd = is_local and nvim.fn.expand '%:p:h' or nvim.fn.getcwd()
+  local cwd = is_local and vim.fn.expand '%:p:h' or vim.fn.getcwd()
   local buf = nvim.create_buf(true, false)
 
   nvim.set_current_buf(buf)
-  nvim.fn.termopen(nvim.o.shell, { cwd = cwd })
+  vim.fn.termopen(nvim.o.shell, { cwd = cwd })
   nvim.ex.normal 'i'
 end
 

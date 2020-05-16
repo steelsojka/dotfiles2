@@ -2,7 +2,6 @@ local Subscription = require 'utils/subscription'
 local Funcref = require 'utils/funcref'
 local nvim = require 'nvim'
 local unique_id = require 'utils/unique_id'
-local utils = require 'utils/utils'
 
 local Fzf = {}
 
@@ -64,7 +63,7 @@ function Fzf.create_floating_window(on_close)
     })
   end
 
-  nvim.fn.setbufvar(buf, '&signcolumn', 'no' )
+  vim.fn.setbufvar(buf, '&signcolumn', 'no' )
   nvim.open_win(buf, true, { relative = 'editor', row = y, col = x, width = width, height = height })
   nvim.ex.setlocal 'winblend=10'
 end

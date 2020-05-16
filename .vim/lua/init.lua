@@ -9,6 +9,7 @@ require 'init/globals'
 require 'init/global_mappings'
 require 'init/filetypes'
 require 'init/commands'
+require 'init/lsp'
 
 colorizer.setup {
   'css',

@@ -15,7 +15,7 @@ local function start_which_key(visual)
   end
 
   nvim.g.which_key_map = which_key_dict
-  nvim.fn['which_key#register']('<Space>', 'g:which_key_map')
+  vim.fn['which_key#register']('<Space>', 'g:which_key_map')
   nvim.command(([[%s " "]]):format(visual and 'WhichKeyVisual' or 'WhichKey'))
 end
 

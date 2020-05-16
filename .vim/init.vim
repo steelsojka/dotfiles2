@@ -2,12 +2,18 @@
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 
+" Install vim-plugged if not installed
+if empty(glob('~/.local/share/nvim/plugged'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'liuchengxu/vim-which-key'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mhartington/oceanic-next'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
@@ -27,23 +33,13 @@ Plug 'tpope/vim-dispatch'
 Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
 Plug 'norcalli/nvim.lua', { 'commit': 'ceb76105a8d715eec898c692ba41c2d8dbdc6dbd' }
-" COC extensions
-Plug 'neoclide/coc-tsserver', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-json', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-git', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-java', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-pairs', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-prettier', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-css', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-html', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-yank', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-lists', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-snippets', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-eslint', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-sources', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-tslint', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-emmet', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'iamcco/coc-angular', { 'do': 'yarn install --frozen-lockfile && yarn run build' }
+Plug 'neovim/nvim-lsp'
+Plug 'haorenW1025/completion-nvim'
+Plug 'haorenW1025/diagnostic-nvim'
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
+" TODO: Install UltiSnips
+" Integrate FZF with LSP (symbols, diagnostics, etc...)
 
 call plug#end()
 

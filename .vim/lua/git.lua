@@ -5,9 +5,9 @@ local Fzf = require 'fzf/fzf'
 local git_checkout_fzf = Fzf:create '!git checkout'
 
 local function get_git_status()
-  local status = nvim.fn['fugitive#head']()
+  local status = vim.fn['fugitive#head']()
 
-  if nvim.fn.winwidth(0) > 80 then
+  if vim.fn.winwidth(0) > 80 then
     return #status > 30 and (status:sub(0, 27) .. '...') or status
   end
   

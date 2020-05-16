@@ -11,12 +11,12 @@ return function()
     ['n mF'] = { function() quickfix.filter(true) end, description = 'Filter (destructive)' },
     ['n mf'] = { function() quickfix.filter(false) end, description = 'Filter' },
     ['n md'] = { function()
-      local line = nvim.fn.getpos('.')[2]
+      local line = vim.fn.getpos('.')[2]
 
       quickfix.delete_item(line, line)
     end, description = 'Delete item' },
     ['v md'] = { function() 
-      quickfix.delete_item(nvim.fn.getpos("'<")[2], nvim.fn.getpos("'>")[2])
+      quickfix.delete_item(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
     end, description = 'Delete selected items' }
   }
 end

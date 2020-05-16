@@ -50,11 +50,22 @@ local function split(str, split_on)
   return result
 end
 
+local function concat(list1, list2)
+  local result = { unpack(list1) }
+
+  for i,v in ipairs(list2) do
+    result[#result + i] = list2[i]
+  end
+
+  return result
+end
+
 return {
   reduce = reduce,
   map = map,
   filter = filter,
   join = join,
   split = split,
-  find = find
+  find = find,
+  concat = concat
 }

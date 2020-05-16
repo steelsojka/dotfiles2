@@ -3,13 +3,13 @@ local utils = require 'utils/utils'
 local Fzf = require 'fzf/fzf'
 
 local function build_list(lines)
-  nvim.fn.setqflist(utils.map(lines, function(line) return { filename = line } end))
+  vim.fn.setqflist(utils.map(lines, function(line) return { filename = line } end))
   nvim.ex.copen()
   nvim.ex.cc()
 end
 
 local function get_fzf_list()
-  local qf_list = nvim.fn.getqflist()
+  local qf_list = vim.fn.getqflist()
 
   return utils.map(
     qf_list, 
@@ -23,7 +23,7 @@ end
 -- @param destructive Whether to overwrite the current quick fix list
 local function filter_qf(destructive)
   local fzf = Fzf:create(function(ref, lines)
-    local qf_list = nvim.fn.getqflist()
+    local qf_list = vim.fn.getqflist()
     local rows_to_keep = utils.filter(
       utils.map(lines, function(line) return line:match('^([0-9]+)') end),
       function(line) return line ~= nil end
@@ -31,9 +31,9 @@ local function filter_qf(destructive)
     local new_results = utils.filter(qf_list, function(item, i) return vim.tbl_contains(rows_to_keep, tostring(i)) end)
 
     if not destructive then
-      nvim.fn.setqflist(new_results)
+      vim.fn.setqflist(new_results)
     else
-      nvim.fn.setqflist({}, 'r', { items = new_results })
+      vim.fn.setqflist({}, 'r', { items = new_results })
     end
   end, true)
 
@@ -45,7 +45,7 @@ local function filter_qf(destructive)
 end
 
 local function delete_item(first_line, last_line)
-  local qf_list = nvim.fn.getqflist()
+  local qf_list = vim.fn.getqflist()
   local i = first_line
   
   while i <= last_line do
@@ -53,11 +53,11 @@ local function delete_item(first_line, last_line)
     i = i + 1
   end
 
-  nvim.fn.setqflist({}, 'r', { items = qf_list })
+  vim.fn.setqflist({}, 'r', { items = qf_list })
 end
 
 local function add_line_to_quickfix(start_line, end_line)
-  local list = nvim.fn.getqflist() 
+  local list = vim.fn.getqflist() 
   local buf = nvim.win_get_buf(0)
   local lines = nvim.buf_get_lines(buf, start_line, end_line, false)
   local qflist = utils.map(lines, function(line, index)
@@ -69,13 +69,11 @@ local function add_line_to_quickfix(start_line, end_line)
     }
   end)
 
-  vim.inspect(qflist)
-
-  nvim.fn.setqflist({ unpack(list), unpack(qflist) })
+  vim.fn.setqflist({ unpack(list), unpack(qflist) })
 end
 
 local function new_qf_list(title)
-  nvim.fn.setqflist({}, ' ', { title = title or '' })
+  vim.fn.setqflist({}, ' ', { title = title or '' })
   nvim.ex.copen()
 end
 

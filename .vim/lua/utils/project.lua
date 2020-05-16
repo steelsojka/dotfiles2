@@ -25,7 +25,7 @@ end
 
 -- Creates a local folder in the project root.
 local function create_project_local(path, folder_name, matcher)
-  local root = get_project_root(path, matcher) or nvim.fn.expand('~')
+  local root = get_project_root(path, matcher) or vim.fn.expand('~')
   local local_folder = root .. '/' .. (folder_name or '.local')
   
   if (not fs.isdir(local_folder)) then
