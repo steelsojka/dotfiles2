@@ -1,4 +1,6 @@
-local function reduce(list, accumulator, start_value)
+local M = {}
+
+function M.reduce(list, accumulator, start_value)
   local result = start_value
 
   for i,value in ipairs(list) do
@@ -8,16 +10,16 @@ local function reduce(list, accumulator, start_value)
   return result
 end
 
-local function map(list, mapper)
-  return reduce(list, function(res, item, i)
+function M.map(list, mapper)
+  return M.reduce(list, function(res, item, i)
     table.insert(res, mapper(item, i))
 
     return res
   end, {})
 end
 
-local function filter(list, predicate)
-  return reduce(list, function(res, item, i)
+function M.filter(list, predicate)
+  return M.reduce(list, function(res, item, i)
     if predicate(item, i) then
       table.insert(res, item)
     end
@@ -26,7 +28,7 @@ local function filter(list, predicate)
   end, {})
 end
 
-local function find(list, predicate)
+function M.find(list, predicate)
   for i,v in pairs(list) do
     if predicate(v,i) then
       return v, i
@@ -34,13 +36,13 @@ local function find(list, predicate)
   end
 end
 
-local function join(list, delimiter) 
-  return reduce(list, function(res, item)
+function M.join(list, delimiter) 
+  return M.reduce(list, function(res, item)
     return res == '' and tostring(item) or (res .. delimiter .. tostring(item))
   end, '')
 end 
 
-local function split(str, split_on)
+function M.split(str, split_on)
   local result = {}
 
   for i in string.gmatch(str .. split_on, "([^" .. split_on .. "]+)" .. split_on) do
@@ -50,22 +52,12 @@ local function split(str, split_on)
   return result
 end
 
-local function concat(list1, list2)
-  local result = { unpack(list1) }
+function M.concat(list1, list2)
+  return M.reduce(list2, function(res, item)
+    table.insert(res, item)
 
-  for i,v in ipairs(list2) do
-    result[#result + i] = list2[i]
-  end
-
-  return result
+    return res
+  end, { unpack(list1) })
 end
 
-return {
-  reduce = reduce,
-  map = map,
-  filter = filter,
-  join = join,
-  split = split,
-  find = find,
-  concat = concat
-}
+return M 

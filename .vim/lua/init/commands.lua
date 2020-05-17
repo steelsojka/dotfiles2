@@ -17,9 +17,9 @@ mappings.create_augroups {
   startify = {
     { 'User', 'Startified', function() nvim.ex.setlocal('buflisted') end }
   },
-  coc_nvim = {
-    -- { 'CursorHold', '*', 'silent', function() vim.fn.CocActionAsync('highlight') end },
-    -- { 'User', 'CocJumpPlaceholder', function() vim.fn.CocActionAsync('showSignatureHelp') end }
+  lsp = {
+    -- { 'CursorHold', '*', 'silent', function() vim.lsp.buf.document_highlight() end },
+    -- { 'CursorMoved', '*', 'silent', function() vim.lsp.buf.clear_references() end }
   }
 }
 

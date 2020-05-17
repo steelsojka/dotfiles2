@@ -4,15 +4,17 @@ local nvim = require 'nvim'
 local utils = require 'utils/utils'
 local Fzf = require 'fzf/fzf'
 
-local fzf = Fzf:create(function(_, line)
-  local file, lnum, col = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
+local M = {}
 
-  if file then
-    nvim.ex.buffer(vim.fn.bufnr(file))
+local fzf = Fzf:create(function(_, line)
+  local uri, lnum, col = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
+
+  if uri then
+    nvim.ex.buffer(vim.uri_to_bufnr(uri))
     nvim.ex.mark("'")
 
     if lnum and col then
-      vim.fn.cursor(lnum, col)
+      vim.fn.cursor(lnum + 1, col + 1)
       nvim.ex.normal_('zvzz')
     end
   end
@@ -41,14 +43,18 @@ local function get_diagnostics(options)
         end)
       end
 
+      print(vim.inspect(diagnostics))
+
       result = utils.concat(result, diagnostics)
     end
   end
 
+  -- print(vim.inspect(result))
+
   return utils.map(result, format_diagnostic) 
 end
 
-local function open_diagnostics(file_only)
+function M.open_diagnostics(file_only)
   local diagnostics = get_diagnostics(file_only)
   local opts = {
     source = diagnostics,
@@ -58,6 +64,4 @@ local function open_diagnostics(file_only)
   fzf:execute(opts)
 end
 
-return {
-  open_diagnostics = open_diagnostics
-}
+return M 

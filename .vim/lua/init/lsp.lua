@@ -19,5 +19,11 @@ lsp.html.setup { on_attach = global_on_attach }
 -- VimL
 lsp.vimls.setup { on_attach = global_on_attach }
 
+-- CSS
+lsp.cssls.setup { on_attach = global_on_attach }
+
 -- Bash
 lsp.bashls.setup { on_attach = global_on_attach }
+
+
+lsp.angularls.setup { on_attach = global_on_attach }

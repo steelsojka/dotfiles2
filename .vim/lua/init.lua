@@ -4,6 +4,8 @@ local colorizer = require 'colorizer'
 nvim.ex.filetype('plugin', 'indent', 'on')
 nvim.ex.syntax 'on'
 
+require 'lsp/angular'
+
 require 'init/settings'
 require 'init/globals'
 require 'init/global_mappings'

@@ -159,7 +159,7 @@ local mappings = {
   ['n si'] = { function() vim.lsp.buf.workspace_symbol() end, description = 'Search symbol' },
   ['n sb'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer' },
   ['n ss'] = { [[<Cmd>BLines<CR>]], description = 'Search buffer' },
-  -- ['n so'] = { [[<Cmd>CocList outline<CR>]], description = 'List symbols in file' },
+  ['n so'] = { function() vim.lsp.buf.document_symbol() end, description = 'List symbols in file' },
   ['n sl'] = { [[<Cmd>Lines<CR>]], description = 'Search lines' },
   ['n sp'] = { [[<Cmd>FlyRg<CR>]], description = 'Grep files in project' },
   ['n sP'] = { [[<Cmd>FlyRg!<CR>]], description = 'Grep files in project (full),' },
@@ -186,14 +186,16 @@ local mappings = {
   -- Code mappings <leader>c
   ['n cl'] = { [[<Cmd>Commentary<CR>]], description = 'Comment line' },
   ['v cl'] = { [[:Commentary<CR>]] },
-  ['n cx'] = { function() fzf_diagnostics.open_diagnostics() end, description = 'List diagnostics (fzf)' },
-  ['n cX'] = { [[<Cmd>OpenDiagnostic<CR>]], description = 'List diagnostics (loc)' },
+  ['n cX'] = { function() fzf_diagnostics.open_diagnostics() end, description = 'Find errors' },
+  ['n cx'] = { [[<Cmd>OpenDiagnostic<CR>]], description = 'List errors' },
   ['n cd'] = { function() vim.lsp.buf.definition() end, description = 'Definition' },
-  ['n cD'] = { function() vim.lsp.buf.type_definition() end, description = 'Type references' },
-  ['n ck'] = { [[gh]], description = 'Get help', noremap = false },
-  ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'Rename symbol' },
+  ['n cD'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
+  ['n ck'] = { [[gh]], description = 'Jump to documentation', noremap = false },
+  ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
   ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
-  -- ['n cf'] = { [[<Cmd>CocAction<CR>]], description = 'Quick fix actions' },
+  ['n cj'] = { function() vim.lsp.buf.document_symbol() end, description = 'Jump to symbol' },
+  ['n cJ'] = { function() vim.lsp.buf.workspace_symbol() end, description = 'Jump to symbol in workspace' },
+  ['n ca'] = { function() vim.lsp.buf.code_action() end, description = 'LSP code actions' },
   ['n cql'] = { function()
     local line = vim.fn.getpos(".")[2]
     quickfix.add_line_to_quickfix(line, line)
