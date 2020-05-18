@@ -20,6 +20,7 @@ local globals = {
   diagnostic_enable_virtual_text = 0,
   completion_timer_cycle = 200,
   completion_sorting = 'none',
+  completion_enable_snippet = 'UltiSnips',
   lightline = {
     colorscheme = 'one',
     active = {

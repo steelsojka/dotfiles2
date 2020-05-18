@@ -41,6 +41,8 @@ Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'sirver/UltiSnips'
+Plug 'honza/vim-snippets'
 " TODO: Install UltiSnips
 " Integrate FZF with LSP (symbols, diagnostics, etc...)
 
