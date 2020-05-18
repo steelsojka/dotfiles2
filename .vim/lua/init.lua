@@ -1,8 +1,7 @@
 local nvim = require 'nvim'
 local colorizer = require 'colorizer'
 
-nvim.ex.filetype('plugin', 'indent', 'on')
-nvim.ex.syntax 'on'
+nvim.ex.colorscheme('OceanicNext')
 
 require 'lsp/angular'
 

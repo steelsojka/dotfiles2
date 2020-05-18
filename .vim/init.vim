@@ -1,6 +1,8 @@
 " Space is always the leader
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
+filetype plugin indent on
+syntax on
 
 " Install vim-plugged if not installed
 if filereadable(glob('~/.local/share/nvim/site/autoload/plug.vim')) == 0
@@ -33,8 +35,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
 Plug 'norcalli/nvim.lua', { 'commit': 'ceb76105a8d715eec898c692ba41c2d8dbdc6dbd' }
-Plug 'neovim/nvim-lsp'
 Plug 'haorenW1025/completion-nvim'
+Plug 'neovim/nvim-lsp'
 Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'

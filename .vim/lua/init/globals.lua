@@ -11,8 +11,6 @@ local globals = {
   fzf_layout= {
     window = Fzf.float_window()
   },
-  coc_node_path = nvim.env.SYSTEM_NODE_PATH,
-  coc_snippet_next = '<tab>',
   fzf_action = {
     ['ctrl-t'] = 'tab split',
     ['ctrl-x'] = 'split',
@@ -20,6 +18,8 @@ local globals = {
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
   diagnostic_enable_virtual_text = 0,
+  completion_timer_cycle = 200,
+  completion_sorting = 'none',
   lightline = {
     colorscheme = 'one',
     active = {
@@ -33,8 +33,7 @@ local globals = {
       }
     },
     component = {
-      git_status = [[%{luaeval('require(''git'').get_git_status()')}]],
-      coc_status = [[%{coc#status()}]]
+      git_status = [[%{luaeval('require(''git'').get_git_status()')}]]
     }
   },
   ['sneak#label'] = true,

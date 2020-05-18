@@ -259,7 +259,7 @@ local mappings = {
     end
   end, description = 'Inline errors' },
   -- Help mappings <leader>h
-  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' },
+  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' }
   -- ['n hs'] = { [[<Cmd>CocList snippets<CR>]], description = 'Snippets list' }
 }
 
