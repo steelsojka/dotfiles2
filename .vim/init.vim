@@ -3,8 +3,8 @@ let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 
 " Install vim-plugged if not installed
-if empty(glob('~/.local/share/nvim/plugged'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if filereadable(glob('~/.local/share/nvim/site/autoload/plug.vim')) == 0
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
