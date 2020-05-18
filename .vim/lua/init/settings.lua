@@ -35,8 +35,6 @@ local settings = {
   dictionary = '/usr/share/dict/words'
 }
 
-nvim.ex.colorscheme('OceanicNext')
-
 for key,value in pairs(settings) do
   if value == true then
     nvim.ex.set(key)

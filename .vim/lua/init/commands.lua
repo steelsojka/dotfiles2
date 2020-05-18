@@ -16,11 +16,11 @@ mappings.create_augroups {
 
   startify = {
     { 'User', 'Startified', function() nvim.ex.setlocal('buflisted') end }
-  },
-  lsp = {
+  }
+  -- lsp = {
     -- { 'CursorHold', '*', 'silent', function() vim.lsp.buf.document_highlight() end },
     -- { 'CursorMoved', '*', 'silent', function() vim.lsp.buf.clear_references() end }
-  }
+  -- }
 }
 
 nvim.command [[command! -bang -nargs=* DRg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]

@@ -8,9 +8,9 @@ local script_loc = install_loc .. '/node_modules/@angular/language-server/index.
 local bin_loc = install_loc .. '/node_modules/.bin/angularls'
 
 local installer = lsp_util.npm_installer {
-  server_name = server_name,
-  packages = { '@angular/language-server' },
-  binaries = { 'angularls' },
+  server_name = server_name;
+  packages = { '@angular/language-server' };
+  binaries = { 'angularls' };
   -- angular-language-service doesn't expose a binary, so we create an execution wrapper.
   post_install_script = 
     'echo "#! /bin/sh\n' .. 'node ' .. script_loc .. ' \\$*' .. '" > ' .. bin_loc .. '\n' ..
@@ -18,28 +18,30 @@ local installer = lsp_util.npm_installer {
 }
 
 
-local function get_probe_dir()
-  local project_root = lsp_util.find_node_modules_ancestor(vim.fn.getcwd())
+local function get_probe_dir(root_dir)
+  local project_root = lsp_util.find_node_modules_ancestor(root_dir)
 
   return project_root and (project_root .. '/node_modules') or ''
 end
 
-local default_prob_dir = get_probe_dir()
+local default_prob_dir = get_probe_dir(vim.fn.getcwd())
 
 lsp_configs[server_name] = {
-  name = 'angular',
-  default_config = {
+  default_config = lsp_util.utf8_config {
     cmd = {
       bin_loc, 
       '--stdio',
       '--tsProbeLocations', default_prob_dir,
       '--ngProbeLocations', default_prob_dir
-    },
-    filetypes = {'typescript', 'html', 'typescriptreact', 'typescript.tsx'},
-    root_dir = lsp_util.root_pattern('angular.json', 'tsconfig.json', 'package.json', '.git'),
+    };
+    on_init= function(params, config)
+      print(vim.inspect(params, config))
+    end;
+    filetypes = {'typescript', 'html', 'typescriptreact', 'typescript.tsx'};
+    root_dir = lsp_util.root_pattern('angular.json', 'tsconfig.json', 'package.json', '.git');
     on_new_config = function(new_config)
       local install_info = installer.info()
-      local new_prob_dir = get_probe_dir()
+      local new_prob_dir = get_probe_dir(new_config.root_dir)
 
       if install_info.is_installed then
         -- We need to check our probe directories because they may have changed.
@@ -50,8 +52,8 @@ lsp_configs[server_name] = {
           '--ngProbeLocations', new_prob_dir
         }
       end
-    end
-  },
+    end;
+  };
   docs = {
     description = [[
 https://github.com/angular/vscode-ng-language-service
@@ -60,13 +62,13 @@ https://github.com/angular/vscode-ng-language-service
 
 If you prefer to install this yourself you can through npm `npm install @angular/language-server`.
 Be aware there is no global binary and must be run via `node_modules/@angular/language-server/index.js`
-    ]],
+    ]];
     default_config = {
       root_dir = [[root_pattern("angular.json", "tsconfig.json", "package.json", ".git")]],
       on_init = [[function to handle changing offsetEncoding]],
       capabilities = [[default capabilities, with offsetEncoding utf-8]]
-    }
-  }
+    };
+  };
 }
 
 lsp_configs[server_name].install = installer.install

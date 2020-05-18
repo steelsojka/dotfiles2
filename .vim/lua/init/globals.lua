@@ -33,8 +33,7 @@ local globals = {
       }
     },
     component = {
-      git_status = [[%{luaeval('require(''git'').get_git_status()')}]],
-      coc_status = [[%{coc#status()}]]
+      git_status = [[%{luaeval('require(''git'').get_git_status()')}]]
     }
   },
   ['sneak#label'] = true,
