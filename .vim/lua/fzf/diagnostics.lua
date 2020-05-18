@@ -20,7 +20,7 @@ local fzf = Fzf:create(function(_, line)
   end
 end, false)
 
-local function format_diagnostic(item, key)
+local function format_diagnostic(item, _)
   return (item.uri ~= nil and item.uri or '')
     .. '|' .. (item.range.start.line ~= nil and item.range.start.line or '')
     .. (item.range.start.character ~= nil and (' ' .. item.range.start.character) or ' 0')
@@ -35,23 +35,19 @@ local function get_diagnostics(options)
 
   if options.bufnr then
     result = vim.lsp.util.diagnostics[options.bufnr] or {}
-  else 
-    for buf,diagnostics in pairs(vim.lsp.util.diagnostics_by_buf) do
+  else
+    for _,diagnostics in pairs(vim.lsp.util.diagnostics_by_buf) do
       if options.filetype then
         diagnostics = utils.filter(diagnostics, function(diagnostic)
           return diagnostic.source == options.filetype
         end)
       end
 
-      print(vim.inspect(diagnostics))
-
       result = utils.concat(result, diagnostics)
     end
   end
 
-  -- print(vim.inspect(result))
-
-  return utils.map(result, format_diagnostic) 
+  return utils.map(result, format_diagnostic)
 end
 
 function M.open_diagnostics(file_only)
@@ -64,4 +60,4 @@ function M.open_diagnostics(file_only)
   fzf:execute(opts)
 end
 
-return M 
+return M

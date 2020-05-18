@@ -1,8 +1,9 @@
-local nvim = require 'nvim'
 local utils = require 'utils/utils'
 local project = require 'utils/project'
 
-local function flygrep(query, cwd, fullscreen, args)
+local M = {}
+
+function M.flygrep(query, cwd, fullscreen, args)
   local local_folder = project.create_project_local(vim.fn.expand('%:p:h'))
   local custom_args = utils.join(args or {}, ' ')
   local command = 'rg --column --line-number --no-heading --color=always --smart-case %s %s || true'
@@ -10,9 +11,9 @@ local function flygrep(query, cwd, fullscreen, args)
   local reload_cmd = command:format(custom_args, '{q}')
   local spec = {
     dir = cwd,
-    options = { 
-      '--phony', 
-      '--query', query, 
+    options = {
+      '--phony',
+      '--query', query,
       '--bind', ('change:reload:%s'):format(reload_cmd),
       '--history', local_folder .. '/fzf-history-grep'
     }
@@ -25,7 +26,7 @@ local function flygrep(query, cwd, fullscreen, args)
   end
 end
 
-local function grep(query, dir, fullscreen, args)
+function M.grep(query, dir, fullscreen, args)
   local options
   local custom_args = utils.join(args or {}, ' ')
 
@@ -43,11 +44,4 @@ local function grep(query, dir, fullscreen, args)
   )
 end
 
-local function grep_quickfix_files()
-  local qf_list = vim.fn.getqflist()
-end
-
-return {
-  flygrep = flygrep,
-  grep = grep
-}
+return M

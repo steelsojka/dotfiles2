@@ -3,7 +3,9 @@ local project = require 'utils/project'
 local Fzf = require 'fzf/fzf'
 local fs = require 'utils/fs'
 
-local function fzf_files(query, fullscreen, history_filename)
+local M = {}
+
+function M.fzf_files(query, fullscreen, history_filename)
   local local_folder = project.create_project_local(vim.fn.expand('%:p:h'))
   local spec = {
     options = {
@@ -22,7 +24,7 @@ end
 -- path from the path provided.
 -- Requires node to be installed (which it will always be... let's be real).
 -- @param from_path The path for the file to be relative from.
-local function insert_relative_path(from_path)
+function M.insert_relative_path(from_path)
   local fzf_instance = Fzf:create(function(ref, other_path)
     local cwd = vim.fn.getcwd()
 
@@ -60,7 +62,4 @@ local function insert_relative_path(from_path)
   nvim.input '<esc>i'
 end
 
-return {
-  fzf_files = fzf_files,
-  insert_relative_path = insert_relative_path
-}
+return M

@@ -36,11 +36,11 @@ function M.find(list, predicate)
   end
 end
 
-function M.join(list, delimiter) 
+function M.join(list, delimiter)
   return M.reduce(list, function(res, item)
     return res == '' and tostring(item) or (res .. delimiter .. tostring(item))
   end, '')
-end 
+end
 
 function M.split(str, split_on)
   local result = {}

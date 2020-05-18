@@ -27,7 +27,7 @@ function Funcref:create(fn, opts)
   local instance = {}
   local _opts = opts or {}
 
-  instance.name = _opts.name or 'k' .. unique_id()
+  instance.name = (_opts.name or 'k') .. unique_id()
   instance.subscription = Subscription:create(function()
     LUA_FUNCTION_REFS[instance.name] = nil
   end)
