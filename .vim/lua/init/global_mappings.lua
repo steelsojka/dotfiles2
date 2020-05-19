@@ -238,11 +238,11 @@ local mappings = {
   ['n wtT'] = { function() terminal.float(true) end, description = 'Float terminal (full)' },
   ['n wtv'] = { function() 
     nvim.ex.vsp()
-    terminal.open() 
+    terminal.open_term() 
   end, description = 'Vertical split terminal' },
   ['n wtf'] = { function()
     nvim.ex.vsp()
-    terminal.open(true)
+    terminal.open_term(true)
   end, description = 'Terminal at file' },
   -- Toggle mappings <leader>t
   ['n tl'] = { function() unimplemented() end, description = 'Line numbers' },

@@ -60,4 +60,12 @@ function M.concat(list1, list2)
   end, { unpack(list1) })
 end
 
+function M.indexOf(list, value)
+  for i,v in ipairs(list) do
+    if v == value then return i end
+  end
+
+  return nil
+end
+
 return M 

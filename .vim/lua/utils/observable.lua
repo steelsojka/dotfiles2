@@ -27,7 +27,9 @@ function Observable:subscribe(_subscriber)
     end
   })
 
-  subscription:add(self.sink(subscriber));
+  if self.sink then
+    subscription:add(self.sink(subscriber));
+  end
 
   return subscription
 end

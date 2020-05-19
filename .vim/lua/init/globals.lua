@@ -18,9 +18,9 @@ local globals = {
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
   diagnostic_enable_virtual_text = 0,
-  completion_timer_cycle = 200,
+  completion_timer_cycle = 250,
   completion_sorting = 'none',
-  completion_enable_snippet = 'UltiSnips',
+  -- completion_enable_snippet = 'UltiSnips',
   lightline = {
     colorscheme = 'one',
     active = {
