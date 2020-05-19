@@ -1,9 +1,11 @@
 local nvim = require 'nvim'
 local Fzf = require 'fzf/fzf'
 
+local M = {}
+
 -- Opens a floating terminal
 -- @param full Whether the terminal is full screen
-local function float(full)
+function M.float(full)
   local height
 
   if full then
@@ -20,7 +22,7 @@ end
 
 -- Opens a terminl with an fzf floating window
 -- @param The command to run
-local function float_fzf_cmd(cmd)
+function M.float_fzf_cmd(cmd)
   Fzf.create_floating_window()
   -- Open a term and exit on process exit
   nvim.command(([[call termopen('%s', {'on_exit': {_ -> execute('q!') }})]]):format(cmd))
@@ -29,7 +31,7 @@ end
 
 -- Opens terminal to the cwd or to the current files directory.
 -- @param is_local Whether to open local to the current file directory
-local function open_term(is_local)
+function M.open_term(is_local)
   local cwd = is_local and vim.fn.expand '%:p:h' or vim.fn.getcwd()
   local buf = nvim.create_buf(true, false)
 
@@ -38,8 +40,4 @@ local function open_term(is_local)
   nvim.ex.normal 'i'
 end
 
-return {
-  float = float,
-  float_fzf_cmd = float_fzf_cmd,
-  open = open_term
-}
+return M

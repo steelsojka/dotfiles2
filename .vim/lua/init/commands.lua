@@ -1,10 +1,9 @@
 local nvim = require 'nvim'
 local mappings = require 'utils/mappings'
-local utils = require 'utils/utils'
 
 mappings.create_augroups {
   float_term = {
-    { 'VimResized', '*', function() 
+    { 'VimResized', '*', function()
       nvim.g.floaterm_width = vim.fn.float2nr(nvim.o.columns * 0.9)
       nvim.g.floaterm_height = vim.fn.float2nr(nvim.o.lines * 0.75)
     end }

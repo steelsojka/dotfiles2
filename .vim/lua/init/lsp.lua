@@ -10,7 +10,7 @@ end
 
 -- Typescript
 lsp.tsserver.setup {
-  on_attach = global_on_attach,
+  on_attach = global_on_attach;
   -- Enable for debugging.
   -- cmd = {
   --   'typescript-language-server',
@@ -19,7 +19,7 @@ lsp.tsserver.setup {
   --   '--tsserver-log-verbosity', 'verbose'
   -- },
   -- Don't use package.json to resolve root because monorepos don't like it.
-  root_dir = util.root_pattern('.git', 'tsconfig.json')
+  root_dir = util.root_pattern('.git', 'tsconfig.json');
 }
 
 -- JSON
@@ -37,4 +37,8 @@ lsp.cssls.setup { on_attach = global_on_attach }
 -- Bash
 lsp.bashls.setup { on_attach = global_on_attach }
 
--- lsp.angularls.setup { on_attach = global_on_attach }
+-- Lua
+lsp.sumneko_lua.setup { on_attach = global_on_attach }
+
+-- Angular
+lsp.angularls.setup { on_attach = global_on_attach }

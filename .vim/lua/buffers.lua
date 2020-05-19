@@ -2,8 +2,10 @@ local nvim = require 'nvim'
 local Fzf = require 'fzf/fzf'
 local utils = require 'utils/utils'
 
-local fzf_delete_buffer_handler = Fzf:create(function(ref, buffers)
-  for __,v in pairs(buffers) do
+local M = {}
+
+M._fzf_delete_buffer_handler = Fzf:create(function(_, buffers)
+  for _,v in pairs(buffers) do
     local buf = v:match('^%[([0-9]+)%]')
 
     if buf ~= nil then
@@ -30,13 +32,11 @@ local function format_buflist(buflist)
   end)
 end
 
-local function delete_buffers_fzf()
-  fzf_delete_buffer_handler:execute {
+function M.delete_buffers_fzf()
+  M._fzf_delete_buffer_handler:execute {
     source = format_buflist(get_listed_buffers()),
     options = { '--multi', '--prompt=Kill> ', '--nth=2' }
   }
 end
 
-return {
-  delete_buffers_fzf = delete_buffers_fzf
-}
+return M

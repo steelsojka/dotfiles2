@@ -1,10 +1,12 @@
 local nvim = require 'nvim'
 local utils = require 'utils/utils'
 
+local M = {}
+
 -- Prompts for input to a command
 -- @param command Command to run with search term
 -- @param prompt Prompt text
-local function prompt_command(command, prompt)
+function M.prompt_command(command, prompt)
   local search_term = vim.fn.input(('%s: '):format(prompt))
 
   if string.len(search_term) > 0 then
@@ -12,7 +14,7 @@ local function prompt_command(command, prompt)
   end
 end
 
-local function show_documentation(show_errors)
+function M.show_documentation(show_errors)
   if show_errors then
     local error_result = vim.lsp.util.show_line_diagnostics()
 
@@ -28,15 +30,11 @@ local function show_documentation(show_errors)
   end
 end
 
-local function cycle_property(current, values, setter)
-  local __, current_index = utils.find(values, function(v) return v == current end)
+function M.cycle_property(current, values, setter)
+  local _, current_index = utils.find(values, function(v) return v == current end)
   local next_index = current_index + 1 > #values and 0 or current_index + 1
 
   setter(values[next_index])
 end
 
-return {
-  prompt_command = prompt_command,
-  show_documentation = show_documentation,
-  cycle_property = cycle_property 
-}
+return M

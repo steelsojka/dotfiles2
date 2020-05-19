@@ -151,7 +151,7 @@ local mappings = {
   ['n if'] = { [["%p]], description = 'Current file name' },
   ['n iF'] = { [[<Cmd>put = expand('%:p')<CR>]], description = 'Current file path' },
   -- ['n iy'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'From clipboard' },
-  ['n is'] = { function() unimplemented() end, description = 'Insert snippet' },
+  ['n is'] = { [[<Cmd>Snippets<CR>]], description = 'Insert snippet' },
   -- Search mappings <leader>s
   ['n sd'] = { [[<Cmd>FlyDRg<CR>]], description = 'Grep files in directory' },
   ['n sc'] = { [[<Cmd>History:<CR>]], description = 'Search command history' },

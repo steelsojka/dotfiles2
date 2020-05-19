@@ -1,4 +1,6 @@
-local function exists(file)
+local M = {}
+
+function M.exists(file)
   local ok, err, code = os.rename(file, file)
 
   if not ok then
@@ -8,11 +10,11 @@ local function exists(file)
   return ok, err
 end
 
-local function isdir(path)
-  return exists(path .. '/')
+function M.isdir(path)
+  return M.exists(path .. '/')
 end
 
-local function exec(prog)
+function M.exec(prog)
   local i = 0
   local result = {}
 
@@ -28,14 +30,9 @@ local function exec(prog)
   return result
 end
 
-local function readdir(path)
-  return exec('ls -a "' .. path .. '"')
+function M.readdir(path)
+  return M.exec('ls -a "' .. path .. '"')
 end
 
 
-return {
-  readdir = readdir,
-  exists = exists,
-  isdir = isdir,
-  exec = exec
-}
+return M

@@ -1,20 +1,21 @@
-local utils = require 'utils/utils'
 local nvim = require 'nvim'
 
 LUA_MAPPINGS = {}
 LUA_BUFFER_MAPPINGS = {}
 LUA_AUGROUP_HOOKS = {}
 
-local function unimplemented()
+local M = {}
+
+function M.unimplemented()
   print('Unimplemented mapping!');
 end
 
-local function escape_keymap(key)
+function M.escape_keymap(key)
 	-- Prepend with a letter so it can be used as a dictionary key
 	return 'k' .. key:gsub('.', string.byte)
 end
 
-local function init_buffer_mappings(initial_mappings)
+function M.init_buffer_mappings(initial_mappings)
   local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
 
   if not success then
@@ -26,8 +27,8 @@ local function init_buffer_mappings(initial_mappings)
   return local_which_key_dict
 end
 
-local function parse_key_map(key_str)
-  local result = {} 
+function M.parse_key_map(key_str)
+  local result = {}
   local i = 1
   local len = #key_str
   local is_meta = false
@@ -59,43 +60,43 @@ local function parse_key_map(key_str)
   return result
 end
 
-local function add_to_which_key(keys, description, key_dict)
+function M.add_to_which_key(keys, description, key_dict)
   local category = key_dict
   local category_keys = {unpack(keys, 1, #keys - 1)}
   local end_key = keys[#keys]
 
-  for i,key in ipairs(category_keys) do
+  for _,key in ipairs(category_keys) do
     category = category[key]
   end
 
   category[end_key] = description
 end
 
-local function register_mapping(key, mapping, key_dict)
+function M.register_mapping(key, mapping, key_dict)
   local mode, key_string = key:match("^(.)(.+)$")
-  local keys = parse_key_map(key_string)
+  local keys = M.parse_key_map(key_string)
   local action = mapping[1]
   local is_buffer = mapping.buffer == true or type(mapping.buffer) == 'number'
   local bufnr = type(mapping.buffer) == 'number' and mapping.buffer or nvim.get_current_buf()
 
   if keys[1] == ' ' and mapping.which_key ~= false and mapping.description then
     if keys[2] == 'm' and is_buffer then
-      local local_which_key_dict = init_buffer_mappings()
+      local local_which_key_dict = M.init_buffer_mappings()
 
-      add_to_which_key({unpack(keys, 2)}, mapping.description, local_which_key_dict)
+      M.add_to_which_key({unpack(keys, 2)}, mapping.description, local_which_key_dict)
 
       nvim.b.local_which_key = local_which_key_dict
     elseif key_dict then
-      add_to_which_key({unpack(keys, 2)}, mapping.description, key_dict)
+      M.add_to_which_key({unpack(keys, 2)}, mapping.description, key_dict)
     end
   end
-  
+
   mapping[1] = nil
   mapping.description = nil
   mapping.which_key = nil
-  mapping.buffer = nil 
+  mapping.buffer = nil
 
-  local escaped_key = escape_keymap(mode .. key_string)
+  local escaped_key = M.escape_keymap(mode .. key_string)
 
   if type(action) == 'function' then
     if is_buffer then
@@ -143,26 +144,27 @@ local function register_mapping(key, mapping, key_dict)
   end
 end
 
-local function register_mappings(mappings, default_options, which_key_dict)
+function M.register_mappings(mappings, default_options, which_key_dict)
   for keys, mapping in pairs(mappings) do
-    register_mapping(keys, vim.tbl_extend('keep', mapping, default_options or {}), which_key_dict)
+    M.register_mapping(keys, vim.tbl_extend('keep', mapping, default_options or {}), which_key_dict)
   end
 end
 
-local function register_buffer_mappings(mappings, default_options, buffer)
+function M.register_buffer_mappings(mappings, default_options, buffer)
   for keys, mapping in pairs(mappings) do
-    register_mapping(keys, vim.tbl_extend('keep', { buffer = buffer or true }, mapping, default_options or {}))
+    M.register_mapping(keys, vim.tbl_extend('keep', { buffer = buffer or true }, mapping, default_options or {}))
   end
 end
 
-local function create_augroups(definitions)
-  for group_name,def in pairs(definitions) do
+function M.create_augroups(definitions)
+  for group_name,defs in pairs(definitions) do
     nvim.ex['augroup LuaAugroup_' .. group_name]()
     nvim.ex.autocmd_()
-    
-    for index,def in pairs(def) do
+
+    for index,def in pairs(defs) do
       if type(def[#def]) == 'function' then
-        fn = def[#def]
+        local fn = def[#def]
+
         def = {unpack(def, 1, #def - 1)}
         table.insert(def, ("lua LUA_AUGROUP_HOOKS['%s']()"):format(group_name .. index))
         LUA_AUGROUP_HOOKS[group_name .. index] = fn
@@ -177,12 +179,4 @@ local function create_augroups(definitions)
   end
 end
 
-return {
-  register_mapping = register_mapping,
-  register_mappings = register_mappings,
-  register_buffer_mappings = register_buffer_mappings,
-  init_buffer_mappings = init_buffer_mappings,
-  create_augroups = create_augroups,
-  escape_keymap = escape_keymap,
-  unimplemented = unimplemented
-}
+return M

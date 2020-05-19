@@ -1,19 +1,21 @@
 local Observable = require 'utils/observable'
 local Funcref = require 'utils/funcref'
 
+local M = {}
+
 local function is_eof(list)
   return type(list) == 'table' and list[1] == "" and list[2] == nil
 end
 
-local function job_start(cmd, stdin_handler)
+function M.job_start(cmd, stdin_handler)
   return Observable:create(function(subscriber)
     local result = {}
-    local handler = Funcref:create(function(ref, jobid, data, event)
+    local handler = Funcref:create(function(_, _, data, event)
       if event == 'stdout' then
         if is_eof(data) then
           subscriber.next(result)
-        else 
-          for __,v in pairs(data) do
+        else
+          for _,v in pairs(data) do
             table.insert(result, v)
           end
         end
@@ -42,9 +44,7 @@ local function job_start(cmd, stdin_handler)
       pcall(function() vim.fn.jobstop(job_id) end)
       handler:unsubscribe()
     end
-  end) 
+  end)
 end
 
-return {
-  job_start = job_start
-}
+return M
