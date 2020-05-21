@@ -18,7 +18,7 @@ end
 function M.init_buffer_mappings(initial_mappings)
   local success, local_which_key_dict = pcall(function() return nvim.b.local_which_key end)
 
-  if not success then
+  if not success or type(local_which_key_dict) ~= 'table' then
     local_which_key_dict = { m = initial_mappings or {} }
   end
 

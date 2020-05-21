@@ -20,7 +20,7 @@ function Observable:subscribe(_subscriber)
     error = _subscriber.error,
     complete = function()
       if _subscriber.complete then
-        _subscriber:complete()
+        _subscriber.complete()
       end
 
       subscription:unsubscribe()

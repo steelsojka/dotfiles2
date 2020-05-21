@@ -62,4 +62,7 @@ function M.insert_relative_path(from_path)
   nvim.input '<esc>i'
 end
 
+function M.format_file(bufnr)
+end
+
 return M

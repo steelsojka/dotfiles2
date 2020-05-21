@@ -14,27 +14,6 @@ end
 -- Typescript
 lsp.tsserver.setup {
   on_attach = global_on_attach;
-  callbacks = {
-    ['textDocument/formatting'] = function(err, method, params, client_id)
-      -- print(method, vim.inspect(params), client_id)
-      local cmd = 'prettier --stdin'
-      local buffer = nvim.win_get_buf(0)
-      local buf_lines = nvim.fn.getbufline(buffer, 1, '$')
-      local job = jobs.job_start(cmd)
-
-      job:subscribe({
-        error = function(err)
-          print(err)
-        end;
-        next = function(lines)
-          nvim.buf_set_lines(buffer, 0, -1, false, lines)
-        end;
-      })
-
-      job:next(utils.join(buf_lines, '\n'))
-      job:complete()
-    end
-  };
   -- Enable for debugging.
   -- cmd = {
   --   'typescript-language-server',
@@ -66,3 +45,14 @@ lsp.bashls.setup { on_attach = global_on_attach }
 
 -- Angular
 -- lsp.angularls.setup { on_attach = global_on_attach }
+
+lsp.jdtls.setup {
+  on_attach = global_on_attach;
+  init_options = {
+    workspace = vim.loop.os_homedir();
+    jvm_args = {
+      "-javaagent:/usr/local/share/lombok/lombok.jar",
+      "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"
+    };
+  };
+}

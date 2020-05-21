@@ -3,7 +3,8 @@ local colorizer = require 'colorizer'
 
 nvim.ex.colorscheme('OceanicNext')
 
-require 'lsp/angular'
+require 'lsp/angularls'
+require 'lsp/jdtls'
 
 require 'init/settings'
 require 'init/globals'

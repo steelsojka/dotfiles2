@@ -1,5 +1,6 @@
 local nvim = require 'nvim'
 local mappings = require 'utils/mappings'
+local highlight = require 'vim.highlight'
 
 mappings.create_augroups {
   float_term = {
@@ -15,6 +16,10 @@ mappings.create_augroups {
 
   startify = {
     { 'User', 'Startified', function() nvim.ex.setlocal('buflisted') end }
+  },
+
+  yank = {
+    { 'TextYankPost', '*', 'silent!', function() highlight.on_yank('IncSearch', 400, vim.v.event) end }
   }
   -- lsp = {
     -- { 'CursorHold', '*', 'silent', function() vim.lsp.buf.document_highlight() end },

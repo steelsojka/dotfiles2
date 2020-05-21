@@ -34,7 +34,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
 Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
-Plug 'norcalli/nvim.lua', { 'commit': 'ceb76105a8d715eec898c692ba41c2d8dbdc6dbd' }
+Plug 'norcalli/nvim.lua' 
 Plug 'haorenW1025/completion-nvim'
 Plug 'neovim/nvim-lsp'
 " Plug 'steelsojka/nvim-lsp', { 'branch': 'angular-ls' }
@@ -44,6 +44,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'sirver/UltiSnips'
 Plug 'honza/vim-snippets'
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 " TODO: Install UltiSnips
 " Integrate FZF with LSP (symbols, diagnostics, etc...)
 

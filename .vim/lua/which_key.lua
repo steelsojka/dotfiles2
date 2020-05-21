@@ -11,7 +11,7 @@ function M.start(visual)
 
   which_key_dict['m'] = { name = '+local' }
 
-  if success then
+  if success and type(local_which_key_dict) == 'table' then
     which_key_dict['m'] = local_which_key_dict['m']
     which_key_dict['m'].name = '+local'
   end

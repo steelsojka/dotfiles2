@@ -53,7 +53,7 @@ local mappings = {
   ['n fs'] = { [[<Cmd>w<CR>]], description = 'Save file' },
   ['n fS'] = { [[<Cmd>wa<CR>]], description = 'Save all files' },
   ['n f/'] = { [[<Cmd>BLines<CR>]], description = 'Search lines' },
-  ['n ff'] = { function() vim.lsp.buf.formatting() end, description = 'Format file' },
+  ['n ff'] = { [[<Plug>(Prettier)]], description = 'Format file' },
   ['n fo'] = { [[<Cmd>Dirvish %:p:h<CR>]], description = 'Show in tree' },
   ['n fO'] = { [[<Cmd>vsp +Dirvish %:p:h<CR>]], description = 'Show in split tree' },
   -- ['n fr'] = { [[<Cmd>CocList mru<CR>]], description = 'Open recent files' },
