@@ -1,6 +1,6 @@
-local mappings = require 'utils/mappings'
-local quickfix = require 'quickfix'
-local Funcref = require 'utils/funcref'
+local mappings = require 'steelvim/utils/mappings'
+local quickfix = require 'steelvim/quickfix'
+local Funcref = require 'steelvim/utils/funcref'
 local nvim = require 'nvim'
 
 return function()

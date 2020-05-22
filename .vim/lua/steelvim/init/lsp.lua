@@ -3,8 +3,7 @@ local lsp_util = require 'nvim_lsp/util'
 local nvim = require 'nvim'
 local completion = require 'completion'
 local diagnostic = require 'diagnostic'
-local jobs = require 'utils/jobs'
-local utils = require 'utils/utils'
+local path = lsp_util.path 
 
 local function global_on_attach()
   completion.on_attach()
@@ -49,7 +48,6 @@ lsp.bashls.setup { on_attach = global_on_attach }
 lsp.jdtls.setup {
   on_attach = global_on_attach;
   init_options = {
-    workspace = vim.loop.os_homedir();
     jvm_args = {
       "-javaagent:/usr/local/share/lombok/lombok.jar",
       "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"

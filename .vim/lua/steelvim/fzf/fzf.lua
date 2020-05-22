@@ -1,7 +1,7 @@
-local Subscription = require 'utils/subscription'
-local Funcref = require 'utils/funcref'
+local Subscription = require 'steelvim/utils/subscription'
+local Funcref = require 'steelvim/utils/funcref'
 local nvim = require 'nvim'
-local unique_id = require 'utils/unique_id'
+local unique_id = require 'steelvim/utils/unique_id'
 
 local Fzf = {}
 
@@ -77,10 +77,10 @@ function Fzf.float_window(on_close)
       ref:unsubscribe()
     end)
 
-    return ("lua require('fzf/fzf').create_floating_window(%s)"):format(fn_ref:get_lua_ref_string())
+    return ("lua require('steelvim/fzf/fzf').create_floating_window(%s)"):format(fn_ref:get_lua_ref_string())
   end
 
-  return [[lua require('fzf/fzf').create_floating_window()]]
+  return [[lua require('steelvim/fzf/fzf').create_floating_window()]]
 end
 
 return Fzf

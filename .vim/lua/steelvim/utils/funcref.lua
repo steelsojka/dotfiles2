@@ -1,7 +1,7 @@
 local nvim = require 'nvim'
-local Subscription = require 'utils/subscription'
-local unique_id = require 'utils/unique_id'
-local utils = require 'utils/utils'
+local Subscription = require 'steelvim/utils/subscription'
+local unique_id = require 'steelvim/utils/unique_id'
+local utils = require 'steelvim/utils/utils'
 
 local Funcref = {}
 local NOOP = function() end

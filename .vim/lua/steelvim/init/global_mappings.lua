@@ -1,14 +1,15 @@
 local nvim = require 'nvim'
-local mapping_utils = require 'utils/mappings'
-local fzf_diagnostics = require 'fzf/diagnostics'
-local git = require 'git'
-local terminal = require 'terminal'
-local which_key = require 'which_key'
-local common = require 'common'
-local buffers = require 'buffers'
-local grep = require 'grep'
-local quickfix = require 'quickfix'
-local files = require 'files'
+local mapping_utils = require 'steelvim/utils/mappings'
+local fzf_diagnostics = require 'steelvim/fzf/diagnostics'
+local git = require 'steelvim/git'
+local terminal = require 'steelvim/terminal'
+local which_key = require 'steelvim/which_key'
+local common = require 'steelvim/common'
+local buffers = require 'steelvim/buffers'
+local grep = require 'steelvim/grep'
+local quickfix = require 'steelvim/quickfix'
+local files = require 'steelvim/files'
+local source = require 'source'
 
 local unimplemented = mapping_utils.unimplemented;
 
@@ -18,6 +19,8 @@ local mappings = {
   ['i<C-space>'] = { function() vim.lsp.omnifunc() end, silent = true },
   ['n <CR>'] = { [[:Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
+  ['i<C-j>'] = { function() source.prevCompletion() end },
+  ['i<C-k>'] = { function() source.nextCompletion() end },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
   ['nU'] = { [[<C-r>]], description = 'Redo' },
   ['n/'] = { [[/\v]], description = 'Search with magic' },
@@ -192,6 +195,10 @@ local mappings = {
   ['n cD'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
   ['n ck'] = { [[gh]], description = 'Jump to documentation', noremap = false },
   ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
+  ['n cR'] = { function() 
+    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    nvim.ex.edit()
+  end, description = 'LSP reload' },
   ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
   ['n cj'] = { function() vim.lsp.buf.document_symbol() end, description = 'Jump to symbol' },
   ['n cJ'] = { function() vim.lsp.buf.workspace_symbol() end, description = 'Jump to symbol in workspace' },
@@ -322,6 +329,7 @@ endfunction
 -- Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 nvim.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : completion#trigger_completion()]]
 nvim.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
+nvim.command [[inoremap <expr> <cr> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<cr>"]]
 
 -- Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 -- Coc only does snippet and additional edit on confirm.

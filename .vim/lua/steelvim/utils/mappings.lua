@@ -1,10 +1,12 @@
 local nvim = require 'nvim'
 
-LUA_MAPPINGS = {}
-LUA_BUFFER_MAPPINGS = {}
-LUA_AUGROUP_HOOKS = {}
-
 local M = {}
+
+M._LUA_MAPPINGS = {}
+M._LUA_BUFFER_MAPPINGS = {}
+M._LUA_AUGROUP_HOOKS = {}
+
+local require_string = [[require('steelvim/utils/mappings')]]
 
 function M.unimplemented()
   print('Unimplemented mapping!');
@@ -100,31 +102,31 @@ function M.register_mapping(key, mapping, key_dict)
 
   if type(action) == 'function' then
     if is_buffer then
-      if not LUA_BUFFER_MAPPINGS[bufnr] then
-        LUA_BUFFER_MAPPINGS[bufnr] = {}
+      if not M._LUA_BUFFER_MAPPINGS[bufnr] then
+        M._LUA_BUFFER_MAPPINGS[bufnr] = {}
 
         -- Clean up this map on detach
         nvim.buf_attach(bufnr, false, {
           on_detach = function()
-            LUA_BUFFER_MAPPINGS[bufnr] = nil
+            M._LUA_BUFFER_MAPPINGS[bufnr] = nil
           end
         })
       end
 
-      LUA_BUFFER_MAPPINGS[bufnr][escaped_key] = action
+      M._LUA_BUFFER_MAPPINGS[bufnr][escaped_key] = action
 
       if (mode == 'v' or mode == 'x') then
-        action = ([[:<C-u>lua LUA_BUFFER_MAPPINGS[%d]['%s']()<CR>]]):format(bufnr, escaped_key)
+        action = ([[:<C-u>lua %s._LUA_BUFFER_MAPPINGS[%d]['%s']()<CR>]]):format(require_string, bufnr, escaped_key)
       else
-        action = ([[<Cmd>lua LUA_BUFFER_MAPPINGS[%d]['%s']()<CR>]]):format(bufnr, escaped_key)
+        action = ([[<Cmd>lua %s._LUA_BUFFER_MAPPINGS[%d]['%s']()<CR>]]):format(require_string, bufnr, escaped_key)
       end
     else
-      LUA_MAPPINGS[escaped_key] = action
+      M._LUA_MAPPINGS[escaped_key] = action
 
       if (mode == 'v' or mode == 'x') then
-        action = ([[:<C-u>lua LUA_MAPPINGS['%s']()<CR>]]):format(escaped_key)
+        action = ([[:<C-u>lua %s._LUA_MAPPINGS['%s']()<CR>]]):format(require_string, escaped_key)
       else
-        action = ([[<Cmd>lua LUA_MAPPINGS['%s']()<CR>]]):format(escaped_key)
+        action = ([[<Cmd>lua %s._LUA_MAPPINGS['%s']()<CR>]]):format(require_string, escaped_key)
       end
     end
 
@@ -166,8 +168,8 @@ function M.create_augroups(definitions)
         local fn = def[#def]
 
         def = {unpack(def, 1, #def - 1)}
-        table.insert(def, ("lua LUA_AUGROUP_HOOKS['%s']()"):format(group_name .. index))
-        LUA_AUGROUP_HOOKS[group_name .. index] = fn
+        table.insert(def, ("lua %s._LUA_AUGROUP_HOOKS['%s']()"):format(require_string, group_name .. index))
+        M._LUA_AUGROUP_HOOKS[group_name .. index] = fn
       end
 
       local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')

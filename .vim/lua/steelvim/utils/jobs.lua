@@ -1,5 +1,5 @@
-local Observable = require 'utils/observable'
-local Funcref = require 'utils/funcref'
+local Observable = require 'steelvim/utils/observable'
+local Funcref = require 'steelvim/utils/funcref'
 
 local M = {}
 

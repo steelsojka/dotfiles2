@@ -1,4 +1,4 @@
-local mappings = require 'utils/mappings'
+local mappings = require 'steelvim/utils/mappings'
 local nvim = require 'nvim'
 
 return function()

@@ -1,7 +1,7 @@
 local nvim = require 'nvim'
-local Fzf = require 'fzf/fzf'
-local Funcref = require 'utils/funcref'
-local quickfix = require 'quickfix'
+local Fzf = require 'steelvim/fzf/fzf'
+local Funcref = require 'steelvim/utils/funcref'
+local quickfix = require 'steelvim/quickfix'
 
 local fzf_to_qf_ref = Funcref:create(function(_, lines)
   quickfix.build_list(lines)
@@ -17,17 +17,28 @@ local globals = {
     ['ctrl-v'] = 'vsplit',
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
-  diagnostic_enable_virtual_text = 0,
-  completion_timer_cycle = 250,
+  completion_timer_cycle = 200,
   completion_sorting = 'none',
   completion_enable_snippet = 'UltiSnips',
+  completion_matching_strategy_list = { 'exact' },
+  completion_enable_auto_signature = 0,
+  completion_auto_change_source = 1,
+  completion_chain_complete_list = {
+    { complete_items = { 'lsp' } },
+    { complete_items = { 'snippet' } },
+    { mode = { '<c-p>' } },
+    { mode = { '<c-n>' } }
+  },
+  diagnostic_enable_virtual_text = 0,
+  diagnostic_insert_delay = 1,
   ['prettier#exec_cmd_async'] = 1,
   lightline = {
     colorscheme = 'one',
     active = {
       left = {
         { 'mode', 'paste' },
-        { 'git_status', 'readonly', 'filename', 'modified' }
+        { 'git_status', 'readonly', 'filename', 'modified' },
+        { 'lsp_error_count' }
       },
       right = {
         { 'lineinfo' },
@@ -35,7 +46,8 @@ local globals = {
       }
     },
     component = {
-      git_status = [[%{luaeval('require(''git'').get_git_status()')}]]
+      git_status = [[%{luaeval('require(''steelvim/git'').get_git_status()')}]];
+      lsp_error_count = [[%{luaeval('require(''steelvim/diagnostics'').get_status_line()')}]];
     }
   },
   ['sneak#label'] = true,

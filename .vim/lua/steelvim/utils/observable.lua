@@ -1,5 +1,5 @@
-local Subscriber = require 'utils/subscriber'
-local Subscription = require 'utils/subscription'
+local Subscriber = require 'steelvim/utils/subscriber'
+local Subscription = require 'steelvim/utils/subscription'
 
 local Observable = {}
 

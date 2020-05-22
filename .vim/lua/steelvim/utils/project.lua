@@ -1,5 +1,5 @@
-local utils = require 'utils/utils'
-local fs = require 'utils/fs'
+local utils = require 'steelvim/utils/utils'
+local fs = require 'steelvim/utils/fs'
 
 local M = {}
 

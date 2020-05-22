@@ -1,4 +1,4 @@
-local Fzf = require 'fzf/fzf'
+local Fzf = require 'steelvim/fzf/fzf'
 
 local M = {}
 

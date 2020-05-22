@@ -1,6 +1,6 @@
 local nvim = require 'nvim'
 
-local HOME = vim.fn.expand('~')
+local HOME = vim.loop.os_homedir()
 
 local settings = {
   number = true,

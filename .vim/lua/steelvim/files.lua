@@ -1,7 +1,7 @@
 local nvim = require 'nvim'
-local project = require 'utils/project'
-local Fzf = require 'fzf/fzf'
-local fs = require 'utils/fs'
+local project = require 'steelvim/utils/project'
+local Fzf = require 'steelvim/fzf/fzf'
+local fs = require 'steelvim/utils/fs'
 
 local M = {}
 

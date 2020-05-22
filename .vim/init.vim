@@ -50,4 +50,4 @@ Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 
 call plug#end()
 
-lua require 'init'
+lua require 'steelvim/init'

@@ -1,6 +1,6 @@
 local nvim = require 'nvim'
-local utils = require 'utils/utils'
-local Fzf = require 'fzf/fzf'
+local utils = require 'steelvim/utils/utils'
+local Fzf = require 'steelvim/fzf/fzf'
 
 local M = {}
 

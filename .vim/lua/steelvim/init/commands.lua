@@ -1,5 +1,5 @@
 local nvim = require 'nvim'
-local mappings = require 'utils/mappings'
+local mappings = require 'steelvim/utils/mappings'
 local highlight = require 'vim.highlight'
 
 mappings.create_augroups {
@@ -27,10 +27,10 @@ mappings.create_augroups {
   -- }
 }
 
-nvim.command [[command! -bang -nargs=* DRg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
-nvim.command [[command! -bang -nargs=* Rg call luaeval('require(''grep'').grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
-nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('require(''grep'').flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
-nvim.command [[command! -bang -nargs=* FlyRg call luaeval('require(''grep'').flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
+nvim.command [[command! -bang -nargs=* DRg call luaeval('require(''steelvim/grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
+nvim.command [[command! -bang -nargs=* Rg call luaeval('require(''steelvim/grep'').grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
+nvim.command [[command! -bang -nargs=* FlyDRg call luaeval('require(''steelvim/grep'').flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
+nvim.command [[command! -bang -nargs=* FlyRg call luaeval('require(''steelvim/grep'').flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
 nvim.command [[command! -bang -nargs=? -complete=dir Files 
-  call luaeval('require(''files'').fzf_files(unpack(_A))', [<q-args>, <bang>0])
+  call luaeval('require(''steelvim/files'').fzf_files(unpack(_A))', [<q-args>, <bang>0])
 ]]

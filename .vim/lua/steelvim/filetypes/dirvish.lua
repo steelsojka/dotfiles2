@@ -1,6 +1,6 @@
-local mappings = require 'utils/mappings'
+local mappings = require 'steelvim/utils/mappings'
 local nvim = require 'nvim'
-local Fzf = require 'fzf/fzf'
+local Fzf = require 'steelvim/fzf/fzf'
 
 local find_fzf = Fzf:create 'Dirvish'
 

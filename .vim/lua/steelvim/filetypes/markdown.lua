@@ -1,4 +1,4 @@
-local mappings = require 'utils/mappings'
+local mappings = require 'steelvim/utils/mappings'
 
 return function()
   mappings.register_buffer_mappings {
