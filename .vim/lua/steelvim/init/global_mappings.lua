@@ -211,8 +211,6 @@ local mappings = {
     quickfix.add_line_to_quickfix(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
   end, description = 'Add line to quickfix' },
   ['n cqn'] = { function() quickfix.new_qf_list() end, description = 'New quickfix list' },
-  -- Documentation mappings <leader>d
-  ['n dd'] = { [[<Plug>(doge-generate)]], description = 'Document' },
   -- Git mappings <leader>g
   ['n gcu'] = { [[<Cmd>GitGutterUndoHunk<CR>]], description = 'Undo chunk' },
   ['n gcs'] = { [[<Cmd>GitGutterStageHunk<CR>]], description = 'Stage chunk' },
@@ -266,8 +264,8 @@ local mappings = {
     end
   end, description = 'Inline errors' },
   -- Help mappings <leader>h
-  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' }
-  -- ['n hs'] = { [[<Cmd>CocList snippets<CR>]], description = 'Snippets list' }
+  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' },
+  ['n hs'] = { [[<Cmd>UltiSnippetsEdit<CR>]], description = 'Edit snippets' }
 }
 
 local which_key_map = {

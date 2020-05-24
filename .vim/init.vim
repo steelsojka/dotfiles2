@@ -28,7 +28,6 @@ Plug 'justinmk/vim-dirvish'
 Plug 'arthurxavierx/vim-caser'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'kkoomen/vim-doge'
 Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
@@ -45,7 +44,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'sirver/UltiSnips'
 Plug 'honza/vim-snippets'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-" TODO: Install UltiSnips
 " Integrate FZF with LSP (symbols, diagnostics, etc...)
 
 call plug#end()
