@@ -1,12 +1,7 @@
-local nvim = require 'nvim'
-local Subscription = require 'steelvim/utils/subscription'
-local unique_id = require 'steelvim/utils/unique_id'
-local utils = require 'steelvim/utils/utils'
-
 local Funcref = {}
 local NOOP = function() end
 
-LUA_FUNCTION_REFS = setmetatable({}, {
+__LUA_FUNCTION_REFS = setmetatable({}, {
   __index = function(tbl, key)
     local handler = rawget(tbl, key)
 
@@ -14,9 +9,9 @@ LUA_FUNCTION_REFS = setmetatable({}, {
   end
 })
 
-nvim.command [[
+steel.command [[
   function! LuaFunctionRefHandler(name, ...)
-    return luaeval("LUA_FUNCTION_REFS[_A.name](unpack(_A.args))", {'name': a:name, 'args': a:000})
+    return luaeval("__LUA_FUNCTION_REFS[_A.name](unpack(_A.args))", {'name': a:name, 'args': a:000})
   endfunction
 ]]
 
@@ -27,12 +22,12 @@ function Funcref:create(fn, opts)
   local instance = {}
   local _opts = opts or {}
 
-  instance.name = (_opts.name or 'k') .. unique_id()
-  instance.subscription = Subscription:create(function()
-    LUA_FUNCTION_REFS[instance.name] = nil
+  instance.name = (_opts.name or 'k') .. steel.utils.unique_id()
+  instance.subscription = steel.rx.subscription:create(function()
+    __LUA_FUNCTION_REFS[instance.name] = nil
   end)
 
-  LUA_FUNCTION_REFS[instance.name] = function(...) fn(instance, ...) end
+  __LUA_FUNCTION_REFS[instance.name] = function(...) fn(instance, ...) end
 
   return setmetatable(instance, {
     __index = Funcref
@@ -46,12 +41,12 @@ end
 
 -- Gets a string in VimL that creates a function ref to this Lua function.
 function Funcref:get_vim_ref_string(...)
-  return ('function("LuaFunctionRefHandler", [%s])'):format(utils.join({ '"' .. self.name .. '"', ... }, ','))
+  return ('function("LuaFunctionRefHandler", [%s])'):format(steel.fn.join({ '"' .. self.name .. '"', ... }, ','))
 end
 
 -- Gets a string to reference this function from Lua.
 function Funcref:get_lua_ref_string()
-  return ('LUA_FUNCTION_REFS["%s"]'):format(self.name)
+  return ('__LUA_FUNCTION_REFS["%s"]'):format(self.name)
 end
 
 return Funcref

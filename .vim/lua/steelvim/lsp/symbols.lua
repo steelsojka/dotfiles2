@@ -1,12 +1,10 @@
 local lsp_utils = require 'steelvim/lsp/utils'
-local utils = require 'steelvim/utils/utils'
-local Fzf = require 'steelvim/fzf/fzf'
 
 local M = {}
 
-M._fzf_symbol_handler = Fzf:create(function(ref, results)
+M._fzf_symbol_handler = steel.fzf:create(function(ref, results)
   if #results > 1 then
-    local locations = utils.map(results, function(item)
+    local locations = steel.fn.map(results, function(item)
       return M._parse_symbol_to_location(item)
     end)
 
@@ -33,12 +31,12 @@ function M.symbol_callback(_, _, result, _, bufnr)
 
   M._fzf_symbol_handler:execute {
     options = { "--multi", "--ansi", "--with-nth", "2..", "--tabstop", "1", "-n", "3,1..2" };
-    source = utils.map(items, function(item)
+    source = steel.fn.map(items, function(item)
       local symbol = item.text:match("] (.*)")
 
       return string.format([[%s %s %d:%d %s]], item.filename, item.kind, item.lnum, item.col, symbol)
     end);
-    window = Fzf.float_window();
+    window = steel.fzf.float_window();
   }
 end
 

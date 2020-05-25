@@ -1,16 +1,11 @@
-local nvim = require 'nvim'
-local project = require 'steelvim/utils/project'
-local Fzf = require 'steelvim/fzf/fzf'
-local fs = require 'steelvim/utils/fs'
-
 local M = {}
 
 function M.fzf_files(query, fullscreen, history_filename)
-  local local_folder = project.create_project_local(vim.fn.expand('%:p:h'))
+  local local_folder = steel.project.create_project_local(vim.fn.expand('%:p:h'))
   local spec = {
     options = {
       '--history', local_folder .. '/' .. (history_filename or 'fzf-history-files')
-    }
+    };
   }
 
   if fullscreen == 1 then
@@ -25,7 +20,7 @@ end
 -- Requires node to be installed (which it will always be... let's be real).
 -- @param from_path The path for the file to be relative from.
 function M.insert_relative_path(from_path)
-  local fzf_instance = Fzf:create(function(ref, other_path)
+  local fzf_instance = steel.fzf:create(function(ref, other_path)
     local cwd = vim.fn.getcwd()
 
     if cwd then
@@ -41,9 +36,9 @@ function M.insert_relative_path(from_path)
         end
 
         -- Enter insert mode and type the text.
-        nvim.ex.normal_('i' .. result)
+        steel.command("normal! i" .. result)
         -- Move back to position and enter insert mode.
-        nvim.input 'li' 
+        vim.api.input 'li' 
       else
         print "No path result!"
       end
@@ -56,10 +51,10 @@ function M.insert_relative_path(from_path)
 
   fzf_instance:execute {
     source = [[rg --files]],
-    window = Fzf.float_window()
+    window = steel.fzf.float_window()
   }
   -- Escape mode and enter insert mode.
-  nvim.input '<esc>i'
+  vim.api.input '<esc>i'
 end
 
 function M.format_file(bufnr)

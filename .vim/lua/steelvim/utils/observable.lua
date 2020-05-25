@@ -1,6 +1,3 @@
-local Subscriber = require 'steelvim/utils/subscriber'
-local Subscription = require 'steelvim/utils/subscription'
-
 local Observable = {}
 
 function Observable:create(sink)
@@ -14,8 +11,8 @@ function Observable:create(sink)
 end
 
 function Observable:subscribe(_subscriber)
-  local subscription = Subscription:create();
-  local subscriber = Subscriber:create({
+  local subscription = steel.rx.subscription:create();
+  local subscriber = steel.rx.subscriber:create({
     next = _subscriber.next,
     error = _subscriber.error,
     complete = function()

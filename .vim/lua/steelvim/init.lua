@@ -1,7 +1,8 @@
-local nvim = require 'nvim'
 local colorizer = require 'colorizer'
 
-nvim.ex.colorscheme('OceanicNext')
+require 'steelvim'
+
+steel.ex.colorscheme "OceanicNext"
 
 require 'steelvim/lsp/angularls'
 require 'steelvim/lsp/jdtls'

@@ -33,10 +33,8 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
 Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
-Plug 'norcalli/nvim.lua' 
 Plug 'haorenW1025/completion-nvim'
 Plug 'neovim/nvim-lsp'
-" Plug 'steelsojka/nvim-lsp', { 'branch': 'angular-ls' }
 Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'

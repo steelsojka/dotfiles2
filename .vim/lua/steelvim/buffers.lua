@@ -1,27 +1,23 @@
-local nvim = require 'nvim'
-local Fzf = require 'steelvim/fzf/fzf'
-local utils = require 'steelvim/utils/utils'
-
 local M = {}
 
-M._fzf_delete_buffer_handler = Fzf:create(function(_, buffers)
+M._fzf_delete_buffer_handler = steel.fzf:create(function(_, buffers)
   for _,v in pairs(buffers) do
     local buf = v:match('^%[([0-9]+)%]')
 
     if buf ~= nil then
-      nvim.ex.bw(buf)
+      steel.ex.bw(buf)
     end
   end
 end, { handle_all = true })
 
 local function get_listed_buffers()
-  return utils.filter(vim.fn.range(1, vim.fn.bufnr('$')), function(val)
+  return steel.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), function(val)
     return vim.fn.buflisted(val) == 1 and vim.fn.getbufvar(val, '&filetype') ~= 'qf'
   end)
 end
 
 local function format_buflist(buflist)
-  return utils.map(buflist, function(buf)
+  return steel.fn.map(buflist, function(buf)
     local name = vim.fn.bufname(buf)
     local modified = vim.fn.getbufvar(buf, '&modified') == 1 and ' [+]' or ''
     local readonly = vim.fn.getbufvar(buf, '&modifiable') == 1 and '' or ' [RO]'

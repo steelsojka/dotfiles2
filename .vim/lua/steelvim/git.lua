@@ -1,8 +1,6 @@
-local Fzf = require 'steelvim/fzf/fzf'
-
 local M = {}
 
-M._git_checkout_fzf = Fzf:create '!git checkout'
+M._git_checkout_fzf = steel.fzf:create '!git checkout'
 
 function M.get_git_status()
   local status = vim.fn['fugitive#head']()
@@ -19,7 +17,7 @@ end
 function M.checkout_git_branch_fzf(dir)
   M._git_checkout_fzf:execute {
     source = 'git lob',
-    window = Fzf.float_window(),
+    window = steel.fzf.float_window(),
     dir = dir
   }
 end

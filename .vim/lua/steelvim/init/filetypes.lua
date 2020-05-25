@@ -1,6 +1,4 @@
-local mappings = require 'steelvim/utils/mappings'
-
-LUA_FILETYPE_HOOKS = {
+__LUA_FILETYPE_HOOKS = {
   dirvish = require 'steelvim/filetypes/dirvish',
   typescript = require 'steelvim/filetypes/typescript',
   qf = require 'steelvim/filetypes/qf',
@@ -11,10 +9,10 @@ LUA_FILETYPE_HOOKS = {
 
 local autocmds = {}
 
-for filetype,fn in pairs(LUA_FILETYPE_HOOKS) do
-  autocmds['LuaFiletypeHooks_' .. mappings.escape_keymap(filetype)] = {
-    { 'FileType', filetype, ("lua LUA_FILETYPE_HOOKS[%q]()"):format(filetype) }
+for filetype,fn in pairs(__LUA_FILETYPE_HOOKS) do
+  autocmds['LuaFiletypeHooks_' .. steel.mappings.escape_keymap(filetype)] = {
+    { 'FileType', filetype, ("lua __LUA_FILETYPE_HOOKS[%q]()"):format(filetype) }
   }
 end
 
-mappings.create_augroups(autocmds)
+steel.mappings.create_augroups(autocmds)

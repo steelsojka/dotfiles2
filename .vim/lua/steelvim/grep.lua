@@ -1,11 +1,8 @@
-local utils = require 'steelvim/utils/utils'
-local project = require 'steelvim/utils/project'
-
 local M = {}
 
 function M.flygrep(query, cwd, fullscreen, args)
-  local local_folder = project.create_project_local(vim.fn.expand('%:p:h'))
-  local custom_args = utils.join(args or {}, ' ')
+  local local_folder = steel.project.create_project_local(vim.fn.expand('%:p:h'))
+  local custom_args = steel.fn.join(args or {}, ' ')
   local command = 'rg --column --line-number --no-heading --color=always --smart-case %s %s || true'
   local initial_cmd = command:format(custom_args, vim.fn.shellescape(query))
   local reload_cmd = command:format(custom_args, '{q}')
@@ -28,7 +25,7 @@ end
 
 function M.grep(query, dir, fullscreen, args)
   local options
-  local custom_args = utils.join(args or {}, ' ')
+  local custom_args = steel.fn.join(args or {}, ' ')
 
   if fullscreen == 1 then
     options = vim.fn['fzf#vim#with_preview']({ dir = dir }, 'up:80%')

@@ -1,6 +1,3 @@
-local Observable = require 'steelvim/utils/observable'
-local Funcref = require 'steelvim/utils/funcref'
-
 local M = {}
 
 local function is_eof(list)
@@ -8,9 +5,9 @@ local function is_eof(list)
 end
 
 function M.job_start(cmd, stdin_handler)
-  return Observable:create(function(subscriber)
+  return steel.rx.observable:create(function(subscriber)
     local result = {}
-    local handler = Funcref:create(function(ref, jobid, data, event)
+    local handler = steel.utils.funcref:create(function(ref, jobid, data, event)
       if event == 'stdout' then
         if is_eof(data) then
           subscriber:next(result)

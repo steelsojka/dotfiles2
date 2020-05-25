@@ -1,5 +1,3 @@
-local nvim = require 'nvim'
-
 local HOME = vim.loop.os_homedir()
 
 local settings = {
@@ -29,7 +27,7 @@ local settings = {
   splitbelow = true,
   splitright = true,
   inccommand = 'nosplit',
-  shortmess = nvim.o.shortmess .. 'c',
+  shortmess = vim.o.shortmess .. 'c',
   completeopt = 'menuone,noinsert,noselect',
   gdefault = true,
   dictionary = '/usr/share/dict/words'
@@ -37,10 +35,10 @@ local settings = {
 
 for key,value in pairs(settings) do
   if value == true then
-    nvim.ex.set(key)
+    steel.ex.set(key)
   elseif value == false then
-    nvim.ex.set('no' .. key)
+    steel.ex.set('no' .. key)
   else
-    nvim.o[key] = value
+    vim.o[key] = value
   end
 end

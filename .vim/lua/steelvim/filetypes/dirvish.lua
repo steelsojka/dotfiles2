@@ -1,8 +1,4 @@
-local mappings = require 'steelvim/utils/mappings'
-local nvim = require 'nvim'
-local Fzf = require 'steelvim/fzf/fzf'
-
-local find_fzf = Fzf:create 'Dirvish'
+local find_fzf = steel.fzf:create 'Dirvish'
 
 local function fzf_directories(starting_point)
   find_fzf:execute {
@@ -18,19 +14,19 @@ local function fzf_files(starting_point)
 end
 
 return function()
-  nvim.ex.setlocal 'nospell'
-  mappings.init_buffer_mappings {
+  steel.ex.setlocal("nospell")
+  steel.mappings.init_buffer_mappings {
     g = { name = '+goto' }
   }
 
-  mappings.register_buffer_mappings {
+  steel.mappings.register_buffer_mappings {
     ['n md'] = { function()
       local filehead = vim.fn.expand '<cfile>:h'
       local dirname = vim.fn.input 'Create directory: '
 
       if filename ~= '' then
-        nvim.command(('!mkdir %s/%s'):format(filehead, dirname))
-        nvim.input 'R'
+        steel.command(('!mkdir %s/%s'):format(filehead, dirname))
+        vim.api.input 'R'
       end
     end, description = 'Make directory' },
     ['n mf'] = { function()
@@ -38,8 +34,8 @@ return function()
       local filename = vim.fn.input 'Create file: '
 
       if filename ~= '' then
-        nvim.command(('!touch %s/%s'):format(filehead, filename))
-        nvim.input 'R'
+        steel.command(('!touch %s/%s'):format(filehead, filename))
+        vim.api.input 'R'
       end
     end, description = 'Create file' },
     ['n mr'] = { function()
@@ -49,8 +45,8 @@ return function()
       local new_name = vim.fn.input('Rename file: ', filename)
 
       if new_name ~= '' and new_name ~= filename then
-        nvim.command(('!mv %s %s/%s'):format(filepath, filehead, new_name))
-        nvim.input 'R'
+        steel.command(('!mv %s %s/%s'):format(filepath, filehead, new_name))
+        vim.api.input 'R'
       end
     end, description = 'Rename' },
     ['n mm'] = { function()
@@ -58,8 +54,8 @@ return function()
       local new_path = vim.fn.input('Move file to : ', filepath)
 
       if new_path ~= '' and new_path ~= filepath then
-        nvim.command(('!mv %s %s'):format(filepath, new_path))
-        nvim.input 'R'
+        steel.command(('!mv %s %s'):format(filepath, new_path))
+        vim.api.input 'R'
       end
     end, description = 'Move' },
     ['n mc'] = { function()
@@ -67,8 +63,8 @@ return function()
       local new_path = vim.fn.input('Copy file to : ', filepath)
 
       if new_path ~= '' and new_path ~= filepath then
-        nvim.command(('!cp %s %s'):format(filepath, new_path))
-        nvim.input 'R'
+        steel.command(('!cp %s %s'):format(filepath, new_path))
+        vim.api.input 'R'
       end
     end, description = 'Copy' },
     ['n mk'] = { function()
@@ -76,8 +72,8 @@ return function()
       local confirmed = vim.fn.confirm(('Delete %s?'):format(filepath))
 
       if confirmed == 1 then
-        nvim.command(('!rm -r %s'):format(filepath))
-        nvim.input 'R'
+        steel.command(('!rm -r %s'):format(filepath))
+        vim.api.input 'R'
       end
     end, description = 'Delete' },
     ['n mgd'] = { function() fzf_directories(vim.fn.expand '%:p:h') end, description = 'Child directory' },

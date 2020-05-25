@@ -1,6 +1,3 @@
-local nvim = require 'nvim'
-local utils = require 'steelvim/utils/utils'
-
 local M = {}
 
 -- Prompts for input to a command
@@ -10,7 +7,7 @@ function M.prompt_command(command, prompt)
   local search_term = vim.fn.input(('%s: '):format(prompt))
 
   if string.len(search_term) > 0 then
-    nvim.command(('%s %s'):format(command, search_term))
+    steel.command(('%s %s'):format(command, search_term))
   end
 end
 
@@ -23,8 +20,8 @@ function M.show_documentation(show_errors)
     end
   end
 
-  if vim.fn.index({ 'vim', 'lua', 'help' }, nvim.bo.filetype) >= 0 then
-    nvim.ex.help(vim.fn.expand('<cword>'))
+  if vim.fn.index({ 'vim', 'lua', 'help' }, vim.bo.filetype) >= 0 then
+    steel.ex.help(vim.fn.expand('<cword>'))
   else
     vim.lsp.buf.hover()
   end

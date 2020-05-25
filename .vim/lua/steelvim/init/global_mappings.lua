@@ -1,21 +1,10 @@
-local nvim = require 'nvim'
-local mapping_utils = require 'steelvim/utils/mappings'
-local fzf_diagnostics = require 'steelvim/fzf/diagnostics'
-local git = require 'steelvim/git'
-local terminal = require 'steelvim/terminal'
-local which_key = require 'steelvim/which_key'
-local common = require 'steelvim/common'
-local buffers = require 'steelvim/buffers'
-local grep = require 'steelvim/grep'
-local quickfix = require 'steelvim/quickfix'
-local files = require 'steelvim/files'
 local source = require 'source'
 
-local unimplemented = mapping_utils.unimplemented;
+local unimplemented = steel.mappings.unimplemented;
 
 local mappings = {
-  ['n '] = { function() which_key.start(false) end, silent = true },
-  ['v '] = { function() which_key.start(true) end, silent = true },
+  ['n '] = { function() steel.wk.start(false) end, silent = true },
+  ['v '] = { function() steel.wk.start(true) end, silent = true },
   ['i<C-space>'] = { function() vim.lsp.omnifunc() end, silent = true },
   ['n <CR>'] = { [[:Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
@@ -25,13 +14,13 @@ local mappings = {
   ['nU'] = { [[<C-r>]], description = 'Redo' },
   ['n/'] = { [[/\v]], description = 'Search with magic' },
   ['n?'] = { [[?\v]], description = 'Search backwards with magic' },
-  ['nK'] = { function() common.show_documentation() end, description = 'Show documentation', silent = true },
-  ['ngh'] = { function() common.show_documentation(true) end, description = 'Show documentation', silent = true },
+  ['nK'] = { function() steel.common.show_documentation() end, description = 'Show documentation', silent = true },
+  ['ngh'] = { function() steel.common.show_documentation(true) end, description = 'Show documentation', silent = true },
   -- Completion for all lines in all buffers
   ['i<C-l>'] = { [[<Plug>(fzf-complete-line)]] },
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]] },
   ['i<C-w>'] = { [[<Plug>(fzf-complete-word)]] },
-  ['i<C-u>'] = { function() files.insert_relative_path(vim.fn.expand('%:p:h')) end },
+  ['i<C-u>'] = { function() steel.files.insert_relative_path(vim.fn.expand('%:p:h')) end },
   ['ngd'] = { function() vim.lsp.buf.definition() end, silent = true },
   ['ngy'] = { function() vim.lsp.buf.type_definition()  end, silent = true },
   ['ngi'] = { function() vim.lsp.buf.implementation() end, silent = true },
@@ -65,7 +54,7 @@ local mappings = {
   ['n fE'] = { [[<Cmd>vsp $MYVIMRC<CR>]], description = 'Edit .vimrc' },
   ['n fF'] = { [[<Cmd>Files %:p:h<CR>]], description = 'Find from file' },
   ['n fP'] = { [[<Cmd>Files ~/.vim/lua<CR>]], description = 'Find config file' },
-  ['n fx'] = { function() fzf_diagnostics.open_diagnostics(true) end, description = 'List file diagnostics' },
+  ['n fx'] = { function() steel.diagnostics.open_diagnostics(true) end, description = 'List file diagnostics' },
   -- Buffer mappings <leader>b
   ['n bp'] = { [[<Cmd>bprevious<CR>]], description = 'Previous buffer' },
   ['n bn'] = { [[<Cmd>bnext<CR>]], description = 'Next buffer' },
@@ -73,10 +62,10 @@ local mappings = {
   ['n bl'] = { [[<Cmd>blast<CR>]], description = 'Last buffer' },
   ['n bd'] = { [[<Cmd>bp<CR>:bd#<CR>]], description = 'Delete buffer' },
   ['n bk'] = { [[<Cmd>bp<CR>:bw!#<CR>]], description = 'Wipe buffer' },
-  ['n bK'] = { function() buffers.delete_buffers_fzf() end, description = 'Wipe buffers' },
+  ['n bK'] = { function() steel.buf.delete_buffers_fzf() end, description = 'Wipe buffers' },
   ['n bb'] = { [[<Cmd>Buffers<CR>]], description = 'List buffers' },
   ['n bY'] = { [[ggyG]], description = 'Yank buffer' },
-  ['n bm'] = { function() common.prompt_command('mark', 'Set mark') end, description = 'Set mark' },
+  ['n bm'] = { function() steel.common.prompt_command('mark', 'Set mark') end, description = 'Set mark' },
   -- Window mappings <leader>w
   ['n ww'] = { [[<C-W>w]], description = 'Move below/right' },
   ['n wa'] = { [[<Cmd>Windows<CR>]], description = 'List windows' },
@@ -115,8 +104,8 @@ local mappings = {
   ['n ps'] = { function()
     local word = vim.fn.expand("<cword>")
 
-    nvim.ex.Files('.') 
-    nvim.input(word)
+    steel.ex.Files('.') 
+    vim.api.input(word)
   end, description = 'Find file with text' },
   ['n pT'] = { [[<Cmd>vsp +Dirvish<CR>]], description = 'Open File explorer in split' },
   ['n pt'] = { [[<Cmd>Dirvish<CR>]], description = 'Open file Explorer' },
@@ -168,7 +157,7 @@ local mappings = {
   ['n sP'] = { [[<Cmd>FlyRg!<CR>]], description = 'Grep files in project (full),' },
   ['n sm'] = { [[<Cmd>Marks<CR>]], description = 'Jump to marks' },
   ['n sa'] = { function()
-    grep.flygrep('', vim.fn.expand('%:p:h'), 0, { '--hidden', '--no-ignore' })
+    steel.grep.flygrep('', vim.fn.expand('%:p:h'), 0, { '--hidden', '--no-ignore' })
   end, description = 'Grep all files' },
   ['n sS'] = { [[:Rg <C-r><C-w><CR>]], description = 'Search selected text (project)' },
   -- Local Search/Replace mappings <leader>/
@@ -177,8 +166,8 @@ local mappings = {
   ['v /s'] = { [["9y/<C-r>9<CR>]] },
   ['v /S'] = { [["9y:Rg <C-r>9<CR>]] },
   ['n /r'] = { function()
-    nvim.ex.normal('g*')
-    nvim.input(':%s//')
+    steel.ex.normal('g*')
+    vim.api.input(':%s//')
   end, description = 'Replace selected text' },
   -- Yank with preview <leader>y
   -- ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },
@@ -189,7 +178,7 @@ local mappings = {
   -- Code mappings <leader>c
   ['n cl'] = { [[<Cmd>Commentary<CR>]], description = 'Comment line' },
   ['v cl'] = { [[:Commentary<CR>]] },
-  ['n cX'] = { function() fzf_diagnostics.open_diagnostics() end, description = 'Find errors' },
+  ['n cX'] = { function() steel.diagnostics.open_diagnostics() end, description = 'Find errors' },
   ['n cx'] = { [[<Cmd>OpenDiagnostic<CR>]], description = 'List errors' },
   ['n cd'] = { function() vim.lsp.buf.definition() end, description = 'Definition' },
   ['n cD'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
@@ -197,7 +186,7 @@ local mappings = {
   ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
   ['n cR'] = { function() 
     vim.lsp.stop_client(vim.lsp.get_active_clients())
-    nvim.ex.edit()
+    steel.ex.edit()
   end, description = 'LSP reload' },
   ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
   ['n cj'] = { function() vim.lsp.buf.document_symbol() end, description = 'Jump to symbol' },
@@ -205,10 +194,10 @@ local mappings = {
   ['n ca'] = { function() vim.lsp.buf.code_action() end, description = 'LSP code actions' },
   ['n cql'] = { function()
     local line = vim.fn.getpos(".")[2]
-    quickfix.add_line_to_quickfix(line, line)
+    steel.qf.add_line_to_quickfix(line, line)
   end, description = 'Add line to quickfix' },
   ['v cql'] = { function()
-    quickfix.add_line_to_quickfix(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
+    steel.qf.add_line_to_quickfix(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
   end, description = 'Add line to quickfix' },
   ['n cqn'] = { function() quickfix.new_qf_list() end, description = 'New quickfix list' },
   -- Git mappings <leader>g
@@ -217,7 +206,7 @@ local mappings = {
   ['n gcn'] = { [[<Cmd>GitGutterNextHunk<CR>]], description = 'Next chunk' },
   ['n gcp'] = { [[<Cmd>GitGutterPrevHunk<CR>]], description = 'Previous chunk' },
   ['n gci'] = { [[<Cmd>GitGutterPreviewHunk<CR>]], description = 'Chunk info' },
-  ['n gB'] = { function() git.checkout_git_branch_fzf(vim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
+  ['n gB'] = { function() steel.git.checkout_git_branch_fzf(vim.fn.expand("%:p:h")) end , description = 'Checkout branch' },
   ['n gs'] = { [[<Cmd>G<CR>]], description = 'Git status' },
   ['n gd'] = { [[<Cmd>Gdiffsplit<CR>]], description = 'Git diff' },
   ['n ge'] = { [[<Cmd>Gedit<CR>]], description = 'Git edit' },
@@ -228,26 +217,26 @@ local mappings = {
   ['n gp'] = { [[<Cmd>Gpull<CR>]], description = 'Git pull' },
   ['n gP'] = { [[<Cmd>Gpush<CR>]], description = 'Git push' },
   ['n gb'] = { [[<Cmd>Gblame<CR>]], description = 'Git blame' },
-  ['n gr'] = { function() terminal.float_fzf_cmd("grh") end, description = 'Reset files to head' },
-  ['n gD'] = { function() terminal.float_fzf_cmd("gd") end, description = 'Diff files' },
-  ['n ga'] = { function() terminal.float_fzf_cmd("ga") end, description = 'Add files' },
-  ['n gC'] = { function() terminal.float_fzf_cmd("gcf") end, description = 'Checkout files' },
+  ['n gr'] = { function() steel.term.float_fzf_cmd("grh") end, description = 'Reset files to head' },
+  ['n gD'] = { function() steel.term.float_fzf_cmd("gd") end, description = 'Diff files' },
+  ['n ga'] = { function() steel.term.float_fzf_cmd("ga") end, description = 'Add files' },
+  ['n gC'] = { function() steel.term.float_fzf_cmd("gcf") end, description = 'Checkout files' },
   ['n gfc'] = { function() unimplemented() end, description = 'Find commit' },
   ['n gff'] = { function() unimplemented() end, description = 'Find file' },
   ['n gfg'] = { function() unimplemented() end, description = 'Find gitconfig file' },
   ['n gfi'] = { function() unimplemented() end, description = 'Find issue' },
   ['n gfp'] = { function() unimplemented() end, description = 'Find pull request' },
-  ['n gfs'] = { function() terminal.float_fzf_cmd("gss") end, description = 'Find stash' },
+  ['n gfs'] = { function() steel.term.float_fzf_cmd("gss") end, description = 'Find stash' },
   -- Terminal mappings <leader>wt
-  ['n wtt'] = { function() terminal.float(false) end, description = 'Float terminal' },
-  ['n wtT'] = { function() terminal.float(true) end, description = 'Float terminal (full)' },
+  ['n wtt'] = { function() steel.term.float(false) end, description = 'Float terminal' },
+  ['n wtT'] = { function() steel.term.float(true) end, description = 'Float terminal (full)' },
   ['n wtv'] = { function() 
-    nvim.ex.vsp()
-    terminal.open_term() 
+    steel.ex.vsp()
+    steel.term.open_term() 
   end, description = 'Vertical split terminal' },
   ['n wtf'] = { function()
-    nvim.ex.vsp()
-    terminal.open_term(true)
+    steel.ex.vsp()
+    steel.term.open_term(true)
   end, description = 'Terminal at file' },
   -- Toggle mappings <leader>t
   ['n tl'] = { function() unimplemented() end, description = 'Line numbers' },
@@ -255,12 +244,12 @@ local mappings = {
   ['n tr'] = { [[<Cmd>set modifiable!<CR>]], description = 'Read only' },
   ['n ts'] = { [[<Cmd>set spell!<CR>]], description = 'Spell check' },
   ['n te'] = { function()
-    local cur = nvim.g.diagnostic_enable_virtual_text
+    local cur = vim.g.diagnostic_enable_virtual_text
 
     if cur == 1 then
-      nvim.g.diagnostic_enable_virtual_text = 0
+      vim.g.diagnostic_enable_virtual_text = 0
     else
-      nvim.g.diagnostic_enable_virtual_text = 1
+      vim.g.diagnostic_enable_virtual_text = 1
     end
   end, description = 'Inline errors' },
   -- Help mappings <leader>h
@@ -312,11 +301,11 @@ local which_key_map = {
   t = { name = '+toggle' }
 }
 
-mapping_utils.register_mappings(mappings, { noremap = true }, which_key_map)
-nvim.g.which_key_map = which_key_map
+steel.mappings.register_mappings(mappings, { noremap = true }, which_key_map)
+vim.g.which_key_map = which_key_map
 
 -- I can't get the following mappings to work in lua...
-nvim.command [[
+steel.command [[
 function! CheckBackSpace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -325,10 +314,6 @@ endfunction
 
 -- Use tab for trigger completion with characters ahead and navigate.
 -- Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-nvim.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : completion#trigger_completion()]]
-nvim.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
-nvim.command [[inoremap <expr> <cr> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<cr>"]]
-
--- Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
--- Coc only does snippet and additional edit on confirm.
--- nvim.command [[inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"]]
+steel.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : completion#trigger_completion()]]
+steel.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
+steel.command [[inoremap <expr> <cr> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<cr>"]]
