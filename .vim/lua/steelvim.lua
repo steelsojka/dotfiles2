@@ -23,6 +23,7 @@ local api_paths = {
     jobs = 'steelvim/utils/jobs';
   };
   fn = 'steelvim/utils/utils';
+  ansi = 'steelvim/ansi';
   rx = {
     observable = 'steelvim/utils/observable';
     subscriber = 'steelvim/utils/subscriber';

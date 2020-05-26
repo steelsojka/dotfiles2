@@ -12,7 +12,7 @@ local fzf = steel.fzf:create(function(_, line)
       steel.command("normal! zvzz")
     end
   end
-end, false)
+end, { handle_all = false })
 
 local function format_diagnostic(item, _)
   return (item.uri ~= nil and item.uri or '')

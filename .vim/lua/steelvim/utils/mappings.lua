@@ -154,26 +154,42 @@ function M.register_buffer_mappings(mappings, default_options, buffer)
   end
 end
 
+function M.create_autocmd(def, name)
+  name = name or ('Lua_autocmd_' .. steel.utils.unique_id())
+
+  if type(def[#def]) == 'function' then
+    local fn = def[#def]
+
+    def = {unpack(def, 1, #def - 1)}
+    table.insert(def, ("lua steel.mappings._LUA_AUGROUP_HOOKS['%s']()"):format(name))
+    M._LUA_AUGROUP_HOOKS[name] = fn
+  end
+
+  local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
+
+  steel.command(command)
+end
+
+function M.create_autocmds(defs)
+  for _,def in ipairs(defs) do
+    M.create_autocmd(def)
+  end
+end
+
 function M.create_augroups(definitions)
-  for group_name,defs in pairs(definitions) do
-    steel.command('augroup LuaAugroup_' .. group_name)
-    steel.command('autocmd!')
+  if vim.tbl_islist(definitions) then
+    
+  else
+    for group_name,defs in pairs(definitions) do
+      steel.command('augroup LuaAugroup_' .. group_name)
+      steel.command('autocmd!')
 
-    for index,def in pairs(defs) do
-      if type(def[#def]) == 'function' then
-        local fn = def[#def]
-
-        def = {unpack(def, 1, #def - 1)}
-        table.insert(def, ("lua steel.mappings._LUA_AUGROUP_HOOKS['%s']()"):format(group_name .. index))
-        M._LUA_AUGROUP_HOOKS[group_name .. index] = fn
+      for index,def in ipairs(defs) do
+        M.create_autocmd(def, group_name .. index)
       end
 
-      local command = table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
-
-      steel.command(command)
+      steel.command('augroup END')
     end
-
-    steel.command('augroup END')
   end
 end
 

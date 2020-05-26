@@ -29,6 +29,7 @@ local settings = {
   inccommand = 'nosplit',
   shortmess = vim.o.shortmess .. 'c',
   completeopt = 'menuone,noinsert,noselect',
+  complete = '.,b,w,u',
   gdefault = true,
   dictionary = '/usr/share/dict/words'
 }

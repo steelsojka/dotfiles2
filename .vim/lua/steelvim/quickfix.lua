@@ -7,38 +7,40 @@ function M.build_list(lines)
 end
 
 function M.get_fzf_list()
-  local qf_list = vim.fn.getqflist()
-
-  return steel.fn.map(
-    qf_list,
-    function(item, i)
-      return ('%d\t%s\t%d:%d\t%s'):format(i, vim.api.nvim_buf_get_name(item.bufnr), item.lnum, item.col, item.text)
-    end
-  )
+  return steel.fzf.grid_to_source(
+    steel.fzf.create_grid(
+    {
+      { heading = "Text"; length = 45; map = steel.ansi.red; };
+      { heading = "Loc"; length = 12; map = steel.ansi.red; };
+      { heading = "File"; map = steel.ansi.red; };
+    }, 
+    steel.fn.map(vim.fn.getqflist(), function(item, index)
+      return {
+        item.text,
+        { value = item.lnum .. ":" .. item.col; map = steel.ansi.blue; },
+        { value = vim.api.nvim_buf_get_name(item.bufnr); map = steel.ansi.cyan; },
+        tostring(index)
+      }
+    end)
+  ))
 end
 
 -- Filters the quick fix list using FZF
 -- @param destructive Whether to overwrite the current quick fix list
 function M.filter_qf(destructive)
-  local fzf = steel.fzf:create(function(_, lines)
-    local qf_list = vim.fn.getqflist()
-    local rows_to_keep = steel.fn.filter(
-      steel.fn.map(lines, function(line) return line:match('^([0-9]+)') end),
-      function(line) return line ~= nil end
-    )
-    local new_results = steel.fn.filter(qf_list, function(_, i) return vim.tbl_contains(rows_to_keep, tostring(i)) end)
-
+  local fzf = steel.fzf:create(function(_, _, data)
     if not destructive then
-      vim.fn.setqflist(new_results)
+      vim.fn.setqflist(data)
     else
-      vim.fn.setqflist({}, 'r', { items = new_results })
+      vim.fn.setqflist({}, 'r', { items = data })
     end
-  end, true)
+  end, { handle_all = true; indexed_data = true; })
 
   fzf:execute {
-    source = M.get_fzf_list(),
-    window = steel.fzf.float_window(function() fzf:unsubscribe() end),
-    options = { '--multi', '--nth=1..', '--with-nth=2..' }
+    source = M.get_fzf_list();
+    window = steel.fzf.float_window(function() fzf:unsubscribe() end);
+    options = { '--multi', '--nth=1..3', '--with-nth=1..3', '--ansi', '--header-lines=1' };
+    data = vim.fn.getqflist();
   }
 end
 

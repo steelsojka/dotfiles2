@@ -38,7 +38,7 @@ function M.insert_relative_path(from_path)
         -- Enter insert mode and type the text.
         steel.command("normal! i" .. result)
         -- Move back to position and enter insert mode.
-        vim.api.input 'li' 
+        vim.api.nvim_input 'li' 
       else
         print "No path result!"
       end
@@ -54,7 +54,7 @@ function M.insert_relative_path(from_path)
     window = steel.fzf.float_window()
   }
   -- Escape mode and enter insert mode.
-  vim.api.input '<esc>i'
+  vim.api.nvim_input '<esc>i'
 end
 
 function M.format_file(bufnr)

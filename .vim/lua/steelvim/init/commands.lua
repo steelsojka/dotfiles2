@@ -5,30 +5,26 @@ steel.mappings.create_augroups {
     { 'VimResized', '*', function()
       vim.g.floaterm_width = vim.fn.float2nr(vim.o.columns * 0.9)
       vim.g.floaterm_height = vim.fn.float2nr(vim.o.lines * 0.75)
-    end }
-  },
-
+    end };
+  };
   terminal = {
-    { 'TermOpen', '*', function() steel.ex.setlocal('nospell', 'nonumber') end }
-  },
-
+    { 'TermOpen', '*', function() steel.ex.setlocal('nospell', 'nonumber') end };
+  };
   startify = {
-    { 'User', 'Startified', function() steel.ex.setlocal('buflisted') end }
-  },
-
+    { 'User', 'Startified', function() steel.ex.setlocal('buflisted') end };
+  };
   yank = {
-    { 'TextYankPost', '*', 'silent!', function() highlight.on_yank('IncSearch', 400, vim.v.event) end }
-  }
-  -- lsp = {
-    -- { 'CursorHold', '*', 'silent', function() vim.lsp.buf.document_highlight() end },
-    -- { 'CursorMoved', '*', 'silent', function() vim.lsp.buf.clear_references() end }
-  -- }
+    { 'TextYankPost', '*', 'silent!', function() highlight.on_yank('IncSearch', 400, vim.v.event) end };
+  };
+  completion = {
+    { 'BufEnter', '*', function() require 'completion'.on_attach() end };
+  };
 }
 
-steel.command [[command! -bang -nargs=* DRg call luaeval('require(''steelvim/grep'').grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
-steel.command [[command! -bang -nargs=* Rg call luaeval('require(''steelvim/grep'').grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
-steel.command [[command! -bang -nargs=* FlyDRg call luaeval('require(''steelvim/grep'').flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
-steel.command [[command! -bang -nargs=* FlyRg call luaeval('require(''steelvim/grep'').flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
+steel.command [[command! -bang -nargs=* DRg call luaeval('steel.grep.grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
+steel.command [[command! -bang -nargs=* Rg call luaeval('steel.grep.grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
+steel.command [[command! -bang -nargs=* FlyDRg call luaeval('steel.grep.flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
+steel.command [[command! -bang -nargs=* FlyRg call luaeval('steel.grep.flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
 steel.command [[command! -bang -nargs=? -complete=dir Files 
-  call luaeval('require(''steelvim/files'').fzf_files(unpack(_A))', [<q-args>, <bang>0])
+  call luaeval('steel.files.fzf_files(unpack(_A))', [<q-args>, <bang>0])
 ]]

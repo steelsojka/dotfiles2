@@ -26,7 +26,7 @@ return function()
 
       if filename ~= '' then
         steel.command(('!mkdir %s/%s'):format(filehead, dirname))
-        vim.api.input 'R'
+        vim.api.nvim_input 'R'
       end
     end, description = 'Make directory' },
     ['n mf'] = { function()
@@ -35,7 +35,7 @@ return function()
 
       if filename ~= '' then
         steel.command(('!touch %s/%s'):format(filehead, filename))
-        vim.api.input 'R'
+        vim.api.nvim_input 'R'
       end
     end, description = 'Create file' },
     ['n mr'] = { function()
@@ -46,7 +46,7 @@ return function()
 
       if new_name ~= '' and new_name ~= filename then
         steel.command(('!mv %s %s/%s'):format(filepath, filehead, new_name))
-        vim.api.input 'R'
+        vim.api.nvim_input 'R'
       end
     end, description = 'Rename' },
     ['n mm'] = { function()
@@ -55,7 +55,7 @@ return function()
 
       if new_path ~= '' and new_path ~= filepath then
         steel.command(('!mv %s %s'):format(filepath, new_path))
-        vim.api.input 'R'
+        vim.api.nvim_input 'R'
       end
     end, description = 'Move' },
     ['n mc'] = { function()
@@ -64,7 +64,7 @@ return function()
 
       if new_path ~= '' and new_path ~= filepath then
         steel.command(('!cp %s %s'):format(filepath, new_path))
-        vim.api.input 'R'
+        vim.api.nvim_input 'R'
       end
     end, description = 'Copy' },
     ['n mk'] = { function()
@@ -73,7 +73,7 @@ return function()
 
       if confirmed == 1 then
         steel.command(('!rm -r %s'):format(filepath))
-        vim.api.input 'R'
+        vim.api.nvim_input 'R'
       end
     end, description = 'Delete' },
     ['n mgd'] = { function() fzf_directories(vim.fn.expand '%:p:h') end, description = 'Child directory' },

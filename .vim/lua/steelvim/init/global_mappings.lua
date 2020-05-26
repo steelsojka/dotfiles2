@@ -5,7 +5,7 @@ local unimplemented = steel.mappings.unimplemented;
 local mappings = {
   ['n '] = { function() steel.wk.start(false) end, silent = true },
   ['v '] = { function() steel.wk.start(true) end, silent = true },
-  ['i<C-space>'] = { function() vim.lsp.omnifunc() end, silent = true },
+  ['i<C-Space>'] = { [[completion#trigger_completion()]], silent = true, expr = true },
   ['n <CR>'] = { [[:Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
   ['i<C-j>'] = { function() source.prevCompletion() end },
@@ -21,10 +21,6 @@ local mappings = {
   ['i<C-e>'] = { [[<Plug>(fzf-complete-path)]] },
   ['i<C-w>'] = { [[<Plug>(fzf-complete-word)]] },
   ['i<C-u>'] = { function() steel.files.insert_relative_path(vim.fn.expand('%:p:h')) end },
-  ['ngd'] = { function() vim.lsp.buf.definition() end, silent = true },
-  ['ngy'] = { function() vim.lsp.buf.type_definition()  end, silent = true },
-  ['ngi'] = { function() vim.lsp.buf.implementation() end, silent = true },
-  ['ngr'] = { function() vim.lsp.buf.references()  end, silent = true },
   ['nf'] = { [[<Plug>Sneak_f]] },
   ['nF'] = { [[<Plug>Sneak_F]] },
   ['xf'] = { [[<Plug>Sneak_f]] },
@@ -105,7 +101,7 @@ local mappings = {
     local word = vim.fn.expand("<cword>")
 
     steel.ex.Files('.') 
-    vim.api.input(word)
+    vim.api.nvim_input(word)
   end, description = 'Find file with text' },
   ['n pT'] = { [[<Cmd>vsp +Dirvish<CR>]], description = 'Open File explorer in split' },
   ['n pt'] = { [[<Cmd>Dirvish<CR>]], description = 'Open file Explorer' },
@@ -167,7 +163,7 @@ local mappings = {
   ['v /S'] = { [["9y:Rg <C-r>9<CR>]] },
   ['n /r'] = { function()
     steel.ex.normal('g*')
-    vim.api.input(':%s//')
+    vim.api.nvim_input(':%s//')
   end, description = 'Replace selected text' },
   -- Yank with preview <leader>y
   -- ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },

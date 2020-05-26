@@ -29,7 +29,7 @@ function M.filter(list, predicate)
 end
 
 function M.find(list, predicate)
-  for i,v in pairs(list) do
+  for i,v in ipairs(list) do
     if predicate(v,i) then
       return v, i
     end
