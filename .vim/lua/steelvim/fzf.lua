@@ -67,47 +67,16 @@ function Fzf:unsubscribe()
   self.subscription:unsubscribe()
 end
 
--- Creates a floating window for use with fzf
--- @param on_close An optional on close handler executed when the buffer is detached
-function Fzf.create_floating_window(on_close)
-  local buf = vim.api.nvim_create_buf(false, true)
-  local columns = vim.o.columns
-  local lines = vim.o.lines
-  local width = math.floor(columns - (columns * 2 / 20)) local height = lines - 3
-  local y = height
-  local x = math.floor((columns - width) / 2)
-
-  if on_close then
-    vim.api.nvim_buf_attach(buf, false, {
-      on_detach = vim.schedule_wrap(on_close)
-    })
-  end
-
-  vim.fn.setbufvar(buf, '&signcolumn', 'no' )
-  vim.api.nvim_open_win(buf, true, { relative = 'editor', row = y, col = x, width = width, height = height })
-  steel.ex.setlocal 'winblend=10'
-end
-
--- Gets the execution string used in FZF config options
--- @param on_close Optional handler to call on buffer detachment
-function Fzf.float_window(on_close)
-  if on_close then
-    local fn_ref = steel.utils.funcref:create(function(ref)
-      on_close()
-      ref:unsubscribe()
-    end)
-
-    return ("lua steel.fzf.create_floating_window(%s)"):format(fn_ref:get_lua_ref_string())
-  end
-
-  return [[lua steel.fzf.create_floating_window()]]
-end
+Fzf.float_window = steel.win.float_window
+Fzf.create_floating_window = steel.win.create_floating_window
 
 -- Creates a grid with a header row and columns that
 -- are lined up vertically.
-function Fzf.create_grid(headings, items)
+function Fzf.create_grid(headings, items, delimiter)
   local new_items = {}
   local header_row = {}
+
+  delimiter = delimiter or " "
 
   for index,item in ipairs(headings) do
     local heading = item.heading
@@ -120,7 +89,7 @@ function Fzf.create_grid(headings, items)
     if item.length then
       local diff = item.length - #heading
 
-      result = result .. string.rep(" ", diff)
+      result = result .. string.rep(delimiter, diff)
     end
 
     table.insert(header_row, result)
@@ -144,7 +113,7 @@ function Fzf.create_grid(headings, items)
       if heading and heading.length and #value < heading.length then
         local diff = heading.length - #value
 
-        res = res .. string.rep(" ", diff)
+        res = res .. string.rep(delimiter, diff)
       end
 
       table.insert(new_item, res)
@@ -156,9 +125,11 @@ function Fzf.create_grid(headings, items)
   return new_items
 end
 
-function Fzf.grid_to_source(grid)
+function Fzf.grid_to_source(grid, delimiter)
+  delimiter = delimiter or " "
+
   return steel.fn.map(grid, function(row) 
-    return table.concat(row, " ")
+    return table.concat(row, delimiter)
   end)
 end
 

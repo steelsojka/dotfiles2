@@ -39,7 +39,7 @@ function M.filter_qf(destructive)
   fzf:execute {
     source = M.get_fzf_list();
     window = steel.fzf.float_window(function() fzf:unsubscribe() end);
-    options = { '--multi', '--nth=1..3', '--with-nth=1..3', '--ansi', '--header-lines=1' };
+    options = { '--multi', '--ansi', '--header-lines=1' };
     data = vim.fn.getqflist();
   }
 end

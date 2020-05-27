@@ -19,8 +19,9 @@ end
 
 -- Opens a terminl with an fzf floating window
 -- @param The command to run
-function M.float_fzf_cmd(cmd)
-  steel.fzf.create_floating_window()
+function M.float_cmd(cmd)
+  steel.win.create_floating_window()
+
   -- Open a term and exit on process exit
   steel.command(([[call termopen('%s', {'on_exit': {_ -> execute('q!') }})]]):format(cmd))
   steel.ex.normal 'i'
@@ -33,7 +34,7 @@ function M.open_term(is_local)
   local buf = vim.api.nvim_create_buf(true, false)
 
   vim.api.nvim_set_current_buf(buf)
-  vim.fn.termopen(nvim.o.shell, { cwd = cwd })
+  vim.fn.termopen(vim.o.shell, { cwd = cwd })
   steel.ex.normal 'i'
 end
 

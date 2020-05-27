@@ -24,6 +24,7 @@ local api_paths = {
   };
   fn = 'steelvim/utils/utils';
   ansi = 'steelvim/ansi';
+  win = 'steelvim/win';
   rx = {
     observable = 'steelvim/utils/observable';
     subscriber = 'steelvim/utils/subscriber';
@@ -33,7 +34,6 @@ local api_paths = {
   fzf = 'steelvim/fzf';
   fs = 'steelvim/utils/fs';
 }
-
 
 local function setup_lookup_table(tbl, api, path)
   setmetatable(tbl, {
