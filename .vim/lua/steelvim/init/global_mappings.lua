@@ -106,6 +106,7 @@ local mappings = {
   ['n pT'] = { [[<Cmd>vsp +Dirvish<CR>]], description = 'Open File explorer in split' },
   ['n pt'] = { [[<Cmd>Dirvish<CR>]], description = 'Open file Explorer' },
   ['n pq'] = { [[<Cmd>qall<CR>]], description = 'Quit project' },
+  ['n pc'] = { function() steel.project.cd_to_root() end, description = 'Cwd to root' },
   -- Workspace mappings <leader>q
   ['n q'] = { [[<Cmd>q<CR>]], description = 'Quit' },
   ['n Q'] = { [[<Cmd>q!<CR>]], description = 'Force quit' },

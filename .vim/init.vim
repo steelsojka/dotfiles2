@@ -31,7 +31,6 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
-Plug 'wfxr/forgit', { 'dir': '~/.forgit' }
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
 Plug 'haorenW1025/completion-nvim'
 Plug 'neovim/nvim-lsp'

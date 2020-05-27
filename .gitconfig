@@ -45,6 +45,7 @@
   # Use custom `.gitignore` and `.gitattributes`
   excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
+  editor = nvim
   # Treat spaces before tabs, lines that are indented with 8 or more spaces, and
   # all kinds of trailing whitespace as an error.
   # [default] trailing-space: looks for spaces at the end of a line

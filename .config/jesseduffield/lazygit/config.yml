@@ -1,0 +1,8 @@
+git:
+  paging:
+    colorArg: always
+    pager: diff-so-fancy
+os:
+  openCommand: nvim {{filename}}
+reporting: "off"
+startuppopupversion: 1

@@ -33,4 +33,14 @@ function M.create_project_local(path, folder_name, matcher)
   return local_folder
 end
 
+function M.cd_to_root(path, matcher)
+  path = path or vim.fn.getcwd()
+
+  local root = M.get_project_root(path, matcher)
+
+  if root then
+    steel.ex.cd(root)
+  end
+end
+
 return M

@@ -43,7 +43,7 @@ function M.symbol_callback(_, _, result, _, bufnr)
   )
 
   M._fzf_symbol_handler:execute {
-    options = { "--multi", "--ansi", "--with-nth=1..4", "-n", "1,3", "--header-lines=1" };
+    options = { "--multi", "--ansi", "--with-nth=1..4", "-n", "1,3,4", "--header-lines=1" };
     source = steel.fzf.grid_to_source(grid);
     window = steel.fzf.float_window();
     data = items;
