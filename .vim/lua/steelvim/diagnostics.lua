@@ -1,25 +1,42 @@
 local M = {}
 
-local fzf = steel.fzf:create(function(_, line)
-  local uri, lnum, col = line:match('(.-)[|]([0-9]+) ([0-9]+)[|](.*)')
+local DiagnosticSeverity = vim.lsp.protocol.DiagnosticSeverity
 
-  if uri then
-    steel.ex.buffer(vim.uri_to_bufnr(uri))
-    steel.ex.mark("'")
+M.error_display = {
+  [DiagnosticSeverity.Error] = { text = "Error"; color = steel.ansi.red };
+  [DiagnosticSeverity.Warning] = { text = "Warning"; color = steel.ansi.yellow };
+  [DiagnosticSeverity.Information] = { text = "Info"; color = steel.ansi.blue };
+  [DiagnosticSeverity.Hint] = { text = "Hint"; color = function(t) return t end};
+}
 
-    if lnum and col then
-      vim.fn.cursor(lnum + 1, col + 1)
-      steel.command("normal! zvzz")
-    end
-  end
-end, { handle_all = false })
+local fzf = steel.fzf:create(function(_, _, data)
+  steel.lsp.handle_location_items(data, function(item)
+    return steel.lsp.uri_to_location(item.uri, item.range.start.line, item.range.start.character)
+  end)
+end, { handle_all = true; indexed_data = true; })
 
-local function format_diagnostic(item, _)
-  return (item.uri ~= nil and item.uri or '')
-    .. '|' .. (item.range.start.line ~= nil and item.range.start.line or '')
-    .. (item.range.start.character ~= nil and (' ' .. item.range.start.character) or ' 0')
-    .. '| ' .. item.severity
-    .. ': ' .. item.message
+local function format_diagnostics(items)
+  return steel.fzf.grid_to_source(
+    steel.fzf.create_grid({
+      { heading = "Message"; length = 60; map = steel.ansi.red; truncate = true; },
+      { heading = "Severity"; length = 15; map = steel.ansi.red; },
+      { heading = "Loc"; length = 12; map = steel.ansi.red; },
+      { heading = "File"; map = steel.ansi.red; }
+    }, steel.fn.map(items, function(item, index)
+      local error_display = M.error_display[item.severity]
+
+      return {
+        { value = item.message; },
+        { value = error_display.text; map = error_display.color; },
+        { 
+          value = item.range.start.line .. ":" .. item.range.start.character; 
+          map = steel.ansi.blue
+        },
+        { value = item.uri; map = steel.ansi.cyan },
+        tostring(index)
+      }
+    end))
+  )
 end
 
 local function get_diagnostics(options)
@@ -28,7 +45,7 @@ local function get_diagnostics(options)
   local result = {}
 
   if options.bufnr then
-    result = vim.lsp.util.diagnostics[options.bufnr] or {}
+    result = vim.lsp.util.diagnostics_by_buf[options.bufnr] or {}
   else
     for _,diagnostics in pairs(vim.lsp.util.diagnostics_by_buf) do
       if options.filetype then
@@ -41,17 +58,19 @@ local function get_diagnostics(options)
     end
   end
 
-  return steel.fn.map(result, format_diagnostic)
+  return result
 end
 
-function M.open_diagnostics(file_only)
-  local diagnostics = get_diagnostics(file_only)
-  local opts = {
-    source = diagnostics,
-    window = Fzf.float_window()
-  }
+function M.open_diagnostics(options)
+  local diagnostics = get_diagnostics(options)
+  local source = format_diagnostics(diagnostics)
 
-  fzf:execute(opts)
+  fzf:execute {
+    options = { "--ansi", "--multi", "--header-lines=1" };
+    source = source;
+    window = steel.fzf.float_window();
+    data = diagnostics;
+  }
 end
 
 function M.get_status_line()

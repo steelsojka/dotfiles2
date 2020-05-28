@@ -28,7 +28,6 @@ function Fzf:create(sink, options)
         end
         
         data = Fzf.extract_data_items(results, data)
-        print(vim.inspect(data))
       end
 
       sink(ref, results, data)
@@ -105,6 +104,10 @@ function Fzf.create_grid(headings, items, delimiter)
       local is_tbl = type(item_part) == "table"
       local value = is_tbl and item_part.value or item_part
       local res = value
+
+      if heading and heading.truncate and heading.length and #res > heading.length then
+        res = string.sub(res, 1, heading.length - 3) .. "..."
+      end
 
       if is_tbl and type(item_part.map) == "function" then
         res = item_part.map(res)

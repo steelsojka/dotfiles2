@@ -4,14 +4,16 @@ local callbacks = require 'steelvim/lsp/callbacks'
 
 local M = {}
 
-function M.on_attach()
+function M.on_attach(client)
   diagnostic.on_attach()
 
-  steel.mappings.create_autocmds {
-    { 'CursorHold', '<buffer>', function() vim.lsp.buf.document_highlight() end };
-    { 'CursorHoldI', '<buffer>', function() vim.lsp.buf.document_highlight() end };
-    { 'CursorMoved', '<buffer>', function() vim.lsp.buf.clear_references() end };
-  }
+  if client.resolved_capabilities['document_highlight'] then
+    steel.mappings.create_autocmds {
+      { 'CursorHold', '<buffer>', function() vim.lsp.buf.document_highlight() end };
+      { 'CursorHoldI', '<buffer>', function() vim.lsp.buf.document_highlight() end };
+      { 'CursorMoved', '<buffer>', function() vim.lsp.buf.clear_references() end };
+    }
+  end
 
   steel.mappings.register_buffer_mappings {
     ['ngd'] = { function() vim.lsp.buf.definition() end, silent = true };
