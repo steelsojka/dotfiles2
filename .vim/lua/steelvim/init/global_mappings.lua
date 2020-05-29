@@ -183,7 +183,7 @@ local mappings = {
   ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
   ['n cR'] = { function() 
     vim.lsp.stop_client(vim.lsp.get_active_clients())
-    steel.ex.edit()
+    steel.command("e!")
   end, description = 'LSP reload' },
   ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
   ['n cj'] = { function() vim.lsp.buf.document_symbol() end, description = 'Jump to symbol' },

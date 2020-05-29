@@ -138,10 +138,14 @@ end
 
 function Fzf.extract_data_items(results, data)
   return steel.fn.reduce(results, function(res, result)
-    local index = tonumber(string.char(string.byte(result, -1)))
+    local string_index = string.match(result, "%d+$")
 
-    if data[index] then
-      table.insert(res, data[index])
+    if string_index then
+      local index = tonumber(string_index)
+
+      if data[index] then
+        table.insert(res, data[index])
+      end
     end
 
     return res
