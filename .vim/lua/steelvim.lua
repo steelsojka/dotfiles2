@@ -8,7 +8,6 @@ local api_paths = {
   git = 'steelvim/git';
   grep = 'steelvim/grep';
   lsp = {
-    'steelvim/lsp/symbols',
     'steelvim/lsp/utils',
     'steelvim/lsp/setup_config',
     'steelvim/lsp/callbacks'
