@@ -41,6 +41,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'sirver/UltiSnips'
 Plug 'honza/vim-snippets'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'dense-analysis/ale'
 " Integrate FZF with LSP (symbols, diagnostics, etc...)
 
 call plug#end()

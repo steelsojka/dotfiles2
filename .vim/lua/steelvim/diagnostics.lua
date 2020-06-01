@@ -74,9 +74,11 @@ function M.open_diagnostics(options)
 end
 
 function M.get_status_line()
-  local count = vim.lsp.util.buf_diagnostics_count('Error')
+  local lint_results = vim.fn["ale#statusline#Count"](vim.fn.bufnr(""))
+  local lint_errors = lint_results.error + lint_results.style_error + (vim.lsp.util.buf_diagnostics_count('Error') or 0)
+  local lint_warnings = lint_results.warning + lint_results.style_warning + (vim.lsp.util.buf_diagnostics_count('Warning') or 0)
 
-  return (type(count) == 'number' and count > 0) and 'E:' .. count or ''
+  return lint_errors == 0 and lint_warnings == 0 and 'OK' or vim.fn.printf("%dW %dE", lint_warnings, lint_errors)
 end
 
 return M

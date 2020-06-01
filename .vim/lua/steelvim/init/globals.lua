@@ -12,6 +12,11 @@ local globals = {
     ['ctrl-v'] = 'vsplit',
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
+  ale_linters = {
+    javascript = { "eslint" };
+    typescript = { "eslint", "tslint" };
+  },
+  ale_linters_explicit = 1,
   completion_timer_cycle = 200,
   completion_sorting = 'none',
   completion_enable_snippet = 'UltiSnips',
