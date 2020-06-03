@@ -30,9 +30,8 @@ lsp.cssls.setup(steel.lsp.get_config())
 -- Bash
 lsp.bashls.setup(steel.lsp.get_config())
 
-
 -- Lua
--- lsp.sumneko_lua.setup { on_attach = global_on_attach }
+-- lsp.sumneko_lua.setup(steel.lsp.get_config())
 
 -- Angular
 -- lsp.angularls.setup { on_attach = global_on_attach }

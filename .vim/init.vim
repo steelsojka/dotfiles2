@@ -38,10 +38,9 @@ Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'sirver/UltiSnips'
-Plug 'honza/vim-snippets'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'dense-analysis/ale'
+Plug 'steelsojka/completion-buffers'
 " Integrate FZF with LSP (symbols, diagnostics, etc...)
 
 call plug#end()

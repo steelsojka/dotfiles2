@@ -19,13 +19,12 @@ local globals = {
   ale_linters_explicit = 1,
   completion_timer_cycle = 200,
   completion_sorting = 'none',
-  completion_enable_snippet = 'UltiSnips',
-  completion_matching_strategy_list = { 'exact' },
+  completion_matching_strategy_list = { 'exact', 'substring' },
   completion_enable_auto_signature = 1,
   completion_auto_change_source = 1,
   completion_chain_complete_list = {
     { complete_items = { 'lsp' } },
-    { complete_items = { 'snippet' } },
+    { complete_items = { 'buffers' } },
     { mode = { '<c-p>' } },
     { mode = { '<c-n>' } }
   },
