@@ -41,7 +41,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'dense-analysis/ale'
 Plug 'steelsojka/completion-buffers'
-" Integrate FZF with LSP (symbols, diagnostics, etc...)
+Plug 'wbthomason/lsp-status.nvim'
 
 call plug#end()
 

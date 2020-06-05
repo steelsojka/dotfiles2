@@ -24,30 +24,28 @@ local globals = {
   completion_auto_change_source = 1,
   completion_chain_complete_list = {
     { complete_items = { 'lsp' } },
-    { complete_items = { 'buffers' } },
-    { mode = { '<c-p>' } },
-    { mode = { '<c-n>' } }
+    { complete_items = { 'buffers' } }
   },
   diagnostic_enable_virtual_text = 0,
   diagnostic_insert_delay = 1,
   ['prettier#exec_cmd_async'] = 1,
   lightline = {
-    colorscheme = 'one',
+    colorscheme = 'one';
     active = {
       left = {
         { 'mode', 'paste' },
         { 'git_status', 'readonly', 'filename', 'modified' },
-        { 'lsp_error_count' }
-      },
+        { 'lsp_status' }
+      };
       right = {
         { 'lineinfo' },
         { 'percent' }
-      }
+      };
     },
     component = {
       git_status = [[%{luaeval('require(''steelvim/git'').get_git_status()')}]];
-      lsp_error_count = [[%{luaeval('require(''steelvim/diagnostics'').get_status_line()')}]];
-    }
+      lsp_status = [[%{luaeval('require(''lsp-status'').status()')}]];
+    };
   },
   ['sneak#label'] = true,
   doge_enable_mappings = false,

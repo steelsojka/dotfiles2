@@ -36,7 +36,7 @@ function M.location_callback(_, _, result, _, _)
         }, 
         steel.fn.map(items, function(item, index)
           return {
-            item.text,
+            vim.trim(item.text),
             { value = item.lnum .. ":" .. item.col; map = steel.ansi.blue; },
             { value = item.filename; map = steel.ansi.cyan; },
             tostring(index)
