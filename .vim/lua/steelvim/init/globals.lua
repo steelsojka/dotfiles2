@@ -22,12 +22,15 @@ local globals = {
   completion_matching_strategy_list = { 'exact', 'substring' },
   completion_enable_auto_signature = 1,
   completion_auto_change_source = 1,
+  completion_enable_auto_hover = 1,
   completion_chain_complete_list = {
     { complete_items = { 'lsp' } },
-    { complete_items = { 'buffers' } }
+    { complete_items = { 'buffers' } },
+    { complete_items = { 'path' }, triggered_only = { "/" } }
   },
   diagnostic_enable_virtual_text = 0,
   diagnostic_insert_delay = 1,
+  startify_change_to_vcs_root = 1,
   ['prettier#exec_cmd_async'] = 1,
   lightline = {
     colorscheme = 'one';
@@ -43,7 +46,7 @@ local globals = {
       };
     },
     component = {
-      git_status = [[%{luaeval('require(''steelvim/git'').get_git_status()')}]];
+      git_status = [[%{FugitiveStatusline()}]];
       lsp_status = [[%{luaeval('require(''lsp-status'').status()')}]];
     };
   },
@@ -75,4 +78,3 @@ for key,value in pairs(globals) do
 end
 
 steel.command(([[let g:fzf_action['ctrl-q'] = %s]]):format(fzf_to_qf_ref:get_vim_ref_string()))
-
