@@ -24,7 +24,7 @@ function M.insert_relative_path(from_path)
     local cwd = vim.fn.getcwd()
 
     if cwd then
-      local lines = fs.exec(
+      local lines = steel.fs.exec(
         string.format([[node -p "require('path').relative('%s', '%s/%s')"]], from_path, cwd, other_path)
       )
       local result = lines[1]
