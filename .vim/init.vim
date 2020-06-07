@@ -37,11 +37,11 @@ Plug 'neovim/nvim-lsp'
 Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'jiangmiao/auto-pairs'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'dense-analysis/ale'
 Plug 'steelsojka/completion-buffers'
 Plug 'wbthomason/lsp-status.nvim'
+Plug 'raimondi/delimitmate'
 
 call plug#end()
 

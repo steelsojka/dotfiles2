@@ -27,11 +27,4 @@ function M.show_documentation(show_errors)
   end
 end
 
-function M.cycle_property(current, values, setter)
-  local _, current_index = utils.find(values, function(v) return v == current end)
-  local next_index = current_index + 1 > #values and 0 or current_index + 1
-
-  setter(values[next_index])
-end
-
 return M
