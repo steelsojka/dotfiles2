@@ -11,7 +11,6 @@ local M = {
     --   "--tsserver-log-verbosity", "verbose"
     -- },
     -- Don't use package.json to resolve root because monorepos don't like it.
-
     root_dir = root_pattern(".git", "tsconfig.json");
     settings = {
       typescript = {
@@ -27,6 +26,8 @@ local M = {
   vimls = {};
   cssls = {};
   bashls = {};
+  -- Uncomment when neovim handles multiple diagnostics by client
+  -- angularls = {};
   jdtls = {
     init_options = {
       jvm_args = {

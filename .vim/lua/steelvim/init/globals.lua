@@ -24,9 +24,13 @@ local globals = {
   completion_auto_change_source = 1,
   completion_enable_auto_hover = 1,
   completion_chain_complete_list = {
-    { complete_items = { 'lsp' } },
-    { complete_items = { 'buffers' } },
-    { complete_items = { 'path' }, triggered_only = { "/" } }
+    default = {
+      { complete_items = { 'lsp' } },
+      { complete_items = { 'buffers' } }
+    };
+    lua =  {
+      { complete_items = { 'ts', 'buffers' } },
+    };
   },
   diagnostic_enable_virtual_text = 0,
   diagnostic_insert_delay = 1,
@@ -43,11 +47,13 @@ local globals = {
       right = {
         { 'lineinfo' },
         { 'percent' }
+        -- { 'treesitter' }
       };
     },
     component = {
       git_status = [[%{FugitiveStatusline()}]];
       lsp_status = [[%{luaeval('require(''lsp-status'').status()')}]];
+      treesitter = [[%{luaeval('require "nvim-treesitter".statusline()')}]];
     };
   },
   ['sneak#label'] = true,

@@ -42,6 +42,8 @@ Plug 'dense-analysis/ale'
 Plug 'steelsojka/completion-buffers'
 Plug 'wbthomason/lsp-status.nvim'
 Plug 'raimondi/delimitmate'
+Plug 'nvim-treesitter/completion-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 call plug#end()
 

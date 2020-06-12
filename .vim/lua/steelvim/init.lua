@@ -14,7 +14,7 @@ require 'steelvim/init/filetypes'
 require 'steelvim/init/commands'
 require 'steelvim/init/lsp'
 
-colorizer.setup {
+require "colorizer".setup {
   'css',
   'sass',
   'less',
@@ -26,3 +26,9 @@ colorizer.setup {
   'lua'
 }
 
+require "nvim-treesitter.configs".setup {
+  highlight = {
+    enable = true;
+    disable = { 'typescript' }
+  };
+}
