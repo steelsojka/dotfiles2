@@ -29,6 +29,15 @@ require "colorizer".setup {
 require "nvim-treesitter.configs".setup {
   highlight = {
     enable = true;
-    disable = { 'typescript' }
+  };
+  ensure_installed = {
+    "typescript", 
+    "html", 
+    "lua", 
+    "javascript",
+    "json",
+    "java",
+    "css",
+    "c"
   };
 }

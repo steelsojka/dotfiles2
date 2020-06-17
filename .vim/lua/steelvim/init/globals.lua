@@ -31,6 +31,14 @@ local globals = {
     lua =  {
       { complete_items = { 'ts', 'buffers' } },
     };
+    typescript =  {
+      { complete_items = { 'lsp' } },
+      { complete_items = { 'ts', 'buffers' } }
+    };
+    javascript =  {
+      { complete_items = { 'lsp' } },
+      { complete_items = { 'ts', 'buffers' } }
+    };
   },
   diagnostic_enable_virtual_text = 0,
   diagnostic_insert_delay = 1,
@@ -46,7 +54,7 @@ local globals = {
       };
       right = {
         { 'lineinfo' },
-        { 'percent' }
+        { 'percent' },
         -- { 'treesitter' }
       };
     },

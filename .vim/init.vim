@@ -17,7 +17,6 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mhartington/oceanic-next'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'
 Plug 'justinmk/vim-sneak'

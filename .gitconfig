@@ -23,7 +23,7 @@
   # List all other branches
   lob = "!git branch -a | awk '!/\\*/{print $1}' | sed s/'^remotes\\/origin\\/'// "
   # Checkout another branch by fuzzy finding it
-  co = !git lob | fzf --height 10 | xargs git checkout
+  co = "!git checkout $(git branch | fzf)"
   # Push current branch to remote
   pc = "!git push origin $(git rev-parse --abbrev-ref HEAD) "
   # Force push current branch to remote
