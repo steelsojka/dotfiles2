@@ -1,4 +1,4 @@
-local source = require 'source'
+local completion = require 'completion'
 
 local unimplemented = steel.mappings.unimplemented;
 
@@ -8,8 +8,8 @@ local mappings = {
   ['i<C-Space>'] = { [[completion#trigger_completion()]], silent = true, expr = true },
   ['n <CR>'] = { [[:Marks<CR>]], description = 'Jump to mark' },
   ['ijj'] = { [[<esc>]], description = 'Exit insert mode' },
-  ['i<C-j>'] = { function() source.prevCompletion() end },
-  ['i<C-k>'] = { function() source.nextCompletion() end },
+  ['i<C-j>'] = { function() completion.prevCompletion() end },
+  ['i<C-k>'] = { function() completion.nextCompletion() end },
   ['t<C-j><C-j>'] = { [[<C-\><C-n>]], description = 'Exit terminal mode' },
   ['nU'] = { [[<C-r>]], description = 'Redo' },
   ['n/'] = { [[/\v]], description = 'Search with magic' },

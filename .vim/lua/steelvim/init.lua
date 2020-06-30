@@ -27,8 +27,11 @@ require "colorizer".setup {
 }
 
 require "nvim-treesitter.configs".setup {
-  highlight = {
-    enable = true;
+  highlight = { enable = true };
+  refactor = {
+    highlight_definitions = { enable = true };
+    smart_rename = { enable = true };
+    navigation = { enable = true };
   };
   ensure_installed = {
     "typescript", 

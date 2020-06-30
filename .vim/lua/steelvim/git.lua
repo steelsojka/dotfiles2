@@ -1,6 +1,8 @@
 local M = {}
 
-M._git_checkout_fzf = steel.fzf:create '!git checkout'
+M._git_checkout_fzf = steel.fzf:create(function(_, branch)
+  steel.command(string.format("!git checkout %s", vim.trim(branch)))
+end)
 
 -- Checks out a git branch using fzf
 -- @param dir The directory to run fzf in
