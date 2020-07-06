@@ -35,4 +35,11 @@ function M.delete_buffers_fzf()
   }
 end
 
+function M.trim_trailing_whitespace()
+  local saved = vim.fn.winsaveview()
+
+  steel.command [[keeppatterns %s/\s\+$//e]]
+  vim.fn.winrestview(saved)
+end
+
 return M

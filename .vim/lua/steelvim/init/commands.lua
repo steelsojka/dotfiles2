@@ -19,6 +19,9 @@ steel.mappings.create_augroups {
   completion = {
     { 'BufEnter', '*', function() require 'completion'.on_attach() end };
   };
+  edit = {
+    { 'BufWrite', '*', 'silent!', function() steel.buf.trim_trailing_whitespace() end }
+  };
 }
 
 steel.command [[command! -bang -nargs=* DRg call luaeval('steel.grep.grep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
