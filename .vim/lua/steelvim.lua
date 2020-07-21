@@ -48,7 +48,7 @@ local function setup_lookup_table(tbl, api, path)
           local result = {}
 
           for _,path in ipairs(api_path) do
-            result = vim.tbl_extend('force', result, require(path)) 
+            result = vim.tbl_extend('force', result, require(path))
           end
 
           rawset(tbl, key, result)
@@ -84,7 +84,7 @@ steel = {
   ex = setmetatable({}, {
     __index = function(tbl, key)
       local existing = rawget(tbl, key)
-  
+
       if existing then return existing end
 
       local fn = function(...)

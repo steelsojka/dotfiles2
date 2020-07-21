@@ -30,7 +30,6 @@ local function make_installer()
     return {
       is_installed = util.path.exists(install_dir, 'features') ~= false;
       install_dir = install_dir;
-      launcher = X.get_launcher();
     }
   end
 
@@ -61,7 +60,7 @@ local function make_installer()
 
   function X.configure(config)
     local install_info = X.info()
-    local launcher_path = install_info.launcher
+    local launcher_path = X.get_launcher()
 
     if install_info.is_installed then
       config.cmd = vim.list_extend(

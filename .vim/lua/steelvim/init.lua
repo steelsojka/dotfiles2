@@ -27,6 +27,13 @@ require "colorizer".setup {
 }
 
 require "nvim-treesitter.configs".setup {
+  tree_docs = {
+    enable = true,
+    keymaps = {
+      doc_node_at_cursor = '<leader>dd',
+      doc_all_in_range = '<leader>dd'
+    }
+  };
   highlight = { enable = true };
   refactor = {
     highlight_definitions = { enable = true };
@@ -34,9 +41,9 @@ require "nvim-treesitter.configs".setup {
     navigation = { enable = true };
   };
   ensure_installed = {
-    "typescript", 
-    "html", 
-    "lua", 
+    "typescript",
+    "html",
+    "lua",
     "javascript",
     "json",
     "java",

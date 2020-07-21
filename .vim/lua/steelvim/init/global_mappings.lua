@@ -95,12 +95,13 @@ local mappings = {
   ['n w/'] = { [[<Cmd>Windows<CR>]], description = 'Search windows' },
   ['n wS'] = { [[<Cmd>Startify<CR>]], description = 'Start screen' },
   -- Project mappings <leader>p
+  ['n ph'] = { [[<Cmd>History<CR>]], description = 'MRU' },
   ['n pf'] = { [[<Cmd>Files .<CR>]], description = 'Find file' },
   ['n pF'] = { [[<Cmd>Files! .<CR>]], description = 'Find file fullscreen' },
   ['n ps'] = { function()
     local word = vim.fn.expand("<cword>")
 
-    steel.ex.Files('.') 
+    steel.ex.Files('.')
     vim.api.nvim_input(word)
   end, description = 'Find file with text' },
   ['n pT'] = { [[<Cmd>vsp +Dirvish<CR>]], description = 'Open File explorer in split' },
@@ -181,7 +182,7 @@ local mappings = {
   ['n cD'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
   ['n ck'] = { [[gh]], description = 'Jump to documentation', noremap = false },
   ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
-  ['n cR'] = { function() 
+  ['n cR'] = { function()
     vim.lsp.stop_client(vim.lsp.get_active_clients())
     steel.command("e!")
   end, description = 'LSP reload' },
@@ -222,9 +223,9 @@ local mappings = {
   -- Terminal mappings <leader>wt
   ['n wtt'] = { function() steel.term.float(false) end, description = 'Float terminal' },
   ['n wtT'] = { function() steel.term.float(true) end, description = 'Float terminal (full)' },
-  ['n wtv'] = { function() 
+  ['n wtv'] = { function()
     steel.ex.vsp()
-    steel.term.open_term() 
+    steel.term.open_term()
   end, description = 'Vertical split terminal' },
   ['n wtf'] = { function()
     steel.ex.vsp()
@@ -261,8 +262,8 @@ local which_key_map = {
   g = { name = '+git', c = { name = '+chunk' }, f = { name = '+find' } },
   p = { name = '+project' },
   h = { name = '+help' },
-  c = { 
-    name = '+code', 
+  c = {
+    name = '+code',
     q = { name = '+quickfix' },
     c = {
       name = '+case',
@@ -283,10 +284,10 @@ local which_key_map = {
   -- Locals need to be defined per filetype
   m = { name = '+local' },
   d = { name = '+documentation' },
-  j = { 
-    name = '+jump', 
+  j = {
+    name = '+jump',
     m = { name = '+marks' },
-    c = { name = '+changes' }, 
+    c = { name = '+changes' },
     e = { name = '+errors' },
     q = { name = '+quickfix' }
   },
@@ -308,4 +309,4 @@ endfunction
 -- Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 steel.command [[inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackSpace() ? "\<TAB>" : completion#trigger_completion()]]
 steel.command [[inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"]]
-steel.command [[inoremap <expr> <cr> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<cr>"]]
+-- steel.command [[inoremap <expr> <cr> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<cr>"]]

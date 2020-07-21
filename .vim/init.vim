@@ -31,7 +31,7 @@ Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
-Plug 'haorenW1025/completion-nvim'
+Plug 'nvim-lua/completion-nvim'
 Plug 'neovim/nvim-lsp'
 Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
@@ -43,6 +43,8 @@ Plug 'wbthomason/lsp-status.nvim'
 Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug '~/Projects/nvim-tree-docs'
+" Plug '~/Projects/nvim-treesitter'
 
 call plug#end()
 

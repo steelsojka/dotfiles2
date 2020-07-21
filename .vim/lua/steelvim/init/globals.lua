@@ -54,8 +54,8 @@ local globals = {
       };
       right = {
         { 'lineinfo' },
-        { 'percent' }
-        -- { 'treesitter' }
+        { 'percent' },
+        { 'treesitter' }
       };
     },
     component = {
