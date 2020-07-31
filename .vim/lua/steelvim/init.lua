@@ -34,6 +34,22 @@ require "nvim-treesitter.configs".setup {
       doc_all_in_range = '<leader>dd'
     }
   };
+  playground = { enable = true };
+  textobjects = {
+    enable = true,
+    keymaps = {
+      ["af"] = "@function.outer",
+	    ["if"] = "@function.inner",
+	    ["aC"] = "@class.outer",
+	    ["iC"] = "@class.inner",
+	    ["ac"] = "@conditional.outer",
+	    ["ic"] = "@conditional.inner",
+      ["al"] = "@loop.outer",
+	    ["il"] = "@loop.inner",
+      ["am"] = "@call.outer",
+	    ["im"] = "@call.inner"
+    }
+  };
   highlight = { enable = true };
   refactor = {
     highlight_definitions = { enable = true };

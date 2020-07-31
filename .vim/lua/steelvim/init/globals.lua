@@ -12,6 +12,16 @@ local globals = {
     ['ctrl-v'] = 'vsplit',
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
+  polyglot_disabled = {
+    "typescript",
+    "html",
+    "lua",
+    "javascript",
+    "json",
+    "java",
+    "css",
+    "c"
+  },
   ale_linters = {
     javascript = { "eslint" };
     typescript = { "eslint", "tslint" };
@@ -49,13 +59,13 @@ local globals = {
     active = {
       left = {
         { 'mode', 'paste' },
-        { 'git_status', 'readonly', 'filename', 'modified' },
+        { 'readonly', 'filename', 'modified' },
         { 'lsp_status' }
       };
       right = {
         { 'lineinfo' },
-        { 'percent' },
-        { 'treesitter' }
+        { 'percent' }
+        -- { 'treesitter' }
       };
     },
     component = {

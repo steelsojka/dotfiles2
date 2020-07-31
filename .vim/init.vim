@@ -42,9 +42,12 @@ Plug 'steelsojka/completion-buffers'
 Plug 'wbthomason/lsp-status.nvim'
 Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
+Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground'
 Plug '~/Projects/nvim-tree-docs'
 " Plug '~/Projects/nvim-treesitter'
+" Plug '~/Projects/playground'
 
 call plug#end()
 
