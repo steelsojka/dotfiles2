@@ -163,3 +163,5 @@ bar {
         position top
         mode dock
 }
+
+exec_always --no-startup-id ~/.fehbg

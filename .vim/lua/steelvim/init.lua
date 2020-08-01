@@ -6,7 +6,6 @@ steel.ex.colorscheme "OceanicNext"
 
 require 'steelvim/lsp/angularls'
 require 'steelvim/lsp/jdtls'
-
 require 'steelvim/init/settings'
 require 'steelvim/init/globals'
 require 'steelvim/init/global_mappings'
@@ -39,15 +38,15 @@ require "nvim-treesitter.configs".setup {
     enable = true,
     keymaps = {
       ["af"] = "@function.outer",
-	    ["if"] = "@function.inner",
-	    ["aC"] = "@class.outer",
-	    ["iC"] = "@class.inner",
-	    ["ac"] = "@conditional.outer",
-	    ["ic"] = "@conditional.inner",
+      ["if"] = "@function.inner",
+      ["aC"] = "@class.outer",
+      ["iC"] = "@class.inner",
+      ["ac"] = "@conditional.outer",
+      ["ic"] = "@conditional.inner",
       ["al"] = "@loop.outer",
-	    ["il"] = "@loop.inner",
+      ["il"] = "@loop.inner",
       ["am"] = "@call.outer",
-	    ["im"] = "@call.inner"
+      ["im"] = "@call.inner"
     }
   };
   highlight = { enable = true };
@@ -64,6 +63,7 @@ require "nvim-treesitter.configs".setup {
     "json",
     "java",
     "css",
-    "c"
+    "c",
+    "query"
   };
 }
