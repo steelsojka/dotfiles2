@@ -31,7 +31,8 @@ local settings = {
   completeopt = 'menuone,noinsert,noselect',
   complete = '.,b,w,u',
   gdefault = true,
-  dictionary = '/usr/share/dict/words'
+  dictionary = '/usr/share/dict/words',
+  shell = 'zsh'
 }
 
 for key,value in pairs(settings) do
