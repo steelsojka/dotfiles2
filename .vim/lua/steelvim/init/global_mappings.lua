@@ -36,6 +36,7 @@ local mappings = {
   ['n ,'] = { [[<Cmd>Buffers<CR>]], description = 'Switch buffer' },
   ['n .'] = { [[<Cmd>Files<CR>]], description = 'Find files' },
   ['n  '] = { [[<Cmd>Commands<CR>^]] },
+  ["n '"] = { [[q:]], description = 'Ex History' },
   ['n x'] = { [[<Cmd>sp e<CR>]], description = 'Scratch buffer' },
   -- File mappings <leader>f
   ['n fs'] = { [[<Cmd>w<CR>]], description = 'Save file' },
@@ -168,7 +169,6 @@ local mappings = {
     vim.api.nvim_input(':%s//')
   end, description = 'Replace selected text' },
   -- Yank with preview <leader>y
-  -- ['n yl'] = { [[<Cmd>CocList -A --normal yank<CR>]], description = 'List yanks' },
   ['n yf'] = { [[<Cmd>let @" = expand("%:p")<CR>]], description = 'Yank file path' },
   ['n yF'] = { [[<Cmd>let @" = expand("%:t:r")<CR>]], description = 'Yank file name' },
   ['n yy'] = { [["+y]], description = 'Yank to clipboard' },

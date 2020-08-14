@@ -15,7 +15,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'liuchengxu/vim-which-key'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim', { 'commit': '2115caeba1b55040bfdb1b8c38a836ad4e0b7669' }
 Plug 'mhartington/oceanic-next'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'
@@ -43,11 +43,12 @@ Plug 'wbthomason/lsp-status.nvim'
 Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
 Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'puremourning/vimspector'
+" Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-tree-docs'
 " Plug '~/Projects/nvim-tree-docs'
-" Plug '~/Projects/nvim-treesitter'
+Plug '~/Projects/nvim-treesitter'
 " Plug '~/Projects/playground'
 
 call plug#end()

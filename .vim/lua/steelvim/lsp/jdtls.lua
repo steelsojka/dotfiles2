@@ -67,6 +67,7 @@ local function make_installer()
         vim.list_extend(
           {
             "java",
+            "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044",
             "-Declipse.application=org.eclipse.jdt.ls.core.id1",
             "-Dosgi.bundles.defaultStartLevel=4",
             "-Declipse.product=org.eclipse.jdt.ls.core.product",

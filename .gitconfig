@@ -23,7 +23,7 @@
   # List all other branches
   lob = "!git branch -a | awk '!/\\*/{print $1}' | sed s/'^remotes\\/origin\\/'// "
   # Checkout another branch by fuzzy finding it
-  co = "!git checkout $(git branch | fzf)"
+  co = !git checkout $(git branch | fzf)
   # Push current branch to remote
   pc = "!git push origin $(git rev-parse --abbrev-ref HEAD) "
   # Force push current branch to remote
@@ -113,4 +113,7 @@
   helper = cache
 [filesystem "Azul Systems, Inc.|11.0.3|/dev/disk1"]
 	timestampResolution = 1000 milliseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Azul Systems, Inc.|14.0.2|/dev/disk1s1"]
+	timestampResolution = 7000 nanoseconds
 	minRacyThreshold = 0 nanoseconds

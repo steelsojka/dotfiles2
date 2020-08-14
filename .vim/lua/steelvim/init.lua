@@ -33,7 +33,7 @@ require "nvim-treesitter.configs".setup {
       doc_all_in_range = '<leader>dd'
     }
   };
-  playground = { enable = true };
+  playground = { enable = true, persist_queries = true };
   textobjects = {
     enable = true,
     keymaps = {
