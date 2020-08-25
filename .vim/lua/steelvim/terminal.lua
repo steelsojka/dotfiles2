@@ -1,22 +1,5 @@
 local M = {}
 
--- Opens a floating terminal
--- @param full Whether the terminal is full screen
-function M.float(full)
-  local height
-
-  if full then
-    height = vim.fn.winheight(0)
-  else
-    local lines = vim.o.lines
-    height = math.floor(lines * 0.6)
-  end
-
-  vim.g.floaterm_height = height
-  steel.ex.FloatermToggle()
-  steel.ex.normal 'i'
-end
-
 -- Opens a terminl with an fzf floating window
 -- @param The command to run
 function M.float_cmd(cmd)

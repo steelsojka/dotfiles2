@@ -37,6 +37,7 @@ local mappings = {
   ['n .'] = { [[<Cmd>Files<CR>]], description = 'Find files' },
   ['n  '] = { [[<Cmd>Commands<CR>^]] },
   ["n '"] = { [[q:]], description = 'Ex History' },
+  ["v '"] = { [[q:]], description = 'Ex History' },
   ['n x'] = { [[<Cmd>sp e<CR>]], description = 'Scratch buffer' },
   -- File mappings <leader>f
   ['n fs'] = { [[<Cmd>w<CR>]], description = 'Save file' },
@@ -221,8 +222,7 @@ local mappings = {
   ['n gfi'] = { function() unimplemented() end, description = 'Find issue' },
   ['n gfp'] = { function() unimplemented() end, description = 'Find pull request' },
   -- Terminal mappings <leader>wt
-  ['n wtt'] = { function() steel.term.float(false) end, description = 'Float terminal' },
-  ['n wtT'] = { function() steel.term.float(true) end, description = 'Float terminal (full)' },
+  ['n wtt'] = { function() steel.term.open_term() end, description = 'Terminal' },
   ['n wtv'] = { function()
     steel.ex.vsp()
     steel.term.open_term()
@@ -246,8 +246,7 @@ local mappings = {
     end
   end, description = 'Inline errors' },
   -- Help mappings <leader>h
-  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' },
-  ['n hs'] = { [[<Cmd>UltiSnippetsEdit<CR>]], description = 'Edit snippets' }
+  ['n hh'] = { [[<Cmd>Helptags<CR>]], description = 'Help tags' }
 }
 
 local which_key_map = {

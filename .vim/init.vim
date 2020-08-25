@@ -27,7 +27,6 @@ Plug 'justinmk/vim-dirvish'
 Plug 'arthurxavierx/vim-caser'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'voldikss/vim-floaterm', { 'on': ['FloatermToggle'] }
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tpope/vim-dispatch'
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
@@ -44,11 +43,11 @@ Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
 Plug 'sheerun/vim-polyglot'
 Plug 'puremourning/vimspector'
-" Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-tree-docs'
 " Plug '~/Projects/nvim-tree-docs'
-Plug '~/Projects/nvim-treesitter'
+" Plug '~/Projects/nvim-treesitter'
 " Plug '~/Projects/playground'
 
 call plug#end()
