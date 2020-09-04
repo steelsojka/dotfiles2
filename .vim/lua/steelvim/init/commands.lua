@@ -1,12 +1,6 @@
 local highlight = require 'vim.highlight'
 
 steel.mappings.create_augroups {
-  float_term = {
-    { 'VimResized', '*', function()
-      vim.g.floaterm_width = vim.fn.float2nr(vim.o.columns * 0.9)
-      vim.g.floaterm_height = vim.fn.float2nr(vim.o.lines * 0.75)
-    end };
-  };
   terminal = {
     { 'TermOpen', '*', function() steel.ex.setlocal('nospell', 'nonumber') end };
   };
@@ -21,6 +15,9 @@ steel.mappings.create_augroups {
   };
   edit = {
     { 'BufWrite', '*', 'silent!', function() steel.buf.trim_trailing_whitespace() end }
+  };
+  folds = {
+    { 'Syntax', '*', 'silent! normal! zR' }
   };
 }
 

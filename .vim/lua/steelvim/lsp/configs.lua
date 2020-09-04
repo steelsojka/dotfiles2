@@ -22,7 +22,7 @@ local M = {
     };
   };
   jsonls = {};
-  html = {};
+  -- html = {};
   vimls = {};
   cssls = {};
   bashls = {};

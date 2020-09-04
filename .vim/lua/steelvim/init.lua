@@ -54,7 +54,6 @@ require "nvim-treesitter.configs".setup {
     }
   };
   highlight = { enable = true };
-  semantic_highlight = { enable = true };
   refactor = {
     highlight_definitions = { enable = true };
     smart_rename = { enable = true };

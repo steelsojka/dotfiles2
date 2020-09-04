@@ -32,10 +32,15 @@ local settings = {
   complete = '.,b,w,u',
   gdefault = true,
   dictionary = '/usr/share/dict/words',
-  shell = 'zsh'
+  shell = 'zsh',
 }
 
-for key,value in pairs(settings) do
+local window_settings = {
+  foldmethod = 'expr',
+  foldexpr = 'nvim_treesitter#foldexpr()'
+}
+
+for key, value in pairs(settings) do
   if value == true then
     steel.ex.set(key)
   elseif value == false then
@@ -43,4 +48,8 @@ for key,value in pairs(settings) do
   else
     vim.o[key] = value
   end
+end
+
+for key, value in pairs(window_settings) do
+  vim.wo[key] = value
 end
