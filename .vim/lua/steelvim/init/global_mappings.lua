@@ -236,6 +236,8 @@ local mappings = {
   ['n tw'] = { [[<Cmd>set wrap!<CR>]], description = 'Word wrap' },
   ['n tr'] = { [[<Cmd>set modifiable!<CR>]], description = 'Read only' },
   ['n ts'] = { [[<Cmd>set spell!<CR>]], description = 'Spell check' },
+  ['n tf'] = { [[za]], description = 'Fold' },
+  ['n tF'] = { [[zA]], description = 'Fold recursively' },
   ['n te'] = { function()
     local cur = vim.g.diagnostic_enable_virtual_text
 

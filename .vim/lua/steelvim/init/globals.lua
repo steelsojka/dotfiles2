@@ -12,16 +12,6 @@ local globals = {
     ['ctrl-v'] = 'vsplit',
   },
   fzf_files_options = [[--bind 'ctrl-l:execute(bat --paging=always {} > /dev/tty)']],
-  polyglot_disabled = {
-    "typescript",
-    "html",
-    "lua",
-    "javascript",
-    "json",
-    "java",
-    "css",
-    "c"
-  },
   ale_linters = {
     javascript = { "eslint" };
     typescript = { "eslint", "tslint" };

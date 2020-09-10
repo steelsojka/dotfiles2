@@ -4,6 +4,17 @@ let g:mapleader = "\<Space>"
 filetype plugin indent on
 syntax on
 
+let g:polyglot_disabled = [
+  \ 'typescript',
+  \ 'html',
+  \ 'lua',
+  \ 'javascript',
+  \ 'json',
+  \ 'java',
+  \ 'css',
+  \ 'c'
+  \]
+
 " Install vim-plugged if not installed
 if filereadable(glob('~/.local/share/nvim/site/autoload/plug.vim')) == 0
   silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -42,13 +53,13 @@ Plug 'wbthomason/lsp-status.nvim'
 Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
 Plug 'sheerun/vim-polyglot'
-" Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-tree-docs'
 Plug 'norcalli/snippets.nvim'
 Plug 'vigoux/architext.nvim'
 " Plug '~/Projects/nvim-lsp'
-Plug '~/Projects/nvim-treesitter'
+" Plug '~/Projects/nvim-treesitter'
 " Plug '~/Projects/playground'
 
 call plug#end()

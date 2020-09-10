@@ -26,6 +26,7 @@ local M = {
   vimls = {};
   cssls = {};
   bashls = {};
+  sumneko_lua = {};
   -- Uncomment when neovim handles multiple diagnostics by client
   -- angularls = {};
   jdtls = {
