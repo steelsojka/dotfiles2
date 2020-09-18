@@ -68,4 +68,4 @@ function M.indexOf(list, value)
   return nil
 end
 
-return M 
+return M

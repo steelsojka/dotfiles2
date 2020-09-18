@@ -26,7 +26,7 @@ function Fzf:create(sink, options)
         if not vim.tbl_islist(results) then
           error("FZF results must be a list")
         end
-        
+
         data = Fzf.extract_data_items(results, data)
       end
 
@@ -102,7 +102,7 @@ function Fzf.create_grid(headings, items, delimiter)
     for i,item_part in ipairs(item_parts) do
       local heading = headings[i]
       local is_tbl = type(item_part) == "table"
-      local value = is_tbl and item_part.value or item_part
+      local value = (is_tbl and (item_part.value or '')) or item_part
       local res = value
 
       if heading and heading.truncate and heading.length and #res > heading.length then
@@ -131,7 +131,7 @@ end
 function Fzf.grid_to_source(grid, delimiter)
   delimiter = delimiter or " "
 
-  return steel.fn.map(grid, function(row) 
+  return steel.fn.map(grid, function(row)
     return table.concat(row, delimiter)
   end)
 end

@@ -28,11 +28,11 @@ local function format_diagnostics(items)
       return {
         { value = item.message; },
         { value = error_display.text; map = error_display.color; },
-        { 
-          value = item.range.start.line .. ":" .. item.range.start.character; 
+        {
+          value = item.range.start.line .. ":" .. item.range.start.character;
           map = steel.ansi.blue
         },
-        { value = item.uri; map = steel.ansi.cyan },
+        { value = item.uri or "N/A"; map = steel.ansi.cyan },
         tostring(index)
       }
     end))
@@ -62,8 +62,9 @@ local function get_diagnostics(options)
 end
 
 function M.open_diagnostics(options)
+  local bufnr = options and options.bufnr or nil
   local diagnostics = get_diagnostics(options)
-  local source = format_diagnostics(diagnostics)
+  local source = format_diagnostics(diagnostics, bufnr)
 
   fzf:execute {
     options = { "--ansi", "--multi", "--header-lines=1" };

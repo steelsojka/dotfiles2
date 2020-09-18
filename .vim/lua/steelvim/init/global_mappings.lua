@@ -52,7 +52,7 @@ local mappings = {
   ['n fE'] = { [[<Cmd>vsp $MYVIMRC<CR>]], description = 'Edit .vimrc' },
   ['n fF'] = { [[<Cmd>Files %:p:h<CR>]], description = 'Find from file' },
   ['n fP'] = { [[<Cmd>Files ~/.vim/lua<CR>]], description = 'Find config file' },
-  ['n fx'] = { function() steel.diagnostics.open_diagnostics(true) end, description = 'List file diagnostics' },
+  ['n cx'] = { function() steel.diagnostics.open_diagnostics({ bufnr = vim.fn.bufnr("%") }) end, description = 'Document diagnostics' },
   -- Buffer mappings <leader>b
   ['n bp'] = { [[<Cmd>bprevious<CR>]], description = 'Previous buffer' },
   ['n bn'] = { [[<Cmd>bnext<CR>]], description = 'Next buffer' },
