@@ -10,7 +10,15 @@
 });")
   :when (indent "describe('when ${1}', () => {
 });")
-  :it (indent "it('${1}', () => {
+  :it (indent "it('should ${1}', () => {
+});")
+  :after (indent "after(() => {
+});")
+  :afterEach (indent "afterEach(() => {
+});")
+  :before (indent "before(() => {
+});")
+  :beforeEach (indent "beforeEach(() => {
 });")})
 (set snippets.typescript (vim.tbl_extend :force snippets.javascript {}))
 (set snippets.lua {

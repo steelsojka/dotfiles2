@@ -21,3 +21,7 @@
     (.. "<leader>" from)
     (.. ":" to "<cr>")
     {:noremap true}))
+
+(var id 0)
+(defn unique-id [] (set id (+ id 1)) id)
+(defn noop [])

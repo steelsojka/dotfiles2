@@ -20,7 +20,7 @@
 (set nvim.o.ignorecase true)
 (set nvim.o.scrolloff 15)
 (set nvim.o.hidden true)
-(set nvim.o.wrap true)
+(set nvim.o.wrap false)
 (set nvim.o.timeoutlen 300)
 (set nvim.o.grepprg "rg --vimgrep --auto-hybrid-regex")
 (set nvim.o.updatetime 200)
