@@ -59,6 +59,7 @@ Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-tree-docs'
 Plug 'norcalli/snippets.nvim'
 Plug 'vigoux/architext.nvim'
+Plug 'Olical/aniseed'
 " Plug '~/Projects/nvim-lsp'
 " Plug '~/Projects/nvim-treesitter'
 " Plug '~/Projects/refactor'
@@ -66,4 +67,5 @@ Plug 'vigoux/architext.nvim'
 
 call plug#end()
 
+lua require 'aniseed.dotfiles'
 lua require 'steelvim/init'
