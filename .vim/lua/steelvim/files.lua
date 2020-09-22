@@ -38,7 +38,7 @@ function M.insert_relative_path(from_path)
         -- Enter insert mode and type the text.
         steel.command("normal! i" .. result)
         -- Move back to position and enter insert mode.
-        vim.api.nvim_input 'li' 
+        vim.api.nvim_input 'li'
       else
         print "No path result!"
       end

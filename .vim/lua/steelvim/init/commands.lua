@@ -25,6 +25,3 @@ steel.command [[command! -bang -nargs=* DRg call luaeval('steel.grep.grep(unpack
 steel.command [[command! -bang -nargs=* Rg call luaeval('steel.grep.grep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
 steel.command [[command! -bang -nargs=* FlyDRg call luaeval('steel.grep.flygrep(unpack(_A))', [<q-args>, expand('%:p:h'), <bang>0])]]
 steel.command [[command! -bang -nargs=* FlyRg call luaeval('steel.grep.flygrep(unpack(_A))', [<q-args>, getcwd(), <bang>0])]]
-steel.command [[command! -bang -nargs=? -complete=dir Files
-  call luaeval('steel.files.fzf_files(unpack(_A))', [<q-args>, <bang>0])
-]]
