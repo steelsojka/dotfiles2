@@ -6,13 +6,12 @@
             util dotfiles.util}})
 
 (defn- extract-data-items [results data]
-  (core.reduce (fn [res item]
-                 (let [index (string.match item "%d+$")]
+  (core.reduce #(let [index (string.match $2 "%d+$")]
                    (when index
                      (let [idx (tonumber index)]
                        (when (. data idx)
-                         (table.insert res (. data idx)))))
-                   res)) [] results))
+                         (table.insert $1 (. data idx)))))
+                   $1) [] results))
 
 (defn execute [fzf cmd]
   (tset nvim.g fzf.fn-name cmd)
@@ -30,24 +29,24 @@
 
 (defn create [sink options]
   (let [opts (or options {})
-        instance {subscription (rx.new-subscription)
-                  sink-ref sink
-                  fn-name (.. :k (util.unique-id))
-                  handle-all opts.handle-all
-                  execute (fn [cmd] (execute instance cmd))
-                  unsubscribe (fn [] (instance.subscription.unsubscribe))
-                  data nil}]
-    (when (type sink :function)
-      (set instance.sink_ref
-           (funcref.create (fn [ref results]
+        instance {:subscription (rx.new-subscription)
+                  :sink-ref sink
+                  :fn-name (.. :k (util.unique-id))
+                  :handle-all opts.handle-all
+                  :execute #(execute instance $1)
+                  :unsubscribe #(instance.subscription.unsubscribe)
+                  :data nil}]
+    (when (= (type sink) :function)
+      (set instance.sink-ref
+           (funcref.create #(do
                              (var data instance.data)
                              (when opts.indexed_data
                                (when (not instance.data)
                                  (error "No data provided to FZF"))
-                               (when (not (vim.tbl_islist results))
+                               (when (not (vim.tbl_islist $2 ))
                                  (error "FZF results must be a list"))
-                               (set data (extract-data-items results data)))
-                             (sink ref results data)
+                               (set data (extract-data-items $2 data)))
+                             (sink $1 $2 data)
                              (set instance.data nil))))
       (instance.subscription.add instance.sink-ref.subscription))
     instance))
@@ -84,5 +83,5 @@
 
 (defn grid-to-source [grid delimiter]
   (let [del (or delimiter " ")]
-    (core.map (fn [row] (table.concat row del)) grid)))
+    (core.map #(table.concat $1 del) grid)))
 

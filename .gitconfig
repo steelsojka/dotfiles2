@@ -106,7 +106,7 @@
 [url "https://"]
   insteadOf = git://
 [push]
-  default = matching
+  default = current
 [include]
   path = ~/.localgitconfig
 [credential]

@@ -23,11 +23,11 @@
 
 (defn create [callback opts]
   "A factory for creating function refs in Lua"
-  (let [ref {:subscription (rx.new-subscription (fn [] (tset __LUA_FUNCTION_REFS ref.name nil)))
-             :unsubscribe (fn [] (ref.subscription.unsubscribe))
-             :get-vim-ref-string (fn [...] (get-vim-ref-string ref ...))
-             :get-lua-ref-string (fn [] (get-lua-ref-string ref))}
+  (let [ref {:subscription (rx.new-subscription #(tset __LUA_FUNCTION_REFS ref.name nil))
+             :unsubscribe #(ref.subscription.unsubscribe)
+             :get-vim-ref-string #(get-vim-ref-string ref $...)
+             :get-lua-ref-string #(get-lua-ref-string ref)}
         {: name} (or opts {})]
     (set ref.name (.. (or name :k) (util.unique-id)))
-    (tset __LUA_FUNCTION_REFS ref.name (fn [...] (callback ref ...)))
+    (tset __LUA_FUNCTION_REFS ref.name #(callback ref $...))
     ref))
