@@ -24,7 +24,7 @@
   "workspace/symbol" lsp-fzf.symbol-callback
   "textDocument/documentSymbol" lsp-fzf.symbol-callback
   "textDocument/references" lsp-fzf.location-callback
-  "textDocument/codeAction" lsp-fzf.code_action-callback
+  ; "textDocument/codeAction" lsp-fzf.code-action-callback
   "textDocument/declaration" lsp-fzf.location-callback
   "textDocument/definition" lsp-fzf.location-callback
   "textDocument/typeDefinition" lsp-fzf.location-callback

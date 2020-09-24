@@ -77,7 +77,7 @@
     (print "No code actions available")
     (let [grid (fzf.create-grid
                  [{:heading "Title" :map ansi.red}]
-                 (core.map-indexed #(let [[i v] $1] [v.title (tostring i)] actions)))]
+                 (core.map-indexed #(let [[i v] $1] [v.title (tostring i)]) actions))]
       (fzf-code-action-handler.execute
         {:options ["--ansi" "--header-lines=1"]
          :source (fzf.grid-to-source grid)

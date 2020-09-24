@@ -69,7 +69,7 @@
     (local new-item [])
     (each [i item-part (ipairs item-parts)]
       (let [heading (. headings i)
-            is-tbl (type item-part :table)
+            is-tbl (= (type item-part) :table)
             value (if is-tbl
                     (if item-part.value item-part.value "")
                     item-part)]
