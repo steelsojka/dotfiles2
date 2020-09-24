@@ -75,7 +75,7 @@
                     item-part)]
         (var res value)
         (when (and heading heading.truncate heading.length (> (length res) heading.length))
-          (local diff (- heading.length (length value)))
+          (local diff (->> (length value) (- heading.length)))
           (set res (.. res (string.rep _delimiter diff))))
         (table.insert new-item res)))
     (table.insert new-items new-item))

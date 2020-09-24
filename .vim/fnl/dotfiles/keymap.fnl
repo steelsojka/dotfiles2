@@ -13,9 +13,9 @@
   (.. "k" (string.gsub key "." string.byte)))
 
 (defn init-buffer-mappings [mappings]
-  (let [(ok? val-or-err) (pcall (fn [] nvim.b.local_which_key))]
+  (let [(_ val-or-err) (pcall #nvim.b.local_which_key)]
     (var result val-or-err)
-    (when (or (not ok?) (~= (type val-or-err) :table))
+    (when (~= (type val-or-err) :table)
       (set result {:m (or mappings {})}))
     (set nvim.b.local_which_key result)
     result))
@@ -65,10 +65,11 @@
                    mapping.buffer)
                  (nvim.get_current_buf)))
   (when (and (= (. keys 1) " ") (~= mapping.which-key false) mapping.description)
-    (if (and (= (. keys 2) "m") is-buffer?)
+    (if (and (= (. keys 2) "m") is-buffer)
       (do
         (local local-wk-dict (init-buffer-mappings))
-        (add-to-which-key [(unpack keys 2)] mapping.description local-wk-dict))
+        (add-to-which-key [(unpack keys 2)] mapping.description local-wk-dict)
+        (set nvim.b.local_which_key local-wk-dict))
       dict
       (add-to-which-key [(unpack keys 2)] mapping.description dict)))
   (set mapping.do nil)

@@ -16,10 +16,13 @@
       [{:heading "Text" :length 45 :map ansi.red}
        {:heading "Loc" :length 12 :map ansi.red}
        {:heading "File" :map ansi.red}]
-      (core.map #[$1.text
-                  {:value (.. $1.lnum ":" $1.col) :map ansi.blue}
-                  {:value (nvim.buf_get_name $1.bufnr) :map ansi.cyan}
-                  (tostring $2)] (nvim.fn.getqflist)))))
+      (core.map-indexed
+        #(let [[i v] $1]
+           [$1.text
+            {:value (.. v.lnum ":" v.col) :map ansi.blue}
+            {:value (nvim.buf_get_name v.bufnr) :map ansi.cyan}
+            (tostring i) ])
+        (nvim.fn.getqflist)))))
 
 (defn filter [destructive]
   (local _fzf
@@ -45,10 +48,13 @@
   (let [qf-list (nvim.fn.getqflist)
         buf (nvim.get_current_buf)
         lines (nvim.buf_get_lines buf start-line end-line false)
-        new-list (core.map #{:bufnr buf
-                             :lnum (- (+ start-line $2) 1)
-                             :col 0
-                             :text $1} lines)]
+        new-list (core.map-indexed
+                   #(let [[i v] $1]
+                      {:bufnr buf
+                       :lnum (- (+ start-line i) 1)
+                       :col 0
+                       :text v})
+                   lines)]
     (nvim.fn.setqflist [(unpack qf-list) (unpack new-list)])))
 
 (defn new-list [title]

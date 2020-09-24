@@ -177,28 +177,28 @@ local mappings = {
   -- -- Code mappings <leader>c
   -- ['n cl'] = { [[<Cmd>Commentary<CR>]], description = 'Comment line' },
   -- ['v cl'] = { [[:Commentary<CR>]] },
-  ['n cx'] = { function() steel.diagnostics.open_diagnostics({ bufnr = vim.fn.bufnr("%") }) end, description = 'Document diagnostics' },
-  ['n cX'] = { function() steel.diagnostics.open_diagnostics() end, description = 'Workspace diagnostics' },
-  ['n cd'] = { function() vim.lsp.buf.definition() end, description = 'Definition' },
-  ['n cD'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
-  ['n ck'] = { [[gh]], description = 'Jump to documentation', noremap = false },
-  ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
-  ['n cR'] = { function()
-    vim.lsp.stop_client(vim.lsp.get_active_clients())
-    steel.command("e!")
-  end, description = 'LSP reload' },
-  ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
-  ['n cj'] = { function() vim.lsp.buf.document_symbol() end, description = 'Jump to symbol' },
-  ['n cJ'] = { function() vim.lsp.buf.workspace_symbol() end, description = 'Jump to symbol in workspace' },
-  ['n ca'] = { function() vim.lsp.buf.code_action() end, description = 'LSP code actions' },
-  ['n cql'] = { function()
-    local line = vim.fn.getpos(".")[2]
-    steel.qf.add_line_to_quickfix(line, line)
-  end, description = 'Add line to quickfix' },
-  ['v cql'] = { function()
-    steel.qf.add_line_to_quickfix(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
-  end, description = 'Add line to quickfix' },
-  ['n cqn'] = { function() quickfix.new_qf_list() end, description = 'New quickfix list' },
+  -- ['n cx'] = { function() steel.diagnostics.open_diagnostics({ bufnr = vim.fn.bufnr("%") }) end, description = 'Document diagnostics' },
+  -- ['n cX'] = { function() steel.diagnostics.open_diagnostics() end, description = 'Workspace diagnostics' },
+  -- ['n cd'] = { function() vim.lsp.buf.definition() end, description = 'Definition' },
+  -- ['n cD'] = { function() vim.lsp.buf.references() end, description = 'Type references' },
+  -- ['n ck'] = { [[gh]], description = 'Jump to documentation', noremap = false },
+  -- ['n cr'] = { function() vim.lsp.buf.rename() end, description = 'LSP rename' },
+  -- ['n cR'] = { function()
+  --   vim.lsp.stop_client(vim.lsp.get_active_clients())
+  --   steel.command("e!")
+  -- end, description = 'LSP reload' },
+  -- ['n cs'] = { function() vim.lsp.buf.signature_help() end, description = 'Signature help' },
+  -- ['n cj'] = { function() vim.lsp.buf.document_symbol() end, description = 'Jump to symbol' },
+  -- ['n cJ'] = { function() vim.lsp.buf.workspace_symbol() end, description = 'Jump to symbol in workspace' },
+  -- ['n ca'] = { function() vim.lsp.buf.code_action() end, description = 'LSP code actions' },
+  -- ['n cql'] = { function()
+  --   local line = vim.fn.getpos(".")[2]
+  --   steel.qf.add_line_to_quickfix(line, line)
+  -- end, description = 'Add line to quickfix' },
+  -- ['v cql'] = { function()
+  --   steel.qf.add_line_to_quickfix(vim.fn.getpos("'<")[2], vim.fn.getpos("'>")[2])
+  -- end, description = 'Add line to quickfix' },
+  -- ['n cqn'] = { function() quickfix.new_qf_list() end, description = 'New quickfix list' },
   -- Git mappings <leader>g
   ['n gcu'] = { [[<Cmd>GitGutterUndoHunk<CR>]], description = 'Undo chunk' },
   ['n gcs'] = { [[<Cmd>GitGutterStageHunk<CR>]], description = 'Stage chunk' },

@@ -13,7 +13,7 @@ function M.uri_to_location(uri, lnum, col)
         character = col;
       };
     };
-  } 
+  }
 end
 
 function M.handle_location_items(data, location_creator)
@@ -21,8 +21,6 @@ function M.handle_location_items(data, location_creator)
     local locations = steel.fn.map(data, function(item)
       return location_creator(item)
     end)
-
-    print(vim.inspect(locations))
 
     local items = vim.lsp.util.locations_to_items(locations)
 

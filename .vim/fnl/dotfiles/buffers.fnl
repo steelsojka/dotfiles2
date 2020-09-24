@@ -19,12 +19,11 @@
 
 (defn- format-buflist [buflist]
   (core.map
-    (fn [buf]
-      (let [name (nvim.fn.bufname buf)
-            modified (if (= (nvim.fn.getbufvar buf "&modified") 1) " [+]" "")
-            readonly (if (= (nvim.fn.getbufvar buf "&modifiable") 1) "" " [RO]")
-            new-name (if (= (length name) 0) "[No Name]" (nvim.fn.fnamemodify name ":p:~:."))]
-        (string.format "[%s] %s\t%s" buf new-name (.. modified readonly))))))
+    #(let [name (nvim.fn.bufname $1)
+           modified (if (= (nvim.fn.getbufvar $1 "&modified") 1) " [+]" "")
+           readonly (if (= (nvim.fn.getbufvar $1 "&modifiable") 1) "" " [RO]")
+           new-name (if (= (length name) 0) "[No Name]" (nvim.fn.fnamemodify name ":p:~:."))]
+      (string.format "[%s] %s\t%s" $1 new-name (.. modified readonly)))))
 
 (defn delete-buffers-fzf []
   (fzf-del-buf-handler.execute

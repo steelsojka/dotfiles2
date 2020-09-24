@@ -1,13 +1,11 @@
 local completion = require 'completion'
 local diagnostic = require 'diagnostic'
 local callbacks = require 'steelvim/lsp/callbacks'
-local lsp_status = require 'lsp-status'
 
 local M = {}
 
 function M.on_attach(client)
   diagnostic.on_attach()
-  lsp_status.on_attach(client)
 
   if client.resolved_capabilities['document_highlight'] then
     steel.mappings.create_autocmds {
@@ -30,7 +28,7 @@ function M.get_config(overrides)
   return vim.tbl_extend('force', {
     on_attach = M.on_attach;
     callbacks = callbacks.get_callbacks();
-    capabilities = vim.tbl_extend('keep', overrides.capabilities or {}, lsp_status.capabilities)
+    capabilities = overrides.capabilities or {}
   }, overrides or {})
 end
 

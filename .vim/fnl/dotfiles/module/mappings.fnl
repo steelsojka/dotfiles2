@@ -6,6 +6,9 @@
             buffers dotfiles.buffers
             ws dotfiles.workspace
             grep dotfiles.grep
+            term dotfiles.terminal
+            diagnostics dotfiles.diagnostics
+            qf dotfiles.quickfix
             keymap dotfiles.keymap}})
 
 (def- which-key-map {
@@ -208,6 +211,78 @@
   ; Code mappings <leader>c
   "n cl" {:do "<Cmd>Commentary<CR>" :description "Comment line"}
   "v cl" {:do ":Commentary<CR>"}
+  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
+  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
+  "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
+  "n cD" {:do #(vim.lsp.buf.references) :description "Type references"}
+  "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
+  "n cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
+  "n cR" {:do #(do
+                 (-> (vim.lsp.get_active_clients)
+                     (vim.lsp.stop_client))
+                 (nvim.command "e!"))
+          :description "LSP reload"}
+  "n cs" {:do #(vim.lsp.buf.signature_help) :description "Signature help"}
+  "n cj" {:do #(vim.lsp.buf.document_symbol) :description "Jump to symbol"}
+  "n cJ" {:do #(vim.lsp.buf.workspace_symbol) :description "Jump to symbol in workspace"}
+  "n ca" {:do #(vim.lsp.buf.code_action) :description "LSP code actions"}
+  "n cql" {:do #(let [line (. (nvim.fn.getpos ".") 2)]
+                  (qf.add-item line line))
+           :description "Add line to quickfix"}
+  "v cql" {:do #(qf.add-item
+                  (. (vim.fn.getpos "'<") 2) (. (vim.fn.getpos "'>") 2))
+           :description "Add line to quickfix"}
+  "n cqn" {:do #(qf.new-list) :description "New quickfix list"}
+  ; Git mappings <leader>g
+  "n gcu" {:do "<Cmd>GitGutterUndoHunk<CR>" :description "Undo chunk"}
+  "n gcs" {:do "<Cmd>GitGutterStageHunk<CR>" :description "Stage chunk"}
+  "n gcn" {:do "<Cmd>GitGutterNextHunk<CR>" :description "Next chunk"}
+  "n gcp" {:do "<Cmd>GitGutterPrevHunk<CR>" :description "Previous chunk"}
+  "n gci" {:do "<Cmd>GitGutterPreviewHunk<CR>" :description "Chunk info"}
+  ; "n gB" { function() steel.git.checkout_git_branch_fzf(vim.fn.expand("%:p:h")) end , :description "Checkout branch"}
+  "n gs" {:do "<Cmd>G<CR>" :description "Git status"}
+  "n gd" {:do "<Cmd>Gdiffsplit<CR>" :description "Git diff"}
+  "n ge" {:do "<Cmd>Gedit<CR>" :description "Git edit"}
+  "n gg" {:do #(term.float-cmd "lazygit") :description "Git GUI"}
+  "n gl" {:do "<Cmd>Commits<CR>" :description "Git log"}
+  "n gL" {:do "<Cmd>BCommits<CR>" :description "Git file log"}
+  "n gF" {:do "<Cmd>Gfetch<CR>" :description "Git fetch"}
+  "n gp" {:do "<Cmd>Gpull<CR>" :description "Git pull"}
+  "n gP" {:do "<Cmd>Gpush<CR>" :description "Git push"}
+  "n gb" {:do "<Cmd>Gblame<CR>" :description "Git blame"}
+  "n gfc" {:do #(keymap.unimplemented) :description "Find commit"}
+  "n gff" {:do #(keymap.unimplemented) :description "Find file"}
+  "n gfg" {:do #(keymap.unimplemented) :description "Find gitconfig file"}
+  "n gfi" {:do #(keymap.unimplemented) :description "Find issue"}
+  "n gfp" {:do #(keymap.unimplemented) :description "Find pull request"}
+  ; Terminal mappings <leader>wt
+  "n wtt" {:do #(term.open) :description "Terminal"}
+  "n wtv" {:do #(do (nvim.ex.vsp) (term.open)) :description "Vertical split terminal"}
+  "n wtf" {:do #(do (nvim.ex.vsp) (term.open true)) :description "Terminal at file"}
+  ; Toggle mappings <leader>t
+  "n tl" {:do #(keymap.unimplemented) :description "Line numbers"}
+  "n tw" {:do "<Cmd>set wrap!<CR>" :description "Word wrap"}
+  "n tr" {:do "<Cmd>set modifiable!<CR>" :description "Read only"}
+  "n ts" {:do "<Cmd>set spell!<CR>" :description "Spell check"}
+  "n tf" {:do "za" :description "Fold"}
+  "n tF" {:do "zA" :description "Fold recursively"}
+  "n te" {:do #(let [cur nvim.g.diagnostic_enable_virtual_text]
+                 (->> (if (= cur 1) 0 1)
+                      (set nvim.g.diagnostic_enable_virtual_text)))
+          :description "Inline errors"}
+  ; Help mappings <leader>h
+  "n hh" {:do "<Cmd>Helptags<CR>" :description "Help tags"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)
+; I can't get the following mappings to work in lua...
+(nvim.command "
+  function! CheckBackSpace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\\s'
+  endfunction")
+
+; Use tab for trigger completion with characters ahead and navigate.
+; Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+(nvim.command "inoremap <silent><expr> <TAB> pumvisible() ? \"\\<C-n>\" : CheckBackSpace() ? \"\\<TAB>\" : completion#trigger_completion()")
+(nvim.command "inoremap <expr><S-TAB> pumvisible() ? \"\\<C-p>\" : \"\\<C-h>\"")

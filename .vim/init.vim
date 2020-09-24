@@ -49,7 +49,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'dense-analysis/ale'
 Plug 'steelsojka/completion-buffers'
-Plug 'wbthomason/lsp-status.nvim'
 Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
 Plug 'sheerun/vim-polyglot'
