@@ -18,13 +18,19 @@
  :cssls {}
  :bashls {}
  :jdtls {:init_options {:jvm_args ["-javaagent:/usr/local/share/lombok/lombok.jar"
-                                   "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"]}}})
+                                   "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"]}
+         :callbacks {"textDocument/codeAction" #(do
+                                                  (each [_ action (ipairs $3)]
+                                                    (when (= action.command "java.apply.workspaceEdit")
+                                                      (->> (. action.arguments 1)
+                                                           (set action.edit))))
+                                                  (lsp-fzf.code-action-callback $1 $2 $3))}}})
 
 (def- callbacks {
   "workspace/symbol" lsp-fzf.symbol-callback
   "textDocument/documentSymbol" lsp-fzf.symbol-callback
   "textDocument/references" lsp-fzf.location-callback
-  ; "textDocument/codeAction" lsp-fzf.code-action-callback
+  "textDocument/codeAction" lsp-fzf.code-action-callback
   "textDocument/declaration" lsp-fzf.location-callback
   "textDocument/definition" lsp-fzf.location-callback
   "textDocument/typeDefinition" lsp-fzf.location-callback

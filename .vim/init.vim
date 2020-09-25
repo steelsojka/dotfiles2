@@ -67,4 +67,3 @@ Plug 'Olical/aniseed'
 call plug#end()
 
 lua require 'aniseed.dotfiles'
-lua require 'steelvim/init'

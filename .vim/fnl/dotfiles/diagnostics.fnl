@@ -3,6 +3,7 @@
             ansi dotfiles.ansi
             fzf dotfiles.fzf
             core aniseed.core
+            win dotfiles.window
             lsp-util dotfiles.lsp.util}})
 
 (def- severity vim.lsp.protocol.DiagnosticSeverity)
@@ -11,11 +12,11 @@
                      severity.Information {:text "Info" :color ansi.blue}
                      severity.Hint {:text "Hint" :color #$1}})
 
-(def- _fzf fzf.create
+(def- _fzf (fzf.create
   (fn [_ _ data]
     (lsp-util.handle-location-items
       data
-      #(lsp-util.uri-to-location $1.uri $1.range.start.line $1.range.start.character))))
+      #(lsp-util.uri-to-location $1.uri $1.range.start.line $1.range.start.character)))))
 
 (defn- format-diagnostics [items]
   (-> (fzf.create-grid [{:heading "Message" :length 60 :map ansi.red :truncate true}
