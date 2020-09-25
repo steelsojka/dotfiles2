@@ -1,3 +1,3 @@
 function! health#steelvim#check() abort
-  lua require 'steelvim/health'.check()
+  lua require 'dotfiles.health'.check()
 endfunction
