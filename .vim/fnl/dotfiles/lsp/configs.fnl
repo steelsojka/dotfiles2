@@ -13,6 +13,7 @@
             :settings {:typescript {:preferences {:importModuleSpecifier "non-relative"
                                                   :quoteStyle "single"}}}}
  :jsonls {}
+ :clojure_lsp {}
  :html {}
  :vimls {}
  :cssls {}

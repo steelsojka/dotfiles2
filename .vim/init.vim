@@ -53,16 +53,13 @@ Plug 'raimondi/delimitmate'
 Plug 'nvim-treesitter/completion-treesitter'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter'
-" Plug 'nvim-treesitter/refactor'
+" Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-tree-docs'
 Plug 'norcalli/snippets.nvim'
 Plug 'vigoux/architext.nvim'
+Plug 'jpalardy/vim-slime'
 Plug 'Olical/aniseed'
-" Plug '~/Projects/nvim-lsp'
-" Plug '~/Projects/nvim-treesitter'
-" Plug '~/Projects/refactor'
-" Plug '~/Projects/playground'
 
 call plug#end()
 
