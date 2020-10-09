@@ -40,7 +40,7 @@
       (set instance.sink-ref
            (funcref.create #(do
                              (var data instance.data)
-                             (when opts.indexed_data
+                             (when opts.indexed-data
                                (when (not instance.data)
                                  (error "No data provided to FZF"))
                                (when (not (vim.tbl_islist $2 ))

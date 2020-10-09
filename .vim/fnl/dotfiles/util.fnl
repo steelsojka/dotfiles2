@@ -26,7 +26,7 @@
 (defn unique-id [] (set id (+ id 1)) id)
 (defn noop [])
 
-(defn exec [prop]
+(defn exec [prog]
   (var i 0)
   (let [result {}
         pfile (io.popen prog)]

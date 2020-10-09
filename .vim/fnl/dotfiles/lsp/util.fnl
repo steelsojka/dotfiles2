@@ -1,12 +1,12 @@
-(module dotfiles.lsp.fzf
+(module dotfiles.lsp.util
   {require {nvim aniseed.nvim
             core aniseed.core}})
 
-(defn file-to-location [filepath lnum col]
-  (uri-to-location (vim.uri_from_fname filepath) lnum col))
-
 (defn uri-to-location [uri lnum col]
   {: uri :range {:start {:line lnum :character col}}})
+
+(defn file-to-location [filepath lnum col]
+  (uri-to-location (vim.uri_from_fname filepath) lnum col))
 
 (defn handle-location-items [data loc-creator]
   (if (> (length data) 1)

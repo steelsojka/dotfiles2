@@ -9,8 +9,9 @@
 (def- fzf-loc-handler
   (fzf.create
     (fn [_ _ data]
-      (core.map
-        #(lsp-util.file-to-location $1.filename (- $1.lnum 1) (- $1.col 1)) data))
+      (lsp-util.handle-location-items
+        data
+        #(lsp-util.file-to-location $1.filename (- $1.lnum 1) (- $1.col 1))))
     {:handle-all true :indexed-data true}))
 
 (def- fzf-code-action-handler
@@ -30,7 +31,7 @@
   (when (and result (not (vim.tbl_isempty result)))
     (if (vim.tbl_islist result)
       (if (> (length result) 1)
-        (let [items (vim.lsp.util.loctions_to_items result)
+        (let [items (vim.lsp.util.locations_to_items result)
               grid (fzf.create-grid
                      [{:heading "Text" :length 60 :map ansi.red :truncate true}
                       {:heading "Loc" :length 12 :map ansi.red}
