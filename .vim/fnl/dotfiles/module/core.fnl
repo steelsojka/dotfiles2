@@ -36,7 +36,9 @@
 (set nvim.o.complete ".,b,w,u")
 (set nvim.o.gdefault true)
 (set nvim.o.dictionary "/usr/share/dict/words")
-(set nvim.o.shell "zsh")
+(set nvim.o.shell :zsh)
+
+(nvim.command "highlight Normal guibg=#1b2b34")
 
 ; (set nvim.wo.foldmethod :expr)
 ; (set nvim.wo.foldexpr "nvim_treesitter#foldexpr()")
