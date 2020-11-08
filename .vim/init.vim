@@ -64,4 +64,4 @@ Plug 'Olical/conjure', {'tag': 'v4.5.0'}
 
 call plug#end()
 
-lua require 'aniseed.dotfiles'
+lua require "aniseed.env".init({ module = "dotfiles.init" })

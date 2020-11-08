@@ -1,9 +1,0 @@
-#!/bin/bash
-
-PROCESS_COUNT="$(ps -ef | grep xscreensaver --count)"
-
-if [ "$PROCESS_COUNT" != "2" ]; then
-  xscreensaver -nosplash &
-fi
-
-xscreensaver-command -lock
