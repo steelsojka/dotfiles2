@@ -26,7 +26,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'liuchengxu/vim-which-key'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim', { 'commit': '2115caeba1b55040bfdb1b8c38a836ad4e0b7669' }
+Plug 'junegunn/fzf.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'tpope/vim-commentary'
 Plug 'itchyny/lightline.vim'
@@ -59,8 +59,9 @@ Plug 'nvim-treesitter/nvim-tree-docs'
 Plug 'norcalli/snippets.nvim'
 Plug 'vigoux/architext.nvim'
 Plug 'jpalardy/vim-slime'
-Plug 'Olical/aniseed'
-Plug 'Olical/conjure', {'tag': 'v4.5.0'}
+Plug 'bakpakin/fennel.vim'
+Plug 'Olical/aniseed', {'branch': 'develop'}
+Plug 'Olical/conjure', {'tag': 'v4.7.0'}
 
 call plug#end()
 
