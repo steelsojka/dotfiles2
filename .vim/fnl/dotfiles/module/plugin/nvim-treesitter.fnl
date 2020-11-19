@@ -18,7 +18,7 @@
                                     :il "@loop.inner"
                                     :am "@call.outer"
                                     :im "@call.inner"}}}
-   :highlight {:enable true}
+   :highlight {:enable true :use_languagetree false}
    :refactor {:highlight_definitions {:enable true}
               :smart_rename {:enable true}
               :navigation {:enable true}}

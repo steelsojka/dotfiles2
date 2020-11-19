@@ -3,8 +3,8 @@
             keymap dotfiles.keymap
             lsp-fzf dotfiles.lsp.fzf}})
 
-(local lsp (require "nvim_lsp"))
-(local root-pattern (. (require "nvim_lsp/util") :root_pattern))
+(local lsp (require "lspconfig"))
+(local root-pattern (. (require "lspconfig/util") :root_pattern))
 (local completion (require "completion"))
 (local diagnostics (require "diagnostic"))
 
