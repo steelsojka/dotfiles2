@@ -6,7 +6,6 @@
 (local lsp (require "lspconfig"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
 (local completion (require "completion"))
-(local diagnostics (require "diagnostic"))
 
 (def configs
  {:tsserver {:root_dir (root-pattern ".git" "tsconfig.json")
@@ -16,6 +15,7 @@
  :clojure_lsp {}
  :html {}
  :vimls {}
+ :angularls {}
  :cssls {}
  :bashls {}
  :jdtls {:init_options {:jvm_args ["-javaagent:/usr/local/share/lombok/lombok.jar"
@@ -27,7 +27,10 @@
                                                            (set action.edit))))
                                                   (lsp-fzf.code-action-callback $1 $2 $3))}}})
 
-(def- callbacks {
+(def- handlers {
+  "textDocument/publishDiagnostics" (vim.lsp.with
+                                      vim.lsp.diagnostic.on_publish_diagnostics
+                                      {:virtual_text false})
   "workspace/symbol" lsp-fzf.symbol-callback
   "textDocument/documentSymbol" lsp-fzf.symbol-callback
   "textDocument/references" lsp-fzf.location-callback
@@ -38,7 +41,6 @@
   "textDocument/implementation" lsp-fzf.location-callback})
 
 (defn on-attach [client]
- (diagnostics.on_attach)
  (when client.resolved_capabilities.document_highlight
    (keymap.create-autocmds [["CursorHold" "<buffer>" #(vim.lsp.buf.document_highlight)]
                             ["CursorHoldI" "<buffer>" #(vim.lsp.buf.document_highlight)]
@@ -53,6 +55,6 @@
 (defn get-config [overrides]
  (vim.tbl_extend "force"
                  {:on_attach on-attach
-                  : callbacks
+                  : handlers
                   :capabilities (or overrides.capabilities {})}
                  (or overrides {})))

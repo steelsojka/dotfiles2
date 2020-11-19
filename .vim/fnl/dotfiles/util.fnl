@@ -42,7 +42,14 @@
       (nvim.command (string.format "%s %s" command search-term)))))
 
 (defn show-documentation [show-errors]
-  (if (or (not show-errors) (= (vim.lsp.util.show_line_diagnostics) nil))
-    (if (>= (nvim.fn.index [:vim :lua :help] nvim.bo.filetype) 0)
-      (nvim.ex.help (nvim.fn.expand "<cword>"))
-      (vim.lsp.buf.hover))))
+  (let [cursor (vim.api.nvim_win_get_cursor 0)
+        row (. cursor 0)
+        help #(nvim.ex.help (nvim.fn.expand "<cword>"))
+        diagnostics (vim.lsp.diagnostic.get_line_diagnostics 0 row)]
+    (if (or (not show-errors) (= (length diagnostics) 0))
+      (if (>= (nvim.fn.index [:vim :lua :help] nvim.bo.filetype) 0)
+        (help)
+        (let [(success) (pcall #(vim.lsp.buf.hover))]
+          (when (not success) (help))))
+      (let [(success) (pcall #(vim.lsp.diagnostic.show_line_diagnostics))]
+        (when (not success) (help))))))
