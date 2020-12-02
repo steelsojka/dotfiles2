@@ -3,7 +3,7 @@
 
 (set nvim.g.completion_timer_cycle 200)
 (set nvim.g.completion_sorting :none)
-(set nvim.g.completion_matching_strategy_list [:exact :substring])
+(set nvim.g.completion_matching_strategy_list [:exact :substring :fuzzy])
 (set nvim.g.completion_enable_auto_signature 1)
 (set nvim.g.completion_auto_change_source 1)
 (set nvim.g.completion_enable_auto_hover 1)

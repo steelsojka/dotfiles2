@@ -20,7 +20,7 @@
  :bashls {}
  :jdtls {:init_options {:jvm_args ["-javaagent:/usr/local/share/lombok/lombok.jar"
                                    "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"]}
-         :callbacks {"textDocument/codeAction" #(do
+         :handlers {"textDocument/codeAction" #(do
                                                   (each [_ action (ipairs $3)]
                                                     (when (= action.command "java.apply.workspaceEdit")
                                                       (->> (. action.arguments 1)

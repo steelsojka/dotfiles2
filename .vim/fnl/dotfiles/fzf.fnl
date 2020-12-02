@@ -70,13 +70,21 @@
     (each [i item-part (ipairs item-parts)]
       (let [heading (. headings i)
             is-tbl (= (type item-part) :table)
-            value (if is-tbl
-                    (if item-part.value item-part.value "")
-                    item-part)]
+            value (or (if is-tbl
+                        (if item-part.value item-part.value "")
+                        item-part) "")]
         (var res value)
-        (when (and heading heading.truncate heading.length (> (length res) heading.length))
-          (local diff (->> (length value) (- heading.length)))
-          (set res (.. res (string.rep _delimiter diff))))
+        (when (and heading
+                   heading.length
+                   (not= heading.truncate false)
+                   (> (length res) heading.length))
+          (set res (-> (string.sub res 1 (- heading.length 3))
+                           (.. "..."))))
+        (when (and is-tbl (= (type item-part.map) :function))
+          (set res (item-part.map res)))
+        (when (and heading heading.length (< (length value) heading.length))
+          (let [diff (- heading.length (length value))]
+            (set res (.. res (string.rep _delimiter diff)))))
         (table.insert new-item res)))
     (table.insert new-items new-item))
   new-items)

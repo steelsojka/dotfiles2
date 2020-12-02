@@ -166,8 +166,8 @@
   "n ji" {:do #(vim.lsp.buf.implementation) :description "Implementation"}
   "n jy" {:do #(vim.lsp.buf.type_definition) :description "Type definition"}
   "n jr" {:do #(vim.lsp.buf.references) :description "Type references"}
-  "n jep" {:do "<Cmd>PrevDiagnosticCycle<CR>" :description "Previous error"}
-  "n jen" {:do "<Cmd>NextDiagnosticCycle<CR>" :description "Next error"}
+  "n jep" {:do #(vim.lsp.diagnostic.goto_prev {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Previous error"}
+  "n jen" {:do #(vim.lsp.diagnostic.goto_next {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Next error"}
   "n jqp" {:do "<Cmd>cN<CR>" :description "Previous"}
   "n jqn" {:do "<Cmd>cn<CR>" :description "Next"}
   "n jn" {:do "<C-o>" :description "Next jump"}

@@ -55,7 +55,7 @@
   (when (and result (not (vim.tbl_isempty result)))
     (let [items (vim.lsp.util.symbols_to_items result)
           grid (fzf.create-grid
-                 [{:heading "Symbol" :length 35 :map ansi.red :truncate true}
+                 [{:heading "Symbol" :length 35 :map ansi.red}
                   {:heading "Loc" :length 12 :map ansi.red}
                   {:heading "Kind" :length 15 :map ansi.red}
                   {:heading "File" :map ansi.red}]
@@ -66,7 +66,8 @@
                        {:value (.. v.lnum ":" v.col) :map ansi.blue}
                        {:value v.kind :map ansi.yellow}
                        {:value v.filename :map ansi.cyan}
-                       (tostring i)])))]
+                       (tostring i)])
+                   items))]
       (fzf-loc-handler.execute
             {:options ["--multi" "--ansi" "--with-nth=1..4" "-n" "1,3,4" "--header-lines=1"]
              :source (fzf.grid-to-source grid)
