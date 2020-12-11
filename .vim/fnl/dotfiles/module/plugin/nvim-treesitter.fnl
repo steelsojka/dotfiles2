@@ -22,13 +22,4 @@
    :refactor {:highlight_definitions {:enable true}
               :smart_rename {:enable true}
               :navigation {:enable true}}
-   :ensure_installed [:typescript
-                      :html
-                      :lua
-                      :javascript
-                      :json
-                      :java
-                      :css
-                      :c
-                      :fennel
-                      :query]})
+   :ensure_installed :all})

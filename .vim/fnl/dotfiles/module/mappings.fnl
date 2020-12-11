@@ -11,6 +11,8 @@
             qf dotfiles.quickfix
             keymap dotfiles.keymap}})
 
+(local telescope (require "telescope.builtin"))
+
 (def- which-key-map {
   " " "Ex command"
   "/" {:name "+local-search"}
@@ -52,7 +54,7 @@
   "n " {:do #(which-key.start false) :silent true}
   "v " {:do #(which-key.start true) :silent true}
   "i<C-Space>" {:do "completion#trigger_completion()" :silent true :expr true}
-  "n <CR>" {:do ":Marks<CR>" :description "Jump to mark"}
+  "n <CR>" {:do #(telescope.marks) :description "Jump to mark"}
   "ijj" {:do "<esc>" :description "Exit insert mode"}
   "t<C-j><C-j>" {:do "<C-\\><C-n>" :description "Exit terminal mode"}
   "nU" {:do "<C-r>" :description "Redo"}
@@ -76,25 +78,25 @@
   "xT" {:do "<Plug>Sneak_T"}
   "ot" {:do "<Plug>Sneak_t"}
   "oT" {:do "<Plug>Sneak_T"}
-  "n ," {:do "<Cmd>Buffers<CR>" :description "Switch buffer"}
-  "n ." {:do "<Cmd>Files<CR>" :description "Find files"}
-  "n  " {:do "<Cmd>Commands<CR>^"}
+  "n ," {:do #(telescope.buffers) :description "Switch buffer"}
+  "n ." {:do #(telescope.find_files) :description "Find files"}
+  "n  " {:do #(telescope.commands)}
   "n \"" {:do "q:" :description "Ex History"}
   "v \"" {:do "q:" :description "Ex History"}
   "n x" {:do "<Cmd>sp e<CR>" :description "Scratch buffer"}
   ; File mappings <leader>f
   "n fs" {:do "<Cmd>w<CR>" :description "Save file"}
   "n fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
-  "n f/" {:do "<Cmd>BLines<CR>" :description "Search lines"}
+  "n f/" {:do #(telescope.current_buffer_fuzzy_find) :description "Search lines"}
   "n ff" {:do "<Plug>(Prettier)" :description "Format file"}
   "n fo" {:do "<Cmd>Dirvish %:p:h<CR>" :description "Show in tree"}
   "n fO" {:do "<Cmd>vsp +Dirvish %:p:h<CR>" :description "Show in split tree"}
-  "n fr" {:do "<Cmd>History<CR>" :description "Open recent files"}
+  "n fr" {:do #(telescope.oldfiles) :description "Open recent files"}
   "n fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
   "n fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
   "n fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
-  "n fF" {:do "<Cmd>Files %:p:h<CR>" :description "Find from file"}
-  "n fP" {:do "<Cmd>Files ~/.vim/lua<CR>" :description "Find config file"}
+  "n fF" {:do #(telescope.find_files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
+  "n fP" {:do #(telescope.find_files {:cwd "~/.vim/fnl"}) :description "Find config file"}
   ; Buffer mappings <leader>b
   "n bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
   "n bn" {:do "<Cmd>bnext<CR>" :description "Next buffer"}
@@ -103,12 +105,11 @@
   "n bd" {:do "<Cmd>bp<CR>:bd#<CR>" :description "Delete buffer"}
   "n bk" {:do "<Cmd>bp<CR>:bw!#<CR>" :description "Wipe buffer"}
   "n bK" {:do #(delete-buffers-fzf) :description "Wipe buffers"}
-  "n bb" {:do "<Cmd>Buffers<CR>" :description "List buffers"}
+  "n bb" {:do #(telescope.buffers) :description "List buffers"}
   "n bY" {:do "ggyG" :description "Yank buffer"}
   "n bm" {:do #(util.prompt-command :mark "Set mark") :description "Set mark"}
   ; Window mappings <leader>w
   "n ww" {:do "<C-W>w" :description "Move below/right"}
-  "n wa" {:do "<Cmd>Windows<CR>" :description "List windows"}
   "n wd" {:do "<C-W>c" :description "Delete window"}
   "n ws" {:do "<C-W>s" :description "Split window"}
   "n wv" {:do "<C-W>v" :description "Split window vertical"}
@@ -136,16 +137,11 @@
   "n w=" {:do "<C-W>=" :description "Balance splits"}
   "n wF" {:do "<Cmd>tabnew<CR>" :description "New tab"}
   "n wo" {:do "<Cmd>tabnext<CR>" :description "Next tab"}
-  "n w/" {:do "<Cmd>Windows<CR>" :description "Search windows"}
   "n wS" {:do "<Cmd>Startify<CR>" :description "Start screen"}
   ; Project mappings <leader>p
-  "n ph" {:do "<Cmd>History<CR>" :description "MRU"}
-  "n pf" {:do "<Cmd>Files .<CR>" :description "Find file"}
-  "n pF" {:do "<Cmd>Files! .<CR>" :description "Find file fullscreen"}
-  "n ps" {:do #(let [word (nvim.fn.expand "<cword>")]
-                 (nvim.ex.Files ".")
-                 (nvim.input word))
-          :description "Find file with text"}
+  "n ph" {:do #(telescope.oldfiles) :description "MRU"}
+  "n pf" {:do #(telescope.find_files {:cwd (vim.fn.expand ".")}) :description "Find file"}
+  "n ps" {:do #(telescope.grep_string) :description "Find file with text"}
   "n pT" {:do "<Cmd>vsp +Dirvish<CR>" :description "Open File explorer in split"}
   "n pt" {:do "<Cmd>Dirvish<CR>" :description "Open file Explorer"}
   "n pq" {:do "<Cmd>qall<CR>" :description "Quit project"}
@@ -172,7 +168,7 @@
   "n jqn" {:do "<Cmd>cn<CR>" :description "Next"}
   "n jn" {:do "<C-o>" :description "Next jump"}
   "n jp" {:do "<C-i>" :description "Previous jump"}
-  "n jml" {:do "<Cmd>Marks<CR>" :description "List marks"}
+  "n jml" {:do #(telescope.marks) :description "List marks"}
   "n jmd" {:do ":delmarks<Space>" :description "Delete marks"}
   "n jmm" {:do "`" :description "Go to mark"}
   "n ja" {:do "<Cmd>A<CR>" :description "Go to altenate"}
@@ -182,21 +178,20 @@
   ; Insert mappings <leader>i
   "n if" {:do "\"%p" :description "Current file name"}
   "n iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
-  "n is" {:do "<Cmd>Snippets<CR>" :description "Insert snippet"}
+  "n is" {:do #(keymap.unimplemented) :description "Insert snippet"}
   ; Search mappings <leader>s
-  "n sd" {:do "<Cmd>FlyDRg<CR>" :description "Grep files in directory"}
-  "n sc" {:do "<Cmd>History:<CR>" :description "Search command history"}
-  "n sh" {:do "<Cmd>History/<CR>" :description "Search history"}
+  "n sd" {:do #(telescope.live_grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
+  "n sc" {:do #(telescope.command_history) :description "Search command history"}
+  ; "n sh" {:do "<Cmd>History/<CR>" :description "Search history"}
   "n si" {:do #(vim.lsp.buf.workspace_symbol) :description "Search symbol"}
-  "n sb" {:do "<Cmd>BLines<CR>" :description "Search buffer"}
-  "n ss" {:do "<Cmd>BLines<CR>" :description "Search buffer"}
+  "n sb" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
+  "n ss" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
   "n so" {:do #(vim.lsp.buf.document_symbol) :description "List symbols in file"}
-  "n sl" {:do "<Cmd>Lines<CR>" :description "Search lines"}
-  "n sp" {:do "<Cmd>FlyRg<CR>" :description "Grep files in project"}
-  "n sP" {:do "<Cmd>FlyRg!<CR>" :description "Grep files in project (full)"}
-  "n sm" {:do "<Cmd>Marks<CR>" :description "Jump to marks"}
-  "n sa" {:do #(grep.flygrep "" (nvim.fn.expand "%:p:h") 0 ["--hidden" "--no-ignore"]) :description "Grep all files"}
-  "n sS" {:do ":Rg <C-r><C-w><CR>" :description "Search selected text (project)"}
+  ; "n sl" {:do "<Cmd>Lines<CR>" :description "Search lines"}
+  "n sp" {:do #(telescope.live_grep) :description "Grep files in project"}
+  "n sm" {:do #(telescope.marks) :description "Jump to marks"}
+  ; "n sa" {:do #(grep.flygrep "" (nvim.fn.expand "%:p:h") 0 ["--hidden" "--no-ignore"]) :description "Grep all files"}
+  "n sS" {:do #(telescope.grep_string) :description "Search selected text (project)"}
   ; Local Search/Replace mappings <leader>/
   "n /h" {:do "<Cmd>noh<CR>" :description "Clear searh highlight"}
   "n /s" {:do "g*N" :description "Search selected text"}
@@ -214,7 +209,7 @@
   "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
   "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
   "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
-  "n cD" {:do #(vim.lsp.buf.references) :description "Type references"}
+  "n cD" {:do #(telescope.lsp_references) :description "Type references"}
   "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
   "n cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
   "n cR" {:do #(do
@@ -223,9 +218,9 @@
                  (nvim.command "e!"))
           :description "LSP reload"}
   "n cs" {:do #(vim.lsp.buf.signature_help) :description "Signature help"}
-  "n cj" {:do #(vim.lsp.buf.document_symbol) :description "Jump to symbol"}
-  "n cJ" {:do #(vim.lsp.buf.workspace_symbol) :description "Jump to symbol in workspace"}
-  "n ca" {:do #(vim.lsp.buf.code_action) :description "LSP code actions"}
+  "n cj" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
+  "n cJ" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
+  "n ca" {:do #(telescope.lsp_code_actions) :description "LSP code actions"}
   "n cql" {:do #(let [line (. (nvim.fn.getpos ".") 2)]
                   (qf.add-item line line))
            :description "Add line to quickfix"}
@@ -239,19 +234,19 @@
   "n gcn" {:do "<Cmd>GitGutterNextHunk<CR>" :description "Next chunk"}
   "n gcp" {:do "<Cmd>GitGutterPrevHunk<CR>" :description "Previous chunk"}
   "n gci" {:do "<Cmd>GitGutterPreviewHunk<CR>" :description "Chunk info"}
-  ; "n gB" { function() steel.git.checkout_git_branch_fzf(vim.fn.expand("%:p:h")) end , :description "Checkout branch"}
-  "n gs" {:do "<Cmd>G<CR>" :description "Git status"}
+  "n gB" {:do #(telescope.git_branches) :description "Checkout branch"}
+  "n gs" {:do #(telescope.git_status) :description "Git status"}
   "n gd" {:do "<Cmd>Gdiffsplit<CR>" :description "Git diff"}
   "n ge" {:do "<Cmd>Gedit<CR>" :description "Git edit"}
   "n gg" {:do #(term.float-cmd "lazygit") :description "Git GUI"}
-  "n gl" {:do "<Cmd>Commits<CR>" :description "Git log"}
-  "n gL" {:do "<Cmd>BCommits<CR>" :description "Git file log"}
+  "n gl" {:do #(telescope.git_commits) :description "Git log"}
+  "n gL" {:do #(telescope.git_bcommits) :description "Git file log"}
   "n gF" {:do "<Cmd>Gfetch<CR>" :description "Git fetch"}
   "n gp" {:do "<Cmd>Gpull<CR>" :description "Git pull"}
   "n gP" {:do "<Cmd>Gpush<CR>" :description "Git push"}
   "n gb" {:do "<Cmd>Gblame<CR>" :description "Git blame"}
-  "n gfc" {:do #(keymap.unimplemented) :description "Find commit"}
-  "n gff" {:do #(keymap.unimplemented) :description "Find file"}
+  "n gfc" {:do #(telescope.git_commits) :description "Find commit"}
+  "n gff" {:do #(telescope.git_files) :description "Find file"}
   "n gfg" {:do #(keymap.unimplemented) :description "Find gitconfig file"}
   "n gfi" {:do #(keymap.unimplemented) :description "Find issue"}
   "n gfp" {:do #(keymap.unimplemented) :description "Find pull request"}
@@ -271,7 +266,8 @@
                       (set nvim.g.diagnostic_enable_virtual_text)))
           :description "Inline errors"}
   ; Help mappings <leader>h
-  "n hh" {:do "<Cmd>Helptags<CR>" :description "Help tags"}
+  "n hh" {:do #(telescope.help_tags) :description "Help tags"}
+  "n hm" {:do #(telescope.man_pages) :description "Man pages"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)

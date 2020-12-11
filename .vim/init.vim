@@ -43,25 +43,31 @@ Plug 'tpope/vim-dispatch'
 Plug 'so-fancy/diff-so-fancy', { 'dir': '~/.diff-so-fancy' }
 Plug 'nvim-lua/completion-nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'haorenW1025/diagnostic-nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 Plug 'dense-analysis/ale'
 Plug 'steelsojka/completion-buffers'
 Plug 'raimondi/delimitmate'
-Plug 'nvim-treesitter/completion-treesitter'
-Plug 'sheerun/vim-polyglot'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
-Plug 'nvim-treesitter/playground'
-Plug 'nvim-treesitter/nvim-tree-docs'
+" Plug 'nvim-treesitter/completion-treesitter'
+ Plug 'sheerun/vim-polyglot'
+" Plug 'nvim-treesitter/nvim-treesitter'
+ Plug 'nvim-treesitter/playground'
+ Plug '~/src/nvim-treesitter'
+" Plug '~/src/playground'
+Plug '~/src/nvim-treesitter-angular'
+" Plug 'nvim-treesitter/nvim-treesitter-refactor'
+" Plug 'nvim-treesitter/playground'
+" Plug '~/src/nvim-tree-docs'
 Plug 'norcalli/snippets.nvim'
-Plug 'vigoux/architext.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', {'commit': '62b8655f1532d92245a50ac387201f2d1ac616e1'}
+" Plug 'vigoux/architext.nvim'
 Plug 'jpalardy/vim-slime'
 Plug 'bakpakin/fennel.vim'
 Plug 'Olical/aniseed', {'branch': 'develop'}
-Plug 'Olical/conjure', {'tag': 'v4.7.0'}
+Plug 'Olical/conjure', {'tag': 'v4.9.0'}
 
 call plug#end()
 
