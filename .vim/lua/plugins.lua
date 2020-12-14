@@ -6,6 +6,8 @@ end
 
 vim.cmd "packadd packer.nvim"
 
+__test = {}
+
 require "packer".startup(function()
   use {"wbthomason/packer.nvim", opt = true}
   use "liuchengxu/vim-which-key"
@@ -66,7 +68,7 @@ require "packer".startup(function()
     "vigoux/architext.nvim",
     after = "nvim-treesitter"}
   use "jpalardy/vim-slime"
-  use "bakpakin/fennel.vim"
-  use {"Olical/aniseed", branch = "develop"}
-  use {"Olical/conjure", tag = "v4.9.0"}
+  use "Olical/aniseed"
+  -- use "bakpakin/fennel.vim"
+  use {"Olical/conjure", ft = {"fennel", "clojure"}, tag = "v4.9.0"}
 end)
