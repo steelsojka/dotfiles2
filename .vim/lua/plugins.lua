@@ -54,9 +54,7 @@ require "packer".startup(function()
     "nvim-treesitter/nvim-treesitter-refactor",
     after = "nvim-treesitter"}
   use "~/src/nvim-treesitter"
-  use {
-    "~/src/nvim-treesitter-angular",
-    after = "nvim-treesitter"}
+  use "~/src/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
@@ -64,11 +62,18 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
+  use "nvim-telescope/telescope-fzy-native.nvim"
+  use {
+    "jhawthorn/fzy",
+    run = "make && PREFIX=$HOME make install"}
   use {
     "vigoux/architext.nvim",
     after = "nvim-treesitter"}
   use "jpalardy/vim-slime"
   use "Olical/aniseed"
-  -- use "bakpakin/fennel.vim"
-  use {"Olical/conjure", ft = {"fennel", "clojure"}, tag = "v4.9.0"}
+  use "bakpakin/fennel.vim"
+  use {
+    "Olical/conjure",
+    ft = {"fennel", "clojure"},
+    tag = "v4.9.0"}
 end)

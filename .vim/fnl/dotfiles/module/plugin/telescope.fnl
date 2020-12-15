@@ -6,6 +6,6 @@
 
 (telescope.setup {:defaults
                   {:layout_strategy :flex
-                   :mappings {:n {"<leader>q" actions.close}}
-                   :file_sorter sorters.get_fzy_sorter
-                   :generic_sorter sorters.get_fzy_sorter}})
+                   :mappings {:n {"<leader>q" actions.close}}}})
+
+(telescope.load_extension :fzy_native)
