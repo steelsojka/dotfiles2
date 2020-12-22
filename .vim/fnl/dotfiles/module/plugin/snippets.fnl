@@ -6,7 +6,7 @@
 (def- indent U.match_indentation)
 
 (set snippets.javascript {
-  :desc (indent "describe('${1}', () => {
+  :describe (indent "describe('${1}', () => {
 });")
   :when (indent "describe('when ${1}', () => {
 });")

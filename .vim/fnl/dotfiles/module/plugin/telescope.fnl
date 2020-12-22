@@ -1,11 +1,12 @@
-(module dotfiles.module.plugin.telescope)
+(module dotfiles.module.plugin.telescope
+  {require {tele dotfiles.telescope}})
 
 (local telescope (require :telescope))
-(local sorters (require "telescope.sorters"))
 (local actions (require "telescope.actions"))
 
 (telescope.setup {:defaults
                   {:layout_strategy :flex
-                   :mappings {:n {"<leader>q" actions.close}}}})
+                   :mappings {:n {"<leader>q" actions.close}}}
+                  :generic_sorter (. (require "telescope.sorters") :fuzzy_with_index_bias)
+                  :file_previewer (-> (require "telescope.previewers") (. :vim_buffer_cat) (. :new))})
 
-(telescope.load_extension :fzy_native)

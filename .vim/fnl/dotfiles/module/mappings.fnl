@@ -8,6 +8,7 @@
             grep dotfiles.grep
             term dotfiles.terminal
             diagnostics dotfiles.diagnostics
+            tele dotfiles.telescope
             qf dotfiles.quickfix
             keymap dotfiles.keymap}})
 
@@ -79,7 +80,7 @@
   "ot" {:do "<Plug>Sneak_t"}
   "oT" {:do "<Plug>Sneak_T"}
   "n ," {:do #(telescope.buffers) :description "Switch buffer"}
-  "n ." {:do #(telescope.find_files) :description "Find files"}
+  "n ." {:do #(tele.find-files) :description "Find files"}
   "n  " {:do #(telescope.commands)}
   "n \"" {:do "q:" :description "Ex History"}
   "v \"" {:do "q:" :description "Ex History"}
@@ -95,8 +96,8 @@
   "n fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
   "n fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
   "n fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
-  "n fF" {:do #(telescope.find_files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
-  "n fP" {:do #(telescope.find_files {:cwd "~/.vim/fnl"}) :description "Find config file"}
+  "n fF" {:do #(tele.find-files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
+  "n fP" {:do #(tele.find-files {:cwd "~/.vim/fnl"}) :description "Find config file"}
   ; Buffer mappings <leader>b
   "n bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
   "n bn" {:do "<Cmd>bnext<CR>" :description "Next buffer"}
@@ -140,7 +141,7 @@
   "n wS" {:do "<Cmd>Startify<CR>" :description "Start screen"}
   ; Project mappings <leader>p
   "n ph" {:do #(telescope.oldfiles) :description "MRU"}
-  "n pf" {:do #(telescope.find_files {:cwd (vim.fn.expand ".")}) :description "Find file"}
+  "n pf" {:do #(tele.find-files {:cwd (vim.fn.expand ".")}) :description "Find file"}
   "n ps" {:do #(telescope.grep_string) :description "Find file with text"}
   "n pT" {:do "<Cmd>vsp +Dirvish<CR>" :description "Open File explorer in split"}
   "n pt" {:do "<Cmd>Dirvish<CR>" :description "Open file Explorer"}
@@ -180,7 +181,7 @@
   "n iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
   "n is" {:do #(keymap.unimplemented) :description "Insert snippet"}
   ; Search mappings <leader>s
-  "n sd" {:do #(telescope.live_grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
+  "n sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
   "n sc" {:do #(telescope.command_history) :description "Search command history"}
   ; "n sh" {:do "<Cmd>History/<CR>" :description "Search history"}
   "n si" {:do #(vim.lsp.buf.workspace_symbol) :description "Search symbol"}
@@ -188,10 +189,10 @@
   "n ss" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
   "n so" {:do #(vim.lsp.buf.document_symbol) :description "List symbols in file"}
   ; "n sl" {:do "<Cmd>Lines<CR>" :description "Search lines"}
-  "n sp" {:do #(telescope.live_grep) :description "Grep files in project"}
+  "n sp" {:do #(tele.live-grep) :description "Grep files in project"}
   "n sm" {:do #(telescope.marks) :description "Jump to marks"}
   ; "n sa" {:do #(grep.flygrep "" (nvim.fn.expand "%:p:h") 0 ["--hidden" "--no-ignore"]) :description "Grep all files"}
-  "n sS" {:do #(telescope.grep_string) :description "Search selected text (project)"}
+  "n sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
   ; Local Search/Replace mappings <leader>/
   "n /h" {:do "<Cmd>noh<CR>" :description "Clear searh highlight"}
   "n /s" {:do "g*N" :description "Search selected text"}

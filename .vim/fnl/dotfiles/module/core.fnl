@@ -2,7 +2,7 @@
   {require {core aniseed.core
             nvim aniseed.nvim}})
 
-(def- home-dir (vim.loop.os_homedir))
+(def- data-dir (vim.fn.stdpath :data))
 
 (nvim.ex.colorscheme "OceanicNext")
 
@@ -11,8 +11,8 @@
 (set nvim.o.ruler true)
 (set nvim.o.undofile true)
 (set nvim.o.backup true)
-(set nvim.o.undodir (.. home-dir "/.vim/undo"))
-(set nvim.o.backupdir (.. home-dir "/.vim/backups"))
+(set nvim.o.undodir (.. data-dir "/undo"))
+(set nvim.o.backupdir (.. data-dir "/backups"))
 (set nvim.o.shiftwidth 2)
 (set nvim.o.tabstop 2)
 (set nvim.o.expandtab true)
@@ -38,7 +38,7 @@
 (set nvim.o.dictionary "/usr/share/dict/words")
 (set nvim.o.shell :zsh)
 
-(nvim.command "highlight Normal guibg=#1b2b34")
+; (nvim.command "highlight Normal guibg=#1b2b34")
 
 ; (set nvim.wo.foldmethod :expr)
 ; (set nvim.wo.foldexpr "nvim_treesitter#foldexpr()")

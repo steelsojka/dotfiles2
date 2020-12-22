@@ -44,17 +44,17 @@ require "packer".startup(function()
   use "dense-analysis/ale"
   use {
     "steelsojka/completion-buffers",
-    after = "completion"}
+    after = "completion-nvim"}
   use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"
-  use {
-    "nvim-treesitter/playground",
-    after = "nvim-treesitter"}
-  use {
-    "nvim-treesitter/nvim-treesitter-refactor",
-    after = "nvim-treesitter"}
-  use "~/src/nvim-treesitter"
-  use "~/src/nvim-treesitter-angular"
+  use "nvim-treesitter/playground"
+  use "nvim-treesitter/nvim-treesitter-refactor"
+  use "nvim-treesitter/nvim-treesitter"
+  -- use "~/src/nvim-treesitter"
+  use "nvim-treesitter/nvim-tree-docs"
+  -- use "~/src/nvim-tree-docs"
+  use "nvim-treesitter/nvim-treesitter-angular"
+  -- use "~/src/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
@@ -62,7 +62,7 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
-  use "nvim-telescope/telescope-fzy-native.nvim"
+  use "nvim-telescope/telescope-fzf-writer.nvim"
   use {
     "jhawthorn/fzy",
     run = "make && PREFIX=$HOME make install"}

@@ -3,15 +3,14 @@
             fzf dotfiles.fzf
             keymap dotfiles.keymap}})
 
+(local telescope (require "telescope.builtin"))
+(local actions (require "telescope.actions"))
+
 (def- find-fzf (fzf.create "Dirvish"))
 
 (defn- fzf-dir [starting]
   (find-fzf.execute {:source (string.format "find \"%s\" -type d" starting)
                      :options ["--preview=ls la {}"]}))
-
-(defn- fzf-files [starting]
-  (-> (nvim.fn.fzf#vim#with_preview {:source (string.format "rg --hidden --files %s" starting)})
-      (find-fzf.execute)))
 
 (defn- create [input cmd expansion placeholder]
   (let [filehead (nvim.fn.expand expansion)
@@ -19,6 +18,16 @@
     (when (~= name "")
       (nvim.command (string.format cmd filehead name))
       (nvim.input "R"))))
+
+(defn- find-files [cwd]
+  (telescope.find_files
+    {: cwd
+     :attach_mappings (fn []
+                        (actions._goto_file_selection:replace
+                          #(let [entry (actions.get_selected_entry)]
+                             (vim.cmd (string.format "Dirvish %s" (. entry 1)))
+                             (vim.cmd "stopinsert")))
+                        true)}))
 
 (fn []
   (nvim.ex.setlocal "nospell")
@@ -54,8 +63,8 @@
              :description "Delete"}
      "n mgd" {:do #(-> (nvim.fn.expand "%:p:h") (fzf-dir)) :description "Child directory"}
      "n mgD" {:do #(-> (nvim.fn.getcwd) (fzf-dir)) :description "Project directory"}
-     "n mgf" {:do #(-> (nvim.fn.expand "%:p:h") (fzf-files)) :description "Child file"}
-     "n mgF" {:do #(-> (nvim.fn.getcwd) (fzf-files)) :description "Project file"}
+     "n mgf" {:do #(-> {:cwd (nvim.fn.expand "%:p:h")} (telescope.find_files)) :description "Child file"}
+     "n mgF" {:do #(-> (nvim.fn.getcwd) (find-files)) :description "Project file"}
      "nH" {:do "<Plug>(dirvish_up)"}
      "n q" {:do "gq" :noremap false}
      "n Q" {:do "gq" :noremap false}}))

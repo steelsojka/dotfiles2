@@ -53,3 +53,11 @@
           (when (not success) (help))))
       (let [(success) (pcall #(vim.lsp.diagnostic.show_line_diagnostics))]
         (when (not success) (help))))))
+
+(defn flow [...]
+  (let [fns [...]]
+    (fn [...]
+      (var result nil)
+      (each [_ func (ipairs fns)]
+        (set result (func ...)))
+      result)))
