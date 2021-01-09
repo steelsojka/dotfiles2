@@ -58,7 +58,6 @@ require "packer".startup(function()
   use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
-    commit = "62b8655f1532d92245a50ac387201f2d1ac616e1",
     requires = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
@@ -70,7 +69,7 @@ require "packer".startup(function()
     "vigoux/architext.nvim",
     after = "nvim-treesitter"}
   use "jpalardy/vim-slime"
-  use "Olical/aniseed"
+  use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
   use {
     "Olical/conjure",

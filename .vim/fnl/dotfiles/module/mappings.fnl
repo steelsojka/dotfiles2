@@ -53,6 +53,7 @@
 
 (keymap.register-mappings {
   "n " {:do #(which-key.start false) :silent true}
+  "n;" {:do ":"}
   "v " {:do #(which-key.start true) :silent true}
   "i<C-Space>" {:do "completion#trigger_completion()" :silent true :expr true}
   "n <CR>" {:do #(telescope.marks) :description "Jump to mark"}
@@ -162,7 +163,9 @@
   "n jd" {:do #(vim.lsp.buf.definition) :description "Definition"}
   "n ji" {:do #(vim.lsp.buf.implementation) :description "Implementation"}
   "n jy" {:do #(vim.lsp.buf.type_definition) :description "Type definition"}
-  "n jr" {:do #(vim.lsp.buf.references) :description "Type references"}
+  "n js" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
+  "n jS" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
+  "n jr" {:do #(telescope.lsp_references) :description "Type references"}
   "n jep" {:do #(vim.lsp.diagnostic.goto_prev {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Previous error"}
   "n jen" {:do #(vim.lsp.diagnostic.goto_next {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Next error"}
   "n jqp" {:do "<Cmd>cN<CR>" :description "Previous"}
@@ -213,6 +216,7 @@
   "n cD" {:do #(telescope.lsp_references) :description "Type references"}
   "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
   "n cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
+  "n ce" {:do #(vim.lsp.diagnostic.set_loclist) :description "List errors"}
   "n cR" {:do #(do
                  (-> (vim.lsp.get_active_clients)
                      (vim.lsp.stop_client))
@@ -273,13 +277,13 @@
 
 (set nvim.g.which_key_map which-key-map)
 ; I can't get the following mappings to work in lua...
-(nvim.command "
-  function! CheckBackSpace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\\s'
-  endfunction")
+; (nvim.command "
+;   function! CheckBackSpace() abort
+;     let col = col('.') - 1
+;     return !col || getline('.')[col - 1]  =~# '\\s'
+;   endfunction")
 
 ; Use tab for trigger completion with characters ahead and navigate.
 ; Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-(nvim.command "inoremap <silent><expr> <TAB> pumvisible() ? \"\\<C-n>\" : CheckBackSpace() ? \"\\<TAB>\" : completion#trigger_completion()")
-(nvim.command "inoremap <expr><S-TAB> pumvisible() ? \"\\<C-p>\" : \"\\<C-h>\"")
+; (nvim.command "inoremap <silent><expr> <TAB> pumvisible() ? \"\\<C-n>\" : CheckBackSpace() ? \"\\<TAB>\" : completion#trigger_completion()")
+; (nvim.command "inoremap <expr><S-TAB> pumvisible() ? \"\\<C-p>\" : \"\\<C-h>\"")
