@@ -18,6 +18,23 @@
  :angularls {}
  :cssls {}
  :bashls {}
+ :sumneko_lua (let [system-name (if
+                                  (= (vim.fn.has :mac) 1) :macOS
+                                  (= (vim.fn.has :unix) 1) :Linux
+                                  (= (vim.fn.has :win32) 1) :Windows
+                                  "")
+                    root-path (-> (vim.loop.os_homedir) (.. "/src/lua-language-server"))
+                    binary (-> root-path
+                               (.. "/bin/")
+                               (.. system-name)
+                               (.. "/lua-language-server"))]
+                {:cmd [binary "-E" (.. root-path "/main.lua")]
+                 :settings
+                 {:Lua
+                  {:runtime {:version "LuaJIT" :path (vim.split package.path ";")}
+                   :diagnostics {:globals [:vim]}
+                   :workspace {:library {(vim.fn.expand "$VIMRUNTIME/lua") true
+                                         (vim.fn.expand "$VIMRUNTIME/lua/vim/lsp") true}}}}})
  :jdtls {:init_options {:jvm_args ["-javaagent:/usr/local/share/lombok/lombok.jar"
                                    "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"]}
          :handlers {"textDocument/codeAction" #(do
