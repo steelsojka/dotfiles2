@@ -11,10 +11,10 @@
   :default [
     {:complete_items [:lsp]}
     {:complete_items [:buffers]}]
-  :lua [{:complete_items [:ts :buffers]}]
+  :lua [{:complete_items [:buffers]}]
   :typescript [
     {:complete_items [:lsp]}
-    {:complete_items [:ts: :buffers]}]
+    {:complete_items [:buffers]}]
   :javascript [
     {:complete_items [:lsp]}
-    {:complete_items [:ts :buffers]}]})
+    {:complete_items [:buffers]}]})

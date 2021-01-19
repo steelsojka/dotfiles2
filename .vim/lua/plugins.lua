@@ -6,8 +6,6 @@ end
 
 vim.cmd "packadd packer.nvim"
 
-__test = {}
-
 require "packer".startup(function()
   use {"wbthomason/packer.nvim", opt = true}
   use "liuchengxu/vim-which-key"
@@ -42,15 +40,12 @@ require "packer".startup(function()
   use "editorconfig/editorconfig-vim"
   use {"prettier/vim-prettier", run = "npm install"}
   use "dense-analysis/ale"
-  use {
-    "steelsojka/completion-buffers",
-    after = "completion-nvim"}
+  use "steelsojka/completion-buffers"
   use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use "nvim-treesitter/nvim-treesitter"
-  -- use "~/src/nvim-treesitter"
   use "nvim-treesitter/nvim-tree-docs"
   -- use "~/src/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"
@@ -62,12 +57,6 @@ require "packer".startup(function()
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
   use "nvim-telescope/telescope-fzf-writer.nvim"
-  use {
-    "jhawthorn/fzy",
-    run = "make && PREFIX=$HOME make install"}
-  use {
-    "vigoux/architext.nvim",
-    after = "nvim-treesitter"}
   use "jpalardy/vim-slime"
   use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
