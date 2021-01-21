@@ -42,7 +42,7 @@
 (def- handlers {
   "textDocument/publishDiagnostics" (vim.lsp.with
                                       vim.lsp.diagnostic.on_publish_diagnostics
-                                      {:virtual_text true})
+                                      {:virtual_text false})
   "workspace/symbol" lsp-fzf.symbol-callback
   "textDocument/documentSymbol" lsp-fzf.symbol-callback
   "textDocument/references" lsp-fzf.location-callback
