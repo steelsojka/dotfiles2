@@ -2,7 +2,7 @@ is_in_git_repo() {
   git rev-parse HEAD > /dev/null 2>&1
 }
 
-gh() {
+glh() {
   is_in_git_repo || return
   git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always -- $1 |
   fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \

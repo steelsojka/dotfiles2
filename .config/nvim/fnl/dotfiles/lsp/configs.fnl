@@ -6,11 +6,17 @@
 (local lsp (require "lspconfig"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
 (local completion (require "completion"))
+(local home-dir (vim.loop.os_homedir))
+(local jdtls-home (.. home-dir "/src/jdt-language-server"))
 
 (def configs
- {:tsserver {:root_dir (root-pattern ".git" "tsconfig.json")
-            :settings {:typescript {:preferences {:importModuleSpecifier "non-relative"
-                                                  :quoteStyle "single"}}}}
+ {:tsserver
+  {:root_dir (root-pattern ".git" "tsconfig.json")
+   :settings
+    {:typescript
+     {:preferences
+      {:importModuleSpecifier "non-relative"
+       :quoteStyle "single"}}}}
  :jsonls {}
  :clojure_lsp {}
  :html {}
@@ -23,31 +29,20 @@
                                   (= (vim.fn.has :unix) 1) :Linux
                                   (= (vim.fn.has :win32) 1) :Windows
                                   "")
-                    root-path (-> (vim.loop.os_homedir) (.. "/src/lua-language-server"))
-                    binary (-> root-path
-                               (.. "/bin/")
-                               (.. system-name)
-                               (.. "/lua-language-server"))]
+                    root-path (.. home-dir "/src/lua-language-server")
+                    binary (.. root-path "/bin/" system-name "/lua-language-server")]
                 {:cmd [binary "-E" (.. root-path "/main.lua")]
                  :settings
                  {:Lua
                   {:runtime {:version "LuaJIT" :path (vim.split package.path ";")}
                    :diagnostics {:globals [:vim]}
                    :workspace {:library {(vim.fn.expand "$VIMRUNTIME/lua") true
-                                         (vim.fn.expand "$VIMRUNTIME/lua/vim/lsp") true}}}}})
- :jdtls {:init_options {:jvm_args ["-javaagent:/usr/local/share/lombok/lombok.jar"
-                                   "-Xbootclasspath/a:/usr/local/share/lombok/lombok.jar"]}
-         :handlers {"textDocument/codeAction" #(do
-                                                  (each [_ action (ipairs $3)]
-                                                    (when (= action.command "java.apply.workspaceEdit")
-                                                      (->> (. action.arguments 1)
-                                                           (set action.edit))))
-                                                  (lsp-fzf.code-action-callback $1 $2 $3))}}})
+                                         (vim.fn.expand "$VIMRUNTIME/lua/vim/lsp") true}}}}})})
 
 (def- handlers {
   "textDocument/publishDiagnostics" (vim.lsp.with
                                       vim.lsp.diagnostic.on_publish_diagnostics
-                                      {:virtual_text false})
+                                      {:virtual_text true})
   "workspace/symbol" lsp-fzf.symbol-callback
   "textDocument/documentSymbol" lsp-fzf.symbol-callback
   "textDocument/references" lsp-fzf.location-callback

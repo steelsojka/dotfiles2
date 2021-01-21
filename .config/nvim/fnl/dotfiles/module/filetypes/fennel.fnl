@@ -1,4 +1,4 @@
-(module dotfiles.module.filetypes.java
+(module dotfiles.module.filetypes.fennel
   {require {nvim aniseed.nvim
             conjure dotfiles.module.plugin.conjure}})
 

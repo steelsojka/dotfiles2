@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+CONFIG=config_mac
+
+# This doesn't work for some stupid reason
+# if [["$OSTYPE" == "Darwin"*]]; then
+#   CONFIG=config_mac
+# fi
+
+JAR="$HOME/src/jdt-language-server/plugins/org.eclipse.equinox.launcher_*.jar"
+GRADLE_HOME=$HOME/gradle $JAVA_HOME/bin/java \
+  -Declipse.application=org.eclipse.jdt.ls.core.id1 \
+  -Dosgi.bundles.defaultStartLevel=4 \
+  -Declipse.product=org.eclipse.jdt.ls.core.product \
+  -Dlog.protocol=true \
+  -Dlog.level=ALL \
+  -Xms1g \
+  -Xmx2G \
+  -javaagent:$HOME/.local/share/lombok/lombok.jar \
+  -Xbootclasspath/a:$HOME/.local/share/lombok/lombok.jar \
+  -jar $(echo "$JAR") \
+  -configuration "$HOME/src/jdt-language-server/$CONFIG" \
+  -data "$HOME/workspace" \
+  --add-modules=ALL-SYSTEM \
+  --add-opens java.base/java.util=ALL-UNNAMED \
+  --add-opens java.base/java.lang=ALL-UNNAMED

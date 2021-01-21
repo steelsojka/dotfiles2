@@ -4,7 +4,7 @@ local deferred = false
 
 overrideOtherMouseDown = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(e)
   local pressedMouseButton = e:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
-  -- print("down " .. pressedMouseButton)
+  print("down " .. pressedMouseButton)
 
   if scrollMouseButton == pressedMouseButton then
     deferred = true
@@ -13,7 +13,7 @@ overrideOtherMouseDown = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDow
 end)
 
 overrideOtherMouseUp = hs.eventtap.new({ hs.eventtap.event.types.otherMouseUp }, function(e)
-  -- print("up")
+  print("up")
   local pressedMouseButton = e:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
 
   if scrollMouseButton == pressedMouseButton then
@@ -45,7 +45,6 @@ dragOtherToScroll = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDragged 
 
     local dx = e:getProperty(hs.eventtap.event.properties['mouseEventDeltaX'])
     local dy = e:getProperty(hs.eventtap.event.properties['mouseEventDeltaY'])
-    -- print(-dx * scrollmult, dy * scrollmult)
     local scroll = hs.eventtap.event.newScrollEvent({ -dx * scrollmult, dy * scrollmult }, {}, 'pixel')
 
     -- put the mouse back

@@ -3,4 +3,4 @@
 
 (fn []
   (keymap.register-buffer-mappings
-    {"n mp" {:do "<Plug>MarkdownPrevier" :noremap false :description "Preview"}}))
+    {"n mp" {:do "<Plug>MarkdownPreview" :noremap false :description "Preview"}}))

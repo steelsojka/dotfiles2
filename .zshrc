@@ -15,3 +15,7 @@ dotfiles config status.showUntrackedFiles no
 
 # For some reason we have to load this after oh-my-zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/soj214/.sdkman"
+[[ -s "/Users/soj214/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/soj214/.sdkman/bin/sdkman-init.sh"

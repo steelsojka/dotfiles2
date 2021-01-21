@@ -46,8 +46,8 @@ require "packer".startup(function()
   use "nvim-treesitter/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use "nvim-treesitter/nvim-treesitter"
-  use "nvim-treesitter/nvim-tree-docs"
-  -- use "~/src/nvim-tree-docs"
+  -- use "nvim-treesitter/nvim-tree-docs"
+  use "~/src/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"
   -- use "~/src/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
@@ -56,10 +56,10 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
-  use "nvim-telescope/telescope-fzf-writer.nvim"
   use "jpalardy/vim-slime"
   use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
+  use "mfussenegger/nvim-jdtls"
   use {
     "Olical/conjure",
     ft = {"fennel", "clojure"},
