@@ -55,7 +55,9 @@
   "n " {:do #(which-key.start false) :silent true}
   "n;" {:do ":"}
   "v " {:do #(which-key.start true) :silent true}
-  "i<C-Space>" {:do "completion#trigger_completion()" :silent true :expr true}
+  "i<C-Space>" {:do "<Plug>(completion_trigger)" :silent true}
+  "i<C-l>" {:do "<Plug>(completion_next_source)" :silent true}
+  "i<C-h>" {:do "<Plug>(completion_prev_source)" :silent true}
   "n <CR>" {:do #(telescope.marks) :description "Jump to mark"}
   "ijj" {:do "<esc>" :description "Exit insert mode"}
   "t<C-j><C-j>" {:do "<C-\\><C-n>" :description "Exit terminal mode"}
@@ -64,7 +66,6 @@
   "n?" {:do "?\\v" :description "Search backwards with magic"}
   "nK" {:do #(util.show-documentation false) :silent true :description "Show documentation"}
   "ngh" {:do #(util.show-documentation true) :silent true :description "Show documentation"}
-  "i<C-l>" {:do "<Plug>(fzf-complete-line)"}
   "i<C-e>" {:do "<Plug>(fzf-complete-path)"}
   "i<C-w>" {:do "<Plug>(fzf-complete-word)"}
   "i<C-u>" {:do #(files.insert-relative-path (nvim.fn.expand "%:p:h"))}
@@ -106,7 +107,7 @@
   "n bl" {:do "<Cmd>blast<CR>" :description "Last buffer"}
   "n bd" {:do "<Cmd>bp<CR>:bd#<CR>" :description "Delete buffer"}
   "n bk" {:do "<Cmd>bp<CR>:bw!#<CR>" :description "Wipe buffer"}
-  "n bK" {:do #(delete-buffers-fzf) :description "Wipe buffers"}
+  "n bK" {:do #(tele.delete-buffers) :description "Wipe buffers"}
   "n bb" {:do #(telescope.buffers) :description "List buffers"}
   "n bY" {:do "ggyG" :description "Yank buffer"}
   "n bm" {:do #(util.prompt-command :mark "Set mark") :description "Set mark"}
@@ -276,14 +277,3 @@
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)
-; I can't get the following mappings to work in lua...
-; (nvim.command "
-;   function! CheckBackSpace() abort
-;     let col = col('.') - 1
-;     return !col || getline('.')[col - 1]  =~# '\\s'
-;   endfunction")
-
-; Use tab for trigger completion with characters ahead and navigate.
-; Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-; (nvim.command "inoremap <silent><expr> <TAB> pumvisible() ? \"\\<C-n>\" : CheckBackSpace() ? \"\\<TAB>\" : completion#trigger_completion()")
-; (nvim.command "inoremap <expr><S-TAB> pumvisible() ? \"\\<C-p>\" : \"\\<C-h>\"")

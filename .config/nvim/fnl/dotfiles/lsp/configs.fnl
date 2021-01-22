@@ -1,11 +1,11 @@
 (module dotfiles.lsp.configs
   {require {nvim aniseed.nvim
             keymap dotfiles.keymap
-            lsp-fzf dotfiles.lsp.fzf}})
+            telescope dotfiles.telescope}})
 
 (local lsp (require "lspconfig"))
+(local telescope-builtin (require "telescope.builtin"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
-(local completion (require "completion"))
 (local home-dir (vim.loop.os_homedir))
 (local jdtls-home (.. home-dir "/src/jdt-language-server"))
 
@@ -43,14 +43,10 @@
   "textDocument/publishDiagnostics" (vim.lsp.with
                                       vim.lsp.diagnostic.on_publish_diagnostics
                                       {:virtual_text false})
-  "workspace/symbol" lsp-fzf.symbol-callback
-  "textDocument/documentSymbol" lsp-fzf.symbol-callback
-  "textDocument/references" lsp-fzf.location-callback
-  "textDocument/codeAction" lsp-fzf.code-action-callback
-  "textDocument/declaration" lsp-fzf.location-callback
-  "textDocument/definition" lsp-fzf.location-callback
-  "textDocument/typeDefinition" lsp-fzf.location-callback
-  "textDocument/implementation" lsp-fzf.location-callback})
+  "textDocument/declaration" telescope.location-callback
+  "textDocument/definition" telescope.location-callback
+  "textDocument/typeDefinition" telescope.location-callback
+  "textDocument/implementation" telescope.location-callback})
 
 (defn on-attach [client]
  (when client.resolved_capabilities.document_highlight
@@ -61,8 +57,7 @@
    {"ngd" {:do #(vim.lsp.buf.definition) :silent true}
     "ngy" {:do #(vim.lsp.buf.type_definition) :silent true}
     "ngi" {:do #(vim.lsp.buf.implementation :silent true)}
-    "ngr" {:do #(vim.lsp.buf.references) :silent true}
-    "i<C-Space>" {:do #(vim.lsp.omnifunc) :silent true}}))
+    "ngr" {:do #(telescope-builtin.lsp_references) :silent true}}))
 
 (defn get-config [overrides]
  (vim.tbl_extend "force"

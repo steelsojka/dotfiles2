@@ -38,9 +38,5 @@
 (set nvim.o.dictionary "/usr/share/dict/words")
 (set nvim.o.shell :zsh)
 
-; (nvim.command "highlight Normal guibg=#1b2b34")
-
 ; (set nvim.wo.foldmethod :expr)
 ; (set nvim.wo.foldexpr "nvim_treesitter#foldexpr()")
-
-(nvim.command "command! -bang -nargs=? -complete=dir Files call luaeval('require\"dotfiles.files\"[\"fzf-files\"](unpack(_A))', [<q-args>, <bang>0])")
