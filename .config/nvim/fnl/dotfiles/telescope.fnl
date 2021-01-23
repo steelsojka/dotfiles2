@@ -67,6 +67,10 @@
                      (map :n "<C-k>" actions.delete-buffers)
                      (map :i "<C-k>" actions.delete-buffers)
                      true)
+   :paste-entry (fn [_ map]
+                    (map :n "<CR>" actions.paste-entry)
+                    (map :i "<CR>" actions.paste-entry)
+                    true)
    :goto-multi-file (fn [prompt map]
                       (map :n "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
                       (map :i "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
@@ -127,6 +131,14 @@
                                        (map :n "<CR>" (make-paste-relative-path-action from-path))
                                        (map :i "<CR>" (make-paste-relative-path-action from-path))
                                        true)})
+      (: :find)))
+
+(defn insert-word []
+  "Inserts a word from a dictionary"
+  (-> (pickers.new {:prompt_title "Insert Word"
+                    :finder (finders.new_oneshot_job ["cat" vim.o.dictionary])
+                    :sorter (telescope-conf.generic_sorter options)
+                    :attach_mappings mappings.paste-entry})
       (: :find)))
 
 (fn wrap-file-cmd [cmd]

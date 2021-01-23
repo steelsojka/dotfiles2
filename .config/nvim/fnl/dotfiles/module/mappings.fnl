@@ -67,7 +67,7 @@
   "nK" {:do #(util.show-documentation false) :silent true :description "Show documentation"}
   "ngh" {:do #(util.show-documentation true) :silent true :description "Show documentation"}
   "i<C-e>" {:do "<Plug>(fzf-complete-path)"}
-  "i<C-w>" {:do "<Plug>(fzf-complete-word)"}
+  "i<C-w>" {:do #(tele.insert-word)}
   "nf" {:do "<Plug>Sneak_f"}
   "nF" {:do "<Plug>Sneak_F"}
   "xf" {:do "<Plug>Sneak_f"}
@@ -174,8 +174,6 @@
   "n jml" {:do #(telescope.marks) :description "List marks"}
   "n jmd" {:do ":delmarks<Space>" :description "Delete marks"}
   "n jmm" {:do "`" :description "Go to mark"}
-  "n ja" {:do "<Cmd>A<CR>" :description "Go to altenate"}
-  "n jA" {:do "<Cmd>AV<CR>" :description "Split altenate"}
   "n jcn" {:do "g," :description "Next change"}
   "n jcp" {:do "g;" :description "Previous change"}
   ; Insert mappings <leader>i
@@ -187,10 +185,10 @@
   "n sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
   "n sc" {:do #(telescope.command_history) :description "Search command history"}
   ; "n sh" {:do "<Cmd>History/<CR>" :description "Search history"}
-  "n si" {:do #(vim.lsp.buf.workspace_symbol) :description "Search symbol"}
+  "n si" {:do #(telescope.lsp_workspace_symbols) :description "Search symbol"}
   "n sb" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
   "n ss" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
-  "n so" {:do #(vim.lsp.buf.document_symbol) :description "List symbols in file"}
+  "n so" {:do #(telescope.lsp_document_symbols) :description "List symbols in file"}
   ; "n sl" {:do "<Cmd>Lines<CR>" :description "Search lines"}
   "n sp" {:do #(tele.live-grep) :description "Grep files in project"}
   "n sm" {:do #(telescope.marks) :description "Jump to marks"}
@@ -269,7 +267,11 @@
   "n te" {:do #(keymap.unimplemented) :description "Inline errors"}
   ; Help mappings <leader>h
   "n hh" {:do #(telescope.help_tags) :description "Help tags"}
+  "n hi" {:do #(telescope.highlights) :description "List highlights"}
   "n hm" {:do #(telescope.man_pages) :description "Man pages"}
+  "n ho" {:do #(telescope.vim_options) :description "Vim options"}
+  "n ha" {:do #(telescope.autocommands) :description "List autocommands"}
+  "n hk" {:do #(telescope.keymaps) :description "List keymaps"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)
