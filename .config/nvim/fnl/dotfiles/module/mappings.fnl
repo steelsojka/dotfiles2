@@ -68,7 +68,6 @@
   "ngh" {:do #(util.show-documentation true) :silent true :description "Show documentation"}
   "i<C-e>" {:do "<Plug>(fzf-complete-path)"}
   "i<C-w>" {:do "<Plug>(fzf-complete-word)"}
-  "i<C-u>" {:do #(files.insert-relative-path (nvim.fn.expand "%:p:h"))}
   "nf" {:do "<Plug>Sneak_f"}
   "nF" {:do "<Plug>Sneak_F"}
   "xf" {:do "<Plug>Sneak_f"}
@@ -81,7 +80,7 @@
   "xT" {:do "<Plug>Sneak_T"}
   "ot" {:do "<Plug>Sneak_t"}
   "oT" {:do "<Plug>Sneak_T"}
-  "n ," {:do #(telescope.buffers) :description "Switch buffer"}
+  "n ," {:do #(tele.buffers) :description "Switch buffer"}
   "n ." {:do #(tele.find-files) :description "Find files"}
   "n  " {:do #(telescope.commands)}
   "n \"" {:do "q:" :description "Ex History"}
@@ -107,8 +106,7 @@
   "n bl" {:do "<Cmd>blast<CR>" :description "Last buffer"}
   "n bd" {:do "<Cmd>bp<CR>:bd#<CR>" :description "Delete buffer"}
   "n bk" {:do "<Cmd>bp<CR>:bw!#<CR>" :description "Wipe buffer"}
-  "n bK" {:do #(tele.delete-buffers) :description "Wipe buffers"}
-  "n bb" {:do #(telescope.buffers) :description "List buffers"}
+  "n bb" {:do #(tele.buffers) :description "List buffers"}
   "n bY" {:do "ggyG" :description "Yank buffer"}
   "n bm" {:do #(util.prompt-command :mark "Set mark") :description "Set mark"}
   ; Window mappings <leader>w
@@ -184,6 +182,7 @@
   "n if" {:do "\"%p" :description "Current file name"}
   "n iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
   "n is" {:do #(keymap.unimplemented) :description "Insert snippet"}
+  "n ir" {:do #(tele.insert-relative-path (vim.fn.expand "%:p:h")) :description "Insert relative path"}
   ; Search mappings <leader>s
   "n sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
   "n sc" {:do #(telescope.command_history) :description "Search command history"}
@@ -267,10 +266,7 @@
   "n ts" {:do "<Cmd>set spell!<CR>" :description "Spell check"}
   "n tf" {:do "za" :description "Fold"}
   "n tF" {:do "zA" :description "Fold recursively"}
-  "n te" {:do #(let [cur nvim.g.diagnostic_enable_virtual_text]
-                 (->> (if (= cur 1) 0 1)
-                      (set nvim.g.diagnostic_enable_virtual_text)))
-          :description "Inline errors"}
+  "n te" {:do #(keymap.unimplemented) :description "Inline errors"}
   ; Help mappings <leader>h
   "n hh" {:do #(telescope.help_tags) :description "Help tags"}
   "n hm" {:do #(telescope.man_pages) :description "Man pages"}

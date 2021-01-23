@@ -54,7 +54,7 @@
       (let [(success) (pcall #(vim.lsp.diagnostic.show_line_diagnostics))]
         (when (not success) (help))))))
 
-(defn flow [...]
+(defn over-all [...]
   (let [fns [...]]
     (fn [...]
       (var result nil)

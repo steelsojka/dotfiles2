@@ -1,6 +1,7 @@
 (module dotfiles.telescope
   {require {utils dotfiles.util
             buffers dotfiles.buffers
+            files dotfiles.files
             nvim aniseed.nvim}})
 
 (local builtin-actions (require "telescope.actions"))
@@ -43,6 +44,10 @@
                       #(each [_ entry (ipairs $2)] (nvim.ex.bw entry.value))
                       prompt)
                     (builtin-actions.close prompt))
+   :paste-entry (fn [prompt]
+                  (let [entry (builtin-actions.get_selected_entry prompt)]
+                    (builtin-actions.close prompt)
+                    (vim.api.nvim_put [entry.value] "" true true)))
    :goto-file (fn [prompt cmd]
                 (handle-multi-selection
                   #(builtin-actions._goto_file_selection prompt cmd)
@@ -58,9 +63,9 @@
                   (map :n "<Tab>" actions.select-multi-item)
                   (map :i "<Tab>" actions.select-multi-item)
                   true)
-   :delete-buffers (fn [_ map]
-                     (map :n "<Cr>" actions.delete-buffers)
-                     (map :i "<Cr>" actions.delete-buffers)
+   :kill-buffers (fn [_ map]
+                     (map :n "<C-k>" actions.delete-buffers)
+                     (map :i "<C-k>" actions.delete-buffers)
                      true)
    :goto-multi-file (fn [prompt map]
                       (map :n "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
@@ -84,7 +89,7 @@
                {:prompt_title "LSP Location"
                 :previewer (telescope-conf.qflist_previewer options)
                 :sorter (telescope-conf.generic_sorter options)
-                :attach_mappings (utils.flow mappings.multiselect mappings.goto-multi-file)
+                :attach_mappings (utils.over-all mappings.multiselect mappings.goto-multi-file)
                 :finder (finders.new_table
                           {:results items
                            :entry_maker (make-entry.gen_from_quickfix options)})})
@@ -92,28 +97,41 @@
         (vim.lsp.util.jump_to_location (. result 1)))
       (vim.lsp.util.jump_to_location result))))
 
-(defn delete-buffers []
-  (let [bufs (buffers.get-listed-buffers)
-        options {}
-        displayer (entry-display.create {:separator " "
-                                         :items [{} {} {}]})]
-    (-> (pickers.new
-         {:prompt_title "Kill Buffers"
-          :finder (finders.new_table
-                    {:results bufs
-                     :entry_maker (fn [bufnr]
-                                    {:display (displayer (buffers.format-buf-entry bufnr))
-                                     :value bufnr
-                                     :ordinal 1})})
-          :sorter (telescope-conf.generic_sorter options)
-          :attach_mappings (utils.flow
-                             mappings.multiselect
-                             mappings.delete-buffers)})
-        (: :find))))
+(defn buffers []
+  "Buffers with multi select and kill buffer mappings"
+  (builtin.buffers
+    {:attach_mappings (utils.over-all
+                        mappings.multiselect
+                        mappings.kill-buffers)}))
+
+(fn make-paste-relative-path-action [from-path]
+  (fn [prompt from-path]
+    (let [picker (builtin-actions.get_current_picker prompt)
+          selection (picker:get_selection)
+          path (if selection (files.to-relative-path from-path selection.value) "")]
+      (var result path)
+      (builtin-actions.close prompt)
+      (when (and result (not= result ""))
+        (when (~= (result:sub 1 1) ".")
+          (set result (.. "./" result)))
+        (vim.api.nvim_put [result] "" true true)))))
+
+(defn insert-relative-path [from-path default-text]
+  "Searches for a file in the project and inserts the relative path from the path provided.
+  Requires node to be installed (which it will always be... let's be real)."
+  (-> (pickers.new {:prompt_title "Insert Relative Path"
+                    :finder (finders.new_oneshot_job ["rg" "--files"])
+                    :default_text (or default-text "")
+                    :sorter (telescope-conf.generic_sorter options)
+                    :attach_mappings (fn [prompt map]
+                                       (map :n "<CR>" (make-paste-relative-path-action from-path))
+                                       (map :i "<CR>" (make-paste-relative-path-action from-path))
+                                       true)})
+      (: :find)))
 
 (fn wrap-file-cmd [cmd]
   (fn [options]
-    (cmd (->> {:attach_mappings (utils.flow mappings.multiselect mappings.goto-multi-file)}
+    (cmd (->> {:attach_mappings (utils.over-all mappings.multiselect mappings.goto-multi-file)}
               (vim.tbl_deep_extend :keep (or options {}))))))
 
 (def find-files (wrap-file-cmd builtin.find_files))
