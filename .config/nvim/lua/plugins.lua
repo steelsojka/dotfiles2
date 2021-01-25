@@ -16,7 +16,7 @@ require "packer".startup(function()
       vim.cmd(string.format("!ln -s %s ~/.fzf", conf.install_path))
     end}
   use "junegunn/fzf.vim"
-  use "mhartington/oceanic-next"
+  use {"mhartington/oceanic-next", commit = "29d694b9f6323c90fb0f3f54239090370caa99fb"}
   use "tpope/vim-commentary"
   use "itchyny/lightline.vim"
   use "justinmk/vim-sneak"
