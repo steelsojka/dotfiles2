@@ -66,7 +66,7 @@
   "n?" {:do "?\\v" :description "Search backwards with magic"}
   "nK" {:do #(util.show-documentation false) :silent true :description "Show documentation"}
   "ngh" {:do #(util.show-documentation true) :silent true :description "Show documentation"}
-  "i<C-e>" {:do "<Plug>(fzf-complete-path)"}
+  "i<C-e>" {:do #(tele.complete-path)}
   "i<C-w>" {:do #(tele.insert-word)}
   "nf" {:do "<Plug>Sneak_f"}
   "nF" {:do "<Plug>Sneak_F"}
@@ -181,6 +181,7 @@
   "n iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
   "n is" {:do #(keymap.unimplemented) :description "Insert snippet"}
   "n ir" {:do #(tele.insert-relative-path (vim.fn.expand "%:p:h")) :description "Insert relative path"}
+  "n ip" {:do #(tele.complete-path) :description "Insert path"}
   ; Search mappings <leader>s
   "n sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
   "n sc" {:do #(telescope.command_history) :description "Search command history"}

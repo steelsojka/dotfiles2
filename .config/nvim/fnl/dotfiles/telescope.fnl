@@ -48,6 +48,9 @@
                   (let [entry (builtin-actions.get_selected_entry prompt)]
                     (builtin-actions.close prompt)
                     (vim.api.nvim_put [entry.value] "" true true)))
+   :print (fn [prompt]
+            (let [entry (builtin-actions.get_selected_entry prompt)]
+              (print (vim.inspect entry))))
    :goto-file (fn [prompt cmd]
                 (handle-multi-selection
                   #(builtin-actions._goto_file_selection prompt cmd)
@@ -71,6 +74,10 @@
                     (map :n "<CR>" actions.paste-entry)
                     (map :i "<CR>" actions.paste-entry)
                     true)
+   :print (fn [_ map]
+              (map :n "<CR>" actions.print)
+              (map :i "<CR>" actions.print)
+              true)
    :goto-multi-file (fn [prompt map]
                       (map :n "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
                       (map :i "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
@@ -109,7 +116,7 @@
                         mappings.kill-buffers)}))
 
 (fn make-paste-relative-path-action [from-path]
-  (fn [prompt from-path]
+  (fn [prompt]
     (let [picker (builtin-actions.get_current_picker prompt)
           selection (picker:get_selection)
           path (if selection (files.to-relative-path from-path selection.value) "")]
@@ -120,13 +127,31 @@
           (set result (.. "./" result)))
         (vim.api.nvim_put [result] "" true true)))))
 
+(fn make-completion-action [opts]
+  (fn [prompt]
+    (let [picker (builtin-actions.get_current_picker prompt)
+          selection (picker:get_selection)
+          line (- opts.line 1)
+          current-line (or
+                         (. (vim.api.nvim_buf_get_lines opts.bufnr line (+ line 1) false) 1)
+                         "")
+          content (.. (string.sub current-line 1 (- opts.start-col 1))
+                      selection.value
+                      (string.sub current-line (+ opts.end-col 1)))]
+      (builtin-actions.close prompt)
+      (vim.api.nvim_buf_set_lines opts.bufnr
+                                  line
+                                  (+ line 1)
+                                  false
+                                  [content]))))
+
 (defn insert-relative-path [from-path default-text]
   "Searches for a file in the project and inserts the relative path from the path provided.
   Requires node to be installed (which it will always be... let's be real)."
   (-> (pickers.new {:prompt_title "Insert Relative Path"
                     :finder (finders.new_oneshot_job ["rg" "--files"])
                     :default_text (or default-text "")
-                    :sorter (telescope-conf.generic_sorter options)
+                    :sorter (telescope-conf.generic_sorter)
                     :attach_mappings (fn [prompt map]
                                        (map :n "<CR>" (make-paste-relative-path-action from-path))
                                        (map :i "<CR>" (make-paste-relative-path-action from-path))
@@ -137,9 +162,32 @@
   "Inserts a word from a dictionary"
   (-> (pickers.new {:prompt_title "Insert Word"
                     :finder (finders.new_oneshot_job ["cat" vim.o.dictionary])
-                    :sorter (telescope-conf.generic_sorter options)
+                    :sorter (telescope-conf.generic_sorter)
                     :attach_mappings mappings.paste-entry})
       (: :find)))
+
+(defn complete-path [_bufnr]
+  (let [bufnr (or _bufnr (vim.api.nvim_get_current_buf))
+        win (vim.api.nvim_get_current_win)
+        cursor (vim.api.nvim_win_get_cursor win)
+        line (. cursor 1)
+        col (if (= (. (vim.api.nvim_get_mode) :mode) :n)
+              (+ (. cursor 2) 1)
+              (. cursor 2))
+        lines (vim.api.nvim_buf_get_lines bufnr (- line 1) col false)
+        content (or (. lines 1) "")
+        content-to-cursor (string.sub content 1 col)
+        opts (vim.tbl_extend :keep (files.get-fname-prefix content-to-cursor) {: line : bufnr : win})
+        picker (pickers.new
+                 {:prompt_title "Complete Path"
+                  :finder (finders.new_oneshot_job ["rg" "--files"])
+                  :sorter (telescope-conf.generic_sorter)
+                  :attach_mappings (fn [_ map]
+                                     (map :n "<CR>" (make-completion-action opts))
+                                     (map :i "<CR>" (make-completion-action opts))
+                                     true)})]
+    (picker:find)
+    (vim.api.nvim_feedkeys opts.prefix :m false)))
 
 (fn wrap-file-cmd [cmd]
   (fn [options]

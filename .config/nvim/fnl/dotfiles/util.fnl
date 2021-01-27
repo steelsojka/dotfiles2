@@ -61,3 +61,5 @@
       (each [_ func (ipairs fns)]
         (set result (func ...)))
       result)))
+
+(defn noop [] "")
