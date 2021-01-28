@@ -46,7 +46,7 @@ require "packer".startup(function()
   use "nvim-treesitter/playground"
   -- use "~/src/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
-  use "nvim-treesitter/nvim-treesitter"
+  use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use "nvim-treesitter/nvim-tree-docs"
   -- use "~/src/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"

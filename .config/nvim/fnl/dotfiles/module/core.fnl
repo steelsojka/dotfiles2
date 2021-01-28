@@ -4,6 +4,8 @@
 
 (def- data-dir (vim.fn.stdpath :data))
 
+(set vim.g.oceanic_next_terminal_bold 1)
+(set vim.g.oceanic_next_terminal_italic 1)
 (nvim.ex.colorscheme "OceanicNext")
 
 (set nvim.o.number true)
