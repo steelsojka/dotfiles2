@@ -8,7 +8,7 @@
 (set vim.g.oceanic_next_terminal_italic 1)
 (nvim.ex.colorscheme "OceanicNext")
 
-(set nvim.o.number true)
+(set nvim.wo.number true)
 (set nvim.o.termguicolors true)
 (set nvim.o.ruler true)
 (set nvim.o.undofile true)

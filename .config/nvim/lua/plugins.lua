@@ -38,7 +38,6 @@ require "packer".startup(function()
   use "neovim/nvim-lspconfig"
   use "airblade/vim-gitgutter"
   use "editorconfig/editorconfig-vim"
-  use {"prettier/vim-prettier", run = "npm install"}
   use "dense-analysis/ale"
   use "steelsojka/completion-buffers"
   use "raimondi/delimitmate"
@@ -61,6 +60,11 @@ require "packer".startup(function()
   use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
   use "mfussenegger/nvim-jdtls"
+  use {
+    "mhartington/formatter.nvim",
+    run = function()
+      vim.cmd "!npm install -g prettier"
+    end}
   use {
     "Olical/conjure",
     ft = {"fennel", "clojure"},

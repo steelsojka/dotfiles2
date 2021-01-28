@@ -90,7 +90,7 @@
   "n fs" {:do "<Cmd>w<CR>" :description "Save file"}
   "n fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
   "n f/" {:do #(telescope.current_buffer_fuzzy_find) :description "Search lines"}
-  "n ff" {:do "<Plug>(Prettier)" :description "Format file"}
+  "n ff" {:do "<Cmd>Format<CR>" :description "Format file"}
   "n fo" {:do "<Cmd>Dirvish %:p:h<CR>" :description "Show in tree"}
   "n fO" {:do "<Cmd>vsp +Dirvish %:p:h<CR>" :description "Show in split tree"}
   "n fr" {:do #(telescope.oldfiles) :description "Open recent files"}
