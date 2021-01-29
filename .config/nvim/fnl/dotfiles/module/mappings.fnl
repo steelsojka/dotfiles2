@@ -55,9 +55,7 @@
   "n " {:do #(which-key.start false) :silent true}
   "n;" {:do ":"}
   "v " {:do #(which-key.start true) :silent true}
-  "i<C-Space>" {:do "<Plug>(completion_trigger)" :silent true}
-  "i<C-l>" {:do "<Plug>(completion_next_source)" :silent true}
-  "i<C-h>" {:do "<Plug>(completion_prev_source)" :silent true}
+  "i<C-Space>" {:do "compe#complete()" :silent true :expr true}
   "n <CR>" {:do #(telescope.marks) :description "Jump to mark"}
   "ijj" {:do "<esc>" :description "Exit insert mode"}
   "t<C-j><C-j>" {:do "<C-\\><C-n>" :description "Exit terminal mode"}
