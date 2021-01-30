@@ -24,6 +24,7 @@
  :angularls {}
  :cssls {}
  :bashls {}
+ :gdscript {}
  :sumneko_lua (let [system-name (if
                                   (= (vim.fn.has :mac) 1) :macOS
                                   (= (vim.fn.has :unix) 1) :Linux

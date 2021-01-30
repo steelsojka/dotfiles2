@@ -34,8 +34,7 @@ require "packer".startup(function()
     run = function(conf)
       vim.cmd(string.format("!ln -s %s ~/.diff-so-fancy", conf.install_path))
     end}
-  -- use "nvim-lua/completion-nvim"
-  use "hrsh7th/nvim-compe"
+  use {"hrsh7th/nvim-compe", commit = "9d63862d949f7c5bd995bacd1dc929f1af0d0924"}
   use "neovim/nvim-lspconfig"
   use "airblade/vim-gitgutter"
   use "editorconfig/editorconfig-vim"
