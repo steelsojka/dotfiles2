@@ -165,6 +165,8 @@
   "n jr" {:do #(telescope.lsp_references) :description "Type references"}
   "n jep" {:do #(vim.lsp.diagnostic.goto_prev {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Previous error"}
   "n jen" {:do #(vim.lsp.diagnostic.goto_next {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Next error"}
+  "n jeN" {:do #(vim.lsp.diagnostic.goto_next) :description "Next diagnostic"}
+  "n jeP" {:do #(vim.lsp.diagnostic.goto_prev) :description "Previous diagnostic"}
   "n jqp" {:do "<Cmd>cN<CR>" :description "Previous"}
   "n jqn" {:do "<Cmd>cn<CR>" :description "Next"}
   "n jn" {:do "<C-o>" :description "Next jump"}
