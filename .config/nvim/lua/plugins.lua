@@ -34,12 +34,10 @@ require "packer".startup(function()
     run = function(conf)
       vim.cmd(string.format("!ln -s %s ~/.diff-so-fancy", conf.install_path))
     end}
-  use {"hrsh7th/nvim-compe", commit = "9d63862d949f7c5bd995bacd1dc929f1af0d0924"}
+  use "hrsh7th/nvim-compe"
   use "neovim/nvim-lspconfig"
   use "airblade/vim-gitgutter"
   use "editorconfig/editorconfig-vim"
-  use "dense-analysis/ale"
-  -- use "steelsojka/completion-buffers"
   use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
