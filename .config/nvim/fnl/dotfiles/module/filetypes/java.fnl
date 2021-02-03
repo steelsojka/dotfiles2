@@ -9,7 +9,7 @@
         jdtls-setup (require "jdtls.setup")]
     (jdtls.start_or_attach {:cmd ["jdtls"]
                             :handlers lsp-config.handlers
-                            :on-attach (fn [...]
+                            :on_attach (fn [...]
                                          (lsp-config.on-attach ...)
                                          (jdtls-setup.add_commands))
                             :root_dir (jdtls-setup.find_root ["gradle.properties"
