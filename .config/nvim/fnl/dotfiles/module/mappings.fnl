@@ -13,6 +13,7 @@
             keymap dotfiles.keymap}})
 
 (local telescope (require "telescope.builtin"))
+(local dap (require "dap"))
 
 (def- which-key-map {
   " " "Ex command"
@@ -43,7 +44,7 @@
           "." "dot.case"}}
    ; Locals need to be defined per filetype
   :m {:name "+local"}
-  :d {:name "+documentation"}
+  :d {:name "+debug"}
   :j {:name "+jump"
       :m {:name "+marks"}
       :c {:name "+changes"}
@@ -273,6 +274,12 @@
   "n ho" {:do #(telescope.vim_options) :description "Vim options"}
   "n ha" {:do #(telescope.autocommands) :description "List autocommands"}
   "n hk" {:do #(telescope.keymaps) :description "List keymaps"}
+  ; Debug mappings <leader>d
+  "n db" {:do #(dap.toggle_breakpoint) :description "Toggle breakpoint"}
+  "n dc" {:do #(dap.continue) :description "Continue"}
+  "n ds" {:do #(dap.step_into) :description "Step into"}
+  "n dS" {:do #(dap.step_over) :description "Step over"}
+  "n dr" {:do #(dap.repl.open) :description "REPL"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)

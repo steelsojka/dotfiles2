@@ -58,6 +58,7 @@ require "packer".startup(function()
   use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
   use "mfussenegger/nvim-jdtls"
+  use "mfussenegger/nvim-dap"
   use {
     "mhartington/formatter.nvim",
     run = function()
