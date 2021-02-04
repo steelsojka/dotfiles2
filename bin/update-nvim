@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd $HOME/src/neovim
+git fetch
+git checkout master
+git pull
+make clean
+make CMAKE_INSTALL_PREFIX=$HOME CMAKE_BUILD_TYPE=RelWithDebugInfo install
