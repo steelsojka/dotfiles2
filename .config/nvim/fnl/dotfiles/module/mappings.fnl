@@ -14,6 +14,7 @@
 
 (local telescope (require "telescope.builtin"))
 (local dap (require "dap"))
+(local dap-variables (require "dap.ui.variables"))
 
 (def- which-key-map {
   " " "Ex command"
@@ -280,6 +281,8 @@
   "n ds" {:do #(dap.step_into) :description "Step into"}
   "n dS" {:do #(dap.step_over) :description "Step over"}
   "n dr" {:do #(dap.repl.open) :description "REPL"}
+  "n dh" {:do #(dap-variables.hover) :description "Inspect variable"}
+  "n dH" {:do #(dap-variables.visual_hover) :description "Inspect variable (visual)"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)
