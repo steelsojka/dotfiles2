@@ -16,8 +16,18 @@
              "<args>"))
   (let [jdtls (require "jdtls")
         jdtls-setup (require "jdtls.setup")
-        home-dir (vim.loop.os_homedir)]
-    (jdtls.start_or_attach {:cmd ["jdtls"]
+        home-dir (vim.loop.os_homedir)
+        root-dir (jdtls-setup.find_root ["gradlew" ".git"])
+        workspace (string.format "%s/.local/share/eclipse/%s"
+                                 home-dir
+                                 (vim.fn.fnamemodify root-dir ":p:h:t"))
+        gradle-home (.. root-dir "/gradle")
+        config-name (if
+                      (= (vim.fn.has :mac) 1) :mac
+                      (= (vim.fn.has :unix) 1) :linux
+                      (= (vim.fn.has :win32) 1) :win
+                      "")]
+    (jdtls.start_or_attach {:cmd ["jdtls" workspace gradle-home config-name]
                             :handlers lsp-config.handlers
                             :init_options
                             {:bundles (vim.list_extend
@@ -31,8 +41,7 @@
                                          (lsp-config.on-attach ...)
                                          (jdtls-setup.add_commands)
                                          (jdtls.setup_dap))
-                            :root_dir (jdtls-setup.find_root ["gradle.properties"
-                                                              "pom.xml"])})
+                            :root_dir root-dir})
     (keymap.init-buffer-mappings {:t {:name "+test"}})
     (keymap.register-buffer-mappings
       {"n ca" {:do #(jdtls.code_action)}

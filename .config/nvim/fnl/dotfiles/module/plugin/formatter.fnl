@@ -9,4 +9,5 @@
     {:logging false
      :filetype
      {:javascript [prettier]
-      :typescript [prettier]}}))
+      :typescript [prettier]
+      :html [prettier]}}))
