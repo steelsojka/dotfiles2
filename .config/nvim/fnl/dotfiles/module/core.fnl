@@ -34,7 +34,7 @@
 (set nvim.o.splitright true)
 (set nvim.o.inccommand :nosplit)
 (set nvim.o.shortmess (.. nvim.o.shortmess :c))
-(set nvim.o.completeopt "menu,menuone,noselect")
+(set nvim.o.completeopt "menuone,noselect")
 (set nvim.o.complete ".,b,w,u")
 (set nvim.o.gdefault true)
 (set nvim.o.dictionary "/usr/share/dict/words")

@@ -41,13 +41,10 @@ require "packer".startup(function()
   use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
-  -- use "~/src/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use "nvim-treesitter/nvim-tree-docs"
-  -- use "~/src/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"
-  -- use "~/src/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
