@@ -56,6 +56,7 @@ require "packer".startup(function()
   use "bakpakin/fennel.vim"
   use "mfussenegger/nvim-jdtls"
   use "mfussenegger/nvim-dap"
+  use "diepm/vim-rest-console"
   use {
     "mhartington/formatter.nvim",
     run = function()

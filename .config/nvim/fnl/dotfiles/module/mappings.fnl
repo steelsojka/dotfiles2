@@ -51,7 +51,8 @@
       :c {:name "+changes"}
       :e {:name "+errors"}
       :q {:name "+quickfix"}}
-  :t {:name "+toggle"}})
+  :t {:name "+toggle"
+      :b {:name "+buffer"}}})
 
 (keymap.register-mappings {
   "n " {:do #(which-key.start false) :silent true}
