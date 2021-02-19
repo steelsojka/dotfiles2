@@ -100,6 +100,7 @@
   "n fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
   "n fF" {:do #(tele.find-files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
   "n fP" {:do #(tele.find-files {:cwd "~/.vim/fnl"}) :description "Find config file"}
+  "n fn" {:do "<Cmd>new<CR>" :description "New file"}
   ; Buffer mappings <leader>b
   "n bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
   "n bn" {:do "<Cmd>bnext<CR>" :description "Next buffer"}
@@ -143,7 +144,8 @@
   ; Project mappings <leader>p
   "n ph" {:do #(telescope.oldfiles) :description "MRU"}
   "n pf" {:do #(tele.find-files {:cwd (vim.fn.expand ".")}) :description "Find file"}
-  "n ps" {:do #(telescope.grep_string) :description "Find file with text"}
+  "n ps" {:do "<Cmd>SessionSave<CR>" :description "Project save session"}
+  "n pl" {:do "<Cmd>SessionLoad<CR>" :description "Project load session"}
   "n pT" {:do "<Cmd>vsp +Dirvish<CR>" :description "Open File explorer in split"}
   "n pt" {:do "<Cmd>Dirvish<CR>" :description "Open file Explorer"}
   "n pq" {:do "<Cmd>qall<CR>" :description "Quit project"}
