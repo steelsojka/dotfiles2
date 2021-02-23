@@ -10,7 +10,8 @@
             diagnostics dotfiles.diagnostics
             tele dotfiles.telescope
             qf dotfiles.quickfix
-            keymap dotfiles.keymap}})
+            keymap dotfiles.keymap
+            sessions dotfiles.sessions}})
 
 (local telescope (require "telescope.builtin"))
 (local dap (require "dap"))
@@ -26,7 +27,7 @@
   :y {:name "+yank"}
   :i {:name "+insert"}
   :g {:name "+git" :c {:name "+chunk"} :f {:name "+find"}}
-  :p {:name "+project"}
+  :p {:name "+project" :s {:name "+session"}}
   :h {:name "+help"}
   :c {:name "+code"
       :q {:name "+quickfix"}
@@ -143,7 +144,13 @@
   ; Project mappings <leader>p
   "n ph" {:do #(telescope.oldfiles) :description "MRU"}
   "n pf" {:do #(tele.find-files {:cwd (vim.fn.expand ".")}) :description "Find file"}
-  "n ps" {:do #(telescope.grep_string) :description "Find file with text"}
+  "n pss" {:do #(sessions.save-session) :description "Save (default)"}
+  "n psS" {:do #(sessions.save-session nil true) :description "Save"}
+  "n psl" {:do #(sessions.load-session true) :description "Load (default)"}
+  "n psL" {:do #(sessions.load-session false) :description "Load"}
+  "n psc" {:do "<Cmd>SClose<CR>" :description "Project session close"}
+  "n psd" {:do #(sessions.delete-session true) :description "Delete (default)"}
+  "n psD" {:do #(sessions.delete-session) :description "Delete"}
   "n pT" {:do "<Cmd>vsp +Dirvish<CR>" :description "Open File explorer in split"}
   "n pt" {:do "<Cmd>Dirvish<CR>" :description "Open file Explorer"}
   "n pq" {:do "<Cmd>qall<CR>" :description "Quit project"}

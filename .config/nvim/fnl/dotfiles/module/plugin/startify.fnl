@@ -1,8 +1,12 @@
-(module dotfiles.module.plugin.startify
-  {require {nvim aniseed.nvim}})
+(module dotfiles.module.plugin.startify)
 
-(set nvim.g.startify_change_to_vcs_root 1)
-(set nvim.g.startify_custom_header [
+(set vim.g.startify_lists
+     [{:type "dir" :header [(.. "   MRU " (vim.fn.getcwd))]}
+      {:type "sessions" :header ["   Sessions"]}])
+(set vim.g.startify_update_oldfiles 1)
+(set vim.g.startify_session_sort 1)
+(set vim.g.startify_change_to_vcs_root 1)
+(set vim.g.startify_custom_header [
   "                                 __                 "
   "    ___      __    ___   __  __ /\\_\\    ___ ___     "
   "  /' _ `\\  /'__`\\ / __`\\/\\ \\/\\ \\\\/\\ \\ /' __` __`\\   "

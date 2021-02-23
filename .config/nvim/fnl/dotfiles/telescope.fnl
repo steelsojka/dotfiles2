@@ -11,6 +11,7 @@
 (local finders (require "telescope.finders"))
 (local make-entry (require "telescope.make_entry"))
 (local telescope-conf (. (require "telescope.config") :values))
+(local set-actions (require "telescope.actions.set"))
 
 (defn handle-multi-selection [single-action multi-action prompt]
   (let [picker (builtin-actions.get_current_picker prompt)
@@ -53,7 +54,7 @@
               (print (vim.inspect entry))))
    :goto-file (fn [prompt cmd]
                 (handle-multi-selection
-                  #(builtin-actions._goto_file_selection prompt cmd)
+                  #(set-actions.edit prompt cmd)
                   (fn [_ entries]
                     (vim.fn.setqflist (to-qf-items entries))
                     (vim.cmd :copen)

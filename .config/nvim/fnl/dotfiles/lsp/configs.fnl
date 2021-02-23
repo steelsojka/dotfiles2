@@ -21,7 +21,7 @@
  :clojure_lsp {}
  :html {}
  :vimls {}
- :angularls {}
+ ; :angularls {}
  :cssls {}
  :bashls {}
  :gdscript {}

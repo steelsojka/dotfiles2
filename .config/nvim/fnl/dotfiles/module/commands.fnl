@@ -11,5 +11,4 @@
   {:terminal [["TermOpen" "*" #(nvim.ex.setlocal "nospell" "nonumber")]]
    :startify [["User" "Startified" #(nvim.ex.setlocal "buflisted")]]
    :yank [["TextYankPost" "*" "silent!" #(highlight.on_yank {:timeout 400})]]
-   ; :completion [["BufEnter" "*" #((. (require "completion") :on_attach))]]
    :edit [["BufWrite" "*" "silent!" #(buffers.trim-trailing-whitespace)]]})
