@@ -26,8 +26,7 @@ require "packer".startup(function()
   use "justinmk/vim-dirvish"
   use "kristijanhusak/vim-dirvish-git"
   use "arthurxavierx/vim-caser"
-  -- use "mhinz/vim-startify"
-  use "glepnir/dashboard-nvim"
+  use "mhinz/vim-startify"
   use "norcalli/nvim-colorizer.lua"
   use "tpope/vim-dispatch"
   use {
