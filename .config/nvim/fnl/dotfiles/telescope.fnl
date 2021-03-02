@@ -15,7 +15,7 @@
 
 (defn handle-multi-selection [single-action multi-action prompt]
   (let [picker (builtin-actions.get_current_picker prompt)
-        entries (->> picker.multi_select (vim.tbl_keys))
+        entries (->> (picker:get_multi_selection) (vim.tbl_keys))
         is-multi (->> entries (length) (< 1))]
     (if is-multi
       (multi-action prompt entries)
