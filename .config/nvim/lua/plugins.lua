@@ -51,6 +51,10 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
+  use "nvim-telescope/telescope-fzy-native.nvim"
+  use {
+    "jhawthorn/fzy",
+    run = "PREFIX=$HOME make && PREFIX=$HOME make install"}
   use "jpalardy/vim-slime"
   use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
