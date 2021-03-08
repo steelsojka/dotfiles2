@@ -15,7 +15,7 @@
 
 (defn handle-multi-selection [single-action multi-action prompt]
   (let [picker (builtin-actions.get_current_picker prompt)
-        entries (->> (picker:get_multi_selection) (vim.tbl_keys))
+        entries (picker:get_multi_selection)
         is-multi (->> entries (length) (< 1))]
     (if is-multi
       (multi-action prompt entries)
@@ -36,8 +36,10 @@
                               row (picker:get_selection_row)
                               index (picker:get_index row)
                               entry (picker.manager:get_entry index)
-                              is-selected (or (. picker.multi_select entry) false)]
-                          (tset picker.multi_select entry (if is-selected nil true))
+                              is-selected (or (picker:is_multi_selected entry) false)]
+                          (if is-selected
+                            (picker:remove_selection row)
+                            (picker:add_selection row))
                           (builtin-actions.move_selection_next prompt)))
    :delete-buffers (fn [prompt cmd]
                     (handle-multi-selection

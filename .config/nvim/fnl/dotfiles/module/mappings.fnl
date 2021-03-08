@@ -14,6 +14,7 @@
             sessions dotfiles.sessions}})
 
 (local telescope (require "telescope.builtin"))
+(local tele-extensions (-> (require "telescope") (. :extensions)))
 (local dap (require "dap"))
 (local dap-variables (require "dap.ui.variables"))
 
@@ -189,7 +190,7 @@
   ; Insert mappings <leader>i
   "n if" {:do "\"%p" :description "Current file name"}
   "n iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
-  "n is" {:do #(keymap.unimplemented) :description "Insert snippet"}
+  "n is" {:do #(tele-extensions.snippets.snippets) :description "Insert snippet"}
   "n ir" {:do #(tele.insert-relative-path (vim.fn.expand "%:p:h")) :description "Insert relative path"}
   "n ip" {:do #(tele.complete-path) :description "Insert path"}
   ; Search mappings <leader>s

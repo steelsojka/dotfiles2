@@ -52,6 +52,7 @@ require "packer".startup(function()
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
   use "nvim-telescope/telescope-fzy-native.nvim"
+  use "nvim-telescope/telescope-snippets.nvim"
   use {
     "jhawthorn/fzy",
     run = "PREFIX=$HOME make && PREFIX=$HOME make install"}
@@ -70,4 +71,5 @@ require "packer".startup(function()
     "Olical/conjure",
     ft = {"fennel", "clojure"},
     tag = "v4.9.0"}
+  use "tpope/vim-dadbod"
 end)

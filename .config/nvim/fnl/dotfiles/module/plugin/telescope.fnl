@@ -12,7 +12,6 @@
                    :prompt_title ""
                    :results_title ""
                    :preview_title ""}
-                  :generic_sorter (. (require "telescope.sorters") :fuzzy_with_index_bias)
                   :file_previewer (-> (require "telescope.previewers") (. :vim_buffer_cat) (. :new))})
 
-(telescope.load_extension "fzy_native")
+(telescope.load_extension :snippets)
