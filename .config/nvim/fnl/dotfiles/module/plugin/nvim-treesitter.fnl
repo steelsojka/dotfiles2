@@ -20,4 +20,4 @@
                                     :im "@call.inner"}}}
    :highlight {:enable true}
    ; :refactor {:highlight_definitions {:enable true}}
-   :ensure_installed :all})
+   :ensure_installed :maintained})

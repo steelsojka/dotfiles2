@@ -17,6 +17,7 @@
 (local tele-extensions (-> (require "telescope") (. :extensions)))
 (local dap (require "dap"))
 (local dap-variables (require "dap.ui.variables"))
+(local snippets (require "snippets"))
 
 (def- which-key-map {
   " " "Ex command"
@@ -71,18 +72,15 @@
   "ngh" {:do #(util.show-documentation true) :silent true :description "Show documentation"}
   "i<C-e>" {:do #(tele.complete-path)}
   "i<C-w>" {:do #(tele.insert-word)}
-  "nf" {:do "<Plug>Sneak_f"}
-  "nF" {:do "<Plug>Sneak_F"}
-  "xf" {:do "<Plug>Sneak_f"}
-  "xF" {:do "<Plug>Sneak_F"}
-  "of" {:do "<Plug>Sneak_f"}
-  "oF" {:do "<Plug>Sneak_F"}
-  "nt" {:do "<Plug>Sneak_t"}
-  "nT" {:do "<Plug>Sneak_T"}
-  "xt" {:do "<Plug>Sneak_t"}
-  "xT" {:do "<Plug>Sneak_T"}
-  "ot" {:do "<Plug>Sneak_t"}
-  "oT" {:do "<Plug>Sneak_T"}
+  "i<C-l>" {:do #(tele-extensions.snippets.snippets)}
+  "nF" {:do "<Cmd>HopChar1<CR>"}
+  "nf" {:do "<Cmd>HopWord<CR>"}
+  "vF" {:do "<Cmd>HopChar1<CR>"}
+  "vf" {:do "<Cmd>HopWord<CR>"}
+  "ns" {:do "<Cmd>HopChar2<CR>"}
+  "nS" {:do "<Cmd>HopPattern<CR>"}
+  "vs" {:do "<Cmd>HopChar2<CR>"}
+  "vS" {:do "<Cmd>HopPattern<CR>"}
   "n ," {:do #(tele.buffers) :description "Switch buffer"}
   "n ." {:do #(tele.find-files) :description "Find files"}
   "n  " {:do #(telescope.commands)}
@@ -157,8 +155,12 @@
   "n pq" {:do "<Cmd>qall<CR>" :description "Quit project"}
   "n pc" {:do #(ws.cd-to-root) :description "Cwd to root"}
   ; Workspace mappings <leader>q
-  "n q" {:do "<Cmd>q<CR>" :description "Quit"}
-  "n Q" {:do "<Cmd>q!<CR>" :description "Force quit"}
+  "n q" {:do #(if (snippets.has_active_snippet)
+                (snippets.advance_snippet 1)
+                (vim.cmd "q")) :description "Quit"}
+  "n Q" {:do #(if (snippets.has_active_snippet)
+                (snippets.advance_snippet -99)
+                (vim.cmd "q!")) :description "Force quit"}
   ; Navigation mappings <leader>j
   "n jl" {:do "$" :description "End of line"}
   "v jl" {:do "$" :description "End of line" :which-key false}

@@ -19,7 +19,6 @@ require "packer".startup(function()
   use {"mhartington/oceanic-next", commit = "29d694b9f6323c90fb0f3f54239090370caa99fb"}
   use "tpope/vim-commentary"
   use "itchyny/lightline.vim"
-  use "justinmk/vim-sneak"
   use "tpope/vim-fugitive"
   use {"mbbill/undotree", cmd = "UndotreeToggle"}
   use "tpope/vim-surround"
@@ -62,6 +61,7 @@ require "packer".startup(function()
   use "mfussenegger/nvim-jdtls"
   use "mfussenegger/nvim-dap"
   use "diepm/vim-rest-console"
+  use "phaazon/hop.nvim"
   use {
     "mhartington/formatter.nvim",
     run = function()

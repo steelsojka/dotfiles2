@@ -12,7 +12,8 @@
   :after (indent "after(() => {\n});")
   :afterEach (indent "afterEach(() => {\n});")
   :before (indent "before(() => {\n});")
-  :beforeEach (indent "beforeEach(() => {\n});")})
+  :beforeEach (indent "beforeEach(() => {\n});")
+  :import (indent "import { ${1} } from '${2}';")})
 
 (set snippets.typescript
      (vim.tbl_extend
