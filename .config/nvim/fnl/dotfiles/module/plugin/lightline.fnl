@@ -4,6 +4,8 @@
 (set vim.g.lightline {
   :colorscheme :one
   :active {:left [[:mode :paste]
-                  [:readonly :filename :modified]]
+                  [:readonly :filename]
+                  [:gitsigns]]
            :right [[:lineinfo] [:percent]]}
-  :component {:treesitter "%{luaeval('require(\"nvim-treesitter\").statusline()')}"}})
+  :component {:treesitter "%{luaeval('require(\"nvim-treesitter\").statusline()')}"
+              :gitsigns "%{get(b:, 'gitsigns_status', '')}"}})

@@ -35,7 +35,10 @@ require "packer".startup(function()
     end}
   use "hrsh7th/nvim-compe"
   use "neovim/nvim-lspconfig"
-  use "airblade/vim-gitgutter"
+  use {
+    "lewis6991/gitsigns.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim"}}
   use "editorconfig/editorconfig-vim"
   use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"

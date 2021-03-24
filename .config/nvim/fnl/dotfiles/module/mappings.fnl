@@ -18,6 +18,7 @@
 (local dap (require "dap"))
 (local dap-variables (require "dap.ui.variables"))
 (local snippets (require "snippets"))
+(local gitsigns (require "gitsigns"))
 
 (def- which-key-map {
   " " "Ex command"
@@ -246,11 +247,13 @@
            :description "Add line to quickfix"}
   "n cqn" {:do #(qf.new-list) :description "New quickfix list"}
   ; Git mappings <leader>g
-  "n gcu" {:do "<Cmd>GitGutterUndoHunk<CR>" :description "Undo chunk"}
-  "n gcs" {:do "<Cmd>GitGutterStageHunk<CR>" :description "Stage chunk"}
-  "n gcn" {:do "<Cmd>GitGutterNextHunk<CR>" :description "Next chunk"}
-  "n gcp" {:do "<Cmd>GitGutterPrevHunk<CR>" :description "Previous chunk"}
-  "n gci" {:do "<Cmd>GitGutterPreviewHunk<CR>" :description "Chunk info"}
+  "n gcu" {:do #(gitsigns.reset_hunk) :description "Undo chunk"}
+  "n gcs" {:do #(gitsigns.stage_hunk) :description "Stage chunk"}
+  "n gcS" {:do #(gitsigns.undo_stage_hunk) :description "Unstage chunk"}
+  "n gcn" {:do #(gitsigns.next_hunk) :description "Next chunk"}
+  "n gcp" {:do #(gitsigns.prev_hunk) :description "Previous chunk"}
+  "n gci" {:do #(gitsigns.preview_hunk) :description "Chunk info"}
+  "n gcb" {:do #(gitsigns.blame_line) :description "Chunk blame"}
   "n gB" {:do #(telescope.git_branches) :description "Checkout branch"}
   "n gs" {:do #(telescope.git_status) :description "Git status"}
   "n gd" {:do "<Cmd>Gdiffsplit<CR>" :description "Git diff"}
