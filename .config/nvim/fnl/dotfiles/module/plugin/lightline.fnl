@@ -4,7 +4,7 @@
 (set vim.g.lightline {
   :colorscheme :one
   :active {:left [[:mode :paste]
-                  [:readonly :filename]
+                  [:readonly :filename :modified]
                   [:gitsigns]]
            :right [[:lineinfo] [:percent]]}
   :component {:treesitter "%{luaeval('require(\"nvim-treesitter\").statusline()')}"

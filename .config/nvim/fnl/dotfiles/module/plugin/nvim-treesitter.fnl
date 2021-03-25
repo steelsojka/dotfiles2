@@ -20,4 +20,5 @@
                                     :im "@call.inner"}}}
    :highlight {:enable true}
    ; :refactor {:highlight_definitions {:enable true}}
-   :ensure_installed :maintained})
+   :ensure_installed :all
+   :ignore_install [:ledger :supercollider :haskell]})

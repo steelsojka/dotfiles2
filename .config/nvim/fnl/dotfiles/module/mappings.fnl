@@ -11,7 +11,8 @@
             tele dotfiles.telescope
             qf dotfiles.quickfix
             keymap dotfiles.keymap
-            sessions dotfiles.sessions}})
+            sessions dotfiles.sessions
+            repl dotfiles.repl}})
 
 (local telescope (require "telescope.builtin"))
 (local tele-extensions (-> (require "telescope") (. :extensions)))
@@ -56,7 +57,8 @@
       :e {:name "+errors"}
       :q {:name "+quickfix"}}
   :t {:name "+toggle"
-      :b {:name "+buffer"}}})
+      :b {:name "+buffer"}}
+  :r {:name "+REPL"}})
 
 (keymap.register-mappings {
   "n " {:do #(which-key.start false) :silent true}
@@ -297,6 +299,13 @@
   "n dr" {:do #(dap.repl.open) :description "REPL"}
   "n dh" {:do #(dap-variables.hover) :description "Inspect variable"}
   "n dH" {:do #(dap-variables.visual_hover) :description "Inspect variable (visual)"}
+  ; REPL
+  "n ro" {:do #(repl.open-repl) :description "Open REPL"}
+  "n re" {:do #(repl.eval-line) :description "Eval line"}
+  "v re" {:do #(repl.eval-line-visual) :description "Eval selection"}
+  "n rf" {:do #(repl.eval-file) :description "Eval file"}
+  "n rk" {:do #(repl.kill) :description "Kill REPL"}
+  "n rR" {:do #(repl.reset) :description "Reset REPL"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)
