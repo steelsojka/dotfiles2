@@ -19,6 +19,7 @@
                                     :am "@call.outer"
                                     :im "@call.inner"}}}
    :highlight {:enable true}
+   ; :indent {:enable true}
    ; :refactor {:highlight_definitions {:enable true}}
    :ensure_installed :all
    :ignore_install [:ledger :supercollider :haskell]})

@@ -58,7 +58,9 @@ require "packer".startup(function()
   use {
     "jhawthorn/fzy",
     run = "PREFIX=$HOME make && PREFIX=$HOME make install"}
-  use "jpalardy/vim-slime"
+  use {
+    "jpalardy/vim-slime",
+    run = "npm install -g ts-node"}
   use {"Olical/aniseed", tag = "v3.12.0"}
   use "bakpakin/fennel.vim"
   use "mfussenegger/nvim-jdtls"

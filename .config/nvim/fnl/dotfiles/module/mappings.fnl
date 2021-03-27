@@ -76,13 +76,13 @@
   "i<C-e>" {:do #(tele.complete-path)}
   "i<C-w>" {:do #(tele.insert-word)}
   "i<C-l>" {:do #(tele-extensions.snippets.snippets)}
-  "nF" {:do "<Cmd>HopChar1<CR>"}
-  "nf" {:do "<Cmd>HopWord<CR>"}
-  "vF" {:do "<Cmd>HopChar1<CR>"}
-  "vf" {:do "<Cmd>HopWord<CR>"}
-  "ns" {:do "<Cmd>HopChar2<CR>"}
+  "nF" {:do "<Cmd>HopChar2<CR>"}
+  "nf" {:do "<Cmd>HopChar1<CR>"}
+  "vF" {:do "<Cmd>HopChar2<CR>"}
+  "vf" {:do "<Cmd>HopChar1<CR>"}
+  "ns" {:do "<Cmd>HopWord<CR>"}
   "nS" {:do "<Cmd>HopPattern<CR>"}
-  "vs" {:do "<Cmd>HopChar2<CR>"}
+  "vs" {:do "<Cmd>HopWord<CR>"}
   "vS" {:do "<Cmd>HopPattern<CR>"}
   "n ," {:do #(tele.buffers) :description "Switch buffer"}
   "n ." {:do #(tele.find-files) :description "Find files"}
