@@ -40,11 +40,12 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/plenary.nvim"}}
   use "editorconfig/editorconfig-vim"
-  use "raimondi/delimitmate"
+  -- use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+  -- use {"~/src/nvim-treesitter", run = ":TSUpdate"}
   use "nvim-treesitter/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
@@ -77,4 +78,5 @@ require "packer".startup(function()
     ft = {"fennel", "clojure"},
     tag = "v4.9.0"}
   use "tpope/vim-dadbod"
+  use "~/src/pears.nvim"
 end)

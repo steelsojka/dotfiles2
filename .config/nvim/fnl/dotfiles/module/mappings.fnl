@@ -209,6 +209,7 @@
   ; "n sl" {:do "<Cmd>Lines<CR>" :description "Search lines"}
   "n sp" {:do #(tele.live-grep) :description "Grep files in project"}
   "n sm" {:do #(telescope.marks) :description "Jump to marks"}
+  "n sw" {:do #(telescope.spell_suggest) :description "Spell suggest"}
   ; "n sa" {:do #(grep.flygrep "" (nvim.fn.expand "%:p:h") 0 ["--hidden" "--no-ignore"]) :description "Grep all files"}
   "n sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
   ; Local Search/Replace mappings <leader>/
