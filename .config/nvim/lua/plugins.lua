@@ -31,7 +31,7 @@ require "packer".startup(function()
   use {
     "so-fancy/diff-so-fancy",
     run = function(conf)
-      vim.cmd(string.format("!ln -s %s ~/.diff-so-fancy", conf.install_path))
+      vim.cmd(string.format("!ln -s %s/diff-so-fancy ~/bin/diff-so-fancy", conf.install_path))
     end}
   use "hrsh7th/nvim-compe"
   use "neovim/nvim-lspconfig"
@@ -40,12 +40,10 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/plenary.nvim"}}
   use "editorconfig/editorconfig-vim"
-  -- use "raimondi/delimitmate"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-  -- use {"~/src/nvim-treesitter", run = ":TSUpdate"}
   use "nvim-treesitter/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
@@ -78,5 +76,5 @@ require "packer".startup(function()
     ft = {"fennel", "clojure"},
     tag = "v4.9.0"}
   use "tpope/vim-dadbod"
-  use "~/src/pears.nvim"
+  use "steelsojka/pears.nvim"
 end)

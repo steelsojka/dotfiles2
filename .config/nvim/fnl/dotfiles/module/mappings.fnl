@@ -7,11 +7,11 @@
             ws dotfiles.workspace
             grep dotfiles.grep
             term dotfiles.terminal
-            diagnostics dotfiles.diagnostics
             tele dotfiles.telescope
             qf dotfiles.quickfix
             keymap dotfiles.keymap
             sessions dotfiles.sessions
+            rest-client dotfiles.rest-client
             repl dotfiles.repl}})
 
 (local telescope (require "telescope.builtin"))
@@ -226,8 +226,8 @@
   ; Code mappings <leader>c
   "n cl" {:do "<Cmd>Commentary<CR>" :description "Comment line"}
   "v cl" {:do ":Commentary<CR>"}
-  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
-  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
+;  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
+;  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
   "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
   "n cD" {:do #(telescope.lsp_references) :description "Type references"}
   "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
@@ -285,6 +285,7 @@
   "n tf" {:do "za" :description "Fold"}
   "n tF" {:do "zA" :description "Fold recursively"}
   "n te" {:do #(keymap.unimplemented) :description "Inline errors"}
+  "n tbr" {:do #(rest-client.toggle-rest-buf) :description "Toggle REST Client"}
   ; Help mappings <leader>h
   "n hh" {:do #(telescope.help_tags) :description "Help tags"}
   "n hi" {:do #(telescope.highlights) :description "List highlights"}
