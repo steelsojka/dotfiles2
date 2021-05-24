@@ -15,8 +15,11 @@
 (defn init-buffer-mappings [mappings]
   (let [(_ val-or-err) (pcall #nvim.b.local_which_key)]
     (var result val-or-err)
-    (when (~= (type val-or-err) :table)
-      (set result {:m (or mappings {})}))
+    (if (~= (type val-or-err) :table)
+      (set result {:m (or mappings {})})
+      (set result {:m (vim.tbl_deep_extend "force"
+                                           (or (. val-or-err "m"))
+                                           (or mappings {}))}))
     (set nvim.b.local_which_key result)
     result))
 

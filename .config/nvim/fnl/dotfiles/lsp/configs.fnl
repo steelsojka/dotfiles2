@@ -4,10 +4,27 @@
             telescope dotfiles.telescope}})
 
 (local lsp (require "lspconfig"))
+(local lsp-configs (require "lspconfig/configs"))
 (local telescope-builtin (require "telescope.builtin"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
 (local home-dir (vim.loop.os_homedir))
 (local jdtls-home (.. home-dir "/src/jdt-language-server"))
+
+(set lsp-configs.tailwindcss
+     {:default_config
+      {:cmd ["node" (.. home-dir "/src/tailwindcss-intellisense/dist/server/tailwindServer.js") "--stdio"]
+       :filetypes ["html" "typescriptreact" "javascriptreact" "tsx" "jsx"]
+       :root_dir (root-pattern ".git")
+       ; :handlers
+       ; {"tailwindcss/getConfiguration" (fn [err _ params client-id bufnr]
+       ;                                   (let [client (vim.lsp.get_client_by_id client-id)]
+       ;                                     (when client
+       ;                                       (let [configuration (or (vim.lsp.util.lookup_section clien.config.settings "tailwindCSS")
+       ;                                                               {})]
+       ;                                         (set configuration._id params._id)
+       ;                                         (set configuration.tabSize (vim.lsp.util.get_effective_tabstop bufnr))
+       ;                                         (vim.lsp.buf_notify bufnr "tailwindcss/getConfigurationResponse" configuration)))))}
+       }})
 
 (def configs
  {:tsserver
@@ -26,6 +43,8 @@
  :bashls {}
  :gdscript {}
  :yamlls {}
+ :kotlin_language_server {}
+ :tailwindcss {}
  :diagnosticls
  {:filetypes ["javascript"
               "javascriptreact"

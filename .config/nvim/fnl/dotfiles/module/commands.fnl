@@ -5,7 +5,7 @@
 
 (local highlight (require "vim.highlight"))
 
-(vim.cmd "command! LspInstall lua require('dotfiles.lsp.servers').install()")
+(vim.cmd "command! NodeLspInstall lua require('dotfiles.lsp.servers').install()")
 
 (keymap.create-augroups
   {:terminal [["TermOpen" "*" #(nvim.ex.setlocal "nospell" "nonumber")]]

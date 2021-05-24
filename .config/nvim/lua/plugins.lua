@@ -77,4 +77,5 @@ require "packer".startup(function()
     tag = "v4.9.0"}
   use "tpope/vim-dadbod"
   use "steelsojka/pears.nvim"
+  use "steelsojka/headwind.nvim"
 end)
