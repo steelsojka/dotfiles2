@@ -4,21 +4,33 @@ const { spawn } = require('child_process')
 const fs = require('fs')
 
 ;(async () => {
-  const eslint = spawn('eslint', ['--stdin', '--fix-dry-run', '--format=json'])
-  const result = await new Promise((resolve, reject) => {
-    let json = ''
+  const cwd = process.argv[2]
+  const eslint = spawn('eslint', ['--stdin', '--fix-dry-run', '--format=json'], { cwd })
 
-    process.stdin.on('data', chunk => eslint.stdin.write(chunk))
-    process.stdin.on('close', () => eslint.stdin.end())
-    eslint.stdout.on('data', chunk => json += chunk)
-    eslint.on('close', () => {
-      try {
-        resolve(JSON.parse(json))
-      } catch (err) {
-        reject(err)
-      }
+  try {
+    const result = await new Promise((resolve, reject) => {
+      let json = ''
+
+      process.stdin.on('data', chunk => eslint.stdin.write(chunk))
+      process.stdin.on('close', () => eslint.stdin.end())
+      eslint.stdout.on('data', chunk => (json += chunk))
+      eslint.on('close', () => {
+
+        try {
+          resolve(JSON.parse(json))
+        } catch (err) {
+          reject(err)
+        }
+      })
     })
-  })
 
-  process.stdout.write(result[0].output)
+    if (typeof result[0].output !== 'string') {
+      throw new Error(JSON.stringify(result[0].messages, null,'  '))
+    }
+
+    process.stdout.write(result[0].output)
+  } catch (err) {
+    process.stderr.write(err.toString())
+    process.exit(2)
+  }
 })()
