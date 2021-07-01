@@ -39,11 +39,17 @@
  :html {}
  :vimls {}
  ; :angularls {}
+ :omnisharp
+ {:cmd ["omnisharp" "--languageserver" "--hostPID" (tostring (vim.fn.getpid))]
+  :root_dir (root-pattern ".git")}
  :cssls {}
  :bashls {}
  :gdscript {}
  :yamlls {}
- :kotlin_language_server {}
+ :kotlin_language_server
+ {:root_dir (root-pattern ".git")
+  :settings
+  {:kotlin {:compiler {:jvm {:target "1.8"}}}}}
  :tailwindcss {}
  :diagnosticls
  {:filetypes ["javascript"
@@ -56,10 +62,11 @@
   :init_options
   {:linters
    {:eslint
-    {:command "./node_modules/.bin/eslint"
+    {:command "npxx"
      :rootPatterns [".git"]
      :debounce 100
-     :args ["--stdin"
+     :args ["eslint"
+            "--stdin"
             "--stdin-filename"
             "%filepath"
             "--format"

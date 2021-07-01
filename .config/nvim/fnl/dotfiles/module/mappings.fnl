@@ -280,6 +280,7 @@
   ; Toggle mappings <leader>t
   "n tl" {:do #(keymap.unimplemented) :description "Line numbers"}
   "n tw" {:do "<Cmd>set wrap!<CR>" :description "Word wrap"}
+  "n tW" {:do #(buffers.toggle-trim-trailing-ws) :description "Trim trailing whitespace"}
   "n tr" {:do "<Cmd>set modifiable!<CR>" :description "Read only"}
   "n ts" {:do "<Cmd>set spell!<CR>" :description "Spell check"}
   "n tf" {:do "za" :description "Fold"}

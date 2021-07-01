@@ -22,6 +22,9 @@
         {:nginject (indent
                      (string.format "@Inject(${1}) private readonly ${1|S.v:gsub(%q, string.lower)}: $1" "^[A-Z]"))}))
 
+(set snippets.typescriptreact (vim.tbl_extend :force {} snippets.typescript))
+(set snippets.javascriptreact (vim.tbl_extend :force {} snippets.javascript))
+
 (set snippets.lua {
   :req "local ${2:${1|S.v:match\"([^.()]+)[()]*$\"}} = require \"${1}\""})
 

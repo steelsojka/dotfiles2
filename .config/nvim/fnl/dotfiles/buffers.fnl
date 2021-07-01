@@ -2,10 +2,17 @@
   {require {nvim aniseed.nvim
             core aniseed.core}})
 
+(var should-trim-ws true)
+
+(defn toggle-trim-trailing-ws []
+  (set should-trim-ws (not should-trim-ws))
+  (print (.. "Trim whitespace: " (tostring should-trim-ws))))
+
 (defn trim-trailing-whitespace []
-  (let [saved (nvim.fn.winsaveview)]
-    (nvim.command "keeppatterns %s/\\s\\+$//e")
-    (nvim.fn.winrestview saved)))
+  (when should-trim-ws
+    (let [saved (nvim.fn.winsaveview)]
+      (nvim.command "keeppatterns %s/\\s\\+$//e")
+      (nvim.fn.winrestview saved))))
 
 (defn is-buf-visible [bufnr]
   (let [windows (vim.fn.win_findbuf bufnr)]

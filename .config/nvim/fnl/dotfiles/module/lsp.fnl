@@ -4,5 +4,6 @@
 (local nvim-lsp (require "lspconfig"))
 
 (each [server config (pairs lsp.configs)]
-  (-> (lsp.get-config config)
-      ((. nvim-lsp server "setup"))))
+  (when (. nvim-lsp server)
+    (-> (lsp.get-config config)
+        ((. nvim-lsp server "setup")))))

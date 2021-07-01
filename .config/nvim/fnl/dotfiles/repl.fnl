@@ -2,11 +2,14 @@
   {require {buffers dotfiles.buffers
             terminal dotfiles.terminal}})
 
-(local repls
+(var repls
   {:javascript {:cmd #(let [cwd (vim.fn.getcwd)]
                         (string.format "NODE_PATH=%q node" cwd))}
    :typescript {:cmd #(let [cwd (vim.fn.getcwd)]
                         (string.format "ts-node --dir %q" cwd))}})
+
+(tset repls :typescriptreact repls.typescript)
+(tset repls :javascriptreact repls.javascriptreact)
 
 (local active-repls {})
 

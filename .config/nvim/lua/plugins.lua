@@ -33,7 +33,7 @@ require "packer".startup(function()
     run = function(conf)
       vim.cmd(string.format("!ln -s %s/diff-so-fancy ~/bin/diff-so-fancy", conf.install_path))
     end}
-  use "hrsh7th/nvim-compe"
+  use {"hrsh7th/nvim-compe", commit = "96fafb56552953c8f1a139e9038b8ae970eafc29"}
   use "neovim/nvim-lspconfig"
   use {
     "lewis6991/gitsigns.nvim",
@@ -44,7 +44,7 @@ require "packer".startup(function()
   use "nvim-treesitter/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-  use "nvim-treesitter/nvim-tree-docs"
+  use "~/src/nvim-tree-docs"
   use "nvim-treesitter/nvim-treesitter-angular"
   use "norcalli/snippets.nvim"
   use {
@@ -70,6 +70,7 @@ require "packer".startup(function()
     "mhartington/formatter.nvim",
     run = function()
       vim.cmd "!npm install -g prettier"
+      vim.cmd "!npm install -g eslint"
     end}
   use {
     "Olical/conjure",
