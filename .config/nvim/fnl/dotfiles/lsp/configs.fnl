@@ -39,9 +39,9 @@
  :html {}
  :vimls {}
  ; :angularls {}
- :omnisharp
- {:cmd ["omnisharp" "--languageserver" "--hostPID" (tostring (vim.fn.getpid))]
-  :root_dir (root-pattern ".git")}
+ ; :omnisharp
+ ; {:cmd ["omnisharp" "--languageserver" "--hostPID" (tostring (vim.fn.getpid))]
+ ;  :root_dir (root-pattern ".git")}
  :cssls {}
  :bashls {}
  :gdscript {}

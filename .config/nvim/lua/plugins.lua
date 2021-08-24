@@ -37,6 +37,7 @@ require "packer".startup(function()
   use "neovim/nvim-lspconfig"
   use {
     "lewis6991/gitsigns.nvim",
+    branch = "main",
     requires = {
       "nvim-lua/plenary.nvim"}}
   use "editorconfig/editorconfig-vim"

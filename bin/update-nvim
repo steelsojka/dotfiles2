@@ -2,7 +2,7 @@
 
 cd $HOME/src/neovim
 git fetch
-git checkout master
+git checkout $0
 git pull
-make clean
+make distclean clean
 make CMAKE_INSTALL_PREFIX=$HOME CMAKE_BUILD_TYPE=RelWithDebugInfo install

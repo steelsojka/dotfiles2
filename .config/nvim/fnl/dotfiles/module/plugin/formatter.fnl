@@ -1,13 +1,18 @@
 (module dotfiles.module.plugin.formatter)
 
 (local formatters
-  {:prettier #{:exe :prettier
-               :args ["--stdin-filepath"
+  {:prettier #{:exe "npxx"
+               :args ["prettier"
+                      "--stdin-filepath"
                       (vim.api.nvim_buf_get_name 0)]
                :stdin true}
-   :eslint #{:exe "eslint-fix"
-             :args [(vim.fn.expand "%:h")]
-             :stdin true}})
+   :eslint #{:exe "npxx"
+             :args ["eslint"
+                    "--stdin-filename"
+                    (vim.api.nvim_buf_get_name 0)
+                    "--fix"
+                    "--cache"]
+             :stdin false}})
 
 (local use-format
   (fn [default-formatter]
@@ -15,7 +20,6 @@
       (let [formatter-name (or vim.b.formatter
                                (or vim.g.formatter default-formatter))
             formatter-fn (. formatters formatter-name)]
-        (print formatter-name)
         (formatter-fn ...)))))
 
 (let [formatter (require :formatter)]
