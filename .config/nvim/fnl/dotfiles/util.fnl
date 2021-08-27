@@ -12,7 +12,6 @@
 
 (defn lua-file [path]
   (nvim.ex.luafile path))
-
 (def config-path (nvim.fn.stdpath "config"))
 
 (defn nnoremap [from to]
@@ -49,9 +48,11 @@
     (if (or (not show-errors) (= (length diagnostics) 0))
       (if (>= (nvim.fn.index [:vim :lua :help] nvim.bo.filetype) 0)
         (help)
-        (let [(success) (pcall #(vim.lsp.buf.hover))]
+        (let [saga-hover (require "lspsaga.hover")
+              (success) (pcall #(saga-hover.render_hover_doc))]
           (when (not success) (help))))
-      (let [(success) (pcall #(vim.lsp.diagnostic.show_line_diagnostics))]
+      (let [saga-diagnostics (require "lspsaga.diagnostic")
+            (success) (pcall #(saga-diagnostics.show_cursor_diagnostics))]
         (when (not success) (help))))))
 
 (defn over-all [...]

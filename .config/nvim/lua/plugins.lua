@@ -45,8 +45,7 @@ require "packer".startup(function()
   use "nvim-treesitter/playground"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-  use "~/src/nvim-tree-docs"
-  use "nvim-treesitter/nvim-treesitter-angular"
+  use "nvim-treesitter/nvim-tree-docs"
   use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
@@ -80,4 +79,5 @@ require "packer".startup(function()
   use "tpope/vim-dadbod"
   use "steelsojka/pears.nvim"
   use "steelsojka/headwind.nvim"
+  use "glepnir/lspsaga.nvim"
 end)
