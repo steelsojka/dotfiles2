@@ -10,8 +10,7 @@
              :args ["eslint"
                     "--stdin-filename"
                     (vim.api.nvim_buf_get_name 0)
-                    "--fix"
-                    "--cache"]
+                    "--fix"]
              :stdin false}})
 
 (local use-format

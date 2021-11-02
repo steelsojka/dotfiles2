@@ -278,7 +278,7 @@
   "n wtv" {:do #(do (nvim.ex.vsp) (term.open)) :description "Vertical split terminal"}
   "n wtf" {:do #(do (nvim.ex.vsp) (term.open true)) :description "Terminal at file"}
   ; Toggle mappings <leader>t
-  "n tl" {:do #(keymap.unimplemented) :description "Line numbers"}
+  "n tl" {:do "<Cmd>set number!<CR>" :description "Line numbers"}
   "n tw" {:do "<Cmd>set wrap!<CR>" :description "Word wrap"}
   "n tW" {:do #(buffers.toggle-trim-trailing-ws) :description "Trim trailing whitespace"}
   "n tr" {:do "<Cmd>set modifiable!<CR>" :description "Read only"}

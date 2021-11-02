@@ -1,4 +1,5 @@
-(module dotfiles.module.plugin.compe)
+(module dotfiles.module.plugin.compe
+  {require {nvim aniseed.nvim}})
 
 (local compe (require :compe))
 

@@ -18,7 +18,7 @@
                                     :il "@loop.inner"
                                     :am "@call.outer"
                                     :im "@call.inner"}}}
-   :highlight {:enable false :disable ["kotlin"]}
+   :highlight {:enable true :disable ["kotlin"]}
    ; :indent {:enable true}
    ; :refactor {:highlight_definitions {:enable true}}
    :ensure_installed :all

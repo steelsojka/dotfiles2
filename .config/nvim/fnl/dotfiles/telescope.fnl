@@ -12,9 +12,10 @@
 (local make-entry (require "telescope.make_entry"))
 (local telescope-conf (. (require "telescope.config") :values))
 (local set-actions (require "telescope.actions.set"))
+(local telescope-state (require "telescope.actions.state"))
 
 (defn handle-multi-selection [single-action multi-action prompt]
-  (let [picker (builtin-actions.get_current_picker prompt)
+  (let [picker (telescope-state.get_current_picker prompt)
         entries (picker:get_multi_selection)
         is-multi (->> entries (length) (< 1))]
     (if is-multi
@@ -32,7 +33,7 @@
 
 (def actions (->>
   {:select-multi-item (fn [prompt]
-                        (let [picker (builtin-actions.get_current_picker prompt)
+                        (let [picker (telescope-state.get_current_picker prompt)
                               row (picker:get_selection_row)
                               index (picker:get_index row)
                               entry (picker.manager:get_entry index)
@@ -120,7 +121,7 @@
 
 (fn make-paste-relative-path-action [from-path]
   (fn [prompt]
-    (let [picker (builtin-actions.get_current_picker prompt)
+    (let [picker (telescope-state.get_current_picker prompt)
           selection (picker:get_selection)
           path (if selection (files.to-relative-path from-path selection.value) "")]
       (var result path)
@@ -132,7 +133,7 @@
 
 (fn make-completion-action [opts]
   (fn [prompt]
-    (let [picker (builtin-actions.get_current_picker prompt)
+    (let [picker (telescope-state.get_current_picker prompt)
           selection (picker:get_selection)
           line (- opts.line 1)
           current-line (or

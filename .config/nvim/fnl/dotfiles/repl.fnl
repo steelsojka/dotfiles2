@@ -6,7 +6,7 @@
   {:javascript {:cmd #(let [cwd (vim.fn.getcwd)]
                         (string.format "NODE_PATH=%q node" cwd))}
    :typescript {:cmd #(let [cwd (vim.fn.getcwd)]
-                        (string.format "ts-node --dir %q" cwd))}})
+                        (string.format "ts-node --dir %q --transpile-only" cwd))}})
 
 (tset repls :typescriptreact repls.typescript)
 (tset repls :javascriptreact repls.javascriptreact)

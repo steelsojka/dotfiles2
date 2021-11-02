@@ -43,9 +43,13 @@ require "packer".startup(function()
   use "editorconfig/editorconfig-vim"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
-  use "nvim-treesitter/nvim-treesitter-refactor"
+  use {
+    "nvim-treesitter/nvim-treesitter-refactor",
+     after = "nvim-treesitter"}
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-  use "nvim-treesitter/nvim-tree-docs"
+  use {
+    "nvim-treesitter/nvim-tree-docs",
+    after = "nvim-treesitter"}
   use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
@@ -76,8 +80,12 @@ require "packer".startup(function()
     "Olical/conjure",
     ft = {"fennel", "clojure"},
     tag = "v4.9.0"}
-  use "tpope/vim-dadbod"
   use "steelsojka/pears.nvim"
   use "steelsojka/headwind.nvim"
   use "glepnir/lspsaga.nvim"
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = function()
+      vim.cmd "call mkdp#util#install()"
+    end}
 end)
