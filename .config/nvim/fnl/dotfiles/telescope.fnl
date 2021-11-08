@@ -93,7 +93,7 @@
                       (map :i "<C-t>" (partial actions.goto-file prompt :tabedit))
                       true)})
 
-(defn location-callback [_ _ result _ _]
+(defn location-callback [_ result _ _]
   (when (and result (not (vim.tbl_isempty result)))
     (if (vim.tbl_islist result)
       (if (> (length result) 1)
