@@ -228,20 +228,20 @@
   "v cl" {:do ":Commentary<CR>"}
 ;  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
 ;  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
-  "n cd" {:do "<Cmd>Lspsaga preview_definition<CR>" :description "Definition"}
+  "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
   "n cD" {:do #(telescope.lsp_references) :description "Type references"}
   "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
-  "n cr" {:do "<Cmd>Lspsaga rename<CR>" :description "LSP rename"}
+  "n cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
   "n ce" {:do #(vim.lsp.diagnostic.set_loclist) :description "List errors"}
   "n cR" {:do #(do
                  (-> (vim.lsp.get_active_clients)
                      (vim.lsp.stop_client))
                  (nvim.command "e!"))
           :description "LSP reload"}
-  "n cs" {:do "<Cmd>Lspsaga signature_help<CR>" :description "Signature help"}
+  "n cs" {:do #(vim.lsp.buf.signature_help) :description "Signature help"}
   "n cj" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
   "n cJ" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
-  "n ca" {:do "<Cmd>Lspsaga code_action<CR>" :description "LSP code actions"}
+  "n ca" {:do #(telescope.lsp_code_actions) :description "LSP code actions"}
   "n cql" {:do #(let [line (. (nvim.fn.getpos ".") 2)]
                   (qf.add-item line line))
            :description "Add line to quickfix"}

@@ -81,7 +81,6 @@ require "packer".startup(function()
     tag = "v4.9.0"}
   use "steelsojka/pears.nvim"
   use "steelsojka/headwind.nvim"
-  use "glepnir/lspsaga.nvim"
   use {
     "iamcco/markdown-preview.nvim",
     run = function()
