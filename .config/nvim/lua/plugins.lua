@@ -68,7 +68,7 @@ require "packer".startup(function()
   use "mfussenegger/nvim-jdtls"
   use "mfussenegger/nvim-dap"
   use "diepm/vim-rest-console"
-  use "phaazon/hop.nvim"
+  use {"phaazon/hop.nvim", barnch = 'v1'}
   use {
     "mhartington/formatter.nvim",
     run = function()
