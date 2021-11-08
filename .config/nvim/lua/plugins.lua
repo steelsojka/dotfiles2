@@ -33,7 +33,6 @@ require "packer".startup(function()
     run = function(conf)
       vim.cmd(string.format("!ln -s %s/diff-so-fancy ~/bin/diff-so-fancy", conf.install_path))
     end}
-  use {"hrsh7th/nvim-compe", commit = "96fafb56552953c8f1a139e9038b8ae970eafc29"}
   use "neovim/nvim-lspconfig"
   use {
     "lewis6991/gitsigns.nvim",
@@ -88,4 +87,12 @@ require "packer".startup(function()
     run = function()
       vim.cmd "call mkdp#util#install()"
     end}
+
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/cmp-path"
+  use "hrsh7th/cmp-cmdline"
+  use "hrsh7th/nvim-cmp"
+  use "hrsh7th/cmp-vsnip"
+  use "hrsh7th/vim-vsnip"
 end)

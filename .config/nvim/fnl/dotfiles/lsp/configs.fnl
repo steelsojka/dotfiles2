@@ -124,8 +124,10 @@
     "ngr" {:do #(telescope-builtin.lsp_references) :silent true}}))
 
 (defn get-config [overrides]
- (vim.tbl_extend "force"
-                 {:on_attach on-attach
-                  : handlers
-                  :capabilities (or overrides.capabilities {})}
-                 (or overrides {})))
+ (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]
+   (vim.tbl_extend "force"
+                   {:on_attach on-attach
+                    : handlers
+                    :capabilities (cmp-nvim-lsp.update_capabilities
+                                    (vim.lsp.protocol.make_client_capabilities))}
+                   (or overrides {}))))
