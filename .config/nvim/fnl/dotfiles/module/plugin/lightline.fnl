@@ -2,7 +2,7 @@
   {require {nvim aniseed.nvim}})
 
 (set vim.g.lightline {
-  :colorscheme :one
+  :colorscheme "tokyonight"
   :active {:left [[:mode :paste]
                   [:readonly :filename :modified]
                   [:gitsigns]]

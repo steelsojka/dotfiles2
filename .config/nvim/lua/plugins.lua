@@ -16,7 +16,7 @@ require "packer".startup(function()
       vim.cmd(string.format("!ln -s %s ~/.fzf", conf.install_path))
     end}
   use "junegunn/fzf.vim"
-  use {"mhartington/oceanic-next", commit = "29d694b9f6323c90fb0f3f54239090370caa99fb"}
+  use "folke/tokyonight.nvim"
   use "tpope/vim-commentary"
   use "itchyny/lightline.vim"
   use "tpope/vim-fugitive"
@@ -42,9 +42,9 @@ require "packer".startup(function()
   use "editorconfig/editorconfig-vim"
   use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
-  use {
-    "nvim-treesitter/nvim-treesitter-refactor",
-     after = "nvim-treesitter"}
+  -- use {
+  --   "nvim-treesitter/nvim-treesitter-refactor",
+  --    after = "nvim-treesitter"}
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use {
     "nvim-treesitter/nvim-tree-docs",
@@ -96,4 +96,5 @@ require "packer".startup(function()
   -- Snippets
   use "hrsh7th/vim-vsnip"
   use "hrsh7th/vim-vsnip-integ"
+
 end)

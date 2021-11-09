@@ -3,9 +3,13 @@ local data_dir = vim.fn.stdpath "data"
 vim.cmd [[let mapleader = "\<Space>"]]
 vim.cmd [[let g:mapleader = "\<Space>"]]
 
-vim.g.oceanic_next_terminal_bold = 1
-vim.g.oceanic_next_terminal_italic = 1
-vim.cmd "colorscheme OceanicNext"
+vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+vim.g.tokyonight_colors = {
+  bg_sidebar = '#16161e'
+}
+vim.g.tokyonight_style = "night"
+
+vim.cmd "colorscheme tokyonight"
 
 vim.opt.number = true
 vim.opt.termguicolors = true
