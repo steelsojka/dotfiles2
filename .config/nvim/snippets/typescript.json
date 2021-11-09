@@ -1,0 +1,36 @@
+{
+  "describe": {
+    "prefix": ["describe"],
+    "body": [
+      "describe('${1:description}', () => {",
+      "\t${2}",
+      "})"
+    ],
+    "description": "Describe test"
+  },
+  "when": {
+    "prefix": ["when"],
+    "body": [
+      "describe('when ${1:something_happens}', () => {",
+      "\t${2}",
+      "})"
+    ],
+    "description": "Describe test scenario"
+  },
+  "it": {
+    "prefix": ["it"],
+    "body": [
+      "it('should ${1:do_something}', () => {",
+      "\t${2}",
+      "})"
+    ],
+    "description": "Test case"
+  },
+  "import": {
+    "prefix": ["import"],
+    "body": [
+      "import { ${1} } from '${2:package}'"
+    ],
+    "description": "Import"
+  }
+}

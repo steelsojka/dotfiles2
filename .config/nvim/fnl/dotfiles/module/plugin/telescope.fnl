@@ -14,5 +14,3 @@
                    :results_title ""
                    :preview_title ""}
                   :file_previewer (-> (require "telescope.previewers") (. :cat) (. :new))})
-
-(telescope.load_extension :snippets)

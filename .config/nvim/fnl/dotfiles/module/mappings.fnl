@@ -18,7 +18,6 @@
 (local tele-extensions (-> (require "telescope") (. :extensions)))
 (local dap (require "dap"))
 (local dap-variables (require "dap.ui.variables"))
-(local snippets (require "snippets"))
 (local gitsigns (require "gitsigns"))
 
 (def- which-key-map {
@@ -64,7 +63,6 @@
   "n " {:do #(which-key.start false) :silent true}
   "n;" {:do ":"}
   "v " {:do #(which-key.start true) :silent true}
-  "i<C-Space>" {:do "compe#complete()" :silent true :expr true}
   "n <CR>" {:do #(telescope.marks) :description "Jump to mark"}
   "ijj" {:do "<esc>" :description "Exit insert mode"}
   "t<C-j><C-j>" {:do "<C-\\><C-n>" :description "Exit terminal mode"}
@@ -75,7 +73,6 @@
   "ngh" {:do #(util.show-documentation true) :silent true :description "Show documentation"}
   "i<C-e>" {:do #(tele.complete-path)}
   "i<C-w>" {:do #(tele.insert-word)}
-  "i<C-l>" {:do #(tele-extensions.snippets.snippets)}
   "nF" {:do "<Cmd>HopChar2<CR>"}
   "nf" {:do "<Cmd>HopChar1<CR>"}
   "vF" {:do "<Cmd>HopChar2<CR>"}
@@ -158,12 +155,8 @@
   "n pq" {:do "<Cmd>qall<CR>" :description "Quit project"}
   "n pc" {:do #(ws.cd-to-root) :description "Cwd to root"}
   ; Workspace mappings <leader>q
-  "n q" {:do #(if (snippets.has_active_snippet)
-                (snippets.advance_snippet 1)
-                (vim.cmd "q")) :description "Quit"}
-  "n Q" {:do #(if (snippets.has_active_snippet)
-                (snippets.advance_snippet -99)
-                (vim.cmd "q!")) :description "Force quit"}
+  "n q" {:do #(vim.cmd "q") :description "Quit"}
+  "n Q" {:do #(vim.cmd "q!") :description "Force quit"}
   ; Navigation mappings <leader>j
   "n jl" {:do "$" :description "End of line"}
   "v jl" {:do "$" :description "End of line" :which-key false}

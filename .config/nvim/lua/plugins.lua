@@ -49,14 +49,12 @@ require "packer".startup(function()
   use {
     "nvim-treesitter/nvim-tree-docs",
     after = "nvim-treesitter"}
-  use "norcalli/snippets.nvim"
   use {
     "nvim-telescope/telescope.nvim",
     requires = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}}
   use "nvim-telescope/telescope-fzy-native.nvim"
-  use "nvim-telescope/telescope-snippets.nvim"
   use {
     "jhawthorn/fzy",
     run = "PREFIX=$HOME make && PREFIX=$HOME make install"}
@@ -87,11 +85,15 @@ require "packer".startup(function()
       vim.cmd "call mkdp#util#install()"
     end}
 
+  -- Completion
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-buffer"
   use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-cmdline"
   use "hrsh7th/nvim-cmp"
   use "hrsh7th/cmp-vsnip"
+
+  -- Snippets
   use "hrsh7th/vim-vsnip"
+  use "hrsh7th/vim-vsnip-integ"
 end)
