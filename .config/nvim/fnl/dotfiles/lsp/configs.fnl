@@ -14,11 +14,13 @@
       {:importModuleSpecifier "non-relative"
        :quoteStyle "single"}}}}
  :omnisharp
- {:root_dir (root-pattern ".git")}
+ {:settings
+  {:omnisharp
+   {:useGlobalMono "always"}}}
  :kotlin_language_server
- {:root_dir (root-pattern ".git")
-  :settings
-  {:kotlin {:compiler {:jvm {:target "1.8"}}}}}
+ {:settings
+  {:kotlin
+   {:compiler {:jvm {:target "1.8"}}}}}
  :diagnosticls
  {:filetypes ["javascript"
               "javascriptreact"
