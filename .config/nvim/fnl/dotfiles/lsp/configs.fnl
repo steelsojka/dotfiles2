@@ -1,30 +1,9 @@
 (module dotfiles.lsp.configs
-  {require {nvim aniseed.nvim
-            keymap dotfiles.keymap
+  {require {keymap dotfiles.keymap
             telescope dotfiles.telescope}})
 
-(local lsp (require "lspconfig"))
-(local lsp-configs (require "lspconfig/configs"))
 (local telescope-builtin (require "telescope.builtin"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
-(local home-dir (vim.loop.os_homedir))
-(local jdtls-home (.. home-dir "/src/jdt-language-server"))
-
-(set lsp-configs.tailwindcss
-     {:default_config
-      {:cmd ["node" (.. home-dir "/src/tailwindcss-intellisense/dist/server/tailwindServer.js") "--stdio"]
-       :filetypes ["html" "typescriptreact" "javascriptreact" "tsx" "jsx"]
-       :root_dir (root-pattern ".git")
-       ; :handlers
-       ; {"tailwindcss/getConfiguration" (fn [err _ params client-id bufnr]
-       ;                                   (let [client (vim.lsp.get_client_by_id client-id)]
-       ;                                     (when client
-       ;                                       (let [configuration (or (vim.lsp.util.lookup_section clien.config.settings "tailwindCSS")
-       ;                                                               {})]
-       ;                                         (set configuration._id params._id)
-       ;                                         (set configuration.tabSize (vim.lsp.util.get_effective_tabstop bufnr))
-       ;                                         (vim.lsp.buf_notify bufnr "tailwindcss/getConfigurationResponse" configuration)))))}
-       }})
 
 (def configs
  {:tsserver
@@ -34,23 +13,12 @@
      {:preferences
       {:importModuleSpecifier "non-relative"
        :quoteStyle "single"}}}}
- :jsonls {}
- :clojure_lsp {}
- :html {}
- :vimls {}
- ; :angularls {}
- ; :omnisharp
- ; {:cmd ["omnisharp" "--languageserver" "--hostPID" (tostring (vim.fn.getpid))]
- ;  :root_dir (root-pattern ".git")}
- :cssls {}
- :bashls {}
- :gdscript {}
- :yamlls {}
+ :omnisharp
+ {:root_dir (root-pattern ".git")}
  :kotlin_language_server
  {:root_dir (root-pattern ".git")
   :settings
   {:kotlin {:compiler {:jvm {:target "1.8"}}}}}
- :tailwindcss {}
  :diagnosticls
  {:filetypes ["javascript"
               "javascriptreact"
@@ -88,20 +56,12 @@
     "javascript.jsx" "eslint"
     "javascriptreact" "eslint"
     "typescriptreact" "eslint"}}}
- :sumneko_lua (let [system-name (if
-                                  (= (vim.fn.has :mac) 1) :macOS
-                                  (= (vim.fn.has :unix) 1) :Linux
-                                  (= (vim.fn.has :win32) 1) :Windows
-                                  "")
-                    root-path (.. home-dir "/src/lua-language-server")
-                    binary (.. root-path "/bin/" system-name "/lua-language-server")]
-                {:cmd [binary "-E" (.. root-path "/main.lua")]
-                 :settings
-                 {:Lua
-                  {:runtime {:version "LuaJIT" :path (vim.split package.path ";")}
-                   :diagnostics {:globals [:vim]}
-                   :workspace {:library {(vim.fn.expand "$VIMRUNTIME/lua") true
-                                         (vim.fn.expand "$VIMRUNTIME/lua/vim/lsp") true}}}}})})
+ :sumneko_lua {:settings
+               {:Lua
+                {:runtime {:version "LuaJIT" :path (vim.split package.path ";")}
+                 :diagnostics {:globals [:vim]}
+                 :workspace {:library {(vim.fn.expand "$VIMRUNTIME/lua") true
+                                       (vim.fn.expand "$VIMRUNTIME/lua/vim/lsp") true}}}}}})
 
 (def handlers {
   "textDocument/publishDiagnostics" (vim.lsp.with
@@ -124,10 +84,13 @@
     "ngr" {:do #(telescope-builtin.lsp_references) :silent true}}))
 
 (defn get-config [overrides]
- (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]
-   (vim.tbl_extend "force"
-                   {:on_attach on-attach
-                    : handlers
-                    :capabilities (cmp-nvim-lsp.update_capabilities
-                                    (vim.lsp.protocol.make_client_capabilities))}
-                   (or overrides {}))))
+  (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]
+    (vim.tbl_extend "force"
+                    {:on_attach on-attach
+                     : handlers
+                     :capabilities (cmp-nvim-lsp.update_capabilities
+                                     (vim.lsp.protocol.make_client_capabilities))}
+                    (or overrides {}))))
+
+(defn get-config-for [name]
+  (get-config (or (. configs name) {})))

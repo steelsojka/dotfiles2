@@ -3,7 +3,6 @@ local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvi
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	vim.cmd("!git clone https://github.com/wbthomason/packer.nvim ".. install_path)
 end
-
 vim.cmd "packadd packer.nvim"
 
 require "packer".startup(function()
@@ -33,7 +32,6 @@ require "packer".startup(function()
     run = function(conf)
       vim.cmd(string.format("!ln -s %s/diff-so-fancy ~/bin/diff-so-fancy", conf.install_path))
     end}
-  use "neovim/nvim-lspconfig"
   use {
     "lewis6991/gitsigns.nvim",
     branch = "main",
@@ -96,5 +94,9 @@ require "packer".startup(function()
   -- Snippets
   use "hrsh7th/vim-vsnip"
   use "hrsh7th/vim-vsnip-integ"
+
+  -- Lsp
+  use "neovim/nvim-lspconfig"
+  use "williamboman/nvim-lsp-installer"
 
 end)
