@@ -216,7 +216,8 @@
   ; Code mappings <leader>c
   "n cl" {:do "<Cmd>Commentary<CR>" :description "Comment line"}
   "v cl" {:do ":Commentary<CR>"}
-  "n cL" {:do "vsp ~/.cache/nvim/lsp.log" :description "LSP Log"}
+  "n cL" {:do "<Cmd>vsp ~/.cache/nvim/lsp.log<CR>" :description "LSP Log"}
+  "n cW" {:do "<Cmd>vsp term://tail -f -n100 ~/.cache/nvim/lsp.log | normal! G<CR>" :description "Watch LSP Log"}
 ;  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
 ;  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
   "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
