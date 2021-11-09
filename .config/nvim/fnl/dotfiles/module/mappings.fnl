@@ -194,16 +194,13 @@
   ; Search mappings <leader>s
   "n sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
   "n sc" {:do #(telescope.command_history) :description "Search command history"}
-  ; "n sh" {:do "<Cmd>History/<CR>" :description "Search history"}
   "n si" {:do #(telescope.lsp_workspace_symbols) :description "Search symbol"}
   "n sb" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
   "n ss" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
   "n so" {:do #(telescope.lsp_document_symbols) :description "List symbols in file"}
-  ; "n sl" {:do "<Cmd>Lines<CR>" :description "Search lines"}
   "n sp" {:do #(tele.live-grep) :description "Grep files in project"}
   "n sm" {:do #(telescope.marks) :description "Jump to marks"}
   "n sw" {:do #(telescope.spell_suggest) :description "Spell suggest"}
-  ; "n sa" {:do #(grep.flygrep "" (nvim.fn.expand "%:p:h") 0 ["--hidden" "--no-ignore"]) :description "Grep all files"}
   "n sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
   ; Local Search/Replace mappings <leader>/
   "n /h" {:do "<Cmd>noh<CR>" :description "Clear searh highlight"}
@@ -219,6 +216,7 @@
   ; Code mappings <leader>c
   "n cl" {:do "<Cmd>Commentary<CR>" :description "Comment line"}
   "v cl" {:do ":Commentary<CR>"}
+  "n cL" {:do "vsp ~/.cache/nvim/lsp.log" :description "LSP Log"}
 ;  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
 ;  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
   "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}

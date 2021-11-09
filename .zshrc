@@ -13,7 +13,7 @@ dotfiles config status.showUntrackedFiles no
 # For some reason we have to load this after oh-my-zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export VOLTA_HOME="$HOME/.volta"
