@@ -38,11 +38,8 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/plenary.nvim"}}
   use "editorconfig/editorconfig-vim"
-  use "sheerun/vim-polyglot"
+  use {"sheerun/vim-polyglot", disable = true}
   use "nvim-treesitter/playground"
-  -- use {
-  --   "nvim-treesitter/nvim-treesitter-refactor",
-  --    after = "nvim-treesitter"}
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use {
     "nvim-treesitter/nvim-tree-docs",
@@ -59,7 +56,7 @@ require "packer".startup(function()
   use {
     "jpalardy/vim-slime",
     run = "npm install -g ts-node"}
-  use {"Olical/aniseed", tag = "v3.12.0"}
+  use {"Olical/aniseed", tag = "v3.24.0"}
   use "bakpakin/fennel.vim"
   use "mfussenegger/nvim-jdtls"
   use "mfussenegger/nvim-dap"
