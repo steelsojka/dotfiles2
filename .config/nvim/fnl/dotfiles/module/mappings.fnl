@@ -57,7 +57,8 @@
       :q {:name "+quickfix"}}
   :t {:name "+toggle"
       :b {:name "+buffer"}}
-  :r {:name "+REPL"}})
+  :r {:name "+REPL"}
+  :o {:name "+Org"}})
 
 (keymap.register-mappings {
   "n " {:do #(which-key.start false) :silent true}
@@ -214,12 +215,9 @@
   "n yy" {:do "\"+y" :description "Yank to clipboard"}
   "v yy" {:do "\"+y"}
   ; Code mappings <leader>c
-  "n cl" {:do "<Cmd>Commentary<CR>" :description "Comment line"}
-  "v cl" {:do ":Commentary<CR>"}
-  "n cL" {:do "<Cmd>vsp ~/.cache/nvim/lsp.log<CR>" :description "LSP Log"}
+  "n cl" {:do "<Plug>kommentary_line_default" :description "Comment line"}
+  "v cl" {:do "<Plug>kommentary_visual_default<C-c>"}
   "n cW" {:do "<Cmd>vsp term://tail -f -n100 ~/.cache/nvim/lsp.log | normal! G<CR>" :description "Watch LSP Log"}
-;  "n cx" {:do #(diagnostics.open-diagnostics {:bufnr (nvim.fn.bufnr "%")}) :description "Document diagnostics"}
-;  "n cX" {:do #(diagnostics.open-diagnostics) :description "Workspace diagnostics"}
   "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
   "n cD" {:do #(telescope.lsp_references) :description "Type references"}
   "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
@@ -251,15 +249,15 @@
   "n gcb" {:do #(gitsigns.blame_line) :description "Chunk blame"}
   "n gB" {:do #(telescope.git_branches) :description "Checkout branch"}
   "n gs" {:do #(telescope.git_status) :description "Git status"}
-  "n gd" {:do "<Cmd>Gdiffsplit<CR>" :description "Git diff"}
-  "n ge" {:do "<Cmd>Gedit<CR>" :description "Git edit"}
+  "n gd" {:do "<Cmd>Git diffsplit<CR>" :description "Git diff"}
+  "n ge" {:do "<Cmd>Git edit<CR>" :description "Git edit"}
   "n gg" {:do #(term.float-cmd "lazygit") :description "Git GUI"}
   "n gl" {:do #(telescope.git_commits) :description "Git log"}
   "n gL" {:do #(telescope.git_bcommits) :description "Git file log"}
-  "n gF" {:do "<Cmd>Gfetch<CR>" :description "Git fetch"}
-  "n gp" {:do "<Cmd>Gpull<CR>" :description "Git pull"}
-  "n gP" {:do "<Cmd>Gpush<CR>" :description "Git push"}
-  "n gb" {:do "<Cmd>Gblame<CR>" :description "Git blame"}
+  "n gF" {:do "<Cmd>Git fetch<CR>" :description "Git fetch"}
+  "n gp" {:do "<Cmd>Git pull<CR>" :description "Git pull"}
+  "n gP" {:do "<Cmd>Git push<CR>" :description "Git push"}
+  "n gb" {:do "<Cmd>Git blame<CR>" :description "Git blame"}
   "n gfc" {:do #(telescope.git_commits) :description "Find commit"}
   "n gff" {:do #(telescope.git_files) :description "Find file"}
   "n gfg" {:do #(keymap.unimplemented) :description "Find gitconfig file"}

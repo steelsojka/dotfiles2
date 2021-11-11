@@ -5,7 +5,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 vim.cmd "packadd packer.nvim"
 
-require "packer".startup(function()
+require "packer".startup({function()
   use {"wbthomason/packer.nvim", opt = true}
   use "liuchengxu/vim-which-key"
   use {
@@ -16,7 +16,7 @@ require "packer".startup(function()
     end}
   use "junegunn/fzf.vim"
   use "folke/tokyonight.nvim"
-  use "tpope/vim-commentary"
+  use "b3nj5m1n/kommentary"
   use "itchyny/lightline.vim"
   use "tpope/vim-fugitive"
   use {"mbbill/undotree", cmd = "UndotreeToggle"}
@@ -38,7 +38,7 @@ require "packer".startup(function()
     requires = {
       "nvim-lua/plenary.nvim"}}
   use "editorconfig/editorconfig-vim"
-  use {"sheerun/vim-polyglot", disable = true}
+  use "sheerun/vim-polyglot"
   use "nvim-treesitter/playground"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use {
@@ -96,4 +96,12 @@ require "packer".startup(function()
   use "neovim/nvim-lspconfig"
   use "williamboman/nvim-lsp-installer"
 
-end)
+  -- Productivity
+  use "kristijanhusak/orgmode.nvim"
+
+end,
+config = {
+  display = {
+    open_fn = require "packer.util".float
+  }
+}})

@@ -23,7 +23,8 @@
        :sources (cmp.config.sources
                   [{:name "nvim_lsp"}
                    {:name "vsnip"}]
-                  [{:name "buffer"}])})
+                  [{:name "orgmode"}
+                   {:name "buffer"}])})
     (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
     (cmp.setup.cmdline ":" {:sources (cmp.config.sources
                                        [{:name "path"}]
