@@ -2,7 +2,8 @@
   {require {nvim aniseed.nvim
             keymap dotfiles.keymap}})
 
-(set nvim.g.conjure#mapping#prefix "<leader>m")
+(defn setup []
+  (set nvim.g.conjure#mapping#prefix "<leader>m"))
 
 (defn init-local-mappings []
   (keymap.init-buffer-mappings

@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.caser
-  {require {nvim aniseed.nvim}})
+(module dotfiles.module.plugin.caser)
 
-(set nvim.g.caser_prefix "<Space>cc")
+(defn setup []
+  (set vim.g.caser_prefix "<Space>cc"))

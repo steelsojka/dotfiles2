@@ -25,5 +25,6 @@
                               true)})
         (: :find))))
 
-(let [jdtls-ui (require "jdtls.ui")]
-  (set jdtls-ui.pick_one_async pick-one))
+(defn configure []
+  (let [jdtls-ui (require "jdtls.ui")]
+    (set jdtls-ui.pick_one_async pick-one)))

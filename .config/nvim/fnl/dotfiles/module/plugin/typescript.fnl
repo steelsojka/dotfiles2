@@ -1,5 +1,5 @@
-(module dotfiles.module.plugin.typescript
-  {require {nvim aniseed.nvim}})
+(module dotfiles.module.plugin.typescript)
 
-(set nvim.g.typescript_compiler_binary "node_modules/.bin/tsc")
-(set nvim.g.typescript_compiler_options "--noEmit")
+(defn setup []
+  (set vim.g.typescript_compiler_binary "node_modules/.bin/tsc")
+  (set vim.g.typescript_compiler_options "--noEmit"))
