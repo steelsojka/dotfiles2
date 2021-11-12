@@ -11,6 +11,10 @@
                                 :revision "main"
                                 :files ["src/parser.c" "src/scanner.cc"]}
                                :filetype "org"})
+      (set parser_configs.http {:install_info
+                                {:url "https://github.com/NTBBloodbath/tree-sitter-http"
+                                 :revision "main"
+                                 :files ["src/parser.c"]}})
 
       (configs.setup {
          ; :tree_docs {:enable true

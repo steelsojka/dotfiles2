@@ -24,8 +24,7 @@ local plugins = {
   {
     "lewis6991/gitsigns.nvim",
     branch = "main",
-    requires = {
-      "nvim-lua/plenary.nvim"}
+    requires = {"nvim-lua/plenary.nvim"}
   },
   "editorconfig/editorconfig-vim",
   "sheerun/vim-polyglot",
@@ -48,7 +47,10 @@ local plugins = {
   "bakpakin/fennel.vim",
   "mfussenegger/nvim-jdtls",
   "mfussenegger/nvim-dap",
-  "diepm/vim-rest-console",
+  {
+    "NTBBloodbath/rest.nvim",
+    requires = {"nvim-lua/plenary.nvim"}
+  },
   {
     "phaazon/hop.nvim",
     branch = 'v1'
@@ -64,12 +66,16 @@ local plugins = {
   "iamcco/markdown-preview.nvim",
 
   -- Completion
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
-  "hrsh7th/nvim-cmp",
-  "hrsh7th/cmp-vsnip",
+  {
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-vsnip"
+    }
+  },
 
   -- Snippets
   "hrsh7th/vim-vsnip",
@@ -80,7 +86,7 @@ local plugins = {
   "williamboman/nvim-lsp-installer",
 
   -- Productivity
-  "kristijanhusak/orgmode.nvim"
+  "kristijanhusak/orgmode.nvim",
 }
 
 return plugins
