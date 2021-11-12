@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.lsp-installer
+(module dotfiles.module.plugin.nvim-lsp-installer
   {require {lsp-configs dotfiles.lsp.configs}})
 
 (defn configure []

@@ -22,6 +22,20 @@ local function load_plugin_module(name)
   return load_module("dotfiles/module/plugin/" .. name)
 end
 
+local function strip_extensions(str)
+  local result = {}
+
+  for token in string.gmatch(str, ".") do
+    if token ~= "." then
+      table.insert(result, token)
+    else
+      break
+    end
+  end
+
+  return table.concat(result, "")
+end
+
 local function load_all_configs()
   local utils = load_module("dotfiles/util")
   local config_path = vim.fn.stdpath "config"
@@ -31,7 +45,7 @@ local function load_all_configs()
   local plugin_modules = {}
 
   for _, file_path in ipairs(file_paths) do
-    local module_name = vim.fn.fnamemodify(file_path, ":t:r")
+    local module_name = strip_extensions(vim.fn.fnamemodify(file_path, ":t"))
 
     plugin_modules[module_name] = load_plugin_module(module_name)
   end
@@ -43,44 +57,75 @@ local function bootstrap()
   load_lib("packer.nvim", "https://github.com/wbthomason/packer.nvim", "master")
   load_lib("aniseed", "https://github.com/Olical/aniseed", "v3.24.0")
 
+  -- Compile all fennel before we do anything...
+  -- Note, don't load anything... just compile.
   require "aniseed.env".init({module = "dotfiles"})
 end
 
+-- Plugin modules are associated by the plugin name MINUS any extensions.
+-- So, pears.nvim would become just "pears".
+local function make_module_spec(spec, plugin_modules)
+  if type(spec) == "string" then
+    spec = {spec}
+  end
 
-local function setup(startup)
+  local spec_name = spec.alias or strip_extensions(vim.fn.fnamemodify(spec[1], ":t"))
+  local spec_module = plugin_modules[spec_name]
+
+  if not spec_module then
+    return spec, nil
+  end
+
+  if type(spec_module.configure) == "function" then
+    local module_name = string.format(
+      "dotfiles.module.plugin.%s",
+      strip_extensions(spec_name)
+    )
+
+    spec.config = string.format([[require("%s").configure()]], module_name)
+  end
+
+  if spec_module.run then
+    spec.run = spec_module.run
+  end
+
+  return spec, spec_module
+end
+
+local function startup()
+  -- Load packer and compile fennel.
   bootstrap()
 
-  require "packer".startup({
-    startup,
-    config = {
-      display = {
-        open_fn = require "packer.util".float
-      }
+  local packer = require "packer"
+
+  packer.init({
+    display = {
+      open_fn = require "packer.util".float
     }
   })
+  packer.reset()
 
+  local plugins = require "plugins"
+
+  -- Read all plugin modules.
   local plugin_modules = load_all_configs()
 
-  for _, plugin_mod in pairs(plugin_modules) do
-    if type(plugin_mod.setup) == "function" then
-      plugin_mod.setup()
+  for _, spec in ipairs(plugins) do
+    local normalized_spec, spec_module = make_module_spec(spec, plugin_modules)
+
+    if spec_module then
+      -- Run setup before we load the plugin.
+      if spec_module.setup then
+        spec_module.setup()
+      end
     end
+
+    packer.use(normalized_spec)
   end
 
   require "dotfiles.bootstrap"
 end
 
-local function make_lifecycle(lifecycle)
-  return function(name, ...)
-    local mod = load_plugin_module(name)
-
-    if mod[lifecycle] then
-      mod[lifecycle](...)
-    end
-  end
-end
-
 return {
-  setup = setup,
-  configure = make_lifecycle("configure")
+  startup = startup
 }

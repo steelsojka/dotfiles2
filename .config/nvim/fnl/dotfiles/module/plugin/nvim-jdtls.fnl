@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.jdtls)
+(module dotfiles.module.plugin.nvim-jdtls)
 
 (local finders (require "telescope.finders"))
 (local sorters (require "telescope.sorters"))

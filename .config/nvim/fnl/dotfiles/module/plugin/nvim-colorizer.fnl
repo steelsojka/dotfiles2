@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.colorizer)
+(module dotfiles.module.plugin.nvim-colorizer)
 
 (defn configure []
   (let [colorizer (require :colorizer)]

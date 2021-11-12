@@ -1,9 +1,8 @@
 (module dotfiles.module.plugin.conjure
-  {require {nvim aniseed.nvim
-            keymap dotfiles.keymap}})
+  {require {keymap dotfiles.keymap}})
 
 (defn setup []
-  (set nvim.g.conjure#mapping#prefix "<leader>m"))
+  (set vim.g.conjure#mapping#prefix "<leader>m"))
 
 (defn init-local-mappings []
   (keymap.init-buffer-mappings

@@ -21,6 +21,9 @@
             formatter-fn (. formatters formatter-name)]
         (formatter-fn ...)))))
 
+(defn run []
+  (vim.cmd "!npm install -g prettier eslint"))
+
 (defn configure []
   (let [formatter (require :formatter)]
     (formatter.setup

@@ -1,5 +1,4 @@
-(module dotfiles.module.plugin.lightline
-  {require {nvim aniseed.nvim}})
+(module dotfiles.module.plugin.lightline)
 
 (defn setup []
   (set vim.g.lightline {

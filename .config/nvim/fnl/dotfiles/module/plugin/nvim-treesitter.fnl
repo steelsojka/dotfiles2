@@ -1,5 +1,7 @@
 (module dotfiles.module.plugin.nvim-treesitter)
 
+(def run ":TSUpdate")
+
 (defn configure []
    (let [parsers (require "nvim-treesitter.parsers")
          configs (require "nvim-treesitter.configs")

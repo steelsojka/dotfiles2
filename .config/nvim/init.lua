@@ -3,17 +3,6 @@ local data_dir = vim.fn.stdpath "data"
 vim.cmd [[let mapleader = "\<Space>"]]
 vim.cmd [[let g:mapleader = "\<Space>"]]
 
-vim.g.kommentary_create_default_mappings = false
-
--- Colorscheme
-vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-vim.g.tokyonight_colors = {
-  bg_sidebar = '#16161e'
-}
-vim.g.tokyonight_style = "night"
-
-vim.cmd "colorscheme tokyonight"
-
 vim.opt.number = true
 vim.opt.termguicolors = true
 vim.opt.ruler = true
@@ -48,4 +37,4 @@ vim.opt.shortmess:append "c"
 
 -- vim.lsp.set_log_level("debug")
 
-require "plugins"
+require "plugin_loader".startup()

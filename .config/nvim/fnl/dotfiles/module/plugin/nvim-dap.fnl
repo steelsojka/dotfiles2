@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.dap)
+(module dotfiles.module.plugin.nvim-dap)
 
 (defn configure []
   (let [dap (require "dap")

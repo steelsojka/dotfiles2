@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.startify)
+(module dotfiles.module.plugin.vim-startify)
 
 (defn setup []
   (set vim.g.startify_lists

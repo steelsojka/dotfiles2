@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.vsnip)
+(module dotfiles.module.plugin.vim-vsnip)
 
 (defn setup []
   (let [config-dir (vim.fn.stdpath "config")]

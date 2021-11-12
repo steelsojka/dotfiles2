@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.fzf-vim
+(module dotfiles.module.plugin.fzf
   {require {funcref dotfiles.funcref
             win dotfiles.window
             fzf dotfiles.fzf}})

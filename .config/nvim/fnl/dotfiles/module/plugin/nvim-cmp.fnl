@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.cmp)
+(module dotfiles.module.plugin.nvim-cmp)
 
 (defn configure []
   (let [cmp (require "cmp")]
