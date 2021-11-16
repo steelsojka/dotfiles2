@@ -4,23 +4,21 @@ const path = require('path')
 const { spawn } = require('child_process')
 const os = require('os')
 
-;(async () => {
-  const [cmd, ...args] = process.argv.slice(2)
-  const homeDir = os.homedir()
-  const fromHome = path.relative(homeDir, process.cwd())
-  const pathParts = ['./', ...fromHome.split(path.sep)]
-  const nodeBins = []
+const [cmd, ...args] = process.argv.slice(2)
+const homeDir = os.homedir()
+const fromHome = path.relative(homeDir, process.cwd())
+const pathParts = ['./', ...fromHome.split(path.sep)]
+const nodeBins = []
 
-  while (pathParts.length) {
-    nodeBins.push(path.resolve(homeDir, ...pathParts, 'node_modules', '.bin'))
-    pathParts.pop()
+while (pathParts.length) {
+  nodeBins.push(path.resolve(homeDir, ...pathParts, 'node_modules', '.bin'))
+  pathParts.pop()
+}
+
+spawn(cmd, args || [], {
+  stdio: 'inherit',
+  env: {
+    ...process.env,
+    PATH: nodeBins.join(':') + process.env.PATH
   }
-
-  spawn(cmd, args || [], {
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      PATH: nodeBins.join(':') + process.env.PATH
-    }
-  })
-})()
+})

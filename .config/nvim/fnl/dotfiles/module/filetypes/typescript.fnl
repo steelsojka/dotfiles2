@@ -1,12 +1,16 @@
 (module dotfiles.module.filetypes.typescript
   {require {keymap dotfiles.keymap
-            nvim aniseed.nvim
+            files dotfiles.files
             headwind dotfiles.headwind}})
 
+(defn compile-project []
+  "Compiles a ts project or file"
+  (let [buffer-path (vim.fn.expand "%:p:h")
+        tsconfig (files.nearest "tsconfig.json" buffer-path)]
+    (vim.cmd
+      (string.format "Dispatch npxx tsc --noEmit -p %s" tsconfig))))
+
 (fn []
-  (set nvim.bo.makeprg (string.format "%s %s $*"
-                                      nvim.g.typescript_compiler_binary
-                                      nvim.g.typescript_compiler_options))
   (keymap.register-buffer-mappings
-    {"n mc" {:do "<Cmd>Make -p tsconfig.json<CR>" :description "Compile"}})
+    {"n mc" {:do #(compile-project) :description "Compile"}})
   (headwind.add-buf-mappings))
