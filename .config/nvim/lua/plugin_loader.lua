@@ -12,7 +12,7 @@ local function load_module(module_path)
   local module_name = string.gsub(module_path, "/", ".")
 
   if not package.loaded[module_name] then
-    require(module_path)
+    pcall(require, module_path)
   end
 
   return package.loaded[module_name]

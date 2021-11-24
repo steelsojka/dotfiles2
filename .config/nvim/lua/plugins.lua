@@ -31,7 +31,7 @@ local plugins = {
   "nvim-treesitter/playground",
   "nvim-treesitter/nvim-treesitter",
   {
-    "nvim-treesitter/nvim-tree-docs",
+    "~/src/nvim-tree-docs",
     after = "nvim-treesitter"
   },
   {
@@ -84,9 +84,13 @@ local plugins = {
   -- Lsp
   "neovim/nvim-lspconfig",
   "williamboman/nvim-lsp-installer",
+  {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons"
+  },
 
   -- Productivity
-  "kristijanhusak/orgmode.nvim",
+  "kristijanhusak/orgmode.nvim"
 }
 
 return plugins

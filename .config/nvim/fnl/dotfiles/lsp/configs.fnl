@@ -83,7 +83,8 @@
    {"ngd" {:do #(vim.lsp.buf.definition) :silent true}
     "ngy" {:do #(vim.lsp.buf.type_definition) :silent true}
     "ngi" {:do #(vim.lsp.buf.implementation :silent true)}
-    "ngr" {:do #(telescope-builtin.lsp_references) :silent true}}))
+    "ngr" {:do #(telescope-builtin.lsp_references) :silent true}
+    "ngR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true}}))
 
 (defn get-config [overrides]
   (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]

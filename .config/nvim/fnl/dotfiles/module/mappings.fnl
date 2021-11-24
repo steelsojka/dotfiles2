@@ -32,6 +32,7 @@
   :g {:name "+git" :c {:name "+chunk"} :f {:name "+find"}}
   :p {:name "+project" :s {:name "+session"}}
   :h {:name "+help"}
+  :x {:name "+diagnostics"}
   :c {:name "+code"
       :q {:name "+quickfix"}
       :c {:name "+case"
@@ -87,7 +88,7 @@
   "n  " {:do #(telescope.commands)}
   "n \"" {:do "q:" :description "Ex History"}
   "v \"" {:do "q:" :description "Ex History"}
-  "n x" {:do "<Cmd>sp e<CR>" :description "Scratch buffer"}
+  ; "n x" {:do "<Cmd>sp e<CR>" :description "Scratch buffer"}
   ; File mappings <leader>f
   "n fs" {:do "<Cmd>w<CR>" :description "Save file"}
   "n fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
@@ -154,6 +155,7 @@
   "n pT" {:do "<Cmd>vsp +Dirvish<CR>" :description "Open File explorer in split"}
   "n pt" {:do "<Cmd>Dirvish<CR>" :description "Open file Explorer"}
   "n pq" {:do "<Cmd>qall<CR>" :description "Quit project"}
+  "n pQ" {:do "<Cmd>qall!<CR>" :description "Quit project force"}
   "n pc" {:do #(ws.cd-to-root) :description "Cwd to root"}
   ; Workspace mappings <leader>q
   "n q" {:do #(vim.cmd "q") :description "Quit"}
@@ -214,6 +216,12 @@
   "n yF" {:do "<Cmd>let @\" expand(\"%:t:r\")<CR>" :description "Yank file name"}
   "n yy" {:do "\"+y" :description "Yank to clipboard"}
   "v yy" {:do "\"+y"}
+  ; Diagnostic mappings <leader>x
+  "n xx" {:do "<Cmd>TroubleToggle<CR>" :description "Toggle"}
+  "n xw" {:do "<Cmd>TroubleToggle lsp_workspace_diagnostics<CR>" :description "Toggle workspace"}
+  "n xd" {:do "<Cmd>TroubleToggle lsp_document_diagnostics<CR>" :description "Toggle document"}
+  "n xq" {:do "<Cmd>TroubleToggle quickfix<CR>" :description "Toggle quickfix"}
+  "n xl" {:do "<Cmd>TroubleToggle loclist<CR>" :description "Toggle location"}
   ; Code mappings <leader>c
   "n cl" {:do "<Plug>kommentary_line_default" :description "Comment line"}
   "v cl" {:do "<Plug>kommentary_visual_default<C-c>"}
