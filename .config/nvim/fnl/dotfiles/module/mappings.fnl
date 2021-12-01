@@ -281,6 +281,7 @@
   "n tW" {:do #(buffers.toggle-trim-trailing-ws) :description "Trim trailing whitespace"}
   "n tr" {:do "<Cmd>set modifiable!<CR>" :description "Read only"}
   "n ts" {:do "<Cmd>set spell!<CR>" :description "Spell check"}
+  "n tc" {:do "<Cmd>set list!<CR>" :description "Whitespace Chars"}
   "n tf" {:do "za" :description "Fold"}
   "n tF" {:do "zA" :description "Fold recursively"}
   "n te" {:do #(keymap.unimplemented) :description "Inline errors"}

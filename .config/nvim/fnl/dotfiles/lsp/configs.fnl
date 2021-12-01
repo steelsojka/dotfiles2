@@ -1,18 +1,25 @@
 (module dotfiles.lsp.configs
   {require {keymap dotfiles.keymap
-            telescope dotfiles.telescope}})
+            telescope dotfiles.telescope
+            files dotfiles.files}})
 
 (local telescope-builtin (require "telescope.builtin"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
 
 (def configs
  {:tsserver
-  {:root_dir (root-pattern ".git" "tsconfig.json")
-   :settings
-    {:typescript
-     {:preferences
-      {:importModuleSpecifier "non-relative"
-       :quoteStyle "single"}}}}
+  #{:root_dir (root-pattern ".git" "tsconfig.json")
+    :cmd (let [tsserver (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))
+               cmd (. ($:get_default_options) :cmd)]
+           (if tsserver
+             (let [new_cmd (vim.tbl_extend "force" {} cmd)]
+               (vim.list_extend new_cmd ["--tsserver-path" tsserver]))
+             cmd))
+    :settings
+     {:typescript
+      {:preferences
+       {:importModuleSpecifier "non-relative"
+        :quoteStyle "single"}}}}
  :omnisharp
  {:settings
   {:omnisharp
@@ -95,5 +102,9 @@
                                      (vim.lsp.protocol.make_client_capabilities))}
                     (or overrides {}))))
 
-(defn get-config-for [name]
-  (get-config (or (. configs name) {})))
+(defn get-config-for [name server]
+  (let [entry (. configs name)
+        config (if (= (type entry) "function")
+                 (entry server)
+                 entry)]
+    (get-config (or config {}))))

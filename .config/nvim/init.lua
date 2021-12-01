@@ -34,6 +34,7 @@ vim.opt.gdefault = true
 vim.opt.dictionary = "/usr/share/dict/words"
 vim.opt.shell = "zsh"
 vim.opt.shortmess:append "c"
+vim.opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
 
 -- vim.lsp.set_log_level("debug")
 
