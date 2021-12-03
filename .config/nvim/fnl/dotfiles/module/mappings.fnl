@@ -17,7 +17,7 @@
 (local telescope (require "telescope.builtin"))
 (local tele-extensions (-> (require "telescope") (. :extensions)))
 (local dap (require "dap"))
-(local dap-variables (require "dap.ui.variables"))
+(local dap-widgets (require "dap.ui.widgets"))
 (local gitsigns (require "gitsigns"))
 
 (def- which-key-map {
@@ -299,8 +299,8 @@
   "n ds" {:do #(dap.step_into) :description "Step into"}
   "n dS" {:do #(dap.step_over) :description "Step over"}
   "n dr" {:do #(dap.repl.open) :description "REPL"}
-  "n dh" {:do #(dap-variables.hover) :description "Inspect variable"}
-  "n dH" {:do #(dap-variables.visual_hover) :description "Inspect variable (visual)"}
+  "n dh" {:do #(dap-widgets.hover) :description "Inspect variable"}
+  "v dH" {:do #(dap-widgets.hover) :description "Inspect variable (visual)"}
   ; REPL
   "n ro" {:do #(repl.open-repl) :description "Open REPL"}
   "n re" {:do #(repl.eval-line) :description "Eval line"}
