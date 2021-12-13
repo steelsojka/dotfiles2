@@ -303,6 +303,7 @@
   "v dH" {:do #(dap-widgets.hover) :description "Inspect variable (visual)"}
   ; REPL
   "n ro" {:do #(repl.open-repl) :description "Open REPL"}
+  "n rO" {:do #(repl.select-repl) :description "Select REPL"}
   "n re" {:do #(repl.eval-line) :description "Eval line"}
   "v re" {:do #(repl.eval-line-visual) :description "Eval selection"}
   "n rf" {:do #(repl.eval-file) :description "Eval file"}
