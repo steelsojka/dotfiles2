@@ -1,6 +1,7 @@
 (module dotfiles.repl
   {require {buffers dotfiles.buffers
-            terminal dotfiles.terminal}})
+            terminal dotfiles.terminal
+            core aniseed.core}})
 
 (var repls
   {:javascript {:cmd #(let [cwd (vim.fn.getcwd)]
@@ -15,31 +16,37 @@
 
 (defn get-repl [bufnr?]
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))]
-    (. active-repls bufnr)))
+    (or (. active-repls bufnr) [])))
 
-(defn create-repl [bufnr cmd]
+(defn create-repl [bufnr cmd ft]
   (let [[new-bufnr] (terminal.new-term-buf cmd)]
-    (tset active-repls bufnr new-bufnr)
+    (tset active-repls bufnr [new-bufnr ft])
     new-bufnr))
 
 (defn open-repl [bufnr? ft?]
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
-        existing-repl (get-repl bufnr)
+        [existing-repl] (get-repl bufnr)
         ft (or ft? (vim.api.nvim_buf_get_option bufnr "filetype"))
         repl-def (. repls ft)
         current-window (vim.api.nvim_get_current_win)]
     (var repl-bufnr existing-repl)
-    (if (not repl-def)
-      (print (.. "No REPL definition for " ft))
-      (do
-        (when (not existing-repl)
-          (set repl-bufnr (create-repl bufnr (repl-def.cmd))))
-        (when (not (buffers.is-buf-visible repl-bufnr))
-          (vim.cmd "vsplit")
-          (vim.cmd (string.format "buffer %d" repl-bufnr))
-          (let [jobid (vim.api.nvim_buf_get_option repl-bufnr "channel")]
-            (vim.api.nvim_buf_set_var bufnr "slime_config" {: jobid})
-            (vim.api.nvim_set_current_win current-window)))))))
+    (do
+      (when (not existing-repl)
+        (if (not repl-def)
+          (print (.. "No REPL definition for " ft))
+          (set repl-bufnr (create-repl bufnr (repl-def.cmd)))))
+      (when (and repl-bufnr (not (buffers.is-buf-visible repl-bufnr)))
+        (vim.cmd "vsplit")
+        (vim.cmd (string.format "buffer %d" repl-bufnr))
+        (let [jobid (vim.api.nvim_buf_get_option repl-bufnr "channel")]
+          (vim.api.nvim_buf_set_var bufnr "slime_config" {: jobid})
+          (vim.api.nvim_set_current_win current-window))))))
+
+(defn select-repl [bufnr?]
+  (vim.ui.select
+    (core.keys repls)
+    {:kind "string"}
+    #(when $ (open-repl bufnr? $))))
 
 (defn eval-line []
   (open-repl)
@@ -51,14 +58,14 @@
 
 (defn kill [bufnr?]
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
-        repl-bufnr (get-repl bufnr)]
+        [repl-bufnr] (get-repl bufnr)]
     (when repl-bufnr
       (tset active-repls bufnr nil)
       (vim.cmd (string.format "bw! %d" repl-bufnr)))))
 
 (defn reset [bufnr?]
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
-        repl-bufnr (get-repl bufnr)]
+        [repl-bufnr ft] (get-repl bufnr)]
     (when repl-bufnr
       (kill bufnr)
-      (open-repl bufnr))))
+      (open-repl bufnr ft))))

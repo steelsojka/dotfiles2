@@ -90,7 +90,13 @@ local plugins = {
   },
 
   -- Productivity
-  "kristijanhusak/orgmode.nvim"
+  "kristijanhusak/orgmode.nvim",
+  {
+    "weirongxu/plantuml-previewer.vim",
+    requires = {
+      "tyru/open-browser.vim",
+      "aklt/plantuml-syntax"}
+  }
 }
 
 return plugins
