@@ -1,6 +1,5 @@
 (module dotfiles.bootstrap
   {require {core aniseed.core
-            nvim aniseed.nvim
             util dotfiles.util}})
 
 ;; Load all modules in no particular order.
