@@ -9,9 +9,10 @@
 (def configs
  {:tsserver
   #{:root_dir (root-pattern ".git" "tsconfig.json")
-    :cmd (let [tsserver (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))
-               cmd (. ($:get_default_options) :cmd)]
-           (if tsserver
+    :cmd (let [default-config (. (require "lspconfig.server_configurations.tsserver") :default_config)
+               tsserver (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))
+               cmd default-config.cmd]
+           (if (and tsserver (not= tsserver ""))
              (let [new_cmd (vim.tbl_extend "force" {} cmd)]
                (vim.list_extend new_cmd ["--tsserver-path" tsserver]))
              cmd))
