@@ -1,11 +1,14 @@
 (module dotfiles.health
   {require {nvim aniseed.nvim}})
 
+(defn- check-exec [name]
+  (if (= (nvim.fn.executable name) 1)
+    (nvim.fn.health#report_ok name)
+    (nvim.fn.health#report_error (string.format "%s is not installed" "Please install %s" name name))))
+
 (defn check []
   (nvim.fn.health#report_start "Binaries")
-  (if (= (nvim.fn.executable "lazygit") 1)
-    (nvim.fn.health#report_ok "lazygit")
-    (nvim.fn.health#report_error "lazygit is not installed" "Please install lazygit"))
-  (if (= (nvim.fn.executable "node") 1)
-    (nvim.fn.health#report_ok "node")
-    (nvim.fn.health#report_error "NodeJS is not installed" "Please install it")))
+  (check-exec "lazygit")
+  (check-exec "node")
+  (check-exec "fd")
+  (check-exec "fzf"))
