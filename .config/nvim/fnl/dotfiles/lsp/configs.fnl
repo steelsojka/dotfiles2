@@ -5,10 +5,13 @@
 
 (local telescope-builtin (require "telescope.builtin"))
 (local root-pattern (. (require "lspconfig/util") :root_pattern))
+(local lsp-status (require "lsp-status"))
 
 (def configs
  {:tsserver
-  #{:root_dir (root-pattern ".git" "tsconfig.json")
+  #{:root_dir (let [root-fn (root-pattern ".git" "tsconfig.json")]
+                (fn [...]
+                  (or (root-fn ...) (vim.fn.getcwd))))
     :cmd (let [default-config (. (require "lspconfig.server_configurations.tsserver") :default_config)
                tsserver (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))
                cmd default-config.cmd]
@@ -28,7 +31,8 @@
  :kotlin_language_server
  {:settings
   {:kotlin
-   {:compiler {:jvm {:target "1.8"}}}}}
+   {:compiler {:jvm {:target "1.8"}}
+    :trace {:server "verbose"}}}}
  :diagnosticls
  {:filetypes ["javascript"
               "javascriptreact"
@@ -83,24 +87,28 @@
   "textDocument/implementation" telescope.location-callback})
 
 (defn on-attach [client]
- (when client.resolved_capabilities.document_highlight
-   (keymap.create-autocmds [["CursorHold" "<buffer>" #(vim.lsp.buf.document_highlight)]
-                            ["CursorHoldI" "<buffer>" #(vim.lsp.buf.document_highlight)]
-                            ["CursorMoved" "<buffer>" #(vim.lsp.buf.clear_references)]]))
- (keymap.register-buffer-mappings
-   {"ngd" {:do #(vim.lsp.buf.definition) :silent true}
-    "ngy" {:do #(vim.lsp.buf.type_definition) :silent true}
-    "ngi" {:do #(vim.lsp.buf.implementation :silent true)}
-    "ngr" {:do #(telescope-builtin.lsp_references) :silent true}
-    "ngR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true}}))
+  (lsp-status.on_attach client)
+  (when client.resolved_capabilities.document_highlight
+    (keymap.create-autocmds [["CursorHold" "<buffer>" #(vim.lsp.buf.document_highlight)]
+                             ["CursorHoldI" "<buffer>" #(vim.lsp.buf.document_highlight)]
+                             ["CursorMoved" "<buffer>" #(vim.lsp.buf.clear_references)]]))
+  (keymap.register-buffer-mappings
+    {"ngd" {:do #(vim.lsp.buf.definition) :silent true}
+     "ngy" {:do #(vim.lsp.buf.type_definition) :silent true}
+     "ngi" {:do #(vim.lsp.buf.implementation :silent true)}
+     "ngr" {:do #(telescope-builtin.lsp_references) :silent true}
+     "ngR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true}}))
 
 (defn get-config [overrides]
   (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]
     (vim.tbl_extend "force"
                     {:on_attach on-attach
                      : handlers
-                     :capabilities (cmp-nvim-lsp.update_capabilities
-                                     (vim.lsp.protocol.make_client_capabilities))}
+                     :capabilities (vim.tbl_extend
+                                     "keep"
+                                     (cmp-nvim-lsp.update_capabilities
+                                       (vim.lsp.protocol.make_client_capabilities))
+                                     lsp-status.capabilities)}
                     (or overrides {}))))
 
 (defn get-config-for [name server]

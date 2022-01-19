@@ -12,6 +12,7 @@
             keymap dotfiles.keymap
             sessions dotfiles.sessions
             rest-client dotfiles.rest-client
+            lsp-logging dotfiles.lsp.logging
             repl dotfiles.repl}})
 
 (local telescope (require "telescope.builtin"))
@@ -225,17 +226,13 @@
   ; Code mappings <leader>c
   "n cl" {:do "<Plug>kommentary_line_default" :description "Comment line"}
   "v cl" {:do "<Plug>kommentary_visual_default<C-c>"}
-  "n cW" {:do "<Cmd>vsp term://tail -f -n100 ~/.cache/nvim/lsp.log | normal! G<CR>" :description "Watch LSP Log"}
+  "n cW" {:do (string.format "<Cmd>vsp term://tail -f -n100 %s | normal! G<CR>" (vim.lsp.get_log_path)) :description "Watch LSP Log"}
   "n cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
   "n cD" {:do #(telescope.lsp_references) :description "Type references"}
   "n ck" {:do "gh" :description "Jump to documentation" :noremap false}
   "n cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
   "n ce" {:do #(vim.diagnostic.set_loclist) :description "List errors"}
-  "n cR" {:do #(do
-                 (-> (vim.lsp.get_active_clients)
-                     (vim.lsp.stop_client))
-                 (nvim.command "e!"))
-          :description "LSP reload"}
+  "n cR" {:do "<Cmd>LspRestart<CR>" :description "LSP reload"}
   "n cs" {:do #(vim.lsp.buf.signature_help) :description "Signature help"}
   "n cj" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
   "n cJ" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
@@ -247,6 +244,7 @@
                   (. (vim.fn.getpos "'<") 2) (. (vim.fn.getpos "'>") 2))
            :description "Add line to quickfix"}
   "n cqn" {:do #(qf.new-list) :description "New quickfix list"}
+  "n cH" {:do #(lsp-logging.set-logging-level) :description "Set LSP log level"}
   ; Git mappings <leader>g
   "n gcu" {:do #(gitsigns.reset_hunk) :description "Undo chunk"}
   "n gcs" {:do #(gitsigns.stage_hunk) :description "Stage chunk"}

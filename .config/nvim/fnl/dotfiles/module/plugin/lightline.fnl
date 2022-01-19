@@ -6,6 +6,7 @@
     :active {:left [[:mode :paste]
                     [:readonly :filename :modified]
                     [:gitsigns]]
-             :right [[:lineinfo] [:percent]]}
+             :right [[:lineinfo] [:percent] [:lspstatus]]}
     :component {:treesitter "%{luaeval('require(\"nvim-treesitter\").statusline()')}"
-                :gitsigns "%{get(b:, 'gitsigns_status', '')}"}}))
+                :gitsigns "%{get(b:, 'gitsigns_status', '')}"
+                :lspstatus "%{luaeval('require(\"dotfiles.status\").lsp()')}"}}))

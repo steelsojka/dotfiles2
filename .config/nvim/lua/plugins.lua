@@ -88,6 +88,7 @@ local plugins = {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons"
   },
+  "nvim-lua/lsp-status.nvim",
 
   -- Productivity
   "kristijanhusak/orgmode.nvim",

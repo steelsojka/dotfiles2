@@ -35,7 +35,7 @@
          ;                                  :im "@call.inner"}}}
          :highlight
          {:enable true
-          :disable ["org"]
+          :disable ["org" "kotlin" "lua"]
           :additional_vim_regex_highlighting ["org"]}
          ; :indent {:enable true}
          ; :refactor {:highlight_definitions {:enable true}}
