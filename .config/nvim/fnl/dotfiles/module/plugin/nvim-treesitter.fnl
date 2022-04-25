@@ -6,11 +6,6 @@
    (let [parsers (require "nvim-treesitter.parsers")
          configs (require "nvim-treesitter.configs")
          parser_configs (parsers.get_parser_configs)]
-      (set parser_configs.org {:install_info
-                               {:url "https://github.com/milisims/tree-sitter-org"
-                                :revision "main"
-                                :files ["src/parser.c" "src/scanner.cc"]}
-                               :filetype "org"})
       (set parser_configs.http {:install_info
                                 {:url "https://github.com/NTBBloodbath/tree-sitter-http"
                                  :revision "main"
