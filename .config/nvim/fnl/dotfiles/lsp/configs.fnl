@@ -24,6 +24,7 @@
       {:preferences
        {:importModuleSpecifier "non-relative"
         :quoteStyle "single"}}}}
+ :jsonls {:cmd ["vscode-json-languageserver" "--stdio"]}
  :omnisharp
  {:settings
   {:omnisharp

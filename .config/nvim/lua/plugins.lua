@@ -30,10 +30,10 @@ local plugins = {
   "sheerun/vim-polyglot",
   "nvim-treesitter/playground",
   "nvim-treesitter/nvim-treesitter",
-  {
+  --[[ {
     "~/src/nvim-tree-docs",
     after = "nvim-treesitter"
-  },
+  }, ]]
   {
     "nvim-telescope/telescope.nvim",
     requires = {
