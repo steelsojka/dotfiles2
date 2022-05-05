@@ -29,7 +29,9 @@
                      {:name "vsnip"}]
                     [{:name "orgmode"}
                      {:name "buffer"}])})
-      (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
+      (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]
+                              :mapping (cmp.mapping.preset.cmdline)})
       (cmp.setup.cmdline ":" {:sources (cmp.config.sources
                                          [{:name "path"}]
-                                         [{:name "cmdline"}])}))))
+                                         [{:name "cmdline"}])
+                              :mapping (cmp.mapping.preset.cmdline)}))))
