@@ -9,8 +9,9 @@
                      :mappings {:n {"<leader>q" actions.close}}
                      :winblend 20
                      :layout_config
-                     {:width 0.8}
+                      {:width 0.8}
                      :prompt_title ""
                      :results_title ""
                      :preview_title ""}
-                    :file_previewer (-> (require "telescope.previewers") (. :cat) (. :new))}))
+                    :file_previewer (-> (require "telescope.previewers") (. :cat) (. :new))})
+  (telescope.load_extension "ui-select"))

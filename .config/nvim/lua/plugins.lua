@@ -40,6 +40,7 @@ local plugins = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}
   },
+  "nvim-telescope/telescope-ui-select.nvim",
   "nvim-telescope/telescope-fzy-native.nvim",
   "jhawthorn/fzy",
   "jpalardy/vim-slime",

@@ -112,9 +112,16 @@
                                      lsp-status.capabilities)}
                     (or overrides {}))))
 
-(defn get-config-for [name server]
+(defn get-config-for [name]
   (let [entry (. configs name)
         config (if (= (type entry) "function")
-                 (entry server)
+                 (entry)
                  entry)]
     (get-config (or config {}))))
+
+(defn setup []
+  (let [server-names (vim.tbl_keys configs)]
+    (each [i server-name (ipairs server-names)]
+      (let [config (get-config-for server-name)
+            lsp-config (require "lspconfig")]
+        ((. (. lsp-config server-name) :setup) config)))))
