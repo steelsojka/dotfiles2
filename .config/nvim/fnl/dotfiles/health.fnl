@@ -11,4 +11,5 @@
   (check-exec "lazygit")
   (check-exec "node")
   (check-exec "fd")
-  (check-exec "fzf"))
+  (check-exec "fzf")
+  (check-exec "w3m"))

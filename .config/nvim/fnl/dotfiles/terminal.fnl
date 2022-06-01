@@ -19,11 +19,11 @@
 (defn get-channel [bufnr?]
   (vim.api.nvim_buf_get_option (or bufnr? 0) "channel"))
 
-(defn new-term-buf [cmd]
-  (let [new-bufnr (vim.api.nvim_create_buf false false)
+(defn new-term-buf [cmd bufnr?]
+  (let [new-bufnr (or bufnr? (vim.api.nvim_create_buf false false))
         current-buf (vim.api.nvim_get_current_buf)]
     (vim.cmd (string.format "buffer %d" new-bufnr))
-    (vim.cmd (string.format "terminal %s" cmd))
+    (vim.fn.termopen cmd)
     (vim.api.nvim_set_current_buf current-buf)
     (let [channel (get-channel new-bufnr)]
       [new-bufnr channel])))

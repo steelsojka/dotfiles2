@@ -33,3 +33,27 @@
       (vim.cmd "split")
       (vim.cmd (string.format "buffer %d" new-bufnr))
       new-bufnr)))
+
+(defn get-visual-selection [bufnr?]
+  (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
+        [_ start-row start-col] (vim.fn.getpos "'<")
+        [_ end-row end-col] (vim.fn.getpos "'>")
+        lines (vim.api.nvim_buf_get_lines
+                bufnr
+                (- start-row 1)
+                end-row
+                false)
+        first-line 1
+        last-line (+ (- end-row start-row) 1)]
+      (if (= start-row end-row)
+        (tset lines
+              first-line
+              (string.sub (. lines first-line) start-col end-col))
+        (do
+          (tset lines
+                first-line
+                (string.sub (. lines first-line) start-col))
+          (tset lines
+                last-line
+                (string.sub (. lines last-line) 1 end-col))))
+      lines))

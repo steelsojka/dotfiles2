@@ -13,7 +13,8 @@
             sessions dotfiles.sessions
             rest-client dotfiles.rest-client
             lsp-logging dotfiles.lsp.logging
-            repl dotfiles.repl}})
+            repl dotfiles.repl
+            browser dotfiles.browser}})
 
 (local telescope (require "telescope.builtin"))
 (local tele-extensions (-> (require "telescope") (. :extensions)))
@@ -34,6 +35,7 @@
   :p {:name "+project" :s {:name "+session"}}
   :h {:name "+help"}
   :x {:name "+diagnostics"}
+  :e {:name "+web explorer"}
   :c {:name "+code"
       :q {:name "+quickfix"}
       :c {:name "+case"
@@ -307,6 +309,11 @@
   "n rf" {:do #(repl.eval-file) :description "Eval file"}
   "n rk" {:do #(repl.kill) :description "Kill REPL"}
   "n rR" {:do #(repl.reset) :description "Reset REPL"}
+  ; Web explorer
+  "n eo" {:do #(browser.open-url) :description "Open web"}
+  "n es" {:do #(browser.prompt-search) :description "Search term"}
+  "v es" {:do #(browser.search (let [lines (buffers.get-visual-selection)]
+                                 (table.concat lines))) :description "Search term"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)
