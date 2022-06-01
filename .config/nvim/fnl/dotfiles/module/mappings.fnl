@@ -310,7 +310,6 @@
   "n rk" {:do #(repl.kill) :description "Kill REPL"}
   "n rR" {:do #(repl.reset) :description "Reset REPL"}
   ; Web explorer
-  "n eo" {:do #(browser.open-url) :description "Open web"}
   "n es" {:do #(browser.prompt-search) :description "Search term"}
   "v es" {:do #(browser.search (let [lines (buffers.get-visual-selection)]
                                  (table.concat lines))) :description "Search term"}
