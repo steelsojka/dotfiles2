@@ -257,8 +257,8 @@
   "n gcb" {:do #(gitsigns.blame_line) :description "Chunk blame"}
   "n gB" {:do #(telescope.git_branches) :description "Checkout branch"}
   "n gs" {:do #(telescope.git_status) :description "Git status"}
-  "n gd" {:do "<Cmd>Git diffsplit<CR>" :description "Git diff"}
-  "n ge" {:do "<Cmd>Git edit<CR>" :description "Git edit"}
+  "n gd" {:do "<Cmd>Gvdiffsplit<CR>" :description "Git diff"}
+  "n ge" {:do "<Cmd>Gedit<CR>" :description "Git edit"}
   "n gg" {:do #(term.float-cmd "lazygit") :description "Git GUI"}
   "n gl" {:do #(telescope.git_commits) :description "Git log"}
   "n gL" {:do #(telescope.git_bcommits) :description "Git file log"}
