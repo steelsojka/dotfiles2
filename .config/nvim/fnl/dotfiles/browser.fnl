@@ -8,6 +8,8 @@
     :url #(string.format "https://google.com/search?q=%s" $)}
    {:name "MDN"
     :url #(string.format "https://duckduckgo.com?q=site:developer.mozilla.org+%s" $)}
+   {:name "reddit"
+    :url #(string.format "https://www.reddit.com/search?q=%s" $)}
    {:name "npmjs.org"
     :url #(string.format "https://www.npmjs.com/search?q=%s" $)}])
 
