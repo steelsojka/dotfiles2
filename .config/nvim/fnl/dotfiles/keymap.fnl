@@ -78,7 +78,7 @@
   (set mapping.do nil)
   (set mapping.description nil)
   (set mapping.which-key nil)
-  (set mapping.buffer nil)
+  (set mapping.buffer (if is-buffer bufnr nil))
   (local escaped-key (escape-keymap (.. mode key-string)))
   (if (= (type action) :function)
     (do
@@ -106,9 +106,7 @@
     (when (string.match (string.lower action) "^<plug>")
       (set mapping.noremap false)))
   (when action
-    (if is-buffer
-      (nvim.buf_set_keymap bufnr mode key-string action mapping)
-      (nvim.set_keymap mode key-string action mapping))))
+    (vim.keymap.set mode key-string action mapping)))
 
 (defn register-mappings [mappings default-options wk-dict]
   (each [keys mapping (pairs mappings)]
