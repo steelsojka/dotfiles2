@@ -313,6 +313,11 @@
   "n es" {:do #(browser.prompt-search) :description "Search term"}
   "v es" {:do #(browser.search (let [lines (buffers.get-visual-selection)]
                                  (table.concat lines))) :description "Search term"}
+  "n eS" {:do #(browser.prompt-search true) :description "Search term (ext)"}
+  "v eS" {:do #(browser.search (let [lines (buffers.get-visual-selection)]
+                                 (table.concat lines))
+                               nil
+                               true) :description "Search term (ext)"}
 } {:noremap true} which-key-map)
 
 (set nvim.g.which_key_map which-key-map)

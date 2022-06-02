@@ -12,13 +12,15 @@
     :url #(string.format "https://www.npmjs.com/search?q=%s" $)}])
 
 
-(defn open-url [url]
-  (let [command (string.format "w3m '%s'" url)]
-    (vim.cmd "vsp")
-    (vim.cmd (string.format "terminal %s" command))
-    (vim.schedule #(vim.cmd "startinsert"))))
+(defn open-url [url external?]
+  (if external?
+    (vim.cmd (string.format "!open '%s'" url))
+    (do
+      (vim.cmd "vsp")
+      (vim.cmd (string.format "terminal w3m '%s'" url))
+      (vim.schedule #(vim.cmd "startinsert")))))
 
-(defn search [term? search-engine?]
+(defn search [term? search-engine? external?]
   (let [term (or term? "")
         query (string.gsub term "%s" "+")]
     (if (not search-engine?)
@@ -26,9 +28,9 @@
         search-engines
         {:format_item #$.name
          :prompt "Search Engine: "}
-        #(open-url ($.url query)))
-      (open-url (search-engine?.url query)))))
+        #(open-url ($.url query) external?))
+      (open-url (search-engine?.url query) external?))))
 
-(defn prompt-search []
+(defn prompt-search [external?]
   (vim.ui.input {:prompt "Search: "}
-                #(when $1 (search $1))))
+                #(when $1 (search $1 nil external?))))
