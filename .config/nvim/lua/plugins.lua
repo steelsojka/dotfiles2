@@ -1,5 +1,6 @@
 local plugins = {
   {"wbthomason/packer.nvim", opt = true},
+  "lewis6991/impatient.nvim",
   "liuchengxu/vim-which-key",
   {"junegunn/fzf", alias = "fzf-core"},
   "junegunn/fzf.vim",
@@ -28,7 +29,7 @@ local plugins = {
   },
   "editorconfig/editorconfig-vim",
   "sheerun/vim-polyglot",
-  "nvim-treesitter/playground",
+  {"nvim-treesitter/playground", opt = true, cmd = "TSPlaygroundToggle"},
   "nvim-treesitter/nvim-treesitter",
   {
     "nvim-telescope/telescope.nvim",

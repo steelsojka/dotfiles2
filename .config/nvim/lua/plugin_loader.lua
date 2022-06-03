@@ -54,6 +54,13 @@ local function load_all_configs()
 end
 
 local function bootstrap()
+  pcall(require, "impatient")
+
+  -- Uncomment for profiling startup time
+  --[[ pcall(function()
+    require "impatient".enable_profile()
+  end) ]]
+
   load_lib("packer.nvim", "https://github.com/wbthomason/packer.nvim", "master")
   load_lib("aniseed", "https://github.com/Olical/aniseed", "v3.24.0")
 
