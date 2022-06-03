@@ -38,6 +38,7 @@ local plugins = {
       "nvim-lua/plenary.nvim"}
   },
   "nvim-telescope/telescope-ui-select.nvim",
+  "stevearc/dressing.nvim",
   "jpalardy/vim-slime",
   {"Olical/aniseed", tag = "v3.24.0", opt = true},
   "bakpakin/fennel.vim",
