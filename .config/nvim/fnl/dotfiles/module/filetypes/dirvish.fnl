@@ -60,5 +60,5 @@
      "n mgf" {:do #(-> {:cwd (vim.fn.expand "%:p:h")} (telescope.find_files)) :description "Child file"}
      "n mgF" {:do #(-> (vim.fn.getcwd) (find-files)) :description "Project file"}
      "nH" {:do "<Plug>(dirvish_up)"}
-     "n q" {:do "gq" :noremap false}
-     "n Q" {:do "gq" :noremap false}}))
+     "n q" {:do "<Plug>(dirvish_quit)" }
+     "n Q" {:do "<Plug>(dirvish_quit)" }}))
