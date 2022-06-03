@@ -30,10 +30,6 @@ local plugins = {
   "sheerun/vim-polyglot",
   "nvim-treesitter/playground",
   "nvim-treesitter/nvim-treesitter",
-  --[[ {
-    "~/src/nvim-tree-docs",
-    after = "nvim-treesitter"
-  }, ]]
   {
     "nvim-telescope/telescope.nvim",
     requires = {
@@ -41,8 +37,6 @@ local plugins = {
       "nvim-lua/plenary.nvim"}
   },
   "nvim-telescope/telescope-ui-select.nvim",
-  "nvim-telescope/telescope-fzy-native.nvim",
-  "jhawthorn/fzy",
   "jpalardy/vim-slime",
   {"Olical/aniseed", tag = "v3.24.0", opt = true},
   "bakpakin/fennel.vim",
