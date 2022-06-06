@@ -1,4 +1,4 @@
-(module dotfiles.module.plugin.fzf)
+(module dotfiles.module.plugin.fzf-core)
 
 (defn run [conf]
   (->> conf.install_path

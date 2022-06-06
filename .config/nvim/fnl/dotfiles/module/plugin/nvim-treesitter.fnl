@@ -35,4 +35,4 @@
          ; :indent {:enable true}
          ; :refactor {:highlight_definitions {:enable true}}
          :ensure_installed :all
-         :ignore_install [:ledger :supercollider :haskell]})))
+         :ignore_install [:ledger :supercollider :haskell :phpdoc]})))
