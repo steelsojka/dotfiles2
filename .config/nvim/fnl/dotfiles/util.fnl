@@ -51,7 +51,7 @@
         (help)
         (let [(success) (pcall #(vim.lsp.buf.hover))]
           (when (not success) (help))))
-      (let [(success) (pcall #(vim.lsp.diagnostic.show_line_diagnostics))]
+      (let [(success) (pcall #(vim.diagnostic.open_float))]
         (when (not success) (help))))))
 
 (defn over-all [...]

@@ -24,7 +24,8 @@
       {:preferences
        {:importModuleSpecifier "non-relative"
         :quoteStyle "single"}}}}
- :jsonls {:cmd ["vscode-json-languageserver" "--stdio"]}
+ :lwc {:root_dir (root-pattern "core-package.config.json")}
+ :jsonls {}
  :omnisharp
  {:settings
   {:omnisharp

@@ -11,4 +11,5 @@
   (check-exec "node")
   (check-exec "fd")
   (check-exec "fzf")
+  (check-exec "rg")
   (check-exec "w3m"))
