@@ -1,13 +1,10 @@
 #!/usr/bin/env node
 
-const { spawn } = require('child_process')
-const os = require('os')
+const startLangServer = require('../scripts/start-lang-server')
 const path = require('path')
+const homeDir = require('os').homedir()
 
-const homeDir = os.homedir()
-
-spawn('node', [
+startLangServer(
   path.join(homeDir, 'src/lightning-language-server/packages/lwc-language-server/lib/server.js'),
-  '--stdio',
   ...process.argv.slice(2)
-], { stdio: 'inherit' })
+)

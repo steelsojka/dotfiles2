@@ -1,0 +1,12 @@
+#! /usr/bin/env node
+
+const argv = require('../src/args').help().argv;
+const watchHead = require('../src/watch-head');
+
+(async () => {
+  const repo = argv.repo ?? process.cwd();
+
+  process.chdir(repo);
+
+  watchHead({ ...argv, repo });
+})();

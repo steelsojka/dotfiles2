@@ -29,7 +29,7 @@ export MANPAGER="nvim +Man!"
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
 
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export BAT_THEME=OceanicNext

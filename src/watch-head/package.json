@@ -1,0 +1,14 @@
+{
+  "name": "watch-head",
+  "version": "1.0.0",
+  "license": "MIT",
+  "bin": {
+    "watch-head": "bin/watch-head",
+    "watch-head-schedule": "bin/watch-head-schedule"
+  },
+  "dependencies": {
+    "node-cron": "^3.0.1",
+    "node-notifier": "^10.0.1",
+    "yargs": "^17.5.1"
+  }
+}

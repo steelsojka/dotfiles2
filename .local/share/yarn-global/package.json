@@ -1,0 +1,12 @@
+{
+  "name": "yarn-global",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "markdown-toc": "^1.2.0",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.1",
+    "watch-head": "../../../src/watch-head"
+  }
+}

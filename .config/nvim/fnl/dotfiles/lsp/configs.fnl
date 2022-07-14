@@ -24,7 +24,7 @@
       {:preferences
        {:importModuleSpecifier "non-relative"
         :quoteStyle "single"}}}}
- :lwc {:root_dir (root-pattern "core-package.config.json")}
+ ; :lwc {:root_dir (root-pattern "lwc.config.json")}
  :jsonls {}
  :omnisharp
  {:settings

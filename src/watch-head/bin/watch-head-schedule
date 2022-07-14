@@ -1,0 +1,33 @@
+#! /usr/bin/env node
+
+const argv = require('../src/args')
+  .options({
+    schedule: {
+      type: 'string',
+      default: '0 */5 8-16 * * 1-5'
+    }
+  })
+  .help()
+  .argv;
+
+const cron = require('node-cron');
+const watchHead = require('../src/watch-head');
+const log = require('../src/log');
+
+(async () => {
+  const repo = argv.repo ?? process.cwd();
+  const params = {
+    ...argv,
+    repo
+  };
+
+  process.chdir(repo);
+
+  log(`Starting cron job with schedule ${argv.schedule}`);
+
+  cron.schedule(argv.schedule, () => {
+    watchHead(params);
+  });
+
+  watchHead(params);
+})();
