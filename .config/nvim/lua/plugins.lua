@@ -58,7 +58,7 @@ local plugins = {
     ft = {"fennel", "clojure"},
     tag = "v4.9.0"
   },
-  "steelsojka/pears.nvim",
+  "windwp/nvim-autopairs",
   "steelsojka/headwind.nvim",
   "iamcco/markdown-preview.nvim",
 

@@ -4,7 +4,7 @@ const argv = require('../src/args')
   .options({
     schedule: {
       type: 'string',
-      default: '0 */5 8-16 * * 1-5'
+      default: '0 */5 7-16 * * 1-5'
     }
   })
   .help()
