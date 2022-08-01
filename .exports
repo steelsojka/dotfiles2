@@ -31,6 +31,7 @@ export MANPAGER="nvim +Man!"
 export GREP_OPTIONS="--color=auto"
 #export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home
 
+export XDG_CONFIG_HOME="$HOME/.config"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export BAT_THEME=OceanicNext
 export FZF_DEFAULT_COMMAND='rg --files -g "!{node_modules/*}"'
