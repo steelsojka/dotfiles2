@@ -2,11 +2,13 @@
 
 (local formatters
   {:prettier #{:exe "npxx"
+               :cwd (vim.fn.expand "%:h")
                :args ["prettier"
                       "--stdin-filepath"
                       (vim.api.nvim_buf_get_name 0)]
                :stdin true}
    :eslint #{:exe "npxx"
+             :cwd (vim.fn.expand "%:h")
              :args ["eslint"
                     "--stdin-filename"
                     (vim.api.nvim_buf_get_name 0)

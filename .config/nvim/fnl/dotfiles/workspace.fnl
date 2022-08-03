@@ -1,5 +1,8 @@
 (module dotfiles.workspace
-  {require {nvim aniseed.nvim}})
+  {require {nvim aniseed.nvim
+            files dotfiles.files}})
+
+(def- local-config-filename "steelvimrc.lua")
 
 (defn get-workspace-root [path matcher]
   (let [path-parts (vim.split path "/")
@@ -25,3 +28,9 @@
   (let [new-path (or path (nvim.fn.getcwd))
         root (get-workspace-root new-path matcher)]
     (when root (nvim.ex.cd root))))
+
+(defn source-local-config []
+  (let [config-path (files.nearest
+                      local-config-filename
+                      (vim.fn.getcwd))]
+    (when config-path (nvim.ex.source config-path))))

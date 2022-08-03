@@ -47,7 +47,7 @@
   {:linters
    {:eslint
     {:command "npxx"
-     :rootPatterns [".git"]
+     :rootPatterns [".eslintrc.js" ".git"]
      :debounce 100
      :args ["eslint"
             "--stdin"
