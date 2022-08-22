@@ -4,14 +4,24 @@
 (local telescope (require "telescope.builtin"))
 (local actions (require "telescope.actions"))
 
-(defn- create [input cmd expansion placeholder]
-  (let [filehead (vim.fn.expand expansion)]
-    (vim.ui.input
-      {:prompt input
-       :default (if placeholder filehead "")}
-      #(when (and $ (~= $ ""))
-        (vim.cmd (string.format cmd filehead $))
-        (vim.api.nvim_input "R")))))
+(defn- create [input cmd filepath placeholder]
+  (vim.ui.input
+    {:prompt input
+     :default (if placeholder filepath "")}
+    #(when (and $ (~= $ ""))
+      (print (string.format cmd filepath $))
+      (vim.cmd (string.format cmd filepath $))
+      (vim.api.nvim_input "R"))))
+
+(defn- get-directory []
+  (let [directory (vim.fn.expand "%")]
+    (string.match directory "(.-)/$")))
+
+(defn- get-file-under-cursor []
+  (let [directory (get-directory)
+        line (vim.fn.line ".")
+        file-name (vim.fn.expand "<cfile>:t")]
+    (string.format "%s/%s" directory file-name)))
 
 (defn- find-files [cwd]
   (telescope.find_files
@@ -27,13 +37,13 @@
   (vim.cmd "setlocal nospell")
   (keymap.init-buffer-mappings {:g {:name "+goto"}})
   (keymap.register-buffer-mappings
-    {"n md" {:do #(create "Create directory: " "!mkdir %s/%s" "<cfile>:h")
+    {"n md" {:do #(create "Create directory: " "!mkdir %s/%s" (get-directory))
              :description "Make directory"}
-     "n mf" {:do #(create "Create file: " "!touch %s/%s" "<cfile>:h")
+     "n mf" {:do #(create "Create file: " "!touch %s/%s" (get-directory))
              :description "Create file"}
      "n mr" {:do #(let [filename (vim.fn.expand "<cfile>:t")
-                        filepath (vim.fn.expand "<cfile>")
-                        filehead (vim.fn.expand "<cfile>:h")]
+                        filepath (get-file-under-cursor)
+                        filehead (get-directory)]
                     (vim.ui.input
                       {:prompt "Rename file: "
                        :default filename}
@@ -43,11 +53,11 @@
                              (vim.cmd))
                          (vim.api.nvim_input "R"))))
             :description "Rename"}
-     "n mm" {:do #(create "Move file to : " "!mv %s %s" "<cfile>" true)
+     "n mm" {:do #(create "Move file to : " "!mv %s %s" (get-file-under-cursor) true)
              :description "Move"}
-     "n mc" {:do #(create "Copy file to : " "!cp %s %s" "<cfile>" true)
+     "n mc" {:do #(create "Copy file to : " "!cp %s %s" (get-file-under-cursor) true)
              :description "Copy"}
-     "n mk" {:do #(let [filepath (vim.fn.expand "<cfile>")
+     "n mk" {:do #(let [filepath (get-file-under-cursor)
                         confirmed (-> "Delete %s?"
                                       (string.format filepath)
                                       (vim.fn.confirm))]

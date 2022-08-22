@@ -9,7 +9,7 @@
 
 (def configs
  {:tsserver
-  #{:root_dir (let [root-fn (root-pattern ".git" "tsconfig.json")]
+  #{:root_dir (let [root-fn (root-pattern ".git" "tsconfig.json" "jsconfig.json")]
                 (fn [...]
                   (or (root-fn ...) (vim.fn.getcwd))))
     :cmd (let [default-config (. (require "lspconfig.server_configurations.tsserver") :default_config)
