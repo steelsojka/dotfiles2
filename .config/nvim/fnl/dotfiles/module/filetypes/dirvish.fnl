@@ -1,5 +1,6 @@
 (module dotfiles.module.filetypes.dirvish
-  {require {keymap dotfiles.keymap}})
+  {require {keymap dotfiles.keymap
+            utils dotfiles.util}})
 
 (local telescope (require "telescope.builtin"))
 (local actions (require "telescope.actions"))
@@ -17,10 +18,15 @@
   (let [directory (vim.fn.expand "%")]
     (string.match directory "(.-)/$")))
 
+(defn- get-path-tail [path]
+  (let [parts (utils.split path "/")
+        tail (utils.tail parts)]
+    tail))
+
 (defn- get-file-under-cursor []
   (let [directory (get-directory)
-        line (vim.fn.line ".")
-        file-name (vim.fn.expand "<cfile>:t")]
+        file-path (vim.fn.expand "<cfile>")
+        file-name (get-path-tail file-path)]
     (string.format "%s/%s" directory file-name)))
 
 (defn- find-files [cwd]
@@ -41,8 +47,8 @@
              :description "Make directory"}
      "n mf" {:do #(create "Create file: " "!touch %s/%s" (get-directory))
              :description "Create file"}
-     "n mr" {:do #(let [filename (vim.fn.expand "<cfile>:t")
-                        filepath (get-file-under-cursor)
+     "n mr" {:do #(let [filepath (get-file-under-cursor)
+                        filename (get-path-tail filepath)
                         filehead (get-directory)]
                     (vim.ui.input
                       {:prompt "Rename file: "

@@ -63,3 +63,14 @@
       result)))
 
 (defn noop [] "")
+
+(defn split [string sep]
+  (let [matcher (string.format "([^%s]*)" sep)
+        result []]
+    (each [match_ _ (string.gmatch string matcher)]
+      (when (and match_ (not= match_ ""))
+        (table.insert result match_)))
+    result))
+
+(defn tail [tbl]
+  (. tbl (length tbl)))
