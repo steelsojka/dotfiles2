@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+
+// Finds the nearest file that matches the provided filename.
+const path = require('path')
+const fs = require('fs')
+const argv = require('yargs')
+  .options({
+    all: {
+      desc: 'Returns a list of all matches',
+      type: 'boolean',
+      default: false
+    },
+    from: {
+      desc: 'Path to search from',
+      type: 'string'
+    }
+  })
+  .help()
+  .argv
+
+const cwd = process.cwd()
+const pathMatch = argv._[0]
+
+let fromPath = argv.from
+
+if (!pathMatch) {
+  throw new Error('A path is required')
+}
+
+if (fromPath) {
+  if (!path.isAbsolute(argv.from)) {
+    fromPath = path.resolve(cwd, fromPath)
+  }
+} else {
+  fromPath = cwd
+}
+
+const pathParts = fromPath.split(path.sep)
+const result = []
+
+while (pathParts.length) {
+  const fullPath = path.join(pathParts.join(path.sep) || "/", pathMatch)
+
+  if (fs.existsSync(fullPath)) {
+    result.push(fullPath)
+
+    if (!argv.all) {
+      break;
+    }
+  }
+
+  pathParts.pop()
+}
+
+process.stdout.write(result.join("\n"))

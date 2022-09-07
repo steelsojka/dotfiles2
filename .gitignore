@@ -19,3 +19,4 @@ Thumbs.db
 
 .local
 steelvimrc.lua
+node_modules
