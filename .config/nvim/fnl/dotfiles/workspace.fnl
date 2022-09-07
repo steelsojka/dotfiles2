@@ -29,8 +29,11 @@
         root (get-workspace-root new-path matcher)]
     (when root (nvim.ex.cd root))))
 
-(defn source-local-config []
-  (let [config-path (files.nearest
+(defn source-local-config [options?]
+  (let [options (or options? {})
+        config-paths (files.nearest
                       local-config-filename
-                      (vim.fn.getcwd))]
-    (when config-path (nvim.ex.source config-path))))
+                      (vim.fn.getcwd)
+                      options)]
+    (each [_ config-path (ipairs config-paths)]
+      (when config-path (nvim.ex.source config-path)))))

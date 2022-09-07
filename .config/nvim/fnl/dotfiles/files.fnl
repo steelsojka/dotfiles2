@@ -10,14 +10,20 @@
         lines (util.exec cmd)]
     (or (. lines 1) "")))
 
-(defn nearest [filename path]
+(defn nearest [filename path options?]
   "Gets the nearest file path from the given directory and filename"
-  (let [handle (-> "nearest %s %s"
+  (let [options (or options? {})
+        cmd (if options.all
+              "nearest %s --from %s --all"
+              "nearest %s --from %s")
+        handle (-> cmd
                    (string.format filename path)
                    (io.popen))
         result (handle:read "*a")]
     (handle:close)
-    result))
+    (if options.all
+      (util.split result "\n")
+      result)))
 
 (defn get-fname-prefix [str]
   "Gets a file path prefix. This is ported from fzf.vim."
