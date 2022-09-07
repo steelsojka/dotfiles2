@@ -62,7 +62,7 @@
                                       (string.format filepath)
                                       (vim.fn.confirm))]
                     (when (= confirmed 1)
-                      (-> "!rm -r %s"
+                      (-> "!safe-rm -r %s"
                           (string.format filepath)
                           (vim.cmd))
                       (vim.api.nvim_input "R")))

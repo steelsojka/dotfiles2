@@ -1,0 +1,3 @@
+[submodule "src/shell-safe-rm"]
+	path = src/shell-safe-rm
+	url = https://github.com/kaelzhang/shell-safe-rm

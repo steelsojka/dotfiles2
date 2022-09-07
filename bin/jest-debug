@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+node --inspect-brk $(nearest node_modules/.bin/jest) --runInBand $@
