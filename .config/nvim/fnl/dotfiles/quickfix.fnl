@@ -5,57 +5,42 @@
             win dotfiles.window
             fzf dotfiles.fzf}})
 
-(defn build-list [lines]
-  (nvim.fn.setqflist (core.map #{:filename $1}))
-  (nvim.ex.copen)
-  (nvim.ex.cc))
+(defn replace-list [list options?]
+  (let [options (or options? {})
+        nr (or options.win 0)]
+    (if options.loc
+        (vim.fn.setloclist nr [] "r" {:items list})
+        (vim.fn.setqflist [] "r" {:items list}))))
 
-(defn to-fzf-list []
-  (fzf.grid-to-source
-    (fzf.create-grid
-      [{:heading "Text" :length 45 :map ansi.red}
-       {:heading "Loc" :length 12 :map ansi.red}
-       {:heading "File" :map ansi.red}]
-      (core.map-indexed
-        #(let [[i v] $1]
-           [$1.text
-            {:value (.. v.lnum ":" v.col) :map ansi.blue}
-            {:value (nvim.buf_get_name v.bufnr) :map ansi.cyan}
-            (tostring i) ])
-        (nvim.fn.getqflist)))))
-
-(defn filter [destructive]
-  (local _fzf
-    (fzf.create #(if (not destructive)
-                   (nvim.fn.setqflist $3)
-                   (nvim.fn.setqflist [] "r" {:items $3}))
-                {:handle-all true
-                 :indexed-data true}))
-  (_fzf.execute {:source (get-fzf-list)
-                 :window (win.float-window #(_fzf.unsubscribe))
-                 :options ["--multi" "--ansi" "--header-lines=1"]
-                 :data (nvim.fn.getqflist)}))
-
-(defn delete-item [start-line end-line]
-  (let [qf-list (nvim.fn.getqflist)]
+(defn delete-item [start-line end-line options?]
+  (let [options (or options? {})
+        nr (or options.win 0)
+        qf-list (if options.loc
+                  (vim.fn.getloclist nr)
+                  (vim.fn.getqflist))]
     (var i start-line)
     (while (<= i end-line)
       (table.remove qf-list start-line)
       (set i (+ i 1)))
-    (nvim.fn.setqflist [] "r" {:items qf-list})))
+    (replace-list qf-list options)))
 
-(defn add-item [start-line end-line]
-  (let [qf-list (nvim.fn.getqflist)
+(defn add-item [start-line end-line options?]
+  (let [options (or options? {})
+        nr (or options.win 0)
+        qf-list (if options.loc
+                  (vim.fn.getloclist nr)
+                  (vim.fn.getqflist))
         buf (nvim.get_current_buf)
         lines (nvim.buf_get_lines buf start-line end-line false)
         new-list (core.map-indexed
                    #(let [[i v] $1]
                       {:bufnr buf
-                       :lnum (- (+ start-line i) 1)
+                       :lnum (+ start-line i)
                        :col 0
                        :text v})
-                   lines)]
-    (nvim.fn.setqflist [(unpack qf-list) (unpack new-list)])))
+                   lines)
+        updated-list (vim.list_extend qf-list new-list)]
+    (replace-list updated-list options)))
 
 (defn new-list [title]
   (nvim.fn.setqflist [] " " {:title (or title "")})

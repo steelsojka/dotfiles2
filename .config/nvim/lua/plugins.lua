@@ -59,7 +59,6 @@ local plugins = {
     tag = "v4.9.0"
   },
   "windwp/nvim-autopairs",
-  "steelsojka/headwind.nvim",
   "iamcco/markdown-preview.nvim",
 
   -- Completion

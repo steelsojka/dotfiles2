@@ -36,8 +36,9 @@
   :h {:name "+help"}
   :x {:name "+diagnostics"}
   :e {:name "+web explorer"}
+  :l {:name "+quickfix"}
+  :L {:name "+location"}
   :c {:name "+code"
-      :q {:name "+quickfix"}
       :c {:name "+case"
           :p "PascalCase"
           :m "MixedCase"
@@ -239,13 +240,28 @@
   "n cj" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
   "n cJ" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
   "n ca" {:do #(vim.lsp.buf.code_action) :description "LSP code actions"}
-  "n cql" {:do #(let [line (. (nvim.fn.getpos ".") 2)]
-                  (qf.add-item line line))
+  "n lk" {:do "<Cmd>cN<CR>" :description "Previous"}
+  "n lj" {:do "<Cmd>cn<CR>" :description "Next"}
+  "n Lk" {:do "<Cmd>lN<CR>" :description "Previous"}
+  "n Lj" {:do "<Cmd>lne<CR>" :description "Next"}
+  "n lo" {:do "<Cmd>copen<CR>" :description "Open"}
+  "n Lo" {:do "<Cmd>lopen<CR>" :description "Open"}
+  "n lO" {:do "<Cmd>cclose<CR>" :description "Close"}
+  "n LO" {:do "<Cmd>lclose<CR>" :description "Close"}
+  "n ll" {:do #(let [line (. (nvim.fn.getpos ".") 2)]
+                  (qf.add-item (- line 1) line))
            :description "Add line to quickfix"}
-  "v cql" {:do #(qf.add-item
-                  (. (vim.fn.getpos "'<") 2) (. (vim.fn.getpos "'>") 2))
+  "v ll" {:do #(qf.add-item
+                  (- (. (vim.fn.getpos "'<") 2) 1) (. (vim.fn.getpos "'>") 2))
            :description "Add line to quickfix"}
-  "n cqn" {:do #(qf.new-list) :description "New quickfix list"}
+  "n Ll" {:do #(let [line (. (nvim.fn.getpos ".") 2)]
+                  (qf.add-item (- line 1) line {:loc true}))
+           :description "Add line to location"}
+  "v Ll" {:do #(qf.add-item
+                  (- (. (vim.fn.getpos "'<") 2) 1) (. (vim.fn.getpos "'>") 2) {:loc true})
+           :description "Add line to location"}
+  "n ln" {:do #(qf.new-list) :description "New quickfix list"}
+  "n Ln" {:do #(qf.new-list {:loc true}) :description "New loc list"}
   "n cH" {:do #(lsp-logging.set-logging-level) :description "Set LSP log level"}
   ; Git mappings <leader>g
   "n gcu" {:do #(gitsigns.reset_hunk) :description "Undo chunk"}
