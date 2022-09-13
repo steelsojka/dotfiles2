@@ -14,5 +14,17 @@ module.exports = require('yargs')
     notify: {
       type: 'boolean',
       default: true
+    },
+    rebase: {
+      type: 'boolean',
+      default: false
+    },
+    push: {
+      type: 'boolean',
+      default: false
+    },
+    noVerify: {
+      type: 'boolean',
+      default: true
     }
   });

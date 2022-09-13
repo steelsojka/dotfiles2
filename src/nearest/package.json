@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "bin": {
+    "nearest": "bin/nearest"
+  },
   "dependencies": {
     "yargs": "^17.5.1"
   }

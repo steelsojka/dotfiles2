@@ -22,12 +22,21 @@ module.exports = async (params) => {
 
   if (!Number.isNaN(behindCount) && behindCount > 0) {
     log(`HEAD is ${behindCount} commits behind ${params.upstream}!`);
+
     if (params.notify) {
       notifier.notify({
         title: 'GIT Head Watcher',
         message: `Hello, ${params.repo} is ${behindCount} commits behind ${params.upstream}!`,
         sound: 'Funk'
       });
+    }
+
+    if (params.rebase) {
+      await spawn('git' , ['rebase', `${params.upstream}/${params.branch}`]);
+
+      if (params.push) {
+        await spawn('git', ['push', '--force', ...(params.noVerify ? ['--no-verify'] : [])]);
+      }
     }
   } else {
     log(`HEAD is up to date with ${params.upstream}.`);

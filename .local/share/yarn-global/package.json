@@ -7,6 +7,7 @@
     "markdown-toc": "^1.2.0",
     "prettier": "^2.7.1",
     "ts-node": "^10.8.1",
-    "watch-head": "../../../src/watch-head"
+    "watch-head": "file:../../../src/watch-head",
+    "nearest": "file:../../../src/nearest"
   }
 }
