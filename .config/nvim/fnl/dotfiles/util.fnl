@@ -74,3 +74,6 @@
 
 (defn tail [tbl]
   (. tbl (length tbl)))
+
+(defn get-var [var-name default?]
+  (or (. vim.b var-name) (. vim.g var-name) default?))

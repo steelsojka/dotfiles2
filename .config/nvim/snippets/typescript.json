@@ -4,7 +4,7 @@
     "body": [
       "describe('${1:description}', () => {",
       "\t${2}",
-      "})"
+      "});"
     ],
     "description": "Describe test"
   },
@@ -13,7 +13,7 @@
     "body": [
       "describe('when ${1:something_happens}', () => {",
       "\t${2}",
-      "})"
+      "});"
     ],
     "description": "Describe test scenario"
   },
@@ -22,14 +22,41 @@
     "body": [
       "it('should ${1:do_something}', () => {",
       "\t${2}",
-      "})"
+      "});"
+    ],
+    "description": "Test case"
+  },
+  "ita": {
+    "prefix": ["ita"],
+    "body": [
+      "it('should ${1:do_something}', async () => {",
+      "\t${2}",
+      "});"
+    ],
+    "description": "Test case"
+  },
+  "beforeEach": {
+    "prefix": ["before"],
+    "body": [
+      "beforeEach(() => {",
+      "\t${2}",
+      "});"
+    ],
+    "description": "Test case"
+  },
+  "afterEach": {
+    "prefix": ["after"],
+    "body": [
+      "afterEach(() => {",
+      "\t${2}",
+      "});"
     ],
     "description": "Test case"
   },
   "import": {
     "prefix": ["import"],
     "body": [
-      "import { ${1} } from '${2:package}'"
+      "import { ${1} } from '${2:package}';"
     ],
     "description": "Import"
   }
