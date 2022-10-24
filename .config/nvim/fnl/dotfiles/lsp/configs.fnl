@@ -90,7 +90,7 @@
 
 (defn on-attach [client]
   (lsp-status.on_attach client)
-  (when client.resolved_capabilities.document_highlight
+  (when client.server_capabilities.document_highlight
     (keymap.create-autocmds [["CursorHold" "<buffer>" #(vim.lsp.buf.document_highlight)]
                              ["CursorHoldI" "<buffer>" #(vim.lsp.buf.document_highlight)]
                              ["CursorMoved" "<buffer>" #(vim.lsp.buf.clear_references)]]))
@@ -108,7 +108,7 @@
                      : handlers
                      :capabilities (vim.tbl_extend
                                      "keep"
-                                     (cmp-nvim-lsp.update_capabilities
+                                     (cmp-nvim-lsp.default_capabilities
                                        (vim.lsp.protocol.make_client_capabilities))
                                      lsp-status.capabilities)}
                     (or overrides {}))))

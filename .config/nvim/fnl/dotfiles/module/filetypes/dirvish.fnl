@@ -61,7 +61,7 @@
             :description "Rename"}
      "n mm" {:do #(create "Move file to : " "!mv %s %s" (get-file-under-cursor) true)
              :description "Move"}
-     "n mc" {:do #(create "Copy file to : " "!cp %s %s" (get-file-under-cursor) true)
+     "n mc" {:do #(create "Copy file to : " "!cp -R %s %s" (get-file-under-cursor) true)
              :description "Copy"}
      "n mk" {:do #(let [filepath (get-file-under-cursor)
                         confirmed (-> "Delete %s?"
