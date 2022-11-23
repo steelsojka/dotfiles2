@@ -28,7 +28,9 @@
                     [{:name "nvim_lsp"}
                      {:name "vsnip"}]
                     [{:name "orgmode"}
-                     {:name "buffer"}])})
+                     {:name "buffer"
+                      :option
+                      {:get_bufnrs #(vim.api.nvim_list_bufs)}}])})
       (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]
                               :mapping (cmp.mapping.preset.cmdline)})
       (cmp.setup.cmdline ":" {:sources (cmp.config.sources

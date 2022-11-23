@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "http-server": "^14.1.1",
     "markdown-toc": "^1.2.0",
+    "nearest": "file:../../../src/nearest",
     "prettier": "^2.7.1",
     "ts-node": "^10.8.1",
-    "watch-head": "file:../../../src/watch-head",
-    "nearest": "file:../../../src/nearest"
+    "watch-head": "file:../../../src/watch-head"
   }
 }

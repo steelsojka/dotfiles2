@@ -1,5 +1,6 @@
 (module dotfiles.browser
-  {require {terminal dotfiles.terminal}})
+  {require {terminal dotfiles.terminal
+            utils dotfiles.util}})
 
 (local search-engines
   [{:name "Duck Duck Go"
@@ -11,7 +12,11 @@
    {:name "reddit"
     :url #(string.format "https://www.reddit.com/search?q=%s" $)}
    {:name "npmjs.org"
-    :url #(string.format "https://www.npmjs.com/search?q=%s" $)}])
+    :url #(string.format "https://www.npmjs.com/search?q=%s" $)}
+   {:name "Sourcegraph"
+    :url #(let [source-graph-url (utils.get-var "sourcegraph_url")
+                query (string.gsub $ "%s" "+")]
+            (string.format "%s?q=%s" source-graph-url query))}])
 
 
 (defn open-url [url external?]
