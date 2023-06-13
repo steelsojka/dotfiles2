@@ -5,7 +5,7 @@ for file in ~/.{exports,path,extra,aliases,env,functions}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
 
-ulimit -n 65533
+ulimit -f unlimited
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh

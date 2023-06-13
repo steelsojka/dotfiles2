@@ -16,7 +16,7 @@ local plugins = {
   {"mbbill/undotree", cmd = "UndotreeToggle"},
   "tpope/vim-surround",
   "justinmk/vim-dirvish",
-  "kristijanhusak/vim-dirvish-git",
+  -- "kristijanhusak/vim-dirvish-git",
   "arthurxavierx/vim-caser",
   "mhinz/vim-startify",
   "norcalli/nvim-colorizer.lua",

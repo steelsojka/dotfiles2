@@ -89,7 +89,7 @@ local function make_module_spec(spec, plugin_modules)
       strip_extensions(spec_name)
     )
 
-    spec.config = string.format([[require("%s").configure()]], module_name)
+    spec.config = string.format([[require("plugin_loader").configure_plugin("%s")]], module_name)
   end
 
   if spec_module.run then
@@ -99,13 +99,41 @@ local function make_module_spec(spec, plugin_modules)
   return spec, spec_module
 end
 
+local function source_local_config()
+  local workspace = require "dotfiles.workspace"
+
+  workspace["source-local-config"]({all = true})
+end
+
+local function get_workspace_excluded_plugins()
+  local utils = require "dotfiles.util"
+
+  return utils["get-var"]("packer_excluded_plugins") or {}
+end
+
+local function configure_plugin(plugin_path)
+  local excluded_plugins = get_workspace_excluded_plugins()
+
+  if not vim.tbl_contains(excluded_plugins) then
+    require(plugin_path).configure()
+  end
+end
+
+local function is_plugin_workspace_excluded(plugin)
+  local excluded_plugins = get_workspace_excluded_plugins()
+
+  return vim.tbl_contains(excluded_plugins, plugin)
+end
+
 local function startup()
   -- Load packer and compile fennel.
   bootstrap()
+  source_local_config()
 
   local packer = require "packer"
 
   packer.init({
+    compile_path = string.format("%s/%s/%s", vim.fn.stdpath('config'), 'lua', 'packer_compiled.lua'),
     display = {
       open_fn = require "packer.util".float
     }
@@ -130,9 +158,12 @@ local function startup()
     packer.use(normalized_spec)
   end
 
+  require "packer_compiled"
   require "dotfiles.bootstrap"
 end
 
 return {
-  startup = startup
+  startup = startup,
+  configure_plugin = configure_plugin,
+  is_plugin_workspace_excluded = is_plugin_workspace_excluded
 }

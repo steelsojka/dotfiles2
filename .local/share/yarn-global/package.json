@@ -8,6 +8,7 @@
     "markdown-toc": "^1.2.0",
     "nearest": "file:../../../src/nearest",
     "prettier": "^2.7.1",
+    "rename-files": "file:../../../src/rename-files",
     "ts-node": "^10.8.1",
     "watch-head": "file:../../../src/watch-head"
   }

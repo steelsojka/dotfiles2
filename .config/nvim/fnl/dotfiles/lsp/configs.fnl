@@ -26,6 +26,8 @@
         :quoteStyle "single"}}}}
  ; :lwc {:root_dir (root-pattern "lwc.config.json")}
  :jsonls {}
+ :html {}
+ :emmet_ls {}
  :omnisharp
  {:settings
   {:omnisharp
@@ -72,12 +74,14 @@
     "javascript.jsx" "eslint"
     "javascriptreact" "eslint"
     "typescriptreact" "eslint"}}}
- :sumneko_lua {:settings
-               {:Lua
-                {:runtime {:version "LuaJIT" :path (vim.split package.path ";")}
-                 :diagnostics {:globals [:vim]}
-                 :workspace {:library {(vim.fn.expand "$VIMRUNTIME/lua") true
-                                       (vim.fn.expand "$VIMRUNTIME/lua/vim/lsp") true}}}}}})
+ :lua_ls
+  {:settings
+   {:Lua
+    {:runtime {:version "LuaJIT"}
+     :diagnostics {:globals [:vim]}
+     :workspace {:library (vim.api.nvim_get_runtime_file "" true)}
+     :telemetry {:enable false}}}}
+ })
 
 (def handlers {
   "textDocument/publishDiagnostics" (vim.lsp.with

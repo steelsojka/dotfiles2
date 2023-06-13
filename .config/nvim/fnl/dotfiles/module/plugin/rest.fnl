@@ -8,4 +8,6 @@
        :highlight
        {:enabled true
         :timeout 150}
+       :result
+       {:formatters {:html false}}
        :jump_to_request false})))

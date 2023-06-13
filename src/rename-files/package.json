@@ -1,0 +1,15 @@
+{
+  "name": "rename-files",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "rename-files": "./bin/rename-files.js"
+  },
+  "author": "Steven Sojka",
+  "license": "ISC",
+  "dependencies": {
+    "glob": "^10.2.2",
+    "yargs": "^17.7.1"
+  }
+}
