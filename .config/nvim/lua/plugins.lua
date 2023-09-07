@@ -16,7 +16,7 @@ local plugins = {
   {"mbbill/undotree", cmd = "UndotreeToggle"},
   "tpope/vim-surround",
   "justinmk/vim-dirvish",
-  -- "kristijanhusak/vim-dirvish-git",
+  "kristijanhusak/vim-dirvish-git",
   "arthurxavierx/vim-caser",
   "mhinz/vim-startify",
   "norcalli/nvim-colorizer.lua",
@@ -79,10 +79,11 @@ local plugins = {
 
   -- Lsp
   "neovim/nvim-lspconfig",
-  "williamboman/nvim-lsp-installer",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
   {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons"
+    requires = "nvim-tree/nvim-web-devicons"
   },
   "nvim-lua/lsp-status.nvim",
 
