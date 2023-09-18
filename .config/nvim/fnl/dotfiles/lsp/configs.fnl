@@ -25,6 +25,7 @@
        {:importModuleSpecifier "non-relative"
         :quoteStyle "single"}}}}
  ; :lwc {:root_dir (root-pattern "lwc.config.json")}
+ :bashls {}
  :jsonls {}
  :html {}
  :emmet_ls {}

@@ -15,8 +15,6 @@
          :tree_docs {:enable true
                      :keymaps {:doc_node_at_cursor "<leader>dd"
                                :doc_all_in_range "<leader>dd"}}
-         :playground {:enable true
-                      :persist_queries true}
          ; :textobjects {:select {:enable false
          ;                        :keymaps {:af "@function.outer"
          ;                                  :if "@function.inner"

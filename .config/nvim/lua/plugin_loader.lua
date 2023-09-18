@@ -1,5 +1,7 @@
+local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 local function load_lib(package_name, clone_url, branch)
-  local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/" .. package_name
+  local install_path = lazy_path .. "/" .. package_name
 
   if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.cmd(string.format("!git clone -b %s %s %s", branch, clone_url, install_path))
@@ -8,18 +10,19 @@ local function load_lib(package_name, clone_url, branch)
   vim.cmd("packadd " .. package_name)
 end
 
-local function load_module(module_path)
-  local module_name = string.gsub(module_path, "/", ".")
-
-  if not package.loaded[module_name] then
-    pcall(require, module_path)
+local function load_lazy()
+  if not vim.loop.fs_stat(lazy_path) then
+    vim.fn.system {
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=statble",
+      lazy_path
+    }
   end
 
-  return package.loaded[module_name]
-end
-
-local function load_plugin_module(name)
-  return load_module("dotfiles/module/plugin/" .. name)
+  vim.opt.rtp:prepend(lazy_path)
 end
 
 local function strip_extensions(str)
@@ -36,87 +39,18 @@ local function strip_extensions(str)
   return table.concat(result, "")
 end
 
-local function load_all_configs()
-  local utils = load_module("dotfiles/util")
-  local config_path = vim.fn.stdpath "config"
-  local glob = config_path .. "/lua/dotfiles/module/plugin/*.lua"
-
-  local file_paths = utils.glob(glob)
-  local plugin_modules = {}
-
-  for _, file_path in ipairs(file_paths) do
-    local module_name = strip_extensions(vim.fn.fnamemodify(file_path, ":t"))
-
-    plugin_modules[module_name] = load_plugin_module(module_name)
-  end
-
-  return plugin_modules
-end
-
-local function bootstrap()
-  pcall(require, "impatient")
-
-  -- Uncomment for profiling startup time
-  --[[ pcall(function()
-    require "impatient".enable_profile()
-  end) ]]
-
-  load_lib("packer.nvim", "https://github.com/wbthomason/packer.nvim", "master")
-  load_lib("aniseed", "https://github.com/Olical/aniseed", "v3.24.0")
-
-  -- Compile all fennel before we do anything...
-  -- Note, don't load anything... just compile.
-  require "aniseed.env".init({module = "dotfiles"})
-end
-
--- Plugin modules are associated by the plugin name MINUS any extensions.
--- So, pears.nvim would become just "pears".
-local function make_module_spec(spec, plugin_modules)
-  if type(spec) == "string" then
-    spec = {spec}
-  end
-
-  local spec_name = spec.alias or strip_extensions(vim.fn.fnamemodify(spec[1], ":t"))
-  local spec_module = plugin_modules[spec_name]
-
-  if not spec_module then
-    return spec, nil
-  end
-
-  if type(spec_module.configure) == "function" then
-    local module_name = string.format(
-      "dotfiles.module.plugin.%s",
-      strip_extensions(spec_name)
-    )
-
-    spec.config = string.format([[require("plugin_loader").configure_plugin("%s")]], module_name)
-  end
-
-  if spec_module.run then
-    spec.run = spec_module.run
-  end
-
-  return spec, spec_module
-end
-
-local function source_local_config()
-  local workspace = require "dotfiles.workspace"
-
-  workspace["source-local-config"]({all = true})
-end
-
 local function get_workspace_excluded_plugins()
   local utils = require "dotfiles.util"
 
   return utils["get-var"]("packer_excluded_plugins") or {}
 end
 
-local function configure_plugin(plugin_path)
-  local excluded_plugins = get_workspace_excluded_plugins()
+local function bootstrap()
+  load_lib("aniseed", "https://github.com/Olical/aniseed", "v3.24.0")
 
-  if not vim.tbl_contains(excluded_plugins) then
-    require(plugin_path).configure()
-  end
+  -- Compile all fennel before we do anything...
+  -- Note, don't load anything... just compile.
+  require "aniseed.env".init({module = "dotfiles"})
 end
 
 local function is_plugin_workspace_excluded(plugin)
@@ -125,45 +59,91 @@ local function is_plugin_workspace_excluded(plugin)
   return vim.tbl_contains(excluded_plugins, plugin)
 end
 
+-- Plugin modules are associated by the plugin name MINUS any extensions.
+-- So, pears.nvim would become just "pears".
+local function make_module_spec(spec)
+  if type(spec) == "string" then
+    spec = {spec}
+  end
+
+  local spec_name = spec.alias or strip_extensions(vim.fn.fnamemodify(spec[1], ":t"))
+  local module_name = string.format(
+    "dotfiles.module.plugin.%s",
+    strip_extensions(spec_name)
+  )
+
+  if not spec.init then
+    spec.init = function(plugin)
+      pcall(function()
+        require(module_name).setup(plugin)
+      end)
+    end
+  end
+
+  if not spec.build then
+    spec.build = function(plugin)
+      pcall(function()
+        require(module_name).build(plugin)
+      end)
+    end
+  end
+
+  if not spec.config then
+    spec.config = function(plugin, opts)
+      pcall(function()
+        require(module_name).configure(plugin, opts)
+      end)
+    end
+  end
+
+  local spec_cond = spec.cond
+
+  spec.cond = function(plugin)
+    local spec_result = true
+
+    if type(spec_cond) == "boolean" then
+      spec_result = spec_cond
+    elseif type(spec_cond) == "function" then
+      spec_result = spec_cond(plugin)
+    end
+
+    local module_result, err = pcall(function()
+      return require(module_name).cond(plugin)
+    end)
+
+    module_result = (not err) and module_result or true
+
+    return (not is_plugin_workspace_excluded(spec[1]))
+      and spec_result
+      and module_result
+  end
+
+  return spec
+end
+
+local function source_local_config()
+  local workspace = require "dotfiles.workspace"
+
+  workspace["source-local-config"]({all = true})
+end
+
 local function startup()
-  -- Load packer and compile fennel.
+  load_lazy()
   bootstrap()
   source_local_config()
 
-  local packer = require "packer"
-
-  packer.init({
-    compile_path = string.format("%s/%s/%s", vim.fn.stdpath('config'), 'lua', 'packer_compiled.lua'),
-    display = {
-      open_fn = require "packer.util".float
-    }
-  })
-  packer.reset()
-
   local plugins = require "plugins"
-
-  -- Read all plugin modules.
-  local plugin_modules = load_all_configs()
+  local specs = {}
 
   for _, spec in ipairs(plugins) do
-    local normalized_spec, spec_module = make_module_spec(spec, plugin_modules)
-
-    if spec_module then
-      -- Run setup before we load the plugin.
-      if spec_module.setup then
-        spec_module.setup()
-      end
-    end
-
-    packer.use(normalized_spec)
+    table.insert(specs, make_module_spec(spec))
   end
 
-  require "packer_compiled"
+  require "lazy".setup(specs)
   require "dotfiles.bootstrap"
 end
 
 return {
   startup = startup,
-  configure_plugin = configure_plugin,
   is_plugin_workspace_excluded = is_plugin_workspace_excluded
 }
