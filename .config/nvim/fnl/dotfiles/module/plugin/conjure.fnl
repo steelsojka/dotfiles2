@@ -5,20 +5,20 @@
   (set vim.g.conjure#mapping#prefix "<leader>m"))
 
 (defn init-local-mappings []
-  (keymap.init-buffer-mappings
-    {:l {:name "+log"}
-     :e {:name "+eval"}
-     :g {:name "+goto"}})
   (keymap.register-buffer-mappings
-    {"n mls" {:description "H split"}
-     "n mlt" {:description "New tab"}
-     "n mlq" {:description "Close"}
-     "n mlv" {:description "V split"}
-     "n mee" {:description "Form under cursor"}
-     "n mer" {:description "Root form"}
-     "n mem" {:description "At mark"}
-     "n mew" {:description "Work under cursor"}
-     "n mef" {:description "File from disk"}
-     "n mgd" {:description "Go to definition"}
-     "n mE" {:description "Motion"}
-     "n meb" {:description "File buffer"}}))
+    {"ml" "+log"
+     "me" "+eval"
+     "mg" "+goto"
+     "mls" "H split"
+     "mlt" "New tab"
+     "mlq" "Close"
+     "mlv" "V split"
+     "mee" "Form under cursor"
+     "mer" "Root form"
+     "mem" "At mark"
+     "mew" "Work under cursor"
+     "mef" "File from disk"
+     "mgd" "Go to definition"
+     "mE" "Motion"
+     "meb" "File buffer"}
+    {:prefix "<leader>"}))

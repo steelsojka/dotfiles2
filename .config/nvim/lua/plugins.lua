@@ -1,6 +1,6 @@
 return {
-  "liuchengxu/vim-which-key",
-  {"junegunn/fzf", alias = "fzf-core"},
+  "folke/which-key.nvim",
+  {"junegunn/fzf", name = "fzf-core"},
   "junegunn/fzf.vim",
   {
     "folke/tokyonight.nvim",

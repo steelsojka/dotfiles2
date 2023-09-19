@@ -41,13 +41,12 @@
 
 (fn []
   (vim.cmd "setlocal nospell")
-  (keymap.init-buffer-mappings {:g {:name "+goto"}})
   (keymap.register-buffer-mappings
-    {"n md" {:do #(create "Create directory: " "!mkdir %s/%s" (get-directory))
+    {"<leader>md" {:do #(create "Create directory: " "!mkdir %s/%s" (get-directory))
              :description "Make directory"}
-     "n mf" {:do #(create "Create file: " "!touch %s/%s" (get-directory))
+     "<leader>mf" {:do #(create "Create file: " "!touch %s/%s" (get-directory))
              :description "Create file"}
-     "n mr" {:do #(let [filepath (get-file-under-cursor)
+     "<leader>mr" {:do #(let [filepath (get-file-under-cursor)
                         filename (get-path-tail filepath)
                         filehead (get-directory)]
                     (vim.ui.input
@@ -59,11 +58,11 @@
                              (vim.cmd))
                          (vim.api.nvim_input "R"))))
             :description "Rename"}
-     "n mm" {:do #(create "Move file to : " "!mv %s %s" (get-file-under-cursor) true)
+     "<leader>mm" {:do #(create "Move file to : " "!mv %s %s" (get-file-under-cursor) true)
              :description "Move"}
-     "n mc" {:do #(create "Copy file to : " "!cp -R %s %s" (get-file-under-cursor) true)
+     "<leader>mc" {:do #(create "Copy file to : " "!cp -R %s %s" (get-file-under-cursor) true)
              :description "Copy"}
-     "n mk" {:do #(let [filepath (get-file-under-cursor)
+     "<leader>mk" {:do #(let [filepath (get-file-under-cursor)
                         confirmed (-> "Delete %s?"
                                       (string.format filepath)
                                       (vim.fn.confirm))]
@@ -73,8 +72,8 @@
                           (vim.cmd))
                       (vim.api.nvim_input "R")))
              :description "Delete"}
-     "n mgf" {:do #(-> {:cwd (vim.fn.expand "%:p:h")} (telescope.find_files)) :description "Child file"}
-     "n mgF" {:do #(-> (vim.fn.getcwd) (find-files)) :description "Project file"}
-     "nH" {:do "<Plug>(dirvish_up)"}
-     "n q" {:do "<Plug>(dirvish_quit)" }
-     "n Q" {:do "<Plug>(dirvish_quit)" }}))
+     "<leader>mgf" {:do #(-> {:cwd (vim.fn.expand "%:p:h")} (telescope.find_files)) :description "Child file"}
+     "<leader>mgF" {:do #(-> (vim.fn.getcwd) (find-files)) :description "Project file"}
+     "H" {:do "<Plug>(dirvish_up)" :description "Up"}
+     "<leader>q" {:do "<Plug>(dirvish_quit)" :description "Quit"}
+     "<leader>Q" {:do "<Plug>(dirvish_quit)" :description "Quit"}}))

@@ -42,15 +42,17 @@
                                          (jdtls-setup.add_commands)
                                          (jdtls.setup_dap))
                             :root_dir root-dir})
-    (keymap.init-buffer-mappings {:t {:name "+test"}})
     (keymap.register-buffer-mappings
-      {"n ca" {:do #(jdtls.code_action)}
-       "v ca" {:do #(jdtls.code_action true)}
-       "n ma" {:do #(dap-attach) :description "Attach to debugger"}
-       "n mtc" {:do #(jdtls.test_class) :description "Test class"}
-       "n mtm" {:do #(jdtls.test_nearest_method) :description "Test method"}
-       "n mr" {:do #(jdtls.code_action false "refactor") :description "Refactor"}
-       "n mo" {:do #(jdtls.organize_imports) :description "Organize imports"}
-       "n mv" {:do #(jdtls.extract_variable) :description "Extract variable"}
-       "v mv" {:do #(jdtls.extract_variable true) :description "Extract variable"}
-       "v mm" {:do #(jdtls.extract_method true) :description "Extract method"}})))
+      {"ca" {:do #(jdtls.code_action true)}
+       "mv" {:do #(jdtls.extract_variable true) :description "Extract variable"}
+       "mm" {:do #(jdtls.extract_method true) :description "Extract method"}}
+      {:prefix "<leader>" :mode "v"})
+    (keymap.register-buffer-mappings
+      {"ca" {:do #(jdtls.code_action)}
+       "ma" {:do #(dap-attach) :description "Attach to debugger"}
+       "mtc" {:do #(jdtls.test_class) :description "Test class"}
+       "mtm" {:do #(jdtls.test_nearest_method) :description "Test method"}
+       "mr" {:do #(jdtls.code_action false "refactor") :description "Refactor"}
+       "mo" {:do #(jdtls.organize_imports) :description "Organize imports"}
+       "mv" {:do #(jdtls.extract_variable) :description "Extract variable"}}
+      {:prefix "<leader>"})))

@@ -3,6 +3,7 @@
 
 (fn []
   (keymap.register-buffer-mappings
-    {"n mp" {:do "<Cmd>PlantumlOpen<CR>" :description "Preview UML"}
-     "n ms" {:do ":PlantumlSave " :description "Save UML"}
-     "n mS" {:do "<Cmd>PlantumlStop<CR>" :description "Stop watching"}}))
+    {"mp" {:do "<Cmd>PlantumlOpen<CR>" :description "Preview UML"}
+     "ms" {:do ":PlantumlSave " :description "Save UML"}
+     "mS" {:do "<Cmd>PlantumlStop<CR>" :description "Stop watching"}}
+    {:prefix "<leader>"}))

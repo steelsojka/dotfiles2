@@ -1,9 +1,10 @@
 (module dotfiles.module.plugin.fzf-core)
 
-(defn run [conf]
-  (->> conf.install_path
+(defn build [plugin]
+  (print (vim.inspect plugin))
+  (->> plugin.dir
        (string.format "!%s/install --all")
        (vim.cmd))
-  (->> conf.install_path
+  (->> plugin.dir
        (string.format "!ln -s %s ~/.fzf")
        (vim.cmd)))

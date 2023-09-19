@@ -13,4 +13,5 @@
 
 (fn []
   (keymap.register-buffer-mappings
-    {"n mc" {:do #(compile-project) :description "Compile"}}))
+    {"mc" {:do #(compile-project) :description "Compile"}}
+    {:prefix "<leader>"}))

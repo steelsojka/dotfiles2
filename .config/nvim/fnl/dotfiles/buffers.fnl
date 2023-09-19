@@ -36,15 +36,17 @@
 
 (defn get-visual-selection [bufnr?]
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
-        [_ start-row start-col] (vim.fn.getpos "'<")
-        [_ end-row end-col] (vim.fn.getpos "'>")
+        [_ start-row start-col start-offset] (vim.fn.getpos "v")
+        [_ end-row end-col end-offset] (vim.fn.getpos ".")
+        offset-start-row (- start-row 1)
+        offset-end-row (- end-row 1)
         lines (vim.api.nvim_buf_get_lines
                 bufnr
-                (- start-row 1)
+                offset-start-row
                 end-row
                 false)
         first-line 1
-        last-line (+ (- end-row start-row) 1)]
+        last-line (length lines)]
       (if (= start-row end-row)
         (tset lines
               first-line

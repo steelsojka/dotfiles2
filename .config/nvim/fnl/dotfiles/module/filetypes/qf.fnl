@@ -4,13 +4,16 @@
 
 (fn []
   (keymap.register-buffer-mappings
-    {"n mn" {:do ":cnewer<CR>" :description "Newer list"}
-     "n mp" {:do ":colder<CR>" :description "Older list"}
-     "n ml" {:do ":chistory<CR>" :description "List history"}
-     "n md" {:do #(let [line (. (vim.fn.getpos ".") 2)]
-                    (qf.delete-item line line))
-             :description "Delete item"}
-     "v md" {:do #(qf.delete-item
+    {"md" {:do #(qf.delete-item
                     (. (vim.fn.getpos "'<") 2)
                     (. (vim.fn.getpos "'>") 2))
-             :description "Delete selected items"}}))
+             :description "Delete selected items"}}
+    {:prefix "<leader>" :mode "v"})
+  (keymap.register-buffer-mappings
+    {"mn" {:do ":cnewer<CR>" :description "Newer list"}
+     "mp" {:do ":colder<CR>" :description "Older list"}
+     "ml" {:do ":chistory<CR>" :description "List history"}
+     "md" {:do #(let [line (. (vim.fn.getpos ".") 2)]
+                    (qf.delete-item line line))
+             :description "Delete item"}}
+    {:prefix "<leader>"}))

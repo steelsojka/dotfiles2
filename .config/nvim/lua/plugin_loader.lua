@@ -1,7 +1,8 @@
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local pack_dotfiles_path = vim.fn.stdpath("data") .. "/site/pack/dotfiles/opt"
 
 local function load_lib(package_name, clone_url, branch)
-  local install_path = lazy_path .. "/" .. package_name
+  local install_path = pack_dotfiles_path .. "/" .. package_name
 
   if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.cmd(string.format("!git clone -b %s %s %s", branch, clone_url, install_path))
@@ -66,7 +67,7 @@ local function make_module_spec(spec)
     spec = {spec}
   end
 
-  local spec_name = spec.alias or strip_extensions(vim.fn.fnamemodify(spec[1], ":t"))
+  local spec_name = spec.name or strip_extensions(vim.fn.fnamemodify(spec[1], ":t"))
   local module_name = string.format(
     "dotfiles.module.plugin.%s",
     strip_extensions(spec_name)
@@ -107,11 +108,13 @@ local function make_module_spec(spec)
       spec_result = spec_cond(plugin)
     end
 
-    local module_result, err = pcall(function()
+    local has_mod_cond, module_result = pcall(function()
       return require(module_name).cond(plugin)
     end)
 
-    module_result = (not err) and module_result or true
+    if not has_mod_cond then
+      module_result = true
+    end
 
     return (not is_plugin_workspace_excluded(spec[1]))
       and spec_result

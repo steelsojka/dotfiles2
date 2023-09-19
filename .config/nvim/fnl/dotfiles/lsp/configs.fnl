@@ -100,11 +100,11 @@
                              ["CursorHoldI" "<buffer>" #(vim.lsp.buf.document_highlight)]
                              ["CursorMoved" "<buffer>" #(vim.lsp.buf.clear_references)]]))
   (keymap.register-buffer-mappings
-    {"ngd" {:do #(vim.lsp.buf.definition) :silent true}
-     "ngy" {:do #(vim.lsp.buf.type_definition) :silent true}
-     "ngi" {:do #(vim.lsp.buf.implementation :silent true)}
-     "ngr" {:do #(telescope-builtin.lsp_references) :silent true}
-     "ngR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true}}))
+    {"gd" {:do #(vim.lsp.buf.definition) :silent true :description "Go to definition"}
+     "gy" {:do #(vim.lsp.buf.type_definition) :silent true :description "Go to type definition"}
+     "gi" {:do #(vim.lsp.buf.implementation) :silent true :description "Go to implementation"}
+     "gr" {:do #(telescope-builtin.lsp_references) :silent true :description "Search references"}
+     "gR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true :description "References"}}))
 
 (defn get-config [overrides]
   (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]
