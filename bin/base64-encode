@@ -1,0 +1,21 @@
+#! /usr/bin/env node
+
+const fs = require("fs");
+const path = require("path");
+const dataTypes = new Map([
+  [".png", "image/png"],
+  [".jpg", "image/jpeg"],
+  [".jpeg", "image/jpeg"],
+  [".svg", "image/svg+xml"]
+]);
+const [imagePath] = process.argv.slice(2);
+
+const extension = path.extname(imagePath);
+const fileContents = fs.readFileSync(imagePath).toString("base64");
+const dataType = dataTypes.get(extension);
+
+if (!dataType) {
+  throw new Error("Could not determine datatype!");
+}
+
+process.stdout.write(`data:${dataType};charset=utf-8;base64,${fileContents}`);
