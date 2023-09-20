@@ -4,10 +4,12 @@
             core aniseed.core}})
 
 (var repls
-  {:javascript {:cmd #(let [cwd (vim.fn.getcwd)]
-                        (string.format "NODE_PATH=%q node" cwd))}
+  {:javascript {:cmd #"node"
+                :env #(let [cwd (vim.fn.getcwd)]
+                        (string.format "NODE_PATH=%q" cwd))}
    :typescript {:cmd #(let [cwd (vim.fn.getcwd)]
-                        (string.format "ts-node --dir %q --transpile-only" cwd))}})
+                        (string.format "ts-node --dir %q --transpile-only" cwd))
+                :env #""}})
 
 (tset repls :typescriptreact repls.typescript)
 (tset repls :javascriptreact repls.javascriptreact)
@@ -18,9 +20,9 @@
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))]
     (or (. active-repls bufnr) [])))
 
-(defn create-repl [bufnr cmd ft]
-  (let [[new-bufnr] (terminal.new-term-buf cmd)]
-    (tset active-repls bufnr [new-bufnr ft])
+(defn create-repl [bufnr cmd env]
+  (let [[new-bufnr] (terminal.new-term-buf cmd env)]
+    (tset active-repls bufnr [new-bufnr])
     new-bufnr))
 
 (defn open-repl [bufnr? ft?]
@@ -34,7 +36,10 @@
       (when (not existing-repl)
         (if (not repl-def)
           (print (.. "No REPL definition for " ft))
-          (set repl-bufnr (create-repl bufnr (repl-def.cmd)))))
+          (set repl-bufnr (create-repl
+                            bufnr
+                            (repl-def.cmd)
+                            (repl-def.env)))))
       (when (and repl-bufnr (not (buffers.is-buf-visible repl-bufnr)))
         (vim.cmd "vsplit")
         (vim.cmd (string.format "buffer %d" repl-bufnr))

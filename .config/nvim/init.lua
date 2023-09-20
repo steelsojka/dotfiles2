@@ -32,9 +32,12 @@ vim.opt.completeopt = "menuone,noselect"
 vim.opt.complete = ".,b,w,u"
 vim.opt.gdefault = true
 vim.opt.dictionary = "/usr/share/dict/words"
-vim.opt.shell = "zsh"
+vim.opt.shell = vim.env.NVIM_SHELL
 vim.opt.shortmess:append "c"
 vim.opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
+
+vim.g.tshell = vim.env.NVIM_TSHELL
+vim.g.tshell_cmd_flag = vim.env.NVIM_TSHELL_CMD_FLAG
 
 -- vim.lsp.set_log_level("debug")
 

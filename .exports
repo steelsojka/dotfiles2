@@ -11,10 +11,6 @@ export HISTCONTROL=ignoredups
 # Make some commands not show up in history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
-# Network interface to use for network scripts.
-# Should be overriden per machine...
-export MAIN_NET_INT=""
-
 export VOLTA_HOME="$HOME/.volta"
 
 # Prefer US English and use UTF-8
@@ -30,6 +26,12 @@ export MANPAGER="nvim +Man!"
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
 
+# Shell used for non-interactive nvim commands
+export NVIM_SHELL="bash"
+# Shell used for the built in terminal (with custom apis)
+export NVIM_TSHELL="nix-shell"
+# Command flag to execute a command with the shell above
+export NVIM_TSHELL_CMD_FLAG="--command"
 export XDG_CONFIG_HOME="$HOME/.config"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export BAT_THEME=OceanicNext

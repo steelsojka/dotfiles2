@@ -13,17 +13,23 @@
   (let [cwd (if is-local (nvim.fn.expand "%:p:h") (nvim.fn.getcwd))
         buf (nvim.create_buf true false)]
     (nvim.set_current_buf buf)
-    (nvim.fn.termopen vim.o.shell {: cwd})
+    (nvim.fn.termopen vim.g.tshell {: cwd})
     (nvim.ex.normal "i")))
 
 (defn get-channel [bufnr?]
   (vim.api.nvim_buf_get_option (or bufnr? 0) "channel"))
 
-(defn new-term-buf [cmd bufnr?]
+(defn new-term-buf [cmd env? bufnr?]
   (let [new-bufnr (or bufnr? (vim.api.nvim_create_buf false false))
-        current-buf (vim.api.nvim_get_current_buf)]
+        env (or env? "")
+        current-buf (vim.api.nvim_get_current_buf)
+        shell-cmd (string.format "%s %s %s \"%s\""
+                                 env
+                                 vim.g.tshell
+                                 vim.g.tshell_cmd_flag
+                                 cmd)]
     (vim.cmd (string.format "buffer %d" new-bufnr))
-    (vim.fn.termopen cmd)
+    (vim.fn.termopen shell-cmd)
     (vim.api.nvim_set_current_buf current-buf)
     (let [channel (get-channel new-bufnr)]
       [new-bufnr channel])))
