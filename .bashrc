@@ -10,6 +10,8 @@ dotfiles config status.showUntrackedFiles no
 
 ulimit -f unlimited
 
+source ~/.bash_prompt
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export NODE_EXTRA_CA_CERTS="$HOME/npm-sfdc-certs.pem"

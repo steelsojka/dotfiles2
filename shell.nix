@@ -18,4 +18,8 @@ pkgs.mkShell {
     pkgs.fd
     pkgs.diff-so-fancy
   ];
+
+  shellHook = ''
+    source ~/.path
+  '';
 }
