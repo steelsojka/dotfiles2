@@ -29,9 +29,9 @@ export GREP_OPTIONS="--color=auto"
 # Shell used for non-interactive nvim commands
 export NVIM_SHELL="bash"
 # Shell used for the built in terminal (with custom apis)
-export NVIM_TSHELL="nix-shell"
+export NVIM_TSHELL="bash"
 # Command flag to execute a command with the shell above
-export NVIM_TSHELL_CMD_FLAG="--command"
+export NVIM_TSHELL_CMD_FLAG="-c"
 export XDG_CONFIG_HOME="$HOME/.config"
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 export BAT_THEME=OceanicNext
