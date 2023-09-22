@@ -1,6 +1,5 @@
 (module dotfiles.module.mappings
   {require {nvim aniseed.nvim
-            which-key dotfiles.which-key
             files dotfiles.files
             util dotfiles.util
             buffers dotfiles.buffers
@@ -73,7 +72,7 @@
 (keymap.register-mappings
   {"," {:do #(tele.buffers) :description "Switch buffer"}
    "." {:do #(tele.find-files) :description "Find files"}
-   "<leader><CR>" {:do #(telescope.marks) :description "Jump to mark"}
+   "<CR>" {:do #(telescope.marks) :description "Jump to mark"}
    "<leader>" {:do #(telescope.commands) :description "Ex commands"}
    "\"" {:do "q:" :description "Ex History"}
    "fs" {:do "<Cmd>w<CR>" :description "Save file"}

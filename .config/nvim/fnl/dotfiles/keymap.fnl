@@ -14,14 +14,15 @@
 (defn- normalize-mapping [mapping]
   (if (= (type mapping) "string")
     mapping
-    {1 (or mapping.do (. mapping 1))
-     2 mapping.description
-     :name mapping.name
-     :silent mapping.silent
-     :buffer mapping.buffer
-     :expr mapping.expr
-     :nowait mapping.nowait
-     :mode mapping.mode}))
+    (let [lhs (or mapping.do (. mapping 1))
+          entry [lhs mapping.description]]
+      (tset entry :name mapping.name)
+      (tset entry :silent mapping.silent)
+      (tset entry :buffer mapping.buffer)
+      (tset entry :expr mapping.expr)
+      (tset entry :nowait mapping.nowait)
+      (tset entry :mode mapping.mode)
+      entry)))
 
 (defn- normalize-mappings [mappings]
   (let [result {}]

@@ -29,30 +29,40 @@ WHITE='\[\e[0;37m\]'
 BWHITE='\[\e[1;37m\]'
 BGWHITE='\[\e[1;37m\]'
 
-PROMPT_COMMAND=smile_prompt
+PROMPT_COMMAND=prompt
 
-function get_git_branch_prompt
-{
-  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+function get_git_branch_prompt {
+  local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  local diff_stat=$(git status --porcelain 2>/dev/null)
+  local diff_working_stat=$(git diff --stat 2>/dev/null)
+  local mod_color="\e[1;32m"
+  local modifier=""
 
-  if [ "$BRANCH" != "" ]; then
-    echo " ($BRANCH)"
+  if [ "$diff_stat" != "" ]; then
+    mod_color="\e[1;31m"
+  fi
+
+  if [ "$diff_working_stat" != "" ]; then
+    modifier="*"
+  fi
+
+  if [ "$branch" != "" ]; then
+    echo -e " \e[1;36m(${mod_color}${branch}${modifier}\e[1;36m)"
   fi
 }
 
-function smile_prompt
-{
-PS1=""
+function prompt {
+  PS1=""
 
-if [ $UID -eq 0 ]
-then
-#root user color
-  UC="${RED}"
-  PS1="${RED}root "
-fi
+  if [ $UID -eq 0 ]; then
+    #root user color
+    UC="${RED}"
+    PS1="${RED}root "
+  fi
 
-DF='\[\e[0m\]'
+  DF='\[\e[0m\]'
 
-BRANCH='$(get_git_branch_prompt)'
-PS1="$PS1${CYAN}\W${BLUE}$BRANCH ${BYELLOW}\$${DF} "
+  BRANCH='$(get_git_branch_prompt)'
+  BRANCH_STATUS='$(get_branch_status_line)'
+  PS1="$PS1${CYAN}\W$BRANCH ${BYELLOW}\$${DF} "
 }
