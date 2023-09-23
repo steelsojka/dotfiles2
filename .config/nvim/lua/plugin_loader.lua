@@ -18,7 +18,7 @@ local function load_lazy()
       "clone",
       "--filter=blob:none",
       "https://github.com/folke/lazy.nvim.git",
-      "--branch=statble",
+      "--branch=stable",
       lazy_path
     }
   end
