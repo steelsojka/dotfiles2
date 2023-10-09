@@ -1,4 +1,4 @@
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/5148520bfab61f99fd25fb9ff7bfbb50dad3c9db.tar.gz") {} }:
+{ pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {
   packages = [
@@ -17,9 +17,14 @@ pkgs.mkShell {
     pkgs.w3m
     pkgs.fd
     pkgs.diff-so-fancy
+    pkgs.cargo
+    pkgs.tmux
+    pkgs.sshfs
+    pkgs.rclone
+    (pkgs.nnn.override { withNerdIcons = true; })
   ];
 
-  shellHook = ''
+  shellHooks = ''
     source ~/.path
   '';
 }

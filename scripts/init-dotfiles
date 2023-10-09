@@ -7,3 +7,6 @@ rm -r $HOME/.dotfiles-tmp
 
 # Install nix
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
+
+# Install nnn plugins
+sh -c "$(curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs)"

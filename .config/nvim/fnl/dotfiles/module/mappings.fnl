@@ -79,8 +79,8 @@
    "fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
    "f/" {:do #(telescope.current_buffer_fuzzy_find) :description "Search lines"}
    "ff" {:do "<Cmd>Format<CR>" :description "Format file"}
-   "fo" {:do "<Cmd>Dirvish %:p:h<CR>" :description "Show in tree"}
-   "fO" {:do "<Cmd>vsp +Dirvish %:p:h<CR>" :description "Show in split tree"}
+   "fo" {:do "<Cmd>NnnPicker %:p:h<CR>" :description "Show in tree"}
+   "fO" {:do "<Cmd>NnnExplorer %:p:h<CR>" :description "Show in split tree"}
    "fr" {:do #(telescope.oldfiles) :description "Open recent files"}
    "fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
    "fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
@@ -137,8 +137,8 @@
    "psc" {:do "<Cmd>SClose<CR>" :description "Project session close"}
    "psd" {:do #(sessions.delete-session true) :description "Delete (default)"}
    "psD" {:do #(sessions.delete-session) :description "Delete"}
-   "pT" {:do "<Cmd>vsp +Dirvish<CR>" :description "Open File explorer in split"}
-   "pt" {:do "<Cmd>Dirvish<CR>" :description "Open file Explorer"}
+   "pT" {:do "<Cmd>NnnExplorer<CR>" :description "Open File explorer in split"}
+   "pt" {:do "<Cmd>NnnPicker" :description "Open file Explorer"}
    "pq" {:do "<Cmd>qall<CR>" :description "Quit project"}
    "pQ" {:do "<Cmd>qall!<CR>" :description "Quit project force"}
    "pc" {:do #(ws.cd-to-root) :description "Cwd to root"}

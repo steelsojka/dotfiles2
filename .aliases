@@ -1,5 +1,6 @@
 alias vim="nvim"
 alias p="cd ~/src"
+alias nnn="nnn -e"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
