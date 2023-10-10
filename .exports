@@ -40,6 +40,5 @@ export FZF_DEFAULT_OPTS="--bind ctrl-a:toggle-all --layout=reverse --margin=1,1 
 export FZF_ALT_C_OPTS="--preview 'ls -la {}'"
 
 # NNN
-
 export NNN_PLUG='f:finder;F:fzcd;o:fzopen;d:diffs'
 export NNN_FIFO='/tmp/nnn.fifo'
