@@ -1,6 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-# Make vim the default editor
+export ZSH=$HOME/.oh-my-zsh # Make vim the default editor
 export EDITOR="nvim"
 
 # Larger bash history (allow 32³ entries; default is 500)
@@ -40,5 +39,6 @@ export FZF_DEFAULT_OPTS="--bind ctrl-a:toggle-all --layout=reverse --margin=1,1 
 export FZF_ALT_C_OPTS="--preview 'ls -la {}'"
 
 # NNN
-export NNN_PLUG='f:finder;F:fzcd;o:fzopen;d:diffs'
+export NNN_PLUG='f:finder;F:fzcd;o:fzopen;d:diffs;p:preview-tui'
 export NNN_FIFO='/tmp/nnn.fifo'
+export NNN_BMS="s:$HOME/src;d:$HOME/Documents;D:$HOME/Downloads"
