@@ -6,11 +6,7 @@ return {
     "folke/tokyonight.nvim",
     priority = 1000,
     lazy = false},
-  {
-    "b3nj5m1n/kommentary",
-    keys = {
-      "<Plug>kommentary_line_default",
-      "<Plug>kommentary_visual_default"}},
+  "b3nj5m1n/kommentary",
   {"itchyny/lightline.vim", lazy = false},
   "tpope/vim-fugitive",
   {"mbbill/undotree", cmd = "UndotreeToggle"},
