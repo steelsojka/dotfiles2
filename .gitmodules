@@ -1,3 +1,6 @@
 [submodule "src/shell-safe-rm"]
 	path = src/shell-safe-rm
 	url = https://github.com/kaelzhang/shell-safe-rm
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
