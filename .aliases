@@ -1,6 +1,6 @@
 alias vim="nvim"
 alias p="cd ~/src"
-alias nnn="nnn -eHa"
+alias nnn="nnn -eHao"
 alias devsh="nix-shell ~"
 
 # Detect which `ls` flavor is in use
