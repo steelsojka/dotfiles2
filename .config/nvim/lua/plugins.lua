@@ -11,9 +11,7 @@ return {
   "tpope/vim-fugitive",
   {"mbbill/undotree", cmd = "UndotreeToggle"},
   "tpope/vim-surround",
-  {
-    "luukvbaal/nnn.nvim",
-    config = function() require "nnn".setup() end},
+  "stevearc/oil.nvim",
   "justinmk/vim-dirvish",
   "kristijanhusak/vim-dirvish-git",
   "arthurxavierx/vim-caser",
