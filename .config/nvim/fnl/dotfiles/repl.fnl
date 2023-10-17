@@ -20,8 +20,15 @@
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))]
     (or (. active-repls bufnr) [])))
 
+(defn kill [bufnr?]
+  (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
+        [repl-bufnr] (get-repl bufnr)]
+    (when repl-bufnr
+      (tset active-repls bufnr nil)
+      (vim.cmd (string.format "bw! %d" repl-bufnr)))))
+
 (defn create-repl [bufnr cmd env]
-  (let [[new-bufnr] (terminal.new-term-buf cmd env)]
+  (let [[new-bufnr] (terminal.new-term-buf cmd env nil {:on_exit #(kill bufnr)})]
     (tset active-repls bufnr [new-bufnr])
     new-bufnr))
 
@@ -60,13 +67,6 @@
 (defn eval-line-visual []
   (open-repl)
   (vim.cmd "'<,'>SlimeSend"))
-
-(defn kill [bufnr?]
-  (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))
-        [repl-bufnr] (get-repl bufnr)]
-    (when repl-bufnr
-      (tset active-repls bufnr nil)
-      (vim.cmd (string.format "bw! %d" repl-bufnr)))))
 
 (defn reset [bufnr?]
   (let [bufnr (or bufnr? (vim.api.nvim_get_current_buf))

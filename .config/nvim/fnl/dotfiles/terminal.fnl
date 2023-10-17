@@ -19,9 +19,10 @@
 (defn get-channel [bufnr?]
   (vim.api.nvim_buf_get_option (or bufnr? 0) "channel"))
 
-(defn new-term-buf [cmd env? bufnr?]
+(defn new-term-buf [cmd env? bufnr? options?]
   (let [new-bufnr (or bufnr? (vim.api.nvim_create_buf false false))
         env (or env? "")
+        options (or options? {})
         current-buf (vim.api.nvim_get_current_buf)
         shell-cmd (string.format "%s %s %s \"%s\""
                                  env
@@ -29,7 +30,7 @@
                                  vim.g.tshell_cmd_flag
                                  cmd)]
     (vim.cmd (string.format "buffer %d" new-bufnr))
-    (vim.fn.termopen shell-cmd)
+    (vim.fn.termopen shell-cmd options)
     (vim.api.nvim_set_current_buf current-buf)
     (let [channel (get-channel new-bufnr)]
       [new-bufnr channel])))
