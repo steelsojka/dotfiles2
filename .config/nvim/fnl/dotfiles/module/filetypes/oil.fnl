@@ -27,12 +27,13 @@
   (let [telescope (require "telescope.builtin")
         oil (require "oil")]
     (keymap.register-buffer-mappings
-      {"<leader>mgf" {:do #(-> (oil.get_current_dir)
+      {"mgf" {:do #(-> (oil.get_current_dir)
                                (find-files))
                       :description "Child file"}
-       "<leader>mgF" {:do #(-> (vim.fn.getcwd)
+       "mgF" {:do #(-> (vim.fn.getcwd)
                                (find-files))
                       :description "Project file"}
-       "<leader>fF" {:do #(-> {:cwd (oil.get_current_dir)}
+       "fF" {:do #(-> {:cwd (oil.get_current_dir)}
                               (telescope.find_files))
-                     :description "Project file"}})))
+                     :description "Project file"}}
+      {:prefix "<leader>"})))

@@ -49,11 +49,11 @@
                       prompt)
                     (builtin-actions.close prompt))
    :paste-entry (fn [prompt]
-                  (let [entry (builtin-actions.get_selected_entry prompt)]
+                  (let [entry (telescope-state.get_selected_entry prompt)]
                     (builtin-actions.close prompt)
                     (vim.api.nvim_put [entry.value] "" true true)))
    :print (fn [prompt]
-            (let [entry (builtin-actions.get_selected_entry prompt)]
+            (let [entry (telescope-state.get_selected_entry prompt)]
               (print (vim.inspect entry))))
    :goto-file (fn [prompt cmd]
                 (handle-multi-selection

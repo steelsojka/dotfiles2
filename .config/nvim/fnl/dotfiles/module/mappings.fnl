@@ -129,7 +129,7 @@
    "wS" {:do "<Cmd>Startify<CR>" :description "Start screen"}
    ; Project mappings <leader>p
    "ph" {:do #(telescope.oldfiles) :description "MRU"}
-   "pf" {:do #(tele.find-files {:cwd (vim.fn.expand ".")}) :description "Find file"}
+   "pf" {:do #(tele.find-files {:cwd (vim.fn.getcwd)}) :description "Find file"}
    "pss" {:do #(sessions.save-session) :description "Save (default)"}
    "psS" {:do #(sessions.save-session nil true) :description "Save"}
    "psl" {:do #(sessions.load-session true) :description "Load (default)"}
