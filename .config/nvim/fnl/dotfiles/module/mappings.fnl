@@ -13,13 +13,8 @@
             rest-client dotfiles.rest-client
             lsp-logging dotfiles.lsp.logging
             repl dotfiles.repl
+            lib dotfiles.lib
             browser dotfiles.browser}})
-
-(local telescope (require "telescope.builtin"))
-(local tele-extensions (-> (require "telescope") (. :extensions)))
-(local dap (require "dap"))
-(local dap-widgets (require "dap.ui.widgets"))
-(local gitsigns (require "gitsigns"))
 
 (keymap.register-mappings
    {"/" {:name "+local-search"}
@@ -72,16 +67,16 @@
 (keymap.register-mappings
   {"," {:do #(tele.buffers) :description "Switch buffer"}
    "." {:do #(tele.find-files) :description "Find files"}
-   "<CR>" {:do #(telescope.marks) :description "Jump to mark"}
-   "<leader>" {:do #(telescope.commands) :description "Ex commands"}
+   "<CR>" {:do #(lib.telescope_builtin.marks) :description "Jump to mark"}
+   "<leader>" {:do #(lib.telescope_builtin.commands) :description "Ex commands"}
    "\"" {:do "q:" :description "Ex History"}
    "fs" {:do "<Cmd>w<CR>" :description "Save file"}
    "fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
-   "f/" {:do #(telescope.current_buffer_fuzzy_find) :description "Search lines"}
+   "f/" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search lines"}
    "ff" {:do "<Cmd>Format<CR>" :description "Format file"}
    "fo" {:do "<Cmd>Oil %:p:h<CR>" :description "Show in tree"}
    "fO" {:do "<Cmd>Oil --float %:p:h<CR>" :description "Show in float tree"}
-   "fr" {:do #(telescope.oldfiles) :description "Open recent files"}
+   "fr" {:do #(lib.telescope_builtin.oldfiles) :description "Open recent files"}
    "fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
    "fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
    "fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
@@ -126,9 +121,8 @@
    "w=" {:do "<C-W>=" :description "Balance splits"}
    "wF" {:do "<Cmd>tabnew<CR>" :description "New tab"}
    "wo" {:do "<Cmd>tabnext<CR>" :description "Next tab"}
-   "wS" {:do "<Cmd>Startify<CR>" :description "Start screen"}
    ; Project mappings <leader>p
-   "ph" {:do #(telescope.oldfiles) :description "MRU"}
+   "ph" {:do #(lib.telescope_builtin.oldfiles) :description "MRU"}
    "pf" {:do #(tele.find-files {:cwd (vim.fn.getcwd)}) :description "Find file"}
    "pss" {:do #(sessions.save-session) :description "Save (default)"}
    "psS" {:do #(sessions.save-session nil true) :description "Save"}
@@ -153,9 +147,9 @@
    "jd" {:do #(vim.lsp.buf.definition) :description "Definition"}
    "ji" {:do #(vim.lsp.buf.implementation) :description "Implementation"}
    "jy" {:do #(vim.lsp.buf.type_definition) :description "Type definition"}
-   "js" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
-   "jS" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
-   "jr" {:do #(telescope.lsp_references) :description "Type references"}
+   "js" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "Jump to symbol"}
+   "jS" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
+   "jr" {:do #(lib.telescope_builtin.lsp_references) :description "Type references"}
    "jep" {:do #(vim.diagnostic.goto_prev {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Previous error"}
    "jen" {:do #(vim.diagnostic.goto_next {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Next error"}
    "jeN" {:do #(vim.diagnostic.goto_next) :description "Next diagnostic"}
@@ -164,7 +158,7 @@
    "jqn" {:do "<Cmd>cn<CR>" :description "Next"}
    "jn" {:do "<C-o>" :description "Next jump"}
    "jp" {:do "<C-i>" :description "Previous jump"}
-   "jml" {:do #(telescope.marks) :description "List marks"}
+   "jml" {:do #(lib.telescope_builtin.marks) :description "List marks"}
    "jmd" {:do ":delmarks<Space>" :description "Delete marks"}
    "jmm" {:do "`" :description "Go to mark"}
    "jcn" {:do "g," :description "Next change"}
@@ -172,19 +166,19 @@
    ; Insert mappings <leader>i
    "if" {:do "\"%p" :description "Current file name"}
    "iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
-   "is" {:do #(tele-extensions.snippets.snippets) :description "Insert snippet"}
+   "is" {:do #(lib.telescope.extensions.snippets.snippets) :description "Insert snippet"}
    "ir" {:do #(tele.insert-relative-path (vim.fn.expand "%:p:h")) :description "Insert relative path"}
    "ip" {:do #(tele.complete-path) :description "Insert path"}
    ; Search mappings <leader>s
    "sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
-   "sc" {:do #(telescope.command_history) :description "Search command history"}
-   "si" {:do #(telescope.lsp_workspace_symbols) :description "Search symbol"}
-   "sb" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
-   "ss" {:do #(telescope.current_buffer_fuzzy_find) :description "Search buffer"}
-   "so" {:do #(telescope.lsp_document_symbols) :description "List symbols in file"}
+   "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
+   "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
+   "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
+   "ss" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
+   "so" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "List symbols in file"}
    "sp" {:do #(tele.live-grep) :description "Grep files in project"}
-   "sm" {:do #(telescope.marks) :description "Jump to marks"}
-   "sw" {:do #(telescope.spell_suggest) :description "Spell suggest"}
+   "sm" {:do #(lib.telescope_builtin.marks) :description "Jump to marks"}
+   "sw" {:do #(lib.telescope_builtin.spell_suggest) :description "Spell suggest"}
    "sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
    ; Local Search/Replace mappings <leader>/
    "/h" {:do "<Cmd>noh<CR>" :description "Clear searh highlight"}
@@ -201,17 +195,17 @@
    "xq" {:do "<Cmd>TroubleToggle quickfix<CR>" :description "Toggle quickfix"}
    "xl" {:do "<Cmd>TroubleToggle loclist<CR>" :description "Toggle location"}
    ; Code mappings <leader>c
-   "cl" {:do "<Plug>kommentary_line_default" :description "Comment line"}
+   "cl" {:do "<Plug>kommentary_line_default<C-c>" :description "Comment line"}
    "cW" {:do (string.format "<Cmd>vsp term://tail -f -n100 %s | normal! G<CR>" (vim.lsp.get_log_path)) :description "Watch LSP Log"}
    "cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
-   "cD" {:do #(telescope.lsp_references) :description "Type references"}
+   "cD" {:do #(lib.telescope_builtin.lsp_references) :description "Type references"}
    "ck" {:do "gh" :description "Jump to documentation" :noremap false}
    "cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
    "ce" {:do #(vim.diagnostic.set_loclist) :description "List errors"}
    "cR" {:do "<Cmd>LspRestart<CR>" :description "LSP reload"}
    "cs" {:do #(vim.lsp.buf.signature_help) :description "Signature help"}
-   "cj" {:do #(telescope.lsp_document_symbols) :description "Jump to symbol"}
-   "cJ" {:do #(telescope.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
+   "cj" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "Jump to symbol"}
+   "cJ" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
    "ca" {:do #(vim.lsp.buf.code_action) :description "LSP code actions"}
    "lk" {:do "<Cmd>cN<CR>" :description "Previous"}
    "lj" {:do "<Cmd>cn<CR>" :description "Next"}
@@ -231,26 +225,26 @@
    "Ln" {:do #(qf.new-list {:loc true}) :description "New loc list"}
    "cH" {:do #(lsp-logging.set-logging-level) :description "Set LSP log level"}
    ; Git mappings <leader>g
-   "gcu" {:do #(gitsigns.reset_hunk) :description "Undo chunk"}
-   "gcs" {:do #(gitsigns.stage_hunk) :description "Stage chunk"}
-   "gcS" {:do #(gitsigns.undo_stage_hunk) :description "Unstage chunk"}
-   "gcn" {:do #(gitsigns.next_hunk) :description "Next chunk"}
-   "gcp" {:do #(gitsigns.prev_hunk) :description "Previous chunk"}
-   "gci" {:do #(gitsigns.preview_hunk) :description "Chunk info"}
-   "gcb" {:do #(gitsigns.blame_line) :description "Chunk blame"}
-   "gB" {:do #(telescope.git_branches) :description "Checkout branch"}
-   "gs" {:do #(telescope.git_status) :description "Git status"}
+   "gcu" {:do #(lib.gitsigns.reset_hunk) :description "Undo chunk"}
+   "gcs" {:do #(lib.gitsigns.stage_hunk) :description "Stage chunk"}
+   "gcS" {:do #(lib.gitsigns.undo_stage_hunk) :description "Unstage chunk"}
+   "gcn" {:do #(lib.gitsigns.next_hunk) :description "Next chunk"}
+   "gcp" {:do #(lib.gitsigns.prev_hunk) :description "Previous chunk"}
+   "gci" {:do #(lib.gitsigns.preview_hunk) :description "Chunk info"}
+   "gcb" {:do #(lib.gitsigns.blame_line) :description "Chunk blame"}
+   "gB" {:do #(lib.telescope_builtin.git_branches) :description "Checkout branch"}
+   "gs" {:do #(lib.telescope_builtin.git_status) :description "Git status"}
    "gd" {:do "<Cmd>Gvdiffsplit<CR>" :description "Git diff"}
    "ge" {:do "<Cmd>Gedit<CR>" :description "Git edit"}
    "gg" {:do #(term.float-cmd "lazygit") :description "Git GUI"}
-   "gl" {:do #(telescope.git_commits) :description "Git log"}
-   "gL" {:do #(telescope.git_bcommits) :description "Git file log"}
+   "gl" {:do #(lib.telescope_builtin.git_commits) :description "Git log"}
+   "gL" {:do #(lib.telescope_builtin.git_bcommits) :description "Git file log"}
    "gF" {:do "<Cmd>Git fetch<CR>" :description "Git fetch"}
    "gp" {:do "<Cmd>Git pull<CR>" :description "Git pull"}
    "gP" {:do "<Cmd>Git push<CR>" :description "Git push"}
    "gb" {:do "<Cmd>Git blame<CR>" :description "Git blame"}
-   "gfc" {:do #(telescope.git_commits) :description "Find commit"}
-   "gff" {:do #(telescope.git_files) :description "Find file"}
+   "gfc" {:do #(lib.telescope_builtin.git_commits) :description "Find commit"}
+   "gff" {:do #(lib.telescope_builtin.git_files) :description "Find file"}
    "gfg" {:do #(keymap.unimplemented) :description "Find gitconfig file"}
    "gfi" {:do #(keymap.unimplemented) :description "Find issue"}
    "gfp" {:do #(keymap.unimplemented) :description "Find pull request"}
@@ -270,19 +264,19 @@
    "te" {:do #(keymap.unimplemented) :description "Inline errors"}
    "tbr" {:do #(rest-client.toggle-rest-buf) :description "Toggle REST Client"}
    ; Help mappings <leader>h
-   "hh" {:do #(telescope.help_tags) :description "Help tags"}
-   "hi" {:do #(telescope.highlights) :description "List highlights"}
-   "hm" {:do #(telescope.man_pages) :description "Man pages"}
-   "ho" {:do #(telescope.vim_options) :description "Vim options"}
-   "ha" {:do #(telescope.autocommands) :description "List autocommands"}
-   "hk" {:do #(telescope.keymaps) :description "List keymaps"}
+   "hh" {:do #(lib.telescope_builtin.help_tags) :description "Help tags"}
+   "hi" {:do #(lib.telescope_builtin.highlights) :description "List highlights"}
+   "hm" {:do #(lib.telescope_builtin.man_pages) :description "Man pages"}
+   "ho" {:do #(lib.telescope_builtin.vim_options) :description "Vim options"}
+   "ha" {:do #(lib.telescope_builtin.autocommands) :description "List autocommands"}
+   "hk" {:do #(lib.telescope_builtin.keymaps) :description "List keymaps"}
    ; Debug mappings <leader>d
-   "db" {:do #(dap.toggle_breakpoint) :description "Toggle breakpoint"}
-   "dc" {:do #(dap.continue) :description "Continue"}
-   "ds" {:do #(dap.step_into) :description "Step into"}
-   "dS" {:do #(dap.step_over) :description "Step over"}
-   "dr" {:do #(dap.repl.open) :description "REPL"}
-   "dh" {:do #(dap-widgets.hover) :description "Inspect variable"}
+   "db" {:do #(lib.dap.toggle_breakpoint) :description "Toggle breakpoint"}
+   "dc" {:do #(lib.dap.continue) :description "Continue"}
+   "ds" {:do #(lib.dap.step_into) :description "Step into"}
+   "dS" {:do #(lib.dap.step_over) :description "Step over"}
+   "dr" {:do #(lib.dap.repl.open) :description "REPL"}
+   "dh" {:do #(lib.dap_ui_widgets.hover) :description "Inspect variable"}
    ; REPL
    "ro" {:do #(repl.open-repl) :description "Open REPL"}
    "rO" {:do #(repl.select-repl) :description "Select REPL"}
@@ -322,7 +316,7 @@
    "/s" {:do "9y/<C-r>9<CR>" :description "Search selected text"}
    "/S" {:do "9y:Rg <C-r>9<CR>" :description "Search selected text"}
    "yy" {:do "\"+y" :description "Yank selected text to cb"}
-   "cl" {:do "<Plug>kommentary_visual_default<C-c>" :description "Comment selected lines"}
+   "cl" {:do "<Plug>kommentary_visual_default" :description "Comment selected lines"}
    "ll" {:do #(qf.add-item
                    (- (. (vim.fn.getpos "'<") 2) 1) (. (vim.fn.getpos "'>") 2))
             :description "Add line to quickfix"}

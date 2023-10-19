@@ -2,20 +2,11 @@
   {require {utils dotfiles.util
             buffers dotfiles.buffers
             files dotfiles.files
+            lib dotfiles.lib
             nvim aniseed.nvim}})
 
-(local builtin-actions (require "telescope.actions"))
-(local builtin (require "telescope.builtin"))
-(local pickers (require "telescope.pickers"))
-(local entry-display (require "telescope.pickers.entry_display"))
-(local finders (require "telescope.finders"))
-(local make-entry (require "telescope.make_entry"))
-(local telescope-conf (. (require "telescope.config") :values))
-(local set-actions (require "telescope.actions.set"))
-(local telescope-state (require "telescope.actions.state"))
-
 (defn handle-multi-selection [single-action multi-action prompt]
-  (let [picker (telescope-state.get_current_picker prompt)
+  (let [picker (lib.telescope_actions_state.get_current_picker prompt)
         entries (picker:get_multi_selection)
         is-multi (->> entries (length) (< 1))]
     (if is-multi
@@ -33,7 +24,7 @@
 
 (def actions (->>
   {:select-multi-item (fn [prompt]
-                        (let [picker (telescope-state.get_current_picker prompt)
+                        (let [picker (lib.telescope_actions_state.get_current_picker prompt)
                               row (picker:get_selection_row)
                               index (picker:get_index row)
                               entry (picker.manager:get_entry index)
@@ -41,23 +32,23 @@
                           (if is-selected
                             (picker:remove_selection row)
                             (picker:add_selection row))
-                          (builtin-actions.move_selection_next prompt)))
+                          (lib.telescope_actions.prompt)))
    :delete-buffers (fn [prompt cmd]
                     (handle-multi-selection
                       #(nvim.ex.bw $2.value)
                       #(each [_ entry (ipairs $2)] (nvim.ex.bw entry.value))
                       prompt)
-                    (builtin-actions.close prompt))
+                    (lib.telescope_actions.close prompt))
    :paste-entry (fn [prompt]
-                  (let [entry (telescope-state.get_selected_entry prompt)]
-                    (builtin-actions.close prompt)
+                  (let [entry (lib.telescope_actions_state.get_selected_entry prompt)]
+                    (lib.telescope_actions.close prompt)
                     (vim.api.nvim_put [entry.value] "" true true)))
    :print (fn [prompt]
-            (let [entry (telescope-state.get_selected_entry prompt)]
+            (let [entry (lib.telescope_actions_state.get_selected_entry prompt)]
               (print (vim.inspect entry))))
    :goto-file (fn [prompt cmd]
                 (handle-multi-selection
-                  #(set-actions.edit prompt cmd)
+                  #(lib.telescope_actions_set.edit prompt cmd)
                   (fn [_ entries]
                     (vim.fn.setqflist (to-qf-items entries))
                     (vim.cmd :copen)
@@ -83,8 +74,8 @@
               (map :i "<CR>" actions.print)
               true)
    :goto-multi-file (fn [prompt map]
-                      (map :n "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
-                      (map :i "<Cr>" #(do (actions.goto-file prompt :edit) (builtin-actions.center $...)))
+                      (map :n "<Cr>" #(do (actions.goto-file prompt :edit) (lib.telescope_actions.center $...)))
+                      (map :i "<Cr>" #(do (actions.goto-file prompt :edit) (lib.telescope_actions.center $...)))
                       (map :n "<C-x>" (partial actions.goto-file prompt :new))
                       (map :i "<C-x>" (partial actions.goto-file prompt :new))
                       (map :n "<C-v>" (partial actions.goto-file prompt :vnew))
@@ -98,34 +89,35 @@
     (if (vim.tbl_islist result)
       (if (> (length result) 1)
         (let [items (vim.lsp.util.locations_to_items result)
-              options {:shorten_path true}]
-          (-> (pickers.new
+              options {:shorten_path true}
+              make_entry (require "telescope.make_entry")]
+          (-> (lib.telescope_pickers.new
                options
                {:prompt_title "LSP Location"
-                :previewer (telescope-conf.qflist_previewer options)
-                :sorter (telescope-conf.generic_sorter options)
+                :previewer (lib.telescope_config.values.qflist_previewer options)
+                :sorter (lib.telescope_config.values.generic_sorter options)
                 :attach_mappings (utils.over-all mappings.multiselect mappings.goto-multi-file)
-                :finder (finders.new_table
+                :finder (lib.telescope_finders.new_table
                           {:results items
-                           :entry_maker (make-entry.gen_from_quickfix options)})})
+                           :entry_maker (make_entry.gen_from_quickfix options)})})
                (: :find)))
         (vim.lsp.util.jump_to_location (. result 1)))
       (vim.lsp.util.jump_to_location result))))
 
 (defn buffers []
   "Buffers with multi select and kill buffer mappings"
-  (builtin.buffers
+  (lib.telescope_builtin.buffers
     {:attach_mappings (utils.over-all
                         mappings.multiselect
                         mappings.kill-buffers)}))
 
 (fn make-paste-relative-path-action [from-path]
   (fn [prompt]
-    (let [picker (telescope-state.get_current_picker prompt)
+    (let [picker (lib.telescope_actions_state.get_current_picker prompt)
           selection (picker:get_selection)
           path (if selection (files.to-relative-path from-path selection.value) "")]
       (var result path)
-      (builtin-actions.close prompt)
+      (lib.telescope_actions.close prompt)
       (when (and result (not= result ""))
         (when (~= (result:sub 1 1) ".")
           (set result (.. "./" result)))
@@ -133,7 +125,7 @@
 
 (fn make-completion-action [opts]
   (fn [prompt]
-    (let [picker (telescope-state.get_current_picker prompt)
+    (let [picker (lib.telescope_actions_state.get_current_picker prompt)
           selection (picker:get_selection)
           line (- opts.line 1)
           current-line (or
@@ -142,7 +134,7 @@
           content (.. (string.sub current-line 1 (- opts.start-col 1))
                       selection.value
                       (string.sub current-line (+ opts.end-col 1)))]
-      (builtin-actions.close prompt)
+      (lib.telescope_actions.close prompt)
       (vim.api.nvim_buf_set_lines opts.bufnr
                                   line
                                   (+ line 1)
@@ -152,8 +144,8 @@
 (defn insert-relative-path [from-path default-text]
   "Searches for a file in the project and inserts the relative path from the path provided.
   Requires node to be installed (which it will always be... let's be real)."
-  (-> (pickers.new {:prompt_title "Insert Relative Path"
-                    :finder (finders.new_oneshot_job ["rg" "--files"])
+  (-> (lib.telescope_pickers.new {:prompt_title "Insert Relative Path"
+                    :finder (lib.telescope_finders.new_oneshot_job ["rg" "--files"])
                     :default_text (or default-text "")
                     :sorter (telescope-conf.generic_sorter)
                     :attach_mappings (fn [prompt map]
@@ -164,8 +156,8 @@
 
 (defn insert-word []
   "Inserts a word from a dictionary"
-  (-> (pickers.new {:prompt_title "Insert Word"
-                    :finder (finders.new_oneshot_job ["cat" vim.o.dictionary])
+  (-> (lib.telescope_pickers.new {:prompt_title "Insert Word"
+                    :finder (lib.telescope_finders.new_oneshot_job ["cat" vim.o.dictionary])
                     :sorter (telescope-conf.generic_sorter)
                     :attach_mappings mappings.paste-entry})
       (: :find)))
@@ -182,9 +174,9 @@
         content (or (. lines 1) "")
         content-to-cursor (string.sub content 1 col)
         opts (vim.tbl_extend :keep (files.get-fname-prefix content-to-cursor) {: line : bufnr : win})
-        picker (pickers.new
+        picker (lib.telescope_pickers.new
                  {:prompt_title "Complete Path"
-                  :finder (finders.new_oneshot_job ["rg" "--files"])
+                  :finder (lib.telescope_finders.new_oneshot_job ["rg" "--files"])
                   :sorter (telescope-conf.generic_sorter)
                   :attach_mappings (fn [_ map]
                                      (map :n "<CR>" (make-completion-action opts))
@@ -198,6 +190,6 @@
     (cmd (->> {:attach_mappings (utils.over-all mappings.multiselect mappings.goto-multi-file)}
               (vim.tbl_deep_extend :keep (or options {}))))))
 
-(def find-files (wrap-file-cmd builtin.find_files))
-(def live-grep (wrap-file-cmd builtin.live_grep))
-(def grep-string (wrap-file-cmd builtin.grep_string))
+(def find-files (wrap-file-cmd (fn [...] (lib.telescope_builtin.find_files ...))))
+(def live-grep (wrap-file-cmd (fn [...] (lib.telescope_builtin.live_grep ...))))
+(def grep-string (wrap-file-cmd (fn [...] (lib.telescope_builtin.grep_string ...))))

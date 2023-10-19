@@ -1,5 +1,8 @@
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local pack_dotfiles_path = vim.fn.stdpath("data") .. "/site/pack/dotfiles/opt"
+local spec_module_dir = vim.fn.stdpath("config") .. "/lua/dotfiles/module/plugin"
+
+local spec_module_cache = {}
 
 local function load_lib(package_name, clone_url, branch)
   local install_path = pack_dotfiles_path .. "/" .. package_name
@@ -60,6 +63,37 @@ local function is_plugin_workspace_excluded(plugin)
   return vim.tbl_contains(excluded_plugins, plugin)
 end
 
+local function has_spec_module(spec_name)
+  if spec_module_cache[spec_name] ~= nil then
+    return spec_module_cache[spec_name]
+  end
+
+  local file = io.open(spec_module_dir .. "/" .. spec_name .. ".lua", "r")
+
+  if file ~= nil then
+    io.close(file)
+    spec_module_cache[spec_name] = true
+
+    return true
+  end
+
+  spec_module_cache[spec_name] = false
+
+  return false
+end
+
+local function call_spec_module(spec_name, module_name, method, ...)
+  if has_spec_module(spec_name) then
+    local mod = require(module_name)
+
+    if type(mod[method]) == "function" then
+      return mod[method](...)
+    end
+  end
+
+  return nil
+end
+
 -- Plugin modules are associated by the plugin name MINUS any extensions.
 -- So, pears.nvim would become just "pears".
 local function make_module_spec(spec)
@@ -75,25 +109,19 @@ local function make_module_spec(spec)
 
   if not spec.init then
     spec.init = function(plugin)
-      pcall(function()
-        require(module_name).setup(plugin)
-      end)
+      call_spec_module(spec_name, module_name, "setup", plugin)
     end
   end
 
   if not spec.build then
     spec.build = function(plugin)
-      pcall(function()
-        require(module_name).build(plugin)
-      end)
+      call_spec_module(spec_name, module_name, "build", plugin)
     end
   end
 
   if not spec.config then
     spec.config = function(plugin, opts)
-      pcall(function()
-        require(module_name).configure(plugin, opts)
-      end)
+      call_spec_module(spec_name, module_name, "configure", plugin, opts)
     end
   end
 
@@ -108,17 +136,27 @@ local function make_module_spec(spec)
       spec_result = spec_cond(plugin)
     end
 
-    local has_mod_cond, module_result = pcall(function()
-      return require(module_name).cond(plugin)
-    end)
+    local module_result = call_spec_module(spec_name, module_name, "cond", plugin)
 
-    if not has_mod_cond then
+    if module_result == nil then
       module_result = true
+    end
+
+    -- Don't load the plugin if it's not enabled for man pager use.
+    local pager_result = true
+
+    if vim.env.NVIM_MAN_PAGER == "true" then
+      if spec.pager == nil then
+        pager_result = false
+      else
+        pager_result = spec.pager
+      end
     end
 
     return (not is_plugin_workspace_excluded(spec[1]))
       and spec_result
       and module_result
+      and pager_result
   end
 
   return spec

@@ -1,11 +1,12 @@
 (module dotfiles.lsp.configs
   {require {keymap dotfiles.keymap
             telescope dotfiles.telescope
+            lib dotfiles.lib
             files dotfiles.files}})
 
-(local telescope-builtin (require "telescope.builtin"))
-(local root-pattern (. (require "lspconfig/util") :root_pattern))
-(local lsp-status (require "lsp-status"))
+(lambda root-pattern [...]
+  (let [root (. (require "lspconfig/util") :root_pattern)]
+    (root ...)))
 
 (def configs
  {:tsserver
@@ -24,7 +25,6 @@
       {:preferences
        {:importModuleSpecifier "non-relative"
         :quoteStyle "single"}}}}
- ; :lwc {:root_dir (root-pattern "lwc.config.json")}
  :bashls {}
  :jsonls {}
  :html {}
@@ -94,7 +94,7 @@
   "textDocument/implementation" telescope.location-callback})
 
 (defn on-attach [client]
-  (lsp-status.on_attach client)
+  (lib.lsp-status.on_attach client)
   (when client.server_capabilities.document_highlight
     (keymap.create-autocmds [["CursorHold" "<buffer>" #(vim.lsp.buf.document_highlight)]
                              ["CursorHoldI" "<buffer>" #(vim.lsp.buf.document_highlight)]
@@ -103,7 +103,7 @@
     {"gd" {:do #(vim.lsp.buf.definition) :silent true :description "Go to definition"}
      "gy" {:do #(vim.lsp.buf.type_definition) :silent true :description "Go to type definition"}
      "gi" {:do #(vim.lsp.buf.implementation) :silent true :description "Go to implementation"}
-     "gr" {:do #(telescope-builtin.lsp_references) :silent true :description "Search references"}
+     "gr" {:do #(lib.telescope_builtin.lsp_references) :silent true :description "Search references"}
      "gR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true :description "References"}}))
 
 (defn get-config [overrides]
@@ -115,7 +115,7 @@
                                      "keep"
                                      (cmp-nvim-lsp.default_capabilities
                                        (vim.lsp.protocol.make_client_capabilities))
-                                     lsp-status.capabilities)}
+                                     lib.lsp-status.capabilities)}
                     (or overrides {}))))
 
 (defn get-config-for [name]

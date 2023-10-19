@@ -8,7 +8,7 @@
                 :env #(let [cwd (vim.fn.getcwd)]
                         (string.format "NODE_PATH=%q" cwd))}
    :typescript {:cmd #(let [cwd (vim.fn.getcwd)]
-                        (string.format "ts-node --dir %q --transpile-only" cwd))
+                        (string.format "ts-node --dir %q" cwd))
                 :env #""}})
 
 (tset repls :typescriptreact repls.typescript)
