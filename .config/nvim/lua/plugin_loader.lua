@@ -94,6 +94,22 @@ local function call_spec_module(spec_name, module_name, method, ...)
   return nil
 end
 
+local function resolve_pager_flag(env, spec, key, default)
+  if env == "true" then
+    if spec.pager == nil then
+      if spec[key] == nil then
+        return default
+      else
+        return spec[key]
+      end
+    else
+      return spec.pager
+    end
+  end
+
+  return true
+end
+
 -- Plugin modules are associated by the plugin name MINUS any extensions.
 -- So, pears.nvim would become just "pears".
 local function make_module_spec(spec)
@@ -143,20 +159,14 @@ local function make_module_spec(spec)
     end
 
     -- Don't load the plugin if it's not enabled for man pager use.
-    local pager_result = true
-
-    if vim.env.NVIM_MAN_PAGER == "true" then
-      if spec.pager == nil then
-        pager_result = false
-      else
-        pager_result = spec.pager
-      end
-    end
+    local man_pager_result = resolve_pager_flag(vim.env.NVIM_MAN_PAGER, spec, "man_pager", false)
+    local git_pager_result = resolve_pager_flag(vim.env.NVIM_GIT_PAGER, spec, "git_pager", false)
 
     return (not is_plugin_workspace_excluded(spec[1]))
       and spec_result
       and module_result
-      and pager_result
+      and man_pager_result
+      and git_pager_result
   end
 
   return spec

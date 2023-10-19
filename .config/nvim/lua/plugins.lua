@@ -15,7 +15,7 @@ return {
   "tpope/vim-fugitive",
   {"mbbill/undotree", cmd = "UndotreeToggle"},
   "tpope/vim-surround",
-  {"stevearc/oil.nvim", cmd = "Oil"},
+  {"stevearc/oil.nvim"},
   "arthurxavierx/vim-caser",
   {
     "nvimdev/dashboard-nvim",

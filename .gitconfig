@@ -52,12 +52,14 @@
   # [default] space-before-tab: looks for spaces before tabs at the beginning of
   # a line
   whitespace = space-before-tab,indent-with-non-tab,trailing-space
-	pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = NVIM_GIT_PAGER=true nvim -R
+	; pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
   # Use colors in Git commands that are capable of colored output when
   # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
   ui = auto
+  pager = no
 [color "branch"]
   current = yellow reverse
   local = yellow
@@ -111,12 +113,3 @@
   path = ~/.localgitconfig
 [credential]
   helper = cache
-[filesystem "Azul Systems, Inc.|11.0.3|/dev/disk1"]
-	timestampResolution = 1000 milliseconds
-	minRacyThreshold = 0 nanoseconds
-[filesystem "Azul Systems, Inc.|14.0.2|/dev/disk1s1"]
-	timestampResolution = 7000 nanoseconds
-	minRacyThreshold = 0 nanoseconds
-[filesystem "Azul Systems, Inc.|11.0.10|/dev/disk1s1"]
-	timestampResolution = 8000 nanoseconds
-	minRacyThreshold = 0 nanoseconds
