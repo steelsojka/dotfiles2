@@ -77,3 +77,7 @@
 
 (defn get-var [var-name default?]
   (or (. vim.b var-name) (. vim.g var-name) default?))
+
+(defn safe-require [mod]
+  (let [(ok? req_mod) (pcall require mod)]
+    (if ok? req_mod nil)))

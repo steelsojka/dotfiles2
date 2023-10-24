@@ -94,16 +94,12 @@ local function call_spec_module(spec_name, module_name, method, ...)
   return nil
 end
 
-local function resolve_pager_flag(env, spec, key, default)
-  if env == "true" then
-    if spec.pager == nil then
-      if spec[key] == nil then
-        return default
-      else
-        return spec[key]
-      end
+local function is_mode_enabled(modes, default)
+  if vim.env.STEELVIM_MODE ~= nil then
+    if type(modes) == "table" then
+      return vim.tbl_contains(modes, vim.env.STEELVIM_MODE)
     else
-      return spec.pager
+      return default
     end
   end
 
@@ -158,15 +154,13 @@ local function make_module_spec(spec)
       module_result = true
     end
 
-    -- Don't load the plugin if it's not enabled for man pager use.
-    local man_pager_result = resolve_pager_flag(vim.env.NVIM_MAN_PAGER, spec, "man_pager", false)
-    local git_pager_result = resolve_pager_flag(vim.env.NVIM_GIT_PAGER, spec, "git_pager", false)
+    -- Don't load the plugin if it's not enabled for a certain mode
+    local mode_result = is_mode_enabled(spec.modes, false)
 
     return (not is_plugin_workspace_excluded(spec[1]))
       and spec_result
       and module_result
-      and man_pager_result
-      and git_pager_result
+      and mode_result
   end
 
   return spec

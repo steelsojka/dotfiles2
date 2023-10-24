@@ -19,7 +19,7 @@ export LC_ALL="en_US.UTF-8"
 export LESS_TERMCAP_md="$ORANGE"
 
 # Don’t clear the screen after quitting a manual page
-export MANPAGER="NVIM_MAN_PAGER=true nvim +Man!"
+export MANPAGER="STEELVIM_MODE=man_pager nvim +Man!"
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"

@@ -8,7 +8,6 @@ pkgs.mkShell {
     pkgs.neovim
     pkgs.git
     pkgs.ripgrep
-    pkgs.lazygit
     pkgs.volta
     pkgs.curl
     pkgs.bat

@@ -28,6 +28,14 @@ _fzf_compgen_path() {
   fd --hidden --follow --exclude ".git" . "$1"
 }
 
+gg() {
+  if [ -n "$1" ]; then
+     STEELVIM_MODE=git STEELVIM_GIT_CWD="$1" nvim
+  else
+     STEELVIM_MODE=git nvim
+  fi
+}
+
 n() {
     # Block nesting of nnn in subshells
     [ "${NNNLVL:-0}" -eq 0 ] || {

@@ -31,12 +31,13 @@
     result))
 
 (defn register-mappings [mappings options]
-  (let [which-key (require "which-key")
+  (let [which-key (util.safe-require "which-key")
         normalized-mappings (normalize-mappings mappings)]
-    (which-key.register normalized-mappings options)))
+    (when which-key
+      (which-key.register normalized-mappings options))))
 
 (defn register-buffer-mappings [mappings default-options buffer?]
-  (let [buffer (or buffer (vim.api.nvim_get_current_buf))
+  (let [buffer (or buffer? (vim.api.nvim_get_current_buf))
         opts (or default-options {})]
     (register-mappings
       mappings

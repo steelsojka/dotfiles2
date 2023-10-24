@@ -1,18 +1,30 @@
+local modes = {
+  MAN_PAGER = "man_pager",
+  GIT_PAGER = "git_pager",
+  GIT = "git"
+}
+
 return {
   {
     "folke/which-key.nvim",
-    pager = true},
+    modes = {
+      modes.MAN_PAGER,
+      modes.GIT_PAGER}},
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    pager = true,
+    modes = {
+      modes.MAN_PAGER,
+      modes.GIT_PAGER,
+      modes.GIT},
     lazy = false},
   "b3nj5m1n/kommentary",
   {
     "itchyny/lightline.vim",
-    pager = true,
+    modes = {
+      modes.MAN_PAGER,
+      modes.GIT_PAGER},
     lazy = false},
-  "tpope/vim-fugitive",
   {"mbbill/undotree", cmd = "UndotreeToggle"},
   "tpope/vim-surround",
   {"stevearc/oil.nvim"},
@@ -23,7 +35,10 @@ return {
     dependencies = {"nvim-tree/nvim-web-devicons"}},
   {
     "norcalli/nvim-colorizer.lua",
-    pager = true},
+    modes = {
+      modes.MAN_PAGER,
+      modes.GIT,
+      modes.GIT_PAGER}},
   {"tpope/vim-dispatch", cmd = "Dispatch"},
   {
     "lewis6991/gitsigns.nvim",
@@ -34,10 +49,13 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
+    modes = {modes.GIT},
     dependencies = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}},
-  "nvim-telescope/telescope-ui-select.nvim",
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    modes = {modes.GIT}},
   "stevearc/dressing.nvim",
   {
     "jpalardy/vim-slime",
@@ -54,7 +72,9 @@ return {
   {
     "phaazon/hop.nvim",
     branch = 'v1',
-    pager = true,
+    modes = {
+      modes.MAN_PAGER,
+      modes.GIT_PAGER},
     cmd = {
       "HopChar2",
       "HopChar1",
@@ -92,6 +112,18 @@ return {
     dependencies = "nvim-tree/nvim-web-devicons",
     cmd = {"TroubleToggle", "Trouble"}},
   {"nvim-lua/lsp-status.nvim", lazy = true},
+  {
+    "NeogitOrg/neogit",
+    lazy = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "sindrets/diffview.nvim"},
+    modes = {modes.GIT}},
+  {
+    "FabijanZulj/blame.nvim",
+    cmd = {"ToggleBlame", "EnableBlame"},
+    config = true},
 
   -- Productivity
   {

@@ -7,7 +7,6 @@
 
 (defn check []
   (vim.fn.health#report_start "Binaries")
-  (check-exec "lazygit")
   (check-exec "node")
   (check-exec "fd")
   (check-exec "fzf")

@@ -28,7 +28,7 @@
     :i {:name "+insert"}
     :g {:name "+git"}
     :gc {:name "+chunk"}
-    :gf {:name "+find"}
+    :gf {:name "+file"}
     :p {:name "+project"}
     :ps {:name "+session"}
     :h {:name "+help"}
@@ -234,20 +234,14 @@
    "gcb" {:do #(lib.gitsigns.blame_line) :description "Chunk blame"}
    "gB" {:do #(lib.telescope_builtin.git_branches) :description "Checkout branch"}
    "gs" {:do #(lib.telescope_builtin.git_status) :description "Git status"}
-   "gd" {:do "<Cmd>Gvdiffsplit<CR>" :description "Git diff"}
-   "ge" {:do "<Cmd>Gedit<CR>" :description "Git edit"}
-   "gg" {:do #(term.float-cmd "lazygit") :description "Git GUI"}
-   "gl" {:do #(lib.telescope_builtin.git_commits) :description "Git log"}
+   "gd" {:do "<Cmd>DiffviewOpen<CR>" :description "Git diff"}
+   "gg" {:do #(lib.neogit.open) :description "Git GUI"}
+   "gfh" {:do "<Cmd>DiffviewFileHistory %<CR>" :description "Git File History"}
+   "gl" {:do #(lib.neogit.open ["log"]) :description "Git log"}
    "gL" {:do #(lib.telescope_builtin.git_bcommits) :description "Git file log"}
-   "gF" {:do "<Cmd>Git fetch<CR>" :description "Git fetch"}
-   "gp" {:do "<Cmd>Git pull<CR>" :description "Git pull"}
-   "gP" {:do "<Cmd>Git push<CR>" :description "Git push"}
-   "gb" {:do "<Cmd>Git blame<CR>" :description "Git blame"}
-   "gfc" {:do #(lib.telescope_builtin.git_commits) :description "Find commit"}
-   "gff" {:do #(lib.telescope_builtin.git_files) :description "Find file"}
-   "gfg" {:do #(keymap.unimplemented) :description "Find gitconfig file"}
-   "gfi" {:do #(keymap.unimplemented) :description "Find issue"}
-   "gfp" {:do #(keymap.unimplemented) :description "Find pull request"}
+   "gb" {:do "<Cmd>ToggleBlame virtual<CR>" :description "Git blame"}
+   "gC" {:do #(lib.telescope_builtin.git_commits) :description "Find commit"}
+   "gF" {:do #(lib.telescope_builtin.git_files) :description "Find file"}
    ; Terminal mappings <leader>wt
    "wtt" {:do #(term.open) :description "Terminal"}
    "wtv" {:do #(do (nvim.ex.vsp) (term.open)) :description "Vertical split terminal"}
