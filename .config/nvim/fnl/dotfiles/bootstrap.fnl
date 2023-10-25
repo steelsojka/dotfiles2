@@ -3,7 +3,7 @@
             util dotfiles.util
             workspace dotfiles.workspace}})
 
-;; Load all modules in no particular order.
-(->> (util.glob (.. util.config-path "/lua/dotfiles/module/*.lua"))
-     (core.run! (fn [path]
-                  (require (string.gsub path ".*/(.-)/(.-)/(.-)%.lua" "%1.%2.%3")))))
+(require "dotfiles.module.commands")
+(require "dotfiles.module.filetypes")
+(require "dotfiles.module.modes")
+(require "dotfiles.module.mappings")

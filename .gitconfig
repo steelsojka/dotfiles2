@@ -88,9 +88,9 @@
   cmd = code $LOCAL $REMOTE --diff --wait
   trustExitCode = false
 [mergetool "vimdiff"]
-  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  cmd = STEELVIM_MODE=git_diff nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool "vimdiff"]
-  cmd = nvim -d $REMOTE $LOCAL
+  cmd = STEELVIM_MODE=git_diff nvim -d $REMOTE $LOCAL
 
 # URL shorthands
 [url "git@github.com:"]

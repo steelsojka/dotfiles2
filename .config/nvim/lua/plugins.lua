@@ -1,62 +1,68 @@
-local modes = {
-  MAN_PAGER = "man_pager",
-  GIT_PAGER = "git_pager",
-  GIT = "git"
-}
+local modes = require "steelvim.modes"
 
 return {
   {
     "folke/which-key.nvim",
     modes = {
       modes.MAN_PAGER,
-      modes.GIT_PAGER}},
+      modes.GIT_PAGER,
+      modes.GIT_DIFF}},
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    modes = {
-      modes.MAN_PAGER,
-      modes.GIT_PAGER,
-      modes.GIT},
+    modes = modes.ALL,
     lazy = false},
   "b3nj5m1n/kommentary",
   {
     "itchyny/lightline.vim",
-    modes = {
-      modes.MAN_PAGER,
-      modes.GIT_PAGER},
+    modes = modes.ALL,
     lazy = false},
-  {"mbbill/undotree", cmd = "UndotreeToggle"},
-  "tpope/vim-surround",
-  {"stevearc/oil.nvim"},
-  "arthurxavierx/vim-caser",
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+    modes = {modes.GIT_DIFF}},
+  {
+    "tpope/vim-surround",
+    modes = {modes.GIT_DIFF}},
+  "stevearc/oil.nvim",
+  {
+    "arthurxavierx/vim-caser",
+    modes = {modes.GIT_DIFF}},
   {
     "nvimdev/dashboard-nvim",
     event = "VimEnter",
     dependencies = {"nvim-tree/nvim-web-devicons"}},
   {
     "norcalli/nvim-colorizer.lua",
-    modes = {
-      modes.MAN_PAGER,
-      modes.GIT,
-      modes.GIT_PAGER}},
+    modes = modes.ALL},
   {"tpope/vim-dispatch", cmd = "Dispatch"},
   {
     "lewis6991/gitsigns.nvim",
     branch = "main",
     dependencies = {"nvim-lua/plenary.nvim"}},
-  "editorconfig/editorconfig-vim",
-  "nvim-treesitter/nvim-treesitter",
+  {
+    "editorconfig/editorconfig-vim",
+    modes = {modes.GIT_DIFF}},
+  {
+    "nvim-treesitter/nvim-treesitter",
+    modes = {modes.GIT_DIFF}},
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-    modes = {modes.GIT},
+    modes = {
+      modes.GIT,
+      modes.GIT_DIFF},
     dependencies = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}},
   {
     "nvim-telescope/telescope-ui-select.nvim",
-    modes = {modes.GIT}},
-  "stevearc/dressing.nvim",
+    modes = {
+      modes.GIT,
+      modes.GIT_DIFF}},
+  {
+    "stevearc/dressing.nvim",
+    modes = {modes.GIT_DIFF}},
   {
     "jpalardy/vim-slime",
     cmd = {
@@ -74,7 +80,8 @@ return {
     branch = 'v1',
     modes = {
       modes.MAN_PAGER,
-      modes.GIT_PAGER},
+      modes.GIT_PAGER,
+      modes.GIT_DIFF},
     cmd = {
       "HopChar2",
       "HopChar1",
@@ -85,12 +92,15 @@ return {
     "Olical/conjure",
     ft = {"fennel", "clojure"},
     tag = "v4.9.0"},
-  "windwp/nvim-autopairs",
+  {
+    "windwp/nvim-autopairs",
+    modes = {modes.GIT_DIFF}},
   {"iamcco/markdown-preview.nvim", ft = "markdown"},
 
   -- Completion
   {
     "hrsh7th/nvim-cmp",
+    modes = {modes.GIT_DIFF},
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
@@ -112,6 +122,11 @@ return {
     dependencies = "nvim-tree/nvim-web-devicons",
     cmd = {"TroubleToggle", "Trouble"}},
   {"nvim-lua/lsp-status.nvim", lazy = true},
+  {
+    "sindrets/diffview.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons"},
+    modes = {modes.GIT}},
   {
     "NeogitOrg/neogit",
     lazy = true,
