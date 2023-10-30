@@ -264,6 +264,8 @@
    "ho" {:do #(lib.telescope_builtin.vim_options) :description "Vim options"}
    "ha" {:do #(lib.telescope_builtin.autocommands) :description "List autocommands"}
    "hk" {:do #(lib.telescope_builtin.keymaps) :description "List keymaps"}
+   "hl" {:do "<Cmd>Mason<CR>" :description "List LSP"}
+   "hp" {:do "<Cmd>Lazy<CR>" :description "List Plugins"}
    ; Debug mappings <leader>d
    "db" {:do #(lib.dap.toggle_breakpoint) :description "Toggle breakpoint"}
    "dc" {:do #(lib.dap.continue) :description "Continue"}

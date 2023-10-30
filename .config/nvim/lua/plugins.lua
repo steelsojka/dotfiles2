@@ -3,10 +3,7 @@ local modes = require "steelvim.modes"
 return {
   {
     "folke/which-key.nvim",
-    modes = {
-      modes.MAN_PAGER,
-      modes.GIT_PAGER,
-      modes.GIT_DIFF}},
+    modes = modes.ALL},
   {
     "folke/tokyonight.nvim",
     priority = 1000,
