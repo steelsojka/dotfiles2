@@ -4,7 +4,6 @@
             util dotfiles.util
             buffers dotfiles.buffers
             ws dotfiles.workspace
-            grep dotfiles.grep
             term dotfiles.terminal
             tele dotfiles.telescope
             qf dotfiles.quickfix

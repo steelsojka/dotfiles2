@@ -6,15 +6,15 @@
 
 (defn get-workspace-root [path matcher]
   (let [path-parts (vim.split path "/")
-        _matcher (or matcher (fn [file] (= file ".git")))]
+        _matcher (or matcher #(vim.tbl_contains $1 ".git"))]
     (var result nil)
     (while (> (length path-parts) 0)
-      (let [dir (table.concat path-parts "/")
-            files (nvim.fn.readdir dir)]
-        (each [_ file (ipairs files)]
-          (when (and (not result) (_matcher file files dir))
-            (set result dir)))
-        (table.remove path-parts)))
+      (when (not result)
+        (let [dir (table.concat path-parts "/")
+              files (nvim.fn.readdir dir)]
+          (when (_matcher files dir)
+            (set result dir))))
+      (table.remove path-parts))
     result))
 
 (defn create-workspace [path folder-name matcher]
