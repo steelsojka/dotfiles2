@@ -45,7 +45,6 @@ return {
     modes = {modes.GIT_DIFF}},
   {
     "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
     modes = {
       modes.GIT,
       modes.GIT_DIFF},
@@ -136,6 +135,11 @@ return {
   {
     "FabijanZulj/blame.nvim",
     cmd = {"ToggleBlame", "EnableBlame"},
+    config = true},
+  {
+    "stevearc/aerial.nvim",
+    cmd = {"AerialOpen", "AerialNavOpen"},
+    modes = {modes.GIT_DIFF},
     config = true},
 
   -- Productivity

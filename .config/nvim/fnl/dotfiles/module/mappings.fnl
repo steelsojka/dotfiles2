@@ -1,6 +1,5 @@
 (module dotfiles.module.mappings
   {require {nvim aniseed.nvim
-            files dotfiles.files
             util dotfiles.util
             buffers dotfiles.buffers
             ws dotfiles.workspace
@@ -206,6 +205,8 @@
    "cj" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "Jump to symbol"}
    "cJ" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
    "ca" {:do #(vim.lsp.buf.code_action) :description "LSP code actions"}
+   "co" {:do "<Cmd>AerialOpen<CR>" :description "Open outline"}
+   "cO" {:do "<Cmd>AerialNavOpen<CR>" :description "Open outline (nav)"}
    "lk" {:do "<Cmd>cN<CR>" :description "Previous"}
    "lj" {:do "<Cmd>cn<CR>" :description "Next"}
    "Lk" {:do "<Cmd>lN<CR>" :description "Previous"}
