@@ -172,12 +172,12 @@
    "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
    "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
    "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
-   "ss" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
+   "sS" {:do #(lib.spectre.open_file_search) :description "Search/Replace (file)"}
    "so" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "List symbols in file"}
    "sp" {:do #(tele.live-grep) :description "Grep files in project"}
    "sm" {:do #(lib.telescope_builtin.marks) :description "Jump to marks"}
    "sw" {:do #(lib.telescope_builtin.spell_suggest) :description "Spell suggest"}
-   "sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
+   "ss" {:do #(lib.spectre.toggle) :description "Search/Replace toggle"}
    ; Local Search/Replace mappings <leader>/
    "/h" {:do "<Cmd>noh<CR>" :description "Clear searh highlight"}
    "/s" {:do "g*N" :description "Search selected text"}

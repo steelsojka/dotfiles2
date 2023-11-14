@@ -20,12 +20,14 @@
 
 
 (defn open-url [url external?]
-  (if external?
-    (vim.cmd (string.format "!open '%s'" url))
-    (do
-      (vim.cmd "vsp")
-      (vim.cmd (string.format "terminal w3m '%s'" url))
-      (vim.schedule #(vim.cmd "startinsert")))))
+  (let [system (require "steelvim.system")
+        cmd (if system.is_mac_os "open" "xdg-open")]
+    (if external?
+      (vim.cmd (string.format "!open \"%s\"" url))
+      (do
+        (vim.cmd "vsp")
+        (vim.cmd (string.format "terminal w3m \"%s\"" url))
+        (vim.schedule #(vim.cmd "startinsert"))))))
 
 (defn search [term? search-engine? external?]
   (let [term (or term? "")

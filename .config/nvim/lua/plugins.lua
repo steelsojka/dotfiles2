@@ -141,6 +141,11 @@ return {
     cmd = {"AerialOpen", "AerialNavOpen"},
     modes = {modes.GIT_DIFF},
     config = true},
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = {"nvim-la/plenary.nvim"},
+    modes = {modes.GIT},
+    lazy = true},
 
   -- Productivity
   {

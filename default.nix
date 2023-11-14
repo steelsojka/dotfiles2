@@ -20,6 +20,7 @@ pkgs.mkShell {
     pkgs.tmux
     pkgs.sshfs
     pkgs.rclone
+    pkgs.gnused
     (pkgs.nnn.override { withNerdIcons = true; })
   ];
 

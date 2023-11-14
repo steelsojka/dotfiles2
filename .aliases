@@ -1,7 +1,8 @@
 alias vim="nvim"
 alias p="cd ~/src"
 alias nnn="nnn -eHa"
-alias devsh="nix-shell ~"
+alias devsh="nix-shell ~ --command tmux"
+alias gsed="sed"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
