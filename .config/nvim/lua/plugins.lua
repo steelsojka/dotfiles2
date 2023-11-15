@@ -143,7 +143,7 @@ return {
     config = true},
   {
     "nvim-pack/nvim-spectre",
-    dependencies = {"nvim-la/plenary.nvim"},
+    dependencies = {"nvim-lua/plenary.nvim"},
     modes = {modes.GIT},
     lazy = true},
 

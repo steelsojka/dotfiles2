@@ -63,7 +63,7 @@
    {:mode ["n" "v"] :prefix "<leader>"})
 
 (keymap.register-mappings
-  {"," {:do #(tele.buffers) :description "Switch buffer"}
+  {"," {:do ":" :description "Ex"}
    "." {:do #(tele.find-files) :description "Find files"}
    "<CR>" {:do #(lib.telescope_builtin.marks) :description "Jump to mark"}
    "<leader>" {:do #(lib.telescope_builtin.commands) :description "Ex commands"}
@@ -172,12 +172,14 @@
    "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
    "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
    "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
-   "sS" {:do #(lib.spectre.open_file_search) :description "Search/Replace (file)"}
+   "ss" {:do #(lib.spectre.open_file_search {:select_word true}) :description "Search/Replace in file (selected)"}
    "so" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "List symbols in file"}
    "sp" {:do #(tele.live-grep) :description "Grep files in project"}
    "sm" {:do #(lib.telescope_builtin.marks) :description "Jump to marks"}
    "sw" {:do #(lib.telescope_builtin.spell_suggest) :description "Spell suggest"}
-   "ss" {:do #(lib.spectre.toggle) :description "Search/Replace toggle"}
+   "sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
+   "sr" {:do #(lib.spectre.toggle) :description "Search/Replace (project)"}
+   "sR" {:do #(lib.spectre.open_file_search) :description "Search/Replace (file)"}
    ; Local Search/Replace mappings <leader>/
    "/h" {:do "<Cmd>noh<CR>" :description "Clear searh highlight"}
    "/s" {:do "g*N" :description "Search selected text"}
@@ -326,7 +328,8 @@
    "eS" {:do #(browser.search (let [lines (buffers.get-visual-selection)]
                                   (table.concat lines))
                                 nil
-                                true) :description "Search term (ext)"}}
+                                true) :description "Search term (ext)"}
+   "sr" {:do #(lib.spectre.open_visual) :description "Search/Replace in file (selected)"}}
    {:mode "v" :prefix "<leader>"})
 
 ; Non-leader visual mappings
