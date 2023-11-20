@@ -1,4 +1,4 @@
-[-f ~/.bootstrap_rc ] && source ~/.bootstrap_rc
+[ -f ~/.bootstrap_rc ] && source ~/.bootstrap_rc
 
 # Load the shell dotfiles, and then some:
 ZSH_THEME="robbyrussell"

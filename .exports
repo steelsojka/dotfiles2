@@ -38,6 +38,10 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--bind ctrl-a:toggle-all --layout=reverse --margin=1,1 --color=marker:12,pointer:12,hl:#7d7abc,hl+:#7d7abc"
 export FZF_ALT_C_OPTS="--preview 'ls -la {}'"
 
+# Needed for ChatGPT integration
+# Set in .extra_profile
+export OPENAI_API_KEY=""
+
 # NNN
 export NNN_PLUG='f:finder;F:fzcd;o:fzopen;d:diffs;p:preview-tui'
 export NNN_FIFO='/tmp/nnn.fifo'

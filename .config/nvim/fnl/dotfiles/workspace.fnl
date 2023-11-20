@@ -1,6 +1,5 @@
 (module dotfiles.workspace
-  {require {nvim aniseed.nvim
-            files dotfiles.files}})
+  {require {files dotfiles.files}})
 
 (def- local-config-filename "steelvimrc.lua")
 
@@ -11,23 +10,23 @@
     (while (> (length path-parts) 0)
       (when (not result)
         (let [dir (table.concat path-parts "/")
-              files (nvim.fn.readdir dir)]
+              files (vim.fn.readdir dir)]
           (when (_matcher files dir)
             (set result dir))))
       (table.remove path-parts))
     result))
 
 (defn create-workspace [path folder-name matcher]
-  (let [root (or (get-workspace-root path matcher) (nvim.fn.expand "~"))
+  (let [root (or (get-workspace-root path matcher) (vim.fn.expand "~"))
         local-folder (.. root "/" (or folder-name ".local"))]
-    (when (= (nvim.fn.isdirectory local-folder) 0)
+    (when (= (vim.fn.isdirectory local-folder) 0)
       (os.execute (.. "mkdir " local-folder)))
     local-folder))
 
 (defn cd-to-root [path matcher]
-  (let [new-path (or path (nvim.fn.getcwd))
+  (let [new-path (or path (vim.fn.getcwd))
         root (get-workspace-root new-path matcher)]
-    (when root (nvim.ex.cd root))))
+    (when root (vim.cmd (string.format "cd %s" root)))))
 
 (defn source-local-config [options?]
   (let [options (or options? {})
@@ -36,4 +35,4 @@
                       (vim.fn.getcwd)
                       options)]
     (each [_ config-path (ipairs config-paths)]
-      (when config-path (nvim.ex.source config-path)))))
+      (when config-path (vim.cmd (string.format "source %s" config-path))))))

@@ -146,6 +146,26 @@ return {
     dependencies = {"nvim-lua/plenary.nvim"},
     modes = {modes.GIT},
     lazy = true},
+  "onsails/lspkind.nvim",
+  {
+    "Exafunction/codeium.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+        require("codeium").setup({})
+    end},
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup()
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"}},
 
   -- Productivity
   {
