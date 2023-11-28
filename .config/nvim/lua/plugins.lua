@@ -47,7 +47,8 @@ return {
     "nvim-telescope/telescope.nvim",
     modes = {
       modes.GIT,
-      modes.GIT_DIFF},
+      modes.GIT_DIFF,
+      modes.GPT},
     dependencies = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim"}},
@@ -55,6 +56,7 @@ return {
     "nvim-telescope/telescope-ui-select.nvim",
     modes = {
       modes.GIT,
+      modes.GPT,
       modes.GIT_DIFF}},
   {
     "stevearc/dressing.nvim",
@@ -156,8 +158,9 @@ return {
     config = function()
         require("codeium").setup({})
     end},
-  {
+  modes.mixin_mode({
     "jackMort/ChatGPT.nvim",
+    modes = {modes.GPT},
     event = "VeryLazy",
     config = function()
       require("chatgpt").setup()
@@ -166,6 +169,10 @@ return {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim"}},
+    {
+      [modes.GPT] = function(def)
+        def.event = nil
+      end}),
 
   -- Productivity
   {
