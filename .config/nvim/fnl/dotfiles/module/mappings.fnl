@@ -65,7 +65,7 @@
 
 (keymap.register-mappings
   {"," {:do ":" :description "Ex"}
-   "." {:do #(tele.find-files) :description "Find files"}
+   "." {:do #(lib.telescope_builtin.find_files) :description "Find files"}
    "<CR>" {:do #(lib.telescope_builtin.marks) :description "Jump to mark"}
    "<leader>" {:do #(lib.telescope_builtin.commands) :description "Ex commands"}
    "\"" {:do "q:" :description "Ex History"}
@@ -79,8 +79,8 @@
    "fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
    "fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
    "fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
-   "fF" {:do #(tele.find-files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
-   "fP" {:do #(tele.find-files {:cwd "~/.vim/fnl"}) :description "Find config file"}
+   "fF" {:do #(lib.telescope_builtin.find_files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
+   "fP" {:do #(lib.telescope_builtin.find_files {:cwd "~/.vim/fnl"}) :description "Find config file"}
    ; Buffer mappings <leader>b
    "bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
    "bn" {:do "<Cmd>bnext<CR>" :description "Next buffer"}
@@ -88,7 +88,7 @@
    "bl" {:do "<Cmd>blast<CR>" :description "Last buffer"}
    "bd" {:do "<Cmd>bp<CR>:bd#<CR>" :description "Delete buffer"}
    "bk" {:do "<Cmd>bp<CR>:bw!#<CR>" :description "Wipe buffer"}
-   "bb" {:do #(tele.buffers) :description "List buffers"}
+   "bb" {:do #(lib.telescope_builtin.buffers) :description "List buffers"}
    "bY" {:do "ggyG" :description "Yank buffer"}
    "bm" {:do #(util.prompt-command :mark "Set mark") :description "Set mark"}
    ; Window mappings <leader>w
@@ -122,7 +122,7 @@
    "wo" {:do "<Cmd>tabnext<CR>" :description "Next tab"}
    ; Project mappings <leader>p
    "ph" {:do #(lib.telescope_builtin.oldfiles) :description "MRU"}
-   "pf" {:do #(tele.find-files {:cwd (vim.fn.getcwd)}) :description "Find file"}
+   "pf" {:do #(lib.telescope_builtin.find_files {:cwd (vim.fn.getcwd)}) :description "Find file"}
    "pss" {:do #(sessions.save-session) :description "Save (default)"}
    "psS" {:do #(sessions.save-session nil true) :description "Save"}
    "psl" {:do #(sessions.load-session true) :description "Load (default)"}
@@ -169,16 +169,16 @@
    "ir" {:do #(tele.insert-relative-path (vim.fn.expand "%:p:h")) :description "Insert relative path"}
    "ip" {:do #(tele.complete-path) :description "Insert path"}
    ; Search mappings <leader>s
-   "sd" {:do #(tele.live-grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
+   "sd" {:do #(lib.telescope_builtin.live_grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
    "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
    "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
    "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
    "ss" {:do #(lib.spectre.open_file_search {:select_word true}) :description "Search/Replace in file (selected)"}
    "so" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "List symbols in file"}
-   "sp" {:do #(tele.live-grep) :description "Grep files in project"}
+   "sp" {:do #(lib.telescope_builtin.live_grep) :description "Grep files in project"}
    "sm" {:do #(lib.telescope_builtin.marks) :description "Jump to marks"}
    "sw" {:do #(lib.telescope_builtin.spell_suggest) :description "Spell suggest"}
-   "sS" {:do #(tele.grep-string) :description "Search selected text (project)"}
+   "sS" {:do #(lib.telescope_builtin.grep_string) :description "Search selected text (project)"}
    "sr" {:do #(lib.spectre.toggle) :description "Search/Replace (project)"}
    "sR" {:do #(lib.spectre.open_file_search) :description "Search/Replace (file)"}
    ; Local Search/Replace mappings <leader>/

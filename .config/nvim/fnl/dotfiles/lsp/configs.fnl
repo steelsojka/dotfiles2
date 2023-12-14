@@ -13,13 +13,9 @@
   #{:root_dir (let [root-fn (root-pattern ".git" "tsconfig.json" "jsconfig.json")]
                 (fn [...]
                   (or (root-fn ...) (vim.fn.getcwd))))
-    :cmd (let [default-config (. (require "lspconfig.server_configurations.tsserver") :default_config)
-               tsserver (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))
-               cmd default-config.cmd]
-           (if (and tsserver (not= tsserver ""))
-             (let [new_cmd (vim.tbl_extend "force" {} cmd)]
-               (vim.list_extend new_cmd ["--tsserver-path" tsserver]))
-             cmd))
+    :init_options
+    {:tsserver
+     {:path (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))}}
     :settings
      {:typescript
       {:preferences

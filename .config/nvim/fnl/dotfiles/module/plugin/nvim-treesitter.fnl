@@ -28,8 +28,7 @@
          ;                                  :im "@call.inner"}}}
          :highlight
          {:enable true
-          :disable ["org" "kotlin" "lua"]
-          :additional_vim_regex_highlighting ["org"]}
+          :disable ["kotlin" "lua" "jsdoc"]}
          ; :indent {:enable true}
          ; :refactor {:highlight_definitions {:enable true}}
          :ensure_installed :all
