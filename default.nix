@@ -21,6 +21,8 @@ pkgs.mkShell {
     pkgs.sshfs
     pkgs.rclone
     pkgs.gnused
+    pkgs.docker
+    pkgs.tree
     (pkgs.nnn.override { withNerdIcons = true; })
   ];
 

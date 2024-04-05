@@ -1,9 +1,11 @@
 alias vim="nvim"
 alias p="cd ~/src"
 alias nnn="nnn -eHa"
-alias devsh="nix-shell ~ --command tmux"
+alias devsh="nix-shell ~ --command tmux; return"
 alias gsed="sed"
 alias gpt="STEELVIM_MODE=gpt nvim"
+alias todo="nvim -c \"lua require('orgmode.api.agenda').todos()\""
+alias agenda="nvim -c \"lua require('orgmode.api.agenda').agenda()\""
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`

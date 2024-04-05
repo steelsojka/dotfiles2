@@ -28,8 +28,49 @@
          ;                                  :im "@call.inner"}}}
          :highlight
          {:enable true
-          :disable ["kotlin" "lua" "jsdoc"]}
+          :additional_vim_regex_highlighting ["org"]}
          ; :indent {:enable true}
          ; :refactor {:highlight_definitions {:enable true}}
-         :ensure_installed :all
-         :ignore_install [:ledger :supercollider :haskell :phpdoc]})))
+         :ensure_installed
+         [
+          "apex"
+          "awk"
+          "bash"
+          "c"
+          "c_sharp"
+          "clojure"
+          "cmake"
+          "cpp"
+          "css"
+          "diff"
+          "fennel"
+          "gdscript"
+          "git_config"
+          "git_rebase"
+          "gitattributes"
+          "gitcommit"
+          "gitignore"
+          "graphql"
+          "groovy"
+          "http"
+          "java"
+          "javascript"
+          "jsonc"
+          "json"
+          "json5"
+          "lua"
+          "luadoc"
+          "org"
+          "pug"
+          "python"
+          "properties"
+          "scheme"
+          "sql"
+          "ssh_config"
+          "todotxt"
+          "toml"
+          "typescript"
+          "vim"
+          "vimdoc"
+          "xml"
+         ]})))

@@ -79,7 +79,7 @@
    "fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
    "fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
    "fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
-   "fF" {:do #(lib.telescope_builtin.find_files {:cwd (vim.fn.expand "%:p:h")}) :description "Find from file"}
+   "fF" {:do #(lib.telescope_builtin.find_files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
    "fP" {:do #(lib.telescope_builtin.find_files {:cwd "~/.vim/fnl"}) :description "Find config file"}
    ; Buffer mappings <leader>b
    "bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
@@ -166,10 +166,10 @@
    "if" {:do "\"%p" :description "Current file name"}
    "iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
    "is" {:do #(lib.telescope.extensions.snippets.snippets) :description "Insert snippet"}
-   "ir" {:do #(tele.insert-relative-path (vim.fn.expand "%:p:h")) :description "Insert relative path"}
+   "ir" {:do #(tele.insert-relative-path (util.get-current-buffer-dir)) :description "Insert relative path"}
    "ip" {:do #(tele.complete-path) :description "Insert path"}
    ; Search mappings <leader>s
-   "sd" {:do #(lib.telescope_builtin.live_grep {:cwd (vim.fn.expand "%:h")}) :description "Grep files in directory"}
+   "sd" {:do #(lib.telescope_builtin.live_grep {:cwd (util.get-current-buffer-dir)}) :description "Grep files in directory"}
    "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
    "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
    "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}

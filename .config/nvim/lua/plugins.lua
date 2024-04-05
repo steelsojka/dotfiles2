@@ -44,6 +44,10 @@ return {
     "nvim-treesitter/nvim-treesitter",
     modes = {modes.GIT_DIFF}},
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    modes = {modes.GIT_DIFF},
+    dependencies = {"nvim-treesitter/nvim-treesitter"}},
+  {
     "nvim-telescope/telescope.nvim",
     modes = {
       modes.GIT,
@@ -104,7 +108,8 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-vsnip" }},
+      "hrsh7th/cmp-vsnip",
+      "onsails/lspkind.nvim"}},
 
   -- Snippets
   "hrsh7th/vim-vsnip",
@@ -125,6 +130,11 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons"},
     modes = {modes.GIT}},
+  {
+    "nvim-orgmode/orgmode",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter"},
+    event = "VeryLazy"},
   {
     "NeogitOrg/neogit",
     lazy = true,
@@ -148,7 +158,6 @@ return {
     dependencies = {"nvim-lua/plenary.nvim"},
     modes = {modes.GIT},
     lazy = true},
-  "onsails/lspkind.nvim",
   {
     "Exafunction/codeium.nvim",
     dependencies = {

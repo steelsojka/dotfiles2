@@ -113,3 +113,5 @@
   path = ~/.localgitconfig
 [credential]
   helper = cache
+[trace2]
+	maxFiles = 800

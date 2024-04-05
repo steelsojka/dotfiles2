@@ -65,6 +65,7 @@
          :sources (cmp.config.sources
                     [{:name "nvim_lsp"}
                      {:name "vsnip"}
+                     {:name "orgmode"}
                      {:name "codeium"}]
                     [{:name "buffer"
                       :max_item_count 25

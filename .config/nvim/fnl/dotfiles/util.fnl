@@ -81,3 +81,8 @@
 (defn safe-require [mod]
   (let [(ok? req_mod) (pcall require mod)]
     (if ok? req_mod nil)))
+
+(defn get-current-buffer-dir []
+  (let [bufnr (vim.api.nvim_get_current_buf)
+        pwd (vim.fn.expand "%:p:h")]
+    (string.gsub pwd "oil://" "")))
