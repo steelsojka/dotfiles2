@@ -38,6 +38,7 @@ vim.opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
 
 vim.g.tshell = vim.env.NVIM_TSHELL
 vim.g.tshell_cmd_flag = vim.env.NVIM_TSHELL_CMD_FLAG
+vim.g.grepprg_unrestricted = "rg --vimgrep --auto-hybrid -uu"
 
 -- vim.lsp.set_log_level("debug")
 

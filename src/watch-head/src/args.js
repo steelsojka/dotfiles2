@@ -15,9 +15,13 @@ module.exports = require('yargs')
       type: 'boolean',
       default: true
     },
-    rebase: {
+    strategy: {
+      type: 'string',
+      default: 'rebase'
+    },
+    update: {
       type: 'boolean',
-      default: false
+      default: true
     },
     push: {
       type: 'boolean',
@@ -26,5 +30,9 @@ module.exports = require('yargs')
     noVerify: {
       type: 'boolean',
       default: true
+    },
+    mergeMsg: {
+      type: 'string',
+      default: ''
     }
   });

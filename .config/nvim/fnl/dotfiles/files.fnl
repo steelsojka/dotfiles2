@@ -1,12 +1,16 @@
 (module dotfiles.files
   {require {util dotfiles.util}})
 
-(defn to-relative-path [from-path to-path]
-  (let [cmd (string.format "node -p %q"
-                           (string.format "require('path').relative('%s', '%s/%s')"
-                                          from-path
-                                          (vim.fn.getcwd)
-                                          to-path))
+(defn to-relative-path [from-path to-path from-root?]
+  (let [require (if from-root?
+                  (string.format "require('path').relative('%s', '%s/%s')"
+                                 from-path
+                                 (vim.fn.getcwd)
+                                 to-path)
+                  (string.format "require('path').relative('%s', '%s')"
+                                 from-path
+                                 to-path))
+        cmd (string.format "node -p %q" require)
         lines (util.exec cmd)]
     (or (. lines 1) "")))
 

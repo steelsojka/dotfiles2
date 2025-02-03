@@ -115,7 +115,7 @@
   (fn [prompt]
     (let [picker (lib.telescope_actions_state.get_current_picker prompt)
           selection (picker:get_selection)
-          path (if selection (files.to-relative-path from-path selection.value) "")]
+          path (if selection (files.to-relative-path from-path selection.value true) "")]
       (var result path)
       (lib.telescope_actions.close prompt)
       (when (and result (not= result ""))

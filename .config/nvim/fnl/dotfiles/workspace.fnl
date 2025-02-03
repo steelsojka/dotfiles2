@@ -36,3 +36,7 @@
                       options)]
     (each [_ config-path (ipairs config-paths)]
       (when config-path (vim.cmd (string.format "source %s" config-path))))))
+
+(defn get-current-relative-path []
+  (let [full-path (vim.fn.expand "%:p")]
+    (files.to-relative-path (vim.fn.getcwd) full-path)))

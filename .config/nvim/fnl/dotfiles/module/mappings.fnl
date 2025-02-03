@@ -23,6 +23,7 @@
     :wb {:name "+balance"}
     :wt {:name "+terminal"}
     :y {:name "+yank"}
+    :yf {:name "+file"}
     :a {:name "+ai"}
     :i {:name "+insert"}
     :g {:name "+git"}
@@ -80,6 +81,8 @@
    "fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
    "fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
    "fF" {:do #(lib.telescope_builtin.find_files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
+   "fF" {:do #(lib.telescope_builtin.find_files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
+   "fp" {:do "<Cmd>echo expand(\"%:p\")<CR>" :description "Print file path"}
    "fP" {:do #(lib.telescope_builtin.find_files {:cwd "~/.vim/fnl"}) :description "Find config file"}
    ; Buffer mappings <leader>b
    "bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
@@ -170,6 +173,9 @@
    "ip" {:do #(tele.complete-path) :description "Insert path"}
    ; Search mappings <leader>s
    "sd" {:do #(lib.telescope_builtin.live_grep {:cwd (util.get-current-buffer-dir)}) :description "Grep files in directory"}
+   "sD" {:do #(lib.telescope_builtin.live_grep {:cwd (util.get-current-buffer-dir)
+                                                :vimgrep_arguments ["-uu"]})
+         :description "Grep files in directory"}
    "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
    "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
    "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
@@ -186,8 +192,16 @@
    "/s" {:do "g*N" :description "Search selected text"}
    "/r" {:do #(do (nvim.ex.normal "g*") (nvim.input ":%s//")) :description "Replace selected text"}
    ; Yank with preview <leader>y
-   "yf" {:do "<Cmd>let @\" expand(\"%:p\")<CR>" :description "Yank file path"}
-   "yF" {:do "<Cmd>let @\" expand(\"%:t:r\")<CR>" :description "Yank file name"}
+   "yfp" {:do "<Cmd>let @\"=expand(\"%:p\")<CR>" :description "Yank file path"}
+   "yfn" {:do "<Cmd>let @\"=expand(\"%:t:r\")<CR>" :description "Yank file name"}
+   "yfP" {:do "<Cmd>let @+=expand(\"%:p\")<CR>" :description "Yank file path (clipboard)"}
+   "yfN" {:do "<Cmd>let @+=expand(\"%:t:r\")<CR>" :description "Yank file name (clipboard)"}
+   "yfr" {:do #(let [path (ws.get-current-relative-path)]
+                 (vim.cmd (string.format "let @\"=\"%s\"" path)))
+          :description "Yank relative file path"}
+   "yfR" {:do #(let [path (ws.get-current-relative-path)]
+                 (vim.cmd (string.format "let @+=\"%s\"" path)))
+          :description "Yank relative file path (clipboard)"}
    "yy" {:do "\"+y" :description "Yank to clipboard"}
    ; Diagnostic mappings <leader>x
    "xx" {:do "<Cmd>TroubleToggle<CR>" :description "Toggle"}

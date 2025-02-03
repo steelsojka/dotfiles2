@@ -11,8 +11,13 @@ const argv = require('../src/args')
   .argv;
 
 const cron = require('node-cron');
-const watchHead = require('../src/watch-head');
+const _watchHead = require('../src/watch-head');
 const log = require('../src/log');
+
+async function watchHead(...args) {
+  await _watchHead(...args);
+  console.log('Waiting for next scheduled check...');
+}
 
 (async () => {
   const repo = argv.repo ?? process.cwd();
