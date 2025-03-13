@@ -6,6 +6,8 @@ set shiftwidth=2
 set tabstop=2
 set timeoutlen=300
 set ideawrite=file
+set ideajoin
+set ideamarks
 
 inoremap jj <esc>
 nnoremap ; :
@@ -15,6 +17,21 @@ nmap <leader>fS :wa<cr>
 nmap <leader><leader> <Action>(SearchEverywhere)
 nmap <leader>wl <Action>(NextSplitter)
 nmap <leader>wh <Action>(PrevSplitter)
+nmap <leader>wo <Action>(NextTab)
+nmap <leader>wv :vsp<cr>
+nmap <leader>ws :sp<cr>
+nmap <leader>ph <Action>(RecentFiles)
 nmap U <Action>(Redo)
 nmap <leader>q <Action>(CloseContent)
 nmap <leader>pf <Action>(GotoFile)
+nmap <leader>cr <Action>(RenameElement)
+nmap gh <Action>(ShowHoverInfo)
+nmap <leader>sp <Action>(FindInPath)
+nmap <leader>bb <Action>(Switcher)
+nmap <leader>jj <Action>(EditorPageDown)
+nmap <leader>jk <Action>(EditorPageUp)
+vmap <leader>jj <Action>(EditorPageDown)
+vmap <leader>jk <Action>(EditorPageUp)
+vmap <leader>/s 9y/<C-r>9<CR>
+nmap <leader>cl <Action>(CommentByLineComment)
+vmap <leader>cl <Action>(CommentByLineComment)
