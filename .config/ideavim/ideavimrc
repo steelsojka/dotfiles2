@@ -21,6 +21,7 @@ nmap <leader>wo <Action>(NextTab)
 nmap <leader>wv :vsp<cr>
 nmap <leader>ws :sp<cr>
 nmap <leader>ph <Action>(RecentFiles)
+nmap <leader>fo <Action>(SelectIn)
 nmap U <Action>(Redo)
 nmap <leader>q <Action>(CloseContent)
 nmap <leader>pf <Action>(GotoFile)
@@ -30,6 +31,8 @@ nmap <leader>sp <Action>(FindInPath)
 nmap <leader>bb <Action>(Switcher)
 nmap <leader>jj <Action>(EditorPageDown)
 nmap <leader>jk <Action>(EditorPageUp)
+nmap <leader>f/ <Action>(SpeedSearch)
+nmap <leader>fr <Action>(RecentFiles)
 vmap <leader>jj <Action>(EditorPageDown)
 vmap <leader>jk <Action>(EditorPageUp)
 vmap <leader>/s 9y/<C-r>9<CR>

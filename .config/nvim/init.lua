@@ -19,7 +19,6 @@ vim.opt.scrolloff = 15
 vim.opt.hidden = true
 vim.opt.wrap = false
 vim.opt.timeoutlen = 300
-vim.opt.grepprg = "rg --vimgrep --auto-hybrid-regex"
 vim.opt.updatetime = 200
 vim.opt.signcolumn = "yes"
 vim.opt.cmdheight = 1
@@ -38,8 +37,21 @@ vim.opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
 
 vim.g.tshell = vim.env.NVIM_TSHELL
 vim.g.tshell_cmd_flag = vim.env.NVIM_TSHELL_CMD_FLAG
-vim.g.grepprg_unrestricted = "rg --vimgrep --auto-hybrid -uu"
 
 -- vim.lsp.set_log_level("debug")
+if vim.g.vscode then
+  require "plugin_loader".startup {
+    source_local_config = false,
+    plugins = require "steelvim.vscode.plugins",
+    bootstrap_module = "steelvim.vscode.bootstrap"
+  }
+else
+  vim.opt.grepprg = "rg --vimgrep --auto-hybrid-regex"
+  vim.g.grepprg_unrestricted = "rg --vimgrep --auto-hybrid -uu"
 
-require "plugin_loader".startup()
+  require "plugin_loader".startup {
+    source_local_config = true,
+    plugins = require "plugins",
+    bootstrap_module = "dotfiles.bootstrap"
+  }
+end

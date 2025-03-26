@@ -172,12 +172,17 @@ local function source_local_config()
   workspace["source-local-config"]({all = true})
 end
 
-local function startup()
+local function startup(opts)
+  opts = opts or {}
+
   load_lazy()
   bootstrap()
-  source_local_config()
 
-  local plugins = require "plugins"
+  if opts.source_local_config then
+    source_local_config()
+  end
+
+  local plugins = opts.plugins or {}
   local specs = {}
 
   for _, spec in ipairs(plugins) do
@@ -185,10 +190,12 @@ local function startup()
   end
 
   require "lazy".setup(specs)
-  require "dotfiles.bootstrap"
+  require(opts.bootstrap_module)
 end
 
 return {
   startup = startup,
+  load_lazy = load_lazy,
+  make_module_spec = make_module_spec,
   is_plugin_workspace_excluded = is_plugin_workspace_excluded
 }
