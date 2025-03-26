@@ -12,7 +12,7 @@ local function vsa(action, opts)
   end
 end
 
-
+vim.keymap.set('n', 'U', '<C-r>') -- Redo
 vim.keymap.set('n', '<leader>pp', vsa 'workbench.action.showCommands')
 vim.keymap.set('n', '<leader>pf', vsa 'workbench.action.quickOpen')
 vim.keymap.set('n', '<leader>ph', vsa 'workbench.action.openRecent')
@@ -43,6 +43,13 @@ vim.keymap.set('n', '<leader>cl', vsa 'editor.action.commentLine')
 vim.keymap.set('v', '<leader>cl', vsa 'editor.action.blockComment')
 vim.keymap.set('n', '<leader>jk', vsa 'cursorPageUp')
 vim.keymap.set('n', '<leader>jj', vsa 'cursorPageDown')
+vim.keymap.set('n', '<leader>/s', vsa 'actions.find')
+vim.keymap.set('n', '<leader>sp', vsa('workbpnch.action.findInFiles', function()
+  return { args = { isRegex = true } }
+end))
+vim.keymap.set('n', '<leader>sb', vsa('workbpnch.action.findInFiles', function()
+  return { args = { isRegex = true, onlyOpenEditors = true } }
+end))
 vim.keymap.set('n', '<leader>ss', vsa 'workbench.action.findInFiles')
 vim.keymap.set('n', '<leader>sS', vsa('workbench.action.findInFiles', function()
   return {
