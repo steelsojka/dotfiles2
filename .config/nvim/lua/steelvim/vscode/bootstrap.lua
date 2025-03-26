@@ -44,10 +44,10 @@ vim.keymap.set('v', '<leader>cl', vsa 'editor.action.blockComment')
 vim.keymap.set('n', '<leader>jk', vsa 'cursorPageUp')
 vim.keymap.set('n', '<leader>jj', vsa 'cursorPageDown')
 vim.keymap.set('n', '<leader>/s', vsa 'actions.find')
-vim.keymap.set('n', '<leader>sp', vsa('workbpnch.action.findInFiles', function()
+vim.keymap.set('n', '<leader>sp', vsa('workbench.action.findInFiles', function()
   return { args = { isRegex = true } }
 end))
-vim.keymap.set('n', '<leader>sb', vsa('workbpnch.action.findInFiles', function()
+vim.keymap.set('n', '<leader>sb', vsa('workbench.action.findInFiles', function()
   return { args = { isRegex = true, onlyOpenEditors = true } }
 end))
 vim.keymap.set('n', '<leader>ss', vsa 'workbench.action.findInFiles')
