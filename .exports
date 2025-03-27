@@ -1,6 +1,5 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh # Make vim the default editor
-export EDITOR="nvim"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -18,8 +17,13 @@ export LC_ALL="en_US.UTF-8"
 # Highlight section titles in manual pages
 export LESS_TERMCAP_md="$ORANGE"
 
-# Don’t clear the screen after quitting a manual page
-export MANPAGER="STEELVIM_MODE=man_pager nvim +Man!"
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    export EDITOR="code"
+    unset MANPAGER
+else
+    export MANPAGER="STEELVIM_MODE=man_pager nvim +Man!"
+    export EDITOR="nvim"
+fi
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
