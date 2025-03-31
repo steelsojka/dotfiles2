@@ -49,7 +49,7 @@ vim.keymap.set('n', '<leader>vp', vsa 'workbench.panel.markers.view.focus')
 vim.keymap.set('n', '<leader>vP', vsa '~remote.forwardedPortsContainer')
 vim.keymap.set('n', '<leader>vd', vsa 'workbench.panel.repl.view.focus')
 vim.keymap.set('n', '<leader>vr', vsa 'workbench.view.debug')
-vim.keymap.set('n', '<leader>vc', vsa 'workbench.panel.chat.view.copilot.focus')
+vim.keymap.set('n', '<leader>vc', vsa 'workbench.action.toggleAuxiliaryBar')
 vim.keymap.set('n', '<leader>vt', vsa 'workbench.action.quickOpenTerm')
 vim.keymap.set('n', '<leader>vs', vsa 'workbench.view.search')
 vim.keymap.set('n', '<leader>ve', vsa 'workbench.view.explorer')
@@ -64,11 +64,22 @@ vim.keymap.set('v', '<leader>cl', vsa 'editor.action.blockComment')
 vim.keymap.set('n', '<leader>jk', vsa 'cursorPageUp')
 vim.keymap.set('n', '<leader>jj', vsa 'cursorPageDown')
 vim.keymap.set('n', '<leader>/s', vsa 'actions.find')
-vim.keymap.set('n', '<leader>ac', vsa 'workbench.panel.chat.view.copilot.focus')
-vim.keymap.set('n', '<leader>aaf', vsa 'github.copilot.chat.attachFile')
-vim.keymap.set('n', '<leader>aas', vsa 'github.copilot.chat.attachSelection')
-vim.keymap.set('n', '<leader>aat', vsa 'github.copilot.chat.attachTerminalSelection')
-vim.keymap.set('n', '<leader>am', vsa 'github.copilot.openModelPicker')
+
+-- AI bindings
+if vim.env.VSCODE_VARIANT == 'cursor' then
+  vim.keymap.set('n', '<leader>avc', vsa 'workbench.action.chat.openInSidebar')
+  vim.keymap.set('n', '<leader>ave', vsa 'workbench.action.chat.openInEditor')
+  vim.keymap.set('n', '<leader>avn', vsa 'workbench.action.chat.openInNewWindow')
+  vim.keymap.set('n', '<leader>af', vsa 'aichat.addfilestochataction')
+  vim.keymap.set('n', '<leader>as', vsa 'aichat.insertselectionintochat')
+else 
+  vim.keymap.set('n', '<leader>ac', vsa 'workbench.panel.chat.view.copilot.focus')
+  vim.keymap.set('n', '<leader>aaf', vsa 'github.copilot.chat.attachFile')
+  vim.keymap.set('n', '<leader>aas', vsa 'github.copilot.chat.attachSelection')
+  vim.keymap.set('n', '<leader>aat', vsa 'github.copilot.chat.attachTerminalSelection')
+  vim.keymap.set('n', '<leader>am', vsa 'github.copilot.openModelPicker')
+end
+
 vim.keymap.set('n', '<leader>sp', vsa('workbench.action.findInFiles', function()
   return { args = { isRegex = true } }
 end))
