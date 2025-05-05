@@ -3,3 +3,5 @@ for file in ~/.{exports,path,aliases,env,functions,extra,extra_profile}; do
 done
 
 ulimit -f unlimited
+
+eval "$(/opt/homebrew/bin/brew shellenv)"

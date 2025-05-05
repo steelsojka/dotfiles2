@@ -53,7 +53,7 @@
   # [default] space-before-tab: looks for spaces before tabs at the beginning of
   # a line
   whitespace = space-before-tab,indent-with-non-tab,trailing-space
-  pager = STEELVIM_MODE="git_pager" nvim -R
+  # pager = STEELVIM_MODE="git_pager" nvim -R
 	; pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
@@ -77,9 +77,9 @@
 [merge]
   # Include summaries of merged commits in newly created merge commit messages
   log = true
-  tool = vimdiff
+  tool = vscode
 [diff]
-  tool = vimdiff
+  tool = vscode
 [difftool]
   prompt = false
 [difftool "vscode"]

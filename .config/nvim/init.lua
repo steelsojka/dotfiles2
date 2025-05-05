@@ -40,6 +40,7 @@ vim.g.tshell_cmd_flag = vim.env.NVIM_TSHELL_CMD_FLAG
 
 -- vim.lsp.set_log_level("debug")
 if vim.g.vscode then
+  vim.cmd "syntax off"
   require "plugin_loader".startup {
     source_local_config = false,
     plugins = require "steelvim.vscode.plugins",

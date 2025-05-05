@@ -4,6 +4,7 @@
 for file in ~/.{exports,path,aliases,env,functions,extra,extrarc}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
+unset file
 
 alias dotfiles='$(which git) --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 dotfiles config status.showUntrackedFiles no
