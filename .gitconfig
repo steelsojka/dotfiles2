@@ -46,7 +46,7 @@
   # Use custom `.gitignore` and `.gitattributes`
   excludesfile = ~/.gitignore
   attributesfile = ~/.gitattributes
-  editor = nvim
+  editor = "git-editor"
   # Treat spaces before tabs, lines that are indented with 8 or more spaces, and
   # all kinds of trailing whitespace as an error.
   # [default] trailing-space: looks for spaces at the end of a line
@@ -77,9 +77,9 @@
 [merge]
   # Include summaries of merged commits in newly created merge commit messages
   log = true
-  tool = vscode
+  tool = cursor
 [diff]
-  tool = vscode
+  tool = cursor
 [difftool]
   prompt = false
 [difftool "vscode"]
@@ -87,6 +87,12 @@
   trustExitCode = false
 [mergetool "vscode"]
   cmd = code $LOCAL $REMOTE --diff --wait
+  trustExitCode = false
+[difftool "cursor"]
+  cmd = cursor $LOCAL $REMOTE --diff --wait
+  trustExitCode = false
+[mergetool "cursor"]
+  cmd = cursor $LOCAL $REMOTE --diff --wait
   trustExitCode = false
 [mergetool "vimdiff"]
   cmd = STEELVIM_MODE=git_diff nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
@@ -116,3 +122,5 @@
   helper = cache
 [trace2]
 	maxFiles = 800
+[commit]
+	gpgsign = true
