@@ -1,0 +1,3 @@
+ohmyzsh/ohmyzsh path:plugins/git
+marlonrichert/zsh-autocomplete
+jeffreytse/zsh-vi-mode

@@ -6,6 +6,3 @@ for file in ~/.{exports,path,extra,aliases,env,functions}; do
 done
 
 ulimit -f unlimited
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.forgit/forgit.plugin.zsh ] && source ~/.forgit/forgit.plugin.zsh
