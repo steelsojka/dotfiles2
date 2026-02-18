@@ -1,5 +1,9 @@
 export ANTIDOTE_HOME=$HOME/.antidote
 
+if [[ -f "${HOME}/.extrarc" ]]; then
+  source $HOME/.extrarc
+fi
+
 autoload -Uz compinit && compinit
 
 if (( $+commands[git] )); then
