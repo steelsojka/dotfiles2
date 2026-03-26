@@ -9,5 +9,5 @@ elif [[ "$TERM_PROGRAM" == "vscode" ]]; then
         code --wait "$@"
     fi
 else
-    nvim -u NORC "$@"
+    nvim "$@"
 fi

@@ -21,7 +21,7 @@ export MANPAGER="STEELVIM_MODE=man_pager nvim +Man!"
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     export EDITOR="code"
 else
-    export EDITOR="STEELVIM_MODE=man_pager nvim"
+    export EDITOR="nvim"
 fi
 
 # Always enable colored `grep` output
