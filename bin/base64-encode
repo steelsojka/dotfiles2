@@ -6,7 +6,8 @@ const dataTypes = new Map([
   [".png", "image/png"],
   [".jpg", "image/jpeg"],
   [".jpeg", "image/jpeg"],
-  [".svg", "image/svg+xml"]
+  [".svg", "image/svg+xml"],
+  [".json", "application/json"]
 ]);
 const [imagePath] = process.argv.slice(2);
 

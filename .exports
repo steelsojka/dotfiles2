@@ -16,13 +16,12 @@ export LC_ALL="en_US.UTF-8"
 
 # Highlight section titles in manual pages
 export LESS_TERMCAP_md="$ORANGE"
+export MANPAGER="STEELVIM_MODE=man_pager nvim +Man!"
 
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     export EDITOR="code"
-    unset MANPAGER
 else
-    export MANPAGER="STEELVIM_MODE=man_pager nvim +Man!"
-    export EDITOR="nvim"
+    export EDITOR="STEELVIM_MODE=man_pager nvim"
 fi
 
 # Always enable colored `grep` output

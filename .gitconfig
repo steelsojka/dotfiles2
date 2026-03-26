@@ -1,5 +1,5 @@
 [user]
-  email = steelsojka@gmail.com
+	email = steelsojka@gmail.com
   name = Steven Sojka
 [alias]
   # View abbreviated SHA, description, and history graph of the latest 20 commits
@@ -53,7 +53,7 @@
   # [default] space-before-tab: looks for spaces before tabs at the beginning of
   # a line
   whitespace = space-before-tab,indent-with-non-tab,trailing-space
-  # pager = STEELVIM_MODE="git_pager" nvim -R
+  pager = STEELVIM_MODE="git_pager" nvim -R
 	; pager = diff-so-fancy | less --tabs=4 -RFX
 
 [color]
@@ -124,3 +124,5 @@
 	maxFiles = 800
 [commit]
 	gpgsign = true
+[gpg]
+	format = openpgp

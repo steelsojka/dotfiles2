@@ -8,7 +8,9 @@ local modes = {
   -- "git diff"
   GIT_DIFF = "git_diff",
   -- "gpt"
-  GPT = "gpt"
+  GPT = "gpt",
+  -- "minimal"
+  MINIMAL = "minimal"
 }
 
 local ALL_MODES = vim.tbl_values(modes)

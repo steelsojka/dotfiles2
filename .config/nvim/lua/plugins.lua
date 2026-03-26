@@ -32,7 +32,7 @@ return {
   {
     "norcalli/nvim-colorizer.lua",
     modes = modes.ALL},
-  {"tpope/vim-dispatch", cmd = "Dispatch"},
+  -- {"tpope/vim-dispatch", cmd = "Dispatch"},
   {
     "lewis6991/gitsigns.nvim",
     branch = "main",
@@ -43,15 +43,16 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     modes = {modes.GIT_DIFF}},
-  {
+--[[   {
     "nvim-treesitter/nvim-treesitter-context",
     modes = {modes.GIT_DIFF},
-    dependencies = {"nvim-treesitter/nvim-treesitter"}},
+    dependencies = {"nvim-treesitter/nvim-treesitter"}}, ]]
   {
     "nvim-telescope/telescope.nvim",
     modes = {
       modes.GIT,
       modes.GIT_DIFF,
+      modes.MAN_PAGER,
       modes.GPT},
     dependencies = {
       "nvim-lua/popup.nvim",
@@ -61,22 +62,23 @@ return {
     modes = {
       modes.GIT,
       modes.GPT,
+      modes.MAN_PAGER,
       modes.GIT_DIFF}},
-  {
+--[[   {
     "stevearc/dressing.nvim",
-    modes = {modes.GIT_DIFF}},
-  {
+    modes = {modes.GIT_DIFF}}, ]]
+--[[   {
     "jpalardy/vim-slime",
     cmd = {
       "SlimeSendCurrentLine",
-      "SlimeSend"}},
+      "SlimeSend"}}, ]]
   "bakpakin/fennel.vim",
-  {"mfussenegger/nvim-jdtls", ft = "java"},
-  {"mfussenegger/nvim-dap", lazy = true},
-  {
+--[[   {"mfussenegger/nvim-jdtls", ft = "java"},
+  {"mfussenegger/nvim-dap", lazy = true}, ]]
+--[[   {
     "NTBBloodbath/rest.nvim",
     dependencies = {"nvim-lua/plenary.nvim"},
-    ft = "http"},
+    ft = "http"}, ]]
   {
     "phaazon/hop.nvim",
     branch = 'v1',
@@ -89,7 +91,7 @@ return {
       "HopChar1",
       "HopWord",
       "HopPattern"}},
-  {"mhartington/formatter.nvim", cmd = "Format"},
+--[[   {"mhartington/formatter.nvim", cmd = "Format"}, ]]
   {
     "Olical/conjure",
     ft = {"fennel", "clojure"},
@@ -97,7 +99,7 @@ return {
   {
     "windwp/nvim-autopairs",
     modes = {modes.GIT_DIFF}},
-  {"iamcco/markdown-preview.nvim", ft = "markdown"},
+--[[   {"iamcco/markdown-preview.nvim", ft = "markdown"}, ]]
 
   -- Completion
   {
@@ -112,30 +114,30 @@ return {
       "onsails/lspkind.nvim"}},
 
   -- Snippets
-  "hrsh7th/vim-vsnip",
-  "hrsh7th/vim-vsnip-integ",
+--[[   "hrsh7th/vim-vsnip",
+  "hrsh7th/vim-vsnip-integ", ]]
 
   -- Lsp
   "neovim/nvim-lspconfig",
   {
     "williamboman/mason.nvim",
     dependencies = {"williamboman/mason-lspconfig.nvim"}},
-  {
+--[[   {
     "folke/trouble.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
     cmd = {"TroubleToggle", "Trouble"}},
-  {"nvim-lua/lsp-status.nvim", lazy = true},
-  {
+  {"nvim-lua/lsp-status.nvim", lazy = true}, ]]
+--[[   {
     "sindrets/diffview.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons"},
-    modes = {modes.GIT}},
-  {
+    modes = {modes.GIT}}, ]]
+--[[   {
     "nvim-orgmode/orgmode",
     dependencies = {
       "nvim-treesitter/nvim-treesitter"},
-    event = "VeryLazy"},
-  {
+    event = "VeryLazy"}, ]]
+--[[   {
     "NeogitOrg/neogit",
     lazy = true,
     dependencies = {
@@ -143,22 +145,22 @@ return {
       "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons",
       "sindrets/diffview.nvim"},
-    modes = {modes.GIT}},
-  {
+    modes = {modes.GIT}}, ]]
+--[[   {
     "FabijanZulj/blame.nvim",
     cmd = {"ToggleBlame", "EnableBlame"},
-    config = true},
-  {
+    config = true}, ]]
+--[[   {
     "stevearc/aerial.nvim",
     cmd = {"AerialOpen", "AerialNavOpen"},
     modes = {modes.GIT_DIFF},
-    config = true},
+    config = true}, ]]
   {
     "nvim-pack/nvim-spectre",
     dependencies = {"nvim-lua/plenary.nvim"},
     modes = {modes.GIT},
     lazy = true},
-  {
+--[[   {
     "Exafunction/codeium.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -166,8 +168,8 @@ return {
     },
     config = function()
         require("codeium").setup({})
-    end},
-  modes.mixin_mode({
+    end} ]]
+--[[   modes.mixin_mode({
     "jackMort/ChatGPT.nvim",
     modes = {modes.GPT},
     event = "VeryLazy",
@@ -178,12 +180,13 @@ return {
     {
       [modes.GPT] = function(def)
         def.event = nil
-      end}),
+      end}), ]]
 
   -- Productivity
-  {
+--[[   {
     "weirongxu/plantuml-previewer.vim",
     ft = {"uml", "puml", "plantuml"},
     dependencies = {
       "tyru/open-browser.vim",
-      "aklt/plantuml-syntax"}}}
+      "aklt/plantuml-syntax"}} ]]
+}

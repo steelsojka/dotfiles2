@@ -302,23 +302,6 @@
    "eS" {:do #(browser.prompt-search true) :description "Search term (ext)"}}
   {:mode "n" :prefix "<leader>"})
 
-; ChatGPT mappings
-(keymap.register-mappings
-  {"ac" {:do "<cmd>ChatGPT<CR>" :description "ChatGPT"}
-   "ae" {:do "<cmd>ChatGPTEditWithInstruction<CR>" :description "Edit with instruction"}
-   "ag" {:do "<cmd>ChatGPTRun grammar_correction<CR>" :description "Grammar Correction"}
-   "at" {:do "<cmd>ChatGPTRun translate<CR>" :description "Translate"}
-   "ak" {:do "<cmd>ChatGPTRun keywords<CR>" :description "Keywords"}
-   "ad" {:do "<cmd>ChatGPTRun docstring<CR>" :description "Docstring"}
-   "aa" {:do "<cmd>ChatGPTRun add_tests<CR>" :description "Add Tests"}
-   "ao" {:do "<cmd>ChatGPTRun optimize_code<CR>" :description "Optimize Code"}
-   "as" {:do "<cmd>ChatGPTRun summarize<CR>" :description "Summarize"}
-   "af" {:do "<cmd>ChatGPTRun fix_bugs<CR>" :description "Fix Bugs"}
-   "ax" {:do "<cmd>ChatGPTRun explain_code<CR>" :description "Explain Code"}
-   "ar" {:do "<cmd>ChatGPTRun roxygen_edit<CR>" :description "Roxygen Edit"}
-   "al" {:do "<cmd>ChatGPTRun code_readability_analysis<CR>" :description "Code Readability Analysis"}}
-  {:mode ["n" "v"] :prefix "<leader>"})
-
 ; Non-leader mappings
 (keymap.register-mappings
   {";" {:do ":" :description "Ex command mode"}

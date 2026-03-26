@@ -1,0 +1,97 @@
+#!/usr/bin/env node
+
+const { createGzip, createGunzip, createInflate } = require('zlib');
+const { createReadStream } = require('fs');
+const { pipeline } = require('stream/promises');
+const { Transform } = require('stream');
+
+const args = process.argv.slice(2);
+const flags = new Set(args.filter(a => a.startsWith('-')));
+
+if (flags.has('--help') || flags.has('-h')) {
+  console.log(`Usage: zsquish [options] [file]
+
+Compress or decompress data using gzip, optionally with base64 encoding.
+Reads from stdin if no file is given.
+
+Options:
+  -b, --base64    Base64 encode (compress) or decode (decompress)
+  -d, --decode    Decompress instead of compress
+  -v, --verbose   Print timing info to stderr
+  -h, --help      Show this help message`);
+  process.exit(0);
+}
+
+const base64 = flags.has('--base64') || flags.has('-b');
+const decode = flags.has('--decode') || flags.has('-d');
+const verbose = flags.has('--verbose') || flags.has('-v');
+const file = args.find(a => !a.startsWith('-'));
+
+function timed(label, fn) {
+  let buf = Buffer.alloc(0);
+  let start;
+  return new Transform({
+    transform(chunk, _enc, cb) {
+      if (!start) start = process.hrtime.bigint();
+      buf = Buffer.concat([buf, chunk]);
+      cb();
+    },
+    flush(cb) {
+      const result = fn(buf);
+      if (verbose) {
+        const ms = Number(process.hrtime.bigint() - start) / 1e6;
+        console.error(`${label}: ${ms.toFixed(2)}ms`);
+      }
+      this.push(result);
+      cb();
+    }
+  });
+}
+
+function timedZlib(label, createStream) {
+  let start;
+  const zlib = createStream();
+  const marker = new Transform({
+    transform(chunk, _enc, cb) {
+      if (!start) start = process.hrtime.bigint();
+      cb(null, chunk);
+    }
+  });
+  if (verbose) {
+    zlib.on('end', () => {
+      const ms = Number(process.hrtime.bigint() - start) / 1e6;
+      console.error(`${label}: ${ms.toFixed(2)}ms`);
+    });
+  }
+  return [marker, zlib];
+}
+
+async function run() {
+  const input = file ? createReadStream(file) : process.stdin;
+  const streams = [input];
+
+  if (decode) {
+    if (base64) {
+      streams.push(timed('base64 decode', buf => Buffer.from(buf.toString(), 'base64')));
+    }
+    streams.push(...timedZlib('decompress', createInflate));
+  } else {
+    streams.push(...timedZlib('compress', createGzip));
+    if (base64) {
+      streams.push(timed('base64 encode', buf => buf.toString('base64')));
+    }
+  }
+
+  if (!verbose) {
+    streams.push(process.stdout);
+  } else {
+    const { Writable } = require('stream');
+    streams.push(new Writable({ write(_chunk, _enc, cb) { cb(); } }));
+  }
+  await pipeline(...streams);
+}
+
+run().catch(err => {
+  console.error(err.message);
+  process.exit(1);
+});
