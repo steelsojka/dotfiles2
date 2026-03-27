@@ -38,3 +38,169 @@ vmap <leader>jk <Action>(EditorPageUp)
 vmap <leader>/s 9y/<C-r>9<CR>
 nmap <leader>cl <Action>(CommentByLineComment)
 vmap <leader>cl <Action>(CommentByLineComment)
+
+nmap f <Plug>(easymotion-f)
+nmap F <Plug>(easymotion-F)
+
+""" Plugins --------------------------------
+set easymotion
+set commentary
+
+""" Mappings from nvim config ---------------
+
+" Leader shortcuts
+nmap <leader>, :
+nmap <leader>. <Action>(GotoFile)
+nmap <leader><CR> <Action>(ShowBookmarks)
+
+" File <leader>f
+nmap <leader>fp <Action>(CopyAbsolutePath)
+nmap <leader>fP <Action>(GotoFile)
+nmap <leader>fu <Action>(LocalHistory.ShowHistory)
+
+" Buffer <leader>b
+nmap <leader>bp <Action>(PreviousTab)
+nmap <leader>bn <Action>(NextTab)
+nmap <leader>bf <Action>(GoToTab1)
+nmap <leader>bl <Action>(GoToLastTab)
+nmap <leader>bd <Action>(CloseContent)
+nmap <leader>bk <Action>(CloseContent)
+nmap <leader>bY ggyG
+
+" Window <leader>w
+nmap <leader>ww <C-W>w
+nmap <leader>wd <Action>(CloseContent)
+nmap <leader>wn <Action>(EditSourceInNewWindow)
+nmap <leader>wq <Action>(CloseContent)
+nmap <leader>wj <Action>(NextSplitter)
+nmap <leader>wk <Action>(PrevSplitter)
+nmap <leader>wJ <C-W>J
+nmap <leader>wK <C-W>K
+nmap <leader>wH <C-W>H
+nmap <leader>wL <C-W>L
+nmap <leader>wr <C-W>r
+nmap <leader>wR <C-W>R
+nmap <leader>wbj <Action>(StretchSplitToBottom)
+nmap <leader>wbk <Action>(StretchSplitToTop)
+nmap <leader>wbl <Action>(StretchSplitToRight)
+nmap <leader>wbh <Action>(StretchSplitToLeft)
+nmap <leader>wb= <Action>(MaximizeEditorInSplit)
+nmap <leader>w= <Action>(MaximizeEditorInSplit)
+nmap <leader>wF <Action>(OpenEditorInOppositeTabGroup)
+
+" Project <leader>p
+nmap <leader>pt <Action>(ActivateProjectToolWindow)
+nmap <leader>pT <Action>(ActivateProjectToolWindow)
+nmap <leader>pq <Action>(CloseProject)
+nmap <leader>pQ <Action>(Exit)
+
+" Navigation <leader>j
+nmap <leader>jl $
+nmap <leader>jh 0
+nmap <leader>jd <Action>(GotoDeclaration)
+nmap <leader>ji <Action>(GotoImplementation)
+nmap <leader>jy <Action>(GotoTypeDeclaration)
+nmap <leader>js <Action>(FileStructurePopup)
+nmap <leader>jS <Action>(GotoSymbol)
+nmap <leader>jr <Action>(FindUsages)
+nmap <leader>jep <Action>(GotoPreviousError)
+nmap <leader>jen <Action>(GotoNextError)
+nmap <leader>jeN <Action>(GotoNextError)
+nmap <leader>jeP <Action>(GotoPreviousError)
+nmap <leader>jqp <Action>(PreviousOccurence)
+nmap <leader>jqn <Action>(NextOccurence)
+nmap <leader>jn <Action>(Back)
+nmap <leader>jp <Action>(Forward)
+nmap <leader>jml <Action>(ShowBookmarks)
+
+" Search <leader>s
+nmap <leader>si <Action>(GotoSymbol)
+nmap <leader>sb <Action>(Find)
+nmap <leader>so <Action>(FileStructurePopup)
+nmap <leader>sm <Action>(ShowBookmarks)
+nmap <leader>sS <Action>(FindWordAtCaret)
+nmap <leader>sr <Action>(ReplaceInPath)
+nmap <leader>sR <Action>(Replace)
+
+" Local search <leader>/
+nmap <leader>/h :nohlsearch<CR>
+
+" Yank <leader>y
+nmap <leader>yfp <Action>(CopyAbsolutePath)
+nmap <leader>yfn <Action>(CopyFileName)
+nmap <leader>yfP <Action>(CopyAbsolutePath)
+nmap <leader>yfN <Action>(CopyFileName)
+nmap <leader>yfr <Action>(CopyContentRootPath)
+nmap <leader>yfR <Action>(CopyContentRootPath)
+nmap <leader>yy "+y
+
+" Diagnostics <leader>x
+nmap <leader>xx <Action>(ActivateInspectionToolWindow)
+nmap <leader>xw <Action>(ActivateInspectionToolWindow)
+nmap <leader>xd <Action>(ActivateInspectionToolWindow)
+
+" Code <leader>c
+nmap <leader>cd <Action>(GotoDeclaration)
+nmap <leader>cD <Action>(FindUsages)
+nmap <leader>ck <Action>(ShowHoverInfo)
+nmap <leader>ce <Action>(ActivateInspectionToolWindow)
+nmap <leader>cs <Action>(ParameterInfo)
+nmap <leader>cj <Action>(FileStructurePopup)
+nmap <leader>cJ <Action>(GotoSymbol)
+nmap <leader>ca <Action>(ShowIntentionActions)
+nmap <leader>co <Action>(ActivateStructureToolWindow)
+nmap <leader>cO <Action>(ActivateStructureToolWindow)
+nmap <leader>cR <Action>(RestartIde)
+
+" Quickfix/Location <leader>l / <leader>L
+nmap <leader>lk <Action>(PreviousOccurence)
+nmap <leader>lj <Action>(NextOccurence)
+
+" Git <leader>g
+nmap <leader>gcu <Action>(Vcs.RollbackChangedLines)
+nmap <leader>gcn <Action>(VcsShowNextChangeMarker)
+nmap <leader>gcp <Action>(VcsShowPrevChangeMarker)
+nmap <leader>gci <Action>(VcsShowCurrentChangeMarker)
+nmap <leader>gcb <Action>(Annotate)
+nmap <leader>gB <Action>(Git.Branches)
+nmap <leader>gs <Action>(ActivateChangesToolWindow)
+nmap <leader>gd <Action>(Compare.SameVersion)
+nmap <leader>gg <Action>(ActivateChangesToolWindow)
+nmap <leader>gfh <Action>(Vcs.ShowTabbedFileHistory)
+nmap <leader>gl <Action>(Git.Log)
+nmap <leader>gL <Action>(Vcs.ShowTabbedFileHistory)
+nmap <leader>gb <Action>(Annotate)
+
+" Debug <leader>d
+nmap <leader>db <Action>(ToggleLineBreakpoint)
+nmap <leader>dc <Action>(Resume)
+nmap <leader>ds <Action>(StepInto)
+nmap <leader>dS <Action>(StepOver)
+nmap <leader>dr <Action>(ActivateDebugToolWindow)
+nmap <leader>dh <Action>(EvaluateExpression)
+
+" Toggle <leader>t
+nmap <leader>tl <Action>(EditorToggleShowLineNumbers)
+nmap <leader>tw <Action>(EditorToggleUseSoftWraps)
+nmap <leader>tc <Action>(EditorToggleShowWhitespaces)
+nmap <leader>tf za
+nmap <leader>tF zA
+
+" Help <leader>h
+nmap <leader>hk <Action>(GotoAction)
+nmap <leader>hp <Action>(WelcomeScreen.Plugins)
+
+" Non-leader easymotion
+nmap s <Plug>(easymotion-w)
+nmap S <Plug>(easymotion-s)
+
+" Visual leader mappings
+vmap <leader>jl $
+vmap <leader>jh 0
+vmap <leader>yy "+y
+vmap <leader>sr <Action>(FindInPath)
+vmap <leader>sS <Action>(FindWordAtCaret)
+vmap s <Plug>(easymotion-w)
+vmap S <Plug>(easymotion-s)
+vmap f <Plug>(easymotion-f)
+vmap F <Plug>(easymotion-F)

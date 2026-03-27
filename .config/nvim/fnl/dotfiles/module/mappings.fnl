@@ -68,7 +68,6 @@
   {"," {:do ":" :description "Ex"}
    "." {:do #(lib.telescope_builtin.find_files) :description "Find files"}
    "<CR>" {:do #(lib.telescope_builtin.marks) :description "Jump to mark"}
-   "<leader>" {:do #(lib.telescope_builtin.commands) :description "Ex commands"}
    "\"" {:do "q:" :description "Ex History"}
    "fs" {:do "<Cmd>w<CR>" :description "Save file"}
    "fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
@@ -124,6 +123,7 @@
    "wF" {:do "<Cmd>tabnew<CR>" :description "New tab"}
    "wo" {:do "<Cmd>tabnext<CR>" :description "Next tab"}
    ; Project mappings <leader>p
+   "pp" {:do #(lib.telescope_builtin.commands) :description "Ex commands"}
    "ph" {:do #(lib.telescope_builtin.oldfiles) :description "MRU"}
    "pf" {:do #(lib.telescope_builtin.find_files {:cwd (vim.fn.getcwd)}) :description "Find file"}
    "pss" {:do #(sessions.save-session) :description "Save (default)"}
