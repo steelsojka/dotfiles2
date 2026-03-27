@@ -24,11 +24,3 @@ if (( $+commands[starship] )); then
   eval "$(starship init zsh)"
 fi
 
-# >>> aisuite >>>
-export NODE_EXTRA_CA_CERTS="/Users/ssojka/.aisuite/conf/npm-sfdc-certs.pem"
-case ":$PATH:" in
-  *":$HOME/.local/bin:"*) ;;
-  *) [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH" ;;
-esac
-export PATH="/Users/ssojka/.aisuite/bin:/Users/ssojka/.aisuite/bin/aliases:$PATH"
-# <<< aisuite <<<
