@@ -12,10 +12,6 @@ if [[ -f "${ANTIDOTE_ZSH_SCRIPT}" ]]; then
   antidote load
 fi
 
-if (( $+commands[fzf] )); then
-  source <(fzf --zsh)
-fi
-
 if [[ -f "${HOME}/.extrarc" ]]; then
   source $HOME/.extrarc
 fi
@@ -24,3 +20,10 @@ if (( $+commands[starship] )); then
   eval "$(starship init zsh)"
 fi
 
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+fi
+
+# devbar-managed-start
+export NODE_EXTRA_CA_CERTS="$HOME/.devbar/certs/corporate-ca-bundle.pem"
+# devbar-managed-end
