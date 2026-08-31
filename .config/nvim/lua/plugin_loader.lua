@@ -16,14 +16,7 @@ end
 
 local function load_lazy()
   if not vim.loop.fs_stat(lazy_path) then
-    vim.fn.system {
-      "git",
-      "clone",
-      "--filter=blob:none",
-      "https://github.com/folke/lazy.nvim.git",
-      "--branch=v11.17.5",
-      lazy_path
-    }
+    vim.fn.system({ "git", "clone", "-c", "remote.origin.fetch=''", "--filter=blob:none", "--branch=v11.17.5", "--single-branch", "https://github.com/folke/lazy.nvim.git", lazypath })
   end
 
   vim.opt.rtp:prepend(lazy_path)

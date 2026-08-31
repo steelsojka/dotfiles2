@@ -56,7 +56,9 @@ return {
       modes.GPT},
     dependencies = {
       "nvim-lua/popup.nvim",
-      "nvim-lua/plenary.nvim"}},
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim"}},
+    "folke/snacks.nvim",
   {
     "nvim-telescope/telescope-ui-select.nvim",
     modes = {
@@ -80,8 +82,8 @@ return {
     dependencies = {"nvim-lua/plenary.nvim"},
     ft = "http"}, ]]
   {
-    "phaazon/hop.nvim",
-    branch = 'v1',
+    "wsdjeg/hop.nvim",
+    tag = "v2.8.1",
     modes = {
       modes.MAN_PAGER,
       modes.GIT_PAGER,
@@ -91,7 +93,19 @@ return {
       "HopChar1",
       "HopWord",
       "HopPattern"}},
---[[   {"mhartington/formatter.nvim", cmd = "Format"}, ]]
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup {
+        formatters_by_ft = {
+          javascript = { "prettier" },
+          typescript = { "prettier" },
+          typescriptreact = { "prettier" },
+          html = { "prettier" }
+        },
+        notify_no_formatters = true
+      }
+    end},
   {
     "Olical/conjure",
     ft = {"fennel", "clojure"},
@@ -122,22 +136,25 @@ return {
   {
     "williamboman/mason.nvim",
     dependencies = {"williamboman/mason-lspconfig.nvim"}},
---[[   {
+  {
     "folke/trouble.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
-    cmd = {"TroubleToggle", "Trouble"}},
-  {"nvim-lua/lsp-status.nvim", lazy = true}, ]]
---[[   {
+    config = function()
+      require("trouble").setup {}
+    end,
+    cmd = "Trouble"},
+  {"nvim-lua/lsp-status.nvim", lazy = true},
+  {
     "sindrets/diffview.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons"},
-    modes = {modes.GIT}}, ]]
+    modes = {modes.GIT}},
 --[[   {
     "nvim-orgmode/orgmode",
     dependencies = {
       "nvim-treesitter/nvim-treesitter"},
     event = "VeryLazy"}, ]]
---[[   {
+   {
     "NeogitOrg/neogit",
     lazy = true,
     dependencies = {
@@ -145,11 +162,13 @@ return {
       "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons",
       "sindrets/diffview.nvim"},
-    modes = {modes.GIT}}, ]]
---[[   {
+    modes = {modes.GIT}},
+   {
     "FabijanZulj/blame.nvim",
-    cmd = {"ToggleBlame", "EnableBlame"},
-    config = true}, ]]
+    lazy = false,
+    config = function()
+      require("blame").setup {}
+    end},
 --[[   {
     "stevearc/aerial.nvim",
     cmd = {"AerialOpen", "AerialNavOpen"},

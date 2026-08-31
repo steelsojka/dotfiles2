@@ -7,3 +7,5 @@
 (require "dotfiles.module.filetypes")
 (require "dotfiles.module.modes")
 (require "dotfiles.module.mappings")
+(let [lsp (require "dotfiles.lsp.configs")]
+  (lsp.setup))

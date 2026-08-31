@@ -14,4 +14,5 @@
                      :results_title ""
                      :preview_title ""}
                     :file_previewer (-> (require "telescope.previewers") (. :cat) (. :new))})
-  (telescope.load_extension "ui-select"))
+  (telescope.load_extension "ui-select")
+  (telescope.load_extension "live_grep_args"))

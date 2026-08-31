@@ -66,23 +66,23 @@
 
 (keymap.register-mappings
   {"," {:do ":" :description "Ex"}
-   "." {:do #(lib.telescope_builtin.find_files) :description "Find files"}
-   "<CR>" {:do #(lib.telescope_builtin.marks) :description "Jump to mark"}
+   "." {:do #(Snacks.picker.smart) :description "Find files"}
+   "<CR>" {:do #(Snacks.picker.marks) :description "Jump to mark"}
    "\"" {:do "q:" :description "Ex History"}
    "fs" {:do "<Cmd>w<CR>" :description "Save file"}
    "fS" {:do "<Cmd>wa<CR>" :description "Save all files"}
-   "f/" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search lines"}
-   "ff" {:do "<Cmd>Format<CR>" :description "Format file"}
+   "f/" {:do #(Snacks.picker.lines) :description "Search lines"}
+   "ff" {:do #(lib.conform.format {:bufnr (vim.api.nvim_get_current_buf)}) :description "Format file"}
    "fo" {:do "<Cmd>Oil %:p:h<CR>" :description "Show in tree"}
    "fO" {:do "<Cmd>Oil --float %:p:h<CR>" :description "Show in float tree"}
-   "fr" {:do #(lib.telescope_builtin.oldfiles) :description "Open recent files"}
+   "fr" {:do #(Snacks.picker.recent) :description "Open recent files"}
    "fu" {:do "<Cmd>UndotreeToggle<CR>" :description "Undo tree"}
    "fU" {:do "<Cmd>UndotreeFocus<CR>" :description "Focus undo tree"}
    "fE" {:do "<Cmd>vsp $MYVIMRC<CR>" :description "Edit .vimrc"}
-   "fF" {:do #(lib.telescope_builtin.find_files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
-   "fF" {:do #(lib.telescope_builtin.find_files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
+   "fF" {:do #(Snacks.picker.files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
+   "fF" {:do #(Snacks.picker.files {:cwd (util.get-current-buffer-dir)}) :description "Find from file"}
    "fp" {:do "<Cmd>echo expand(\"%:p\")<CR>" :description "Print file path"}
-   "fP" {:do #(lib.telescope_builtin.find_files {:cwd "~/.vim/fnl"}) :description "Find config file"}
+   "fP" {:do #(Snacks.picker.files {:cwd "~/.vim/fnl"}) :description "Find config file"}
    ; Buffer mappings <leader>b
    "bp" {:do "<Cmd>bprevious<CR>" :description "Previous buffer"}
    "bn" {:do "<Cmd>bnext<CR>" :description "Next buffer"}
@@ -90,7 +90,7 @@
    "bl" {:do "<Cmd>blast<CR>" :description "Last buffer"}
    "bd" {:do "<Cmd>bp<CR>:bd#<CR>" :description "Delete buffer"}
    "bk" {:do "<Cmd>bp<CR>:bw!#<CR>" :description "Wipe buffer"}
-   "bb" {:do #(lib.telescope_builtin.buffers) :description "List buffers"}
+   "bb" {:do #(Snacks.picker.buffers) :description "List buffers"}
    "bY" {:do "ggyG" :description "Yank buffer"}
    "bm" {:do #(util.prompt-command :mark "Set mark") :description "Set mark"}
    ; Window mappings <leader>w
@@ -123,9 +123,9 @@
    "wF" {:do "<Cmd>tabnew<CR>" :description "New tab"}
    "wo" {:do "<Cmd>tabnext<CR>" :description "Next tab"}
    ; Project mappings <leader>p
-   "pp" {:do #(lib.telescope_builtin.commands) :description "Ex commands"}
-   "ph" {:do #(lib.telescope_builtin.oldfiles) :description "MRU"}
-   "pf" {:do #(lib.telescope_builtin.find_files {:cwd (vim.fn.getcwd)}) :description "Find file"}
+   "pp" {:do #(Snacks.picker.commands) :description "Ex commands"}
+   "ph" {:do #(Snacks.picker.recent) :description "MRU"}
+   "pf" {:do #(Snacks.picker.files {:cwd (vim.fn.getcwd)}) :description "Find file"}
    "pss" {:do #(sessions.save-session) :description "Save (default)"}
    "psS" {:do #(sessions.save-session nil true) :description "Save"}
    "psl" {:do #(sessions.load-session true) :description "Load (default)"}
@@ -149,9 +149,9 @@
    "jd" {:do #(vim.lsp.buf.definition) :description "Definition"}
    "ji" {:do #(vim.lsp.buf.implementation) :description "Implementation"}
    "jy" {:do #(vim.lsp.buf.type_definition) :description "Type definition"}
-   "js" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "Jump to symbol"}
-   "jS" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
-   "jr" {:do #(lib.telescope_builtin.lsp_references) :description "Type references"}
+   "js" {:do #(Snacks.picker.lsp_symbols) :description "Jump to symbol"}
+   "jS" {:do #(Snacks.picker.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
+   "jr" {:do #(Snacks.picker.lsp_references) :description "Type references"}
    "jep" {:do #(vim.diagnostic.goto_prev {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Previous error"}
    "jen" {:do #(vim.diagnostic.goto_next {:severity vim.lsp.protocol.DiagnosticSeverity.Error}) :description "Next error"}
    "jeN" {:do #(vim.diagnostic.goto_next) :description "Next diagnostic"}
@@ -160,7 +160,7 @@
    "jqn" {:do "<Cmd>cn<CR>" :description "Next"}
    "jn" {:do "<C-o>" :description "Next jump"}
    "jp" {:do "<C-i>" :description "Previous jump"}
-   "jml" {:do #(lib.telescope_builtin.marks) :description "List marks"}
+   "jml" {:do #(Snacks.picker.marks) :description "List marks"}
    "jmd" {:do ":delmarks<Space>" :description "Delete marks"}
    "jmm" {:do "`" :description "Go to mark"}
    "jcn" {:do "g," :description "Next change"}
@@ -168,23 +168,24 @@
    ; Insert mappings <leader>i
    "if" {:do "\"%p" :description "Current file name"}
    "iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
-   "is" {:do #(lib.telescope.extensions.snippets.snippets) :description "Insert snippet"}
    "ir" {:do #(tele.insert-relative-path (util.get-current-buffer-dir)) :description "Insert relative path"}
    "ip" {:do #(tele.complete-path) :description "Insert path"}
    ; Search mappings <leader>s
-   "sd" {:do #(lib.telescope_builtin.live_grep {:cwd (util.get-current-buffer-dir)}) :description "Grep files in directory"}
-   "sD" {:do #(lib.telescope_builtin.live_grep {:cwd (util.get-current-buffer-dir)
-                                                :vimgrep_arguments ["-uu"]})
-         :description "Grep files in directory"}
-   "sc" {:do #(lib.telescope_builtin.command_history) :description "Search command history"}
-   "si" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Search symbol"}
-   "sb" {:do #(lib.telescope_builtin.current_buffer_fuzzy_find) :description "Search buffer"}
+   "sd" {:do #(Snacks.picker.grep {:cwd (util.get-current-buffer-dir)}) :description "Grep files in directory"}
+   "sd" {:do #(Snacks.picker.diagnostics_buffer) :description "Search diagnostics"}
+   "sc" {:do #(Snacks.picker.command_history) :description "Search command history"}
+   "si" {:do #(Snacks.picker.lsp_workspace_symbols) :description "Search symbol"}
+   "sb" {:do #(Snacks.picker.grep_buffers) :description "Search buffer"}
    "ss" {:do #(lib.spectre.open_file_search {:select_word true}) :description "Search/Replace in file (selected)"}
-   "so" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "List symbols in file"}
-   "sp" {:do #(lib.telescope_builtin.live_grep) :description "Grep files in project"}
-   "sm" {:do #(lib.telescope_builtin.marks) :description "Jump to marks"}
-   "sw" {:do #(lib.telescope_builtin.spell_suggest) :description "Spell suggest"}
-   "sS" {:do #(lib.telescope_builtin.grep_string) :description "Search selected text (project)"}
+   "so" {:do #(Snacks.picker.lsp_symbols) :description "List symbols in file"}
+   "sp" {:do #(Snacks.picker.grep) :description "Grep files in project"}
+   "sj" {:do #(Snacks.picker.jumps) :description "Search jumps"}
+   "s/" {:do #(Snacks.picker.search_history) :description "Search search history"}
+   "sh" {:do #(Snacks.picker.help) :description "Search help"}
+   "sm" {:do #(Snacks.picker.marks) :description "Jump to marks"}
+   "sM" {:do #(Snacks.picker.man) :description "Jump to marks"}
+   "sw" {:do #(Snacks.picker.grep_word) :description "Search word"}
+   "sS" {:do #(Snacks.picker.grep_word) :description "Search selected text (project)"}
    "sr" {:do #(lib.spectre.toggle) :description "Search/Replace (project)"}
    "sR" {:do #(lib.spectre.open_file_search) :description "Search/Replace (file)"}
    ; Local Search/Replace mappings <leader>/
@@ -213,14 +214,14 @@
    "cl" {:do "<Plug>kommentary_line_default<C-c>" :description "Comment line"}
    "cW" {:do (string.format "<Cmd>vsp term://tail -f -n100 %s | normal! G<CR>" (vim.lsp.get_log_path)) :description "Watch LSP Log"}
    "cd" {:do #(vim.lsp.buf.definition) :description "Definition"}
-   "cD" {:do #(lib.telescope_builtin.lsp_references) :description "Type references"}
+   "cD" {:do #(Snacks.picker.lsp_references) :description "Type references"}
    "ck" {:do "gh" :description "Jump to documentation" :noremap false}
    "cr" {:do #(vim.lsp.buf.rename) :description "LSP rename"}
    "ce" {:do #(vim.diagnostic.set_loclist) :description "List errors"}
    "cR" {:do "<Cmd>LspRestart<CR>" :description "LSP reload"}
    "cs" {:do #(vim.lsp.buf.signature_help) :description "Signature help"}
-   "cj" {:do #(lib.telescope_builtin.lsp_document_symbols) :description "Jump to symbol"}
-   "cJ" {:do #(lib.telescope_builtin.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
+   "cj" {:do #(Snacks.picker.lsp_symbols) :description "Jump to symbol"}
+   "cJ" {:do #(Snacks.picker.lsp_workspace_symbols) :description "Jump to symbol in workspace"}
    "ca" {:do #(vim.lsp.buf.code_action) :description "LSP code actions"}
    "co" {:do "<Cmd>AerialOpen<CR>" :description "Open outline"}
    "cO" {:do "<Cmd>AerialNavOpen<CR>" :description "Open outline (nav)"}
@@ -249,16 +250,16 @@
    "gcp" {:do #(lib.gitsigns.prev_hunk) :description "Previous chunk"}
    "gci" {:do #(lib.gitsigns.preview_hunk) :description "Chunk info"}
    "gcb" {:do #(lib.gitsigns.blame_line) :description "Chunk blame"}
-   "gB" {:do #(lib.telescope_builtin.git_branches) :description "Checkout branch"}
-   "gs" {:do #(lib.telescope_builtin.git_status) :description "Git status"}
+   "gB" {:do #(Snacks.picker.git_branches) :description "Checkout branch"}
+   "gs" {:do #(Snacks.picker.git_status) :description "Git status"}
    "gd" {:do "<Cmd>DiffviewOpen<CR>" :description "Git diff"}
    "gg" {:do #(lib.neogit.open) :description "Git GUI"}
    "gfh" {:do "<Cmd>DiffviewFileHistory %<CR>" :description "Git File History"}
    "gl" {:do #(lib.neogit.open ["log"]) :description "Git log"}
-   "gL" {:do #(lib.telescope_builtin.git_bcommits) :description "Git file log"}
-   "gb" {:do "<Cmd>ToggleBlame virtual<CR>" :description "Git blame"}
-   "gC" {:do #(lib.telescope_builtin.git_commits) :description "Find commit"}
-   "gF" {:do #(lib.telescope_builtin.git_files) :description "Find file"}
+   "gL" {:do #(Snacks.picker.git_log_file) :description "Git file log"}
+   "gb" {:do "<Cmd>BlameToggle virtual<CR>" :description "Git blame"}
+   "gC" {:do #(Snacks.picker.git_log) :description "Find commit"}
+   "gF" {:do #(Snacks.picker.git_files) :description "Find file"}
    ; Terminal mappings <leader>wt
    "wtt" {:do #(term.open) :description "Terminal"}
    "wtv" {:do #(do (nvim.ex.vsp) (term.open)) :description "Vertical split terminal"}
@@ -275,12 +276,11 @@
    "te" {:do #(keymap.unimplemented) :description "Inline errors"}
    "tbr" {:do #(rest-client.toggle-rest-buf) :description "Toggle REST Client"}
    ; Help mappings <leader>h
-   "hh" {:do #(lib.telescope_builtin.help_tags) :description "Help tags"}
-   "hi" {:do #(lib.telescope_builtin.highlights) :description "List highlights"}
-   "hm" {:do #(lib.telescope_builtin.man_pages) :description "Man pages"}
-   "ho" {:do #(lib.telescope_builtin.vim_options) :description "Vim options"}
-   "ha" {:do #(lib.telescope_builtin.autocommands) :description "List autocommands"}
-   "hk" {:do #(lib.telescope_builtin.keymaps) :description "List keymaps"}
+   "hh" {:do #(Snacks.picker.help) :description "Help tags"}
+   "hi" {:do #(Snacks.picker.highlights) :description "List highlights"}
+   "hm" {:do #(Snacks.picker.man) :description "Man pages"}
+   "ha" {:do #(Snacks.picker.autocmds) :description "List autocommands"}
+   "hk" {:do #(Snacks.picker.keymaps) :description "List keymaps"}
    "hl" {:do "<Cmd>Mason<CR>" :description "List LSP"}
    "hp" {:do "<Cmd>Lazy<CR>" :description "List Plugins"}
    ; Debug mappings <leader>d

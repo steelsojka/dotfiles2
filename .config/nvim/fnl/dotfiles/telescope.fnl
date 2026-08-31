@@ -147,7 +147,7 @@
   (-> (lib.telescope_pickers.new {:prompt_title "Insert Relative Path"
                     :finder (lib.telescope_finders.new_oneshot_job ["rg" "--files"])
                     :default_text (or default-text "")
-                    :sorter (telescope-conf.generic_sorter)
+                    :sorter (lib.telescope_config.value.generic_sorter)
                     :attach_mappings (fn [prompt map]
                                        (map :n "<CR>" (make-paste-relative-path-action from-path))
                                        (map :i "<CR>" (make-paste-relative-path-action from-path))
@@ -158,7 +158,7 @@
   "Inserts a word from a dictionary"
   (-> (lib.telescope_pickers.new {:prompt_title "Insert Word"
                     :finder (lib.telescope_finders.new_oneshot_job ["cat" vim.o.dictionary])
-                    :sorter (telescope-conf.generic_sorter)
+                    :sorter (lib.telescope_config.value.generic_sorter)
                     :attach_mappings mappings.paste-entry})
       (: :find)))
 
@@ -177,7 +177,7 @@
         picker (lib.telescope_pickers.new
                  {:prompt_title "Complete Path"
                   :finder (lib.telescope_finders.new_oneshot_job ["rg" "--files"])
-                  :sorter (telescope-conf.generic_sorter)
+                  :sorter (lib.telescope_config.value.generic_sorter)
                   :attach_mappings (fn [_ map]
                                      (map :n "<CR>" (make-completion-action opts))
                                      (map :i "<CR>" (make-completion-action opts))

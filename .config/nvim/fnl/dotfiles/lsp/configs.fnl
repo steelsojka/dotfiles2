@@ -9,13 +9,14 @@
     (root ...)))
 
 (def configs
- {:tsserver
-  #{:root_dir (let [root-fn (root-pattern ".git" "tsconfig.json" "jsconfig.json")]
-                (fn [...]
-                  (or (root-fn ...) (vim.fn.getcwd))))
-    :init_options
-    {:tsserver
-     {:path (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))}}
+ {:ts_ls
+  #{
+    ; :root_dir (let [root-fn (root-pattern ".git" "tsconfig.json" "jsconfig.json")]
+    ;             (fn [...]
+    ;               (or (root-fn ...) (vim.fn.getcwd))))
+    ; :init_options
+    ; {:tsserver
+    ;  {:path (files.nearest "node_modules/typescript/lib" (vim.fn.getcwd))}}
     :settings
      {:typescript
       {:preferences
@@ -124,6 +125,7 @@
 (defn setup []
   (let [server-names (vim.tbl_keys configs)]
     (each [i server-name (ipairs server-names)]
-      (let [config (get-config-for server-name)
-            lsp-config (require "lspconfig")]
-        ((. (. lsp-config server-name) :setup) config)))))
+      (let [config (get-config-for server-name)]
+        (do
+          (vim.lsp.config server-name config)
+          (vim.lsp.enable server-name))))))

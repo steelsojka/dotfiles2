@@ -9,12 +9,17 @@ set ideawrite=file
 set ideajoin
 set ideamarks
 
+""" Plugins --------------------------------
+set easymotion
+set commentary
+
+
 inoremap jj <esc>
 nnoremap ; :
 nmap <leader>ff <Action>(ReformatCode)
 nmap <leader>fs :w<cr>
 nmap <leader>fS :wa<cr>
-nmap <leader><leader> <Action>(SearchEverywhere)
+nmap <leader>pp <Action>(SearchEverywhere)
 nmap <leader>wl <Action>(NextSplitter)
 nmap <leader>wh <Action>(PrevSplitter)
 nmap <leader>wo <Action>(NextTab)
@@ -41,10 +46,6 @@ vmap <leader>cl <Action>(CommentByLineComment)
 
 nmap f <Plug>(easymotion-f)
 nmap F <Plug>(easymotion-F)
-
-""" Plugins --------------------------------
-set easymotion
-set commentary
 
 """ Mappings from nvim config ---------------
 
