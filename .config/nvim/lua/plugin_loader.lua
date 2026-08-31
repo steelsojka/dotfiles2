@@ -124,7 +124,7 @@ local function make_module_spec(spec)
     end
   end
 
-  if not spec.config then
+  if spec.config == nil then
     spec.config = function(plugin, opts)
       call_spec_module(spec_name, module_name, "configure", plugin, opts)
     end

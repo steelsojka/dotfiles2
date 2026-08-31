@@ -58,7 +58,14 @@ return {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim"}},
-    "folke/snacks.nvim",
+  { "folke/snacks.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require "snacks".setup {
+        picker = { enabled = true }
+      }
+    end },
   {
     "nvim-telescope/telescope-ui-select.nvim",
     modes = {
