@@ -1,6 +1,5 @@
 (module dotfiles.lsp.configs
   {require {keymap dotfiles.keymap
-            telescope dotfiles.telescope
             lib dotfiles.lib
             files dotfiles.files}})
 
@@ -84,11 +83,7 @@
 (def handlers {
   "textDocument/publishDiagnostics" (vim.lsp.with
                                       vim.lsp.diagnostic.on_publish_diagnostics
-                                      {:virtual_text false})
-  "textDocument/declaration" telescope.location-callback
-  "textDocument/definition" telescope.location-callback
-  "textDocument/typeDefinition" telescope.location-callback
-  "textDocument/implementation" telescope.location-callback})
+                                      {:virtual_text false})})
 
 (defn on-attach [client]
   (lib.lsp-status.on_attach client)
@@ -100,20 +95,20 @@
     {"gd" {:do #(vim.lsp.buf.definition) :silent true :description "Go to definition"}
      "gy" {:do #(vim.lsp.buf.type_definition) :silent true :description "Go to type definition"}
      "gi" {:do #(vim.lsp.buf.implementation) :silent true :description "Go to implementation"}
-     "gr" {:do #(lib.telescope_builtin.lsp_references) :silent true :description "Search references"}
+     "gr" {:do #(Snacks.picker.lsp_references) :silent true :description "Search references"}
      "gR" {:do "<Cmd>Trouble lsp_references<CR>" :silent true :description "References"}}))
 
 (defn get-config [overrides]
-  (let [cmp-nvim-lsp (require "cmp_nvim_lsp")]
+  (let [blink-cmp (require "blink.cmp")]
     (vim.tbl_extend "force"
-                    {:on_attach on-attach
-                     : handlers
-                     :capabilities (vim.tbl_extend
-                                     "keep"
-                                     (cmp-nvim-lsp.default_capabilities
-                                       (vim.lsp.protocol.make_client_capabilities))
-                                     lib.lsp-status.capabilities)}
-                    (or overrides {}))))
+                     {:on_attach on-attach
+                      : handlers
+                      :capabilities (vim.tbl_extend
+                                      "keep"
+                                      (blink-cmp.get_lsp_capabilities
+                                        (vim.lsp.protocol.make_client_capabilities))
+                                      lib.lsp-status.capabilities)}
+                     (or overrides {}))))
 
 (defn get-config-for [name]
   (let [entry (. configs name)

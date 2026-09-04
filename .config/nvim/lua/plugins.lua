@@ -107,19 +107,9 @@ return {
 
   -- Completion
   {
-    "hrsh7th/nvim-cmp",
-    modes = {modes.GIT_DIFF},
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-vsnip",
-      "onsails/lspkind.nvim"}},
-
-  -- Snippets
---[[   "hrsh7th/vim-vsnip",
-  "hrsh7th/vim-vsnip-integ", ]]
+    "saghen/blink.cmp",
+    name = "blink-cmp",
+    version = "1.*"},
 
   -- Lsp
   "neovim/nvim-lspconfig",
@@ -148,8 +138,6 @@ return {
     "NeogitOrg/neogit",
     lazy = true,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
       "nvim-tree/nvim-web-devicons",
       "sindrets/diffview.nvim"},
     modes = {modes.GIT}},
@@ -173,7 +161,7 @@ return {
     "Exafunction/codeium.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
+       "saghen/blink.cmp",
     },
     config = function()
         require("codeium").setup({})

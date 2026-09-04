@@ -4,8 +4,7 @@
   (let [neogit (require "neogit")]
     (neogit.setup
       {:integrations
-       {:telescope true
-        :diffview true}
+       {:diffview true}
        :mappings
        {:status
         {:q false}}})))

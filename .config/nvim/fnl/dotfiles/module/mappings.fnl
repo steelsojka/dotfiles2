@@ -4,7 +4,6 @@
             buffers dotfiles.buffers
             ws dotfiles.workspace
             term dotfiles.terminal
-            tele dotfiles.telescope
             qf dotfiles.quickfix
             keymap dotfiles.keymap
             sessions dotfiles.sessions
@@ -12,6 +11,7 @@
             lsp-logging dotfiles.lsp.logging
             repl dotfiles.repl
             lib dotfiles.lib
+            pickers dotfiles.pickers
             browser dotfiles.browser}})
 
 (keymap.register-mappings
@@ -169,11 +169,11 @@
    ; Insert mappings <leader>i
    "if" {:do "\"%p" :description "Current file name"}
    "iF" {:do "<Cmd>put expand(\"%:p\")<CR>" :description "Current file path"}
-   "ir" {:do #(tele.insert-relative-path (util.get-current-buffer-dir)) :description "Insert relative path"}
-   "ip" {:do #(tele.complete-path) :description "Insert path"}
+   "ir" {:do #(pickers.insert-relative-path) :description "Insert relative path"}
+   ; "ip" {:do #(tele.complete-path) :description "Insert path"}
    ; Search mappings <leader>s
    "sd" {:do #(Snacks.picker.grep {:cwd (util.get-current-buffer-dir)}) :description "Grep files in directory"}
-   "sd" {:do #(Snacks.picker.diagnostics_buffer) :description "Search diagnostics"}
+   "sD" {:do #(Snacks.picker.diagnostics_buffer) :description "Search diagnostics"}
    "sc" {:do #(Snacks.picker.command_history) :description "Search command history"}
    "si" {:do #(Snacks.picker.lsp_workspace_symbols) :description "Search symbol"}
    "sb" {:do #(Snacks.picker.grep_buffers) :description "Search buffer"}
