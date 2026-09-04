@@ -47,32 +47,15 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     modes = {modes.GIT_DIFF},
     dependencies = {"nvim-treesitter/nvim-treesitter"}}, ]]
-  {
-    "nvim-telescope/telescope.nvim",
-    modes = {
-      modes.GIT,
-      modes.GIT_DIFF,
-      modes.MAN_PAGER,
-      modes.GPT},
-    dependencies = {
-      "nvim-lua/popup.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-live-grep-args.nvim"}},
   { "folke/snacks.nvim",
     lazy = false,
     priority = 1000,
     config = function()
       require "snacks".setup {
-        picker = { enabled = true }
+        picker = { enabled = true },
+        image = { enabled = true }
       }
     end },
-  {
-    "nvim-telescope/telescope-ui-select.nvim",
-    modes = {
-      modes.GIT,
-      modes.GPT,
-      modes.MAN_PAGER,
-      modes.GIT_DIFF}},
 --[[   {
     "stevearc/dressing.nvim",
     modes = {modes.GIT_DIFF}}, ]]

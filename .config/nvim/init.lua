@@ -37,6 +37,7 @@ vim.opt.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
 
 vim.g.tshell = vim.env.NVIM_TSHELL
 vim.g.tshell_cmd_flag = vim.env.NVIM_TSHELL_CMD_FLAG
+vim.g.ai_term_prog = vim.env.NVIM_AI_TERM_PROG
 
 -- vim.lsp.set_log_level("debug")
 if vim.g.vscode then

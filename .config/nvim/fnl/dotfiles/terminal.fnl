@@ -8,12 +8,18 @@
   (nvim.command (string.format "call termopen('%s', {'on_exit': {_ -> execute('q!') }})" cmd))
   (nvim.ex.normal "i"))
 
-(defn open [is-local]
+(defn open [is-local prog?]
   "Opens terminal to the cwd or to the current files directory."
   (let [cwd (if is-local (nvim.fn.expand "%:p:h") (nvim.fn.getcwd))
-        buf (nvim.create_buf true false)]
+        buf (nvim.create_buf true false)
+        prog (or prog? vim.g.tshell)]
     (nvim.set_current_buf buf)
-    (nvim.fn.termopen vim.g.tshell {: cwd})
+    (nvim.fn.jobstart prog {:cwd cwd
+                            :term true
+                            :on_exit (fn []
+                                       (vim.schedule
+                                         #(when (vim.api.nvim_buf_is_valid buf)
+                                            (vim.api.nvim_buf_delete buf {:force true}))))})
     (nvim.ex.normal "i")))
 
 (defn get-channel [bufnr?]

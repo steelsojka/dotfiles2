@@ -22,6 +22,7 @@
     :w {:name "+windows" }
     :wb {:name "+balance"}
     :wt {:name "+terminal"}
+    :wta {:name "+ai terminal"}
     :y {:name "+yank"}
     :yf {:name "+file"}
     :a {:name "+ai"}
@@ -262,8 +263,11 @@
    "gF" {:do #(Snacks.picker.git_files) :description "Find file"}
    ; Terminal mappings <leader>wt
    "wtt" {:do #(term.open) :description "Terminal"}
+   "wtaa" {:do #(term.open nil vim.g.ai_term_prog) :description "AI Terminal"}
    "wtv" {:do #(do (nvim.ex.vsp) (term.open)) :description "Vertical split terminal"}
+   "wtav" {:do #(do (nvim.ex.vsp) (term.open nil vim.g.ai_term_prog)) :description "Vertical split AI terminal"}
    "wtf" {:do #(do (nvim.ex.vsp) (term.open true)) :description "Terminal at file"}
+   "wtaf" {:do #(do (nvim.ex.vsp) (term.open true vim.g.ai_term_prog)) :description "AI Terminal at file"}
    ; Toggle mappings <leader>t
    "tl" {:do "<Cmd>set number!<CR>" :description "Line numbers"}
    "tw" {:do "<Cmd>set wrap!<CR>" :description "Word wrap"}

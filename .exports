@@ -28,10 +28,11 @@ fi
 export GREP_OPTIONS="--color=auto"
 
 # Shell used for non-interactive nvim commands
-export NVIM_SHELL="bash"
+export NVIM_SHELL="zsh"
 # Shell used for the built in terminal (with custom apis)
-export NVIM_TSHELL="bash"
-export SHELL="bash"
+export NVIM_TSHELL="zsh"
+export NVIM_AI_TERM_PROG="opencode"
+export SHELL="zsh"
 # Command flag to execute a command with the shell above
 export NVIM_TSHELL_CMD_FLAG="-c"
 export XDG_CONFIG_HOME="$HOME/.config"
