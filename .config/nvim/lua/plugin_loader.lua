@@ -6,7 +6,6 @@ local spec_module_cache = {}
 
 local function load_lib(package_name, clone_url, branch)
   local install_path = pack_dotfiles_path .. "/" .. package_name
-
   if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.cmd(string.format("!git clone -b %s %s %s", branch, clone_url, install_path))
   end
@@ -15,10 +14,13 @@ local function load_lib(package_name, clone_url, branch)
 end
 
 local function load_lazy()
+  print "before"
   if not vim.loop.fs_stat(lazy_path) then
-    vim.fn.system({ "git", "clone", "-c", "remote.origin.fetch=''", "--filter=blob:none", "--branch=v11.17.5", "--single-branch", "https://github.com/folke/lazy.nvim.git", lazypath })
+    print "during"
+    vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=v11.17.5", "https://github.com/folke/lazy.nvim.git", lazy_path })
   end
 
+  print "after"
   vim.opt.rtp:prepend(lazy_path)
 end
 
