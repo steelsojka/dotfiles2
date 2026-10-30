@@ -14,13 +14,10 @@ local function load_lib(package_name, clone_url, branch)
 end
 
 local function load_lazy()
-  print "before"
   if not vim.loop.fs_stat(lazy_path) then
-    print "during"
     vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=v11.17.5", "https://github.com/folke/lazy.nvim.git", lazy_path })
   end
 
-  print "after"
   vim.opt.rtp:prepend(lazy_path)
 end
 
