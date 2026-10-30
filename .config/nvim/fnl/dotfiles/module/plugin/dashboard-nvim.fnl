@@ -19,7 +19,7 @@
     (->
       {:config
        {: header
-        :project {:enable true :limit 8}
+        :project {:enable true :limit 8 :action #(Snacks.picker.files {:cwd $1 })}
         :mru {:limit 10}}
        :theme "hyper"
        :shortcut_type "number"}
